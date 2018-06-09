@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="shell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="shell 脚本学习shell 脚本在linux上可以说是非常有用的一个工具，它就是linux命令的一个集合，所以写好shell脚本的关键一部分就是对linux命令比较熟悉。 本博客是在图书馆借阅shell相关脚本学习书记做的一个简单笔记。 shell 脚本的创建与执行一般我们在linux中创建的shell脚本都是以.sh为结尾的，这其实不是说一定要用sh结尾才行，只是大家约定习俗的一个习惯而已。">
+<meta name="keywords" content="shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell 脚本学习">
+<meta property="og:url" content="http://chenzhijun.me/2018/05/13/shell-script/index.html">
+<meta property="og:site_name" content="饺子">
+<meta property="og:description" content="shell 脚本学习shell 脚本在linux上可以说是非常有用的一个工具，它就是linux命令的一个集合，所以写好shell脚本的关键一部分就是对linux命令比较熟悉。 本博客是在图书馆借阅shell相关脚本学习书记做的一个简单笔记。 shell 脚本的创建与执行一般我们在linux中创建的shell脚本都是以.sh为结尾的，这其实不是说一定要用sh结尾才行，只是大家约定习俗的一个习惯而已。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2018-05-13-18-56-53.png">
+<meta property="og:updated_time" content="2018-05-13T11:00:48.987Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell 脚本学习">
+<meta name="twitter:description" content="shell 脚本学习shell 脚本在linux上可以说是非常有用的一个工具，它就是linux命令的一个集合，所以写好shell脚本的关键一部分就是对linux命令比较熟悉。 本博客是在图书馆借阅shell相关脚本学习书记做的一个简单笔记。 shell 脚本的创建与执行一般我们在linux中创建的shell脚本都是以.sh为结尾的，这其实不是说一定要用sh结尾才行，只是大家约定习俗的一个习惯而已。">
+<meta name="twitter:image" content="http://chenzhijun.me/images/qiniu/2018-05-13-18-56-53.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '6303406395207190000',
+      author: 'chenzhijun'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzhijun.me/2018/05/13/shell-script/"/>
+
+
+
+
+
+  <title>shell 脚本学习 | 饺子</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-98129235-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?64f9df4705290b3eaeaf10145b170a11";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">饺子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">优于别人，并不高贵，真正的高贵应该是优于过去的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/05/13/shell-script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shell 脚本学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T18:02:31+08:00">
+                2018-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/13/shell-script/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/13/shell-script/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/13/shell-script/" class="leancloud_visitors" data-flag-title="shell 脚本学习">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="shell-脚本学习"><a href="#shell-脚本学习" class="headerlink" title="shell 脚本学习"></a>shell 脚本学习</h1><p>shell 脚本在linux上可以说是非常有用的一个工具，它就是linux命令的一个集合，所以写好shell脚本的关键一部分就是对linux命令比较熟悉。</p>
+<p>本博客是在图书馆借阅shell相关脚本学习书记做的一个简单笔记。</p>
+<h2 id="shell-脚本的创建与执行"><a href="#shell-脚本的创建与执行" class="headerlink" title="shell 脚本的创建与执行"></a>shell 脚本的创建与执行</h2><p>一般我们在linux中创建的shell脚本都是以<code>.sh</code>为结尾的，这其实不是说一定要用sh结尾才行，只是大家约定习俗的一个习惯而已。<br>在shell文件的第一行，通常是<code>#!/bin/bash</code>，表示该脚本使用bash语法。<code>#</code>是shell脚本中的注释。通常自定义的脚本我通常习惯放在<code>/usr/local/bin</code>目录下,<a href="https://unix.stackexchange.com/questions/8656/usr-bin-vs-usr-local-bin-on-linux" target="_blank" rel="noopener">关于bin,sbin,/usr/bin,/usr/local/bin等的区别</a></p>
+<p>现在我们创建第一个脚本<code>first.sh</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">echo "Hello,world"</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>脚本创建好之后有两种运行方式:</p>
+<ol>
+<li>使用bash执行：<code>bash first.sh</code></li>
+<li>直接执行：先让first.sh变成可执行脚本<code>chmod +x first.sh</code>,然后再直接运行<code>./first.sh</code></li>
+</ol>
+<p>脚本运行过程中可以使用<code>bash -x first.sh</code>，这样可以看到脚本的执行过程。</p>
+<h2 id="shell-脚本的变量"><a href="#shell-脚本的变量" class="headerlink" title="shell 脚本的变量"></a>shell 脚本的变量</h2><h3 id="脚本预定义变量"><a href="#脚本预定义变量" class="headerlink" title="脚本预定义变量"></a>脚本预定义变量</h3><p>shell 预先设置的几个变量值，比如<code>optin.sh</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">echo $0 $1 $2</span><br></pre></td></tr></table></figure>
+<p>如果执行：<code>./option.sh 1 2</code>,输出为：<code>option.sh 1 2</code></p>
+<p>也就是执行脚本的时候后面的参数有几个，在脚本中直接使用<code>$位置</code>就可以使用这些变量值，0位置是脚本的名称。</p>
+<h3 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h3><p>在脚本中自己定义的变量，<code>变量名=变量值</code>，在脚本中使用的方式为<code>$变量名</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">num=1</span><br><span class="line">echo "$num"</span><br></pre></td></tr></table></figure>
+<p><code>num=1</code> 中<code>num</code>和<code>=</code>之间不要有空格,不要有空格，不要有空格。</p>
+<h3 id="控制台变量值传递"><a href="#控制台变量值传递" class="headerlink" title="控制台变量值传递"></a>控制台变量值传递</h3><p>控制台交互性，读取控制台输入的数，然后传递给脚本中，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">read -p "Please input a number: " x</span><br><span class="line">read -p "Please input another number: " y</span><br><span class="line"></span><br><span class="line">sum=$[$x+$y]</span><br><span class="line"></span><br><span class="line">echo "the sum of the two numbers is : $sum"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>#chen@ubuntu:~/shell-learn$ bash read.sh </span><br><span class="line"><span class="meta">#</span>Please input a number: 1</span><br><span class="line"><span class="meta">#</span>Please input another number: 3</span><br><span class="line"><span class="meta">#</span>the sum of the two numbers is : 4</span><br></pre></td></tr></table></figure>
+<h2 id="数值运算"><a href="#数值运算" class="headerlink" title="数值运算"></a>数值运算</h2><p>简单的加减乘除的运算，使用<code>[]</code>前面需要加上<code>$</code>，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">a=1</span><br><span class="line">b=2</span><br><span class="line">sum=$[$a+$b]</span><br><span class="line"></span><br><span class="line">echo "$a+$b=$sum"</span><br><span class="line"></span><br><span class="line">echo ================</span><br><span class="line"></span><br><span class="line">sum2=$[$a+$b]</span><br><span class="line">echo "$a+$b=$sum2"</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span># sh sum.sh 1+2=$[1+2]</span><br><span class="line"><span class="meta">#</span># bash sum.sh 1+2=3</span><br><span class="line"><span class="meta">#</span># ./sum.sh  1+2=3</span><br><span class="line"><span class="meta">#</span># 这三种方式执行结果不一样</span><br></pre></td></tr></table></figure>
+<h2 id="if-else-条件逻辑语句"><a href="#if-else-条件逻辑语句" class="headerlink" title="if-else 条件逻辑语句"></a>if-else 条件逻辑语句</h2><p>对于if-else大家在任何一门语言中都是必备的，shell中的if-else格式如下：</p>
+<h3 id="常用的数值判断"><a href="#常用的数值判断" class="headerlink" title="常用的数值判断"></a>常用的数值判断</h3><p>if-else常用的根据数字来判断的相关实例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 单独if语句</span><br><span class="line">if 判断语句; then</span><br><span class="line">    command</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> if-else 语句</span><br><span class="line">if 判断语句; then</span><br><span class="line">    command</span><br><span class="line">else</span><br><span class="line">    command</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>if-elseif-else 语句</span><br><span class="line">if 判断语句; then </span><br><span class="line">    command</span><br><span class="line">elif 判断语句2; then</span><br><span class="line">    command</span><br><span class="line">else</span><br><span class="line">    command</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">num=$1</span><br><span class="line"></span><br><span class="line">if ((num&lt;60));then</span><br><span class="line">	echo "you don't pass the exam; your score is $num"</span><br><span class="line">elif ((num&gt;=60&amp;&amp;num&lt;80));then</span><br><span class="line">	echo "good job, your score is $num"</span><br><span class="line">else</span><br><span class="line">	echo "great job, your score is $num"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if ((num==60));then </span><br><span class="line">	echo "ok"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if ((num!=50));then</span><br><span class="line">	echo "not equal 50"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>执行的时候：<code>./if.sh 89</code>。</p>
+<p>数值大小的判断除了有<code>(())</code>之外，还可以使用<code>[]</code>，如果使用<code>[]</code>，那么就不能使用<code>&gt; , &lt; , =</code>这些符号，要使用:<br>小于：<code>-lt</code>，大于：<code>-gt</code>，小于或等于：<code>-le</code>，大于或等于：<code>-ge</code>，等于：<code>-eq</code>，不等于：<code>-ne</code>，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">a=10</span><br><span class="line">if [ $a -lt 5 ];then echo ok;fi</span><br><span class="line">if [ $a -gt 5 ];then echo gt;fi</span><br><span class="line">if [ $a -ge 5 ];then echo ge;fi</span><br><span class="line">if [ $a -eq 5 ];then echo eq;fi</span><br><span class="line">if [ $a -ne 5 ];then echo ne;fi</span><br></pre></td></tr></table></figure>
+<h3 id="if中常用的跟文档相关的判断"><a href="#if中常用的跟文档相关的判断" class="headerlink" title="if中常用的跟文档相关的判断"></a>if中常用的跟文档相关的判断</h3><p>if 语句中可以使用一些内置的跟文件判断相关的参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> if判断跟文件相关的一些参数</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> -e 判断文件或目录是否存在</span><br><span class="line"><span class="meta">#</span> -d 判断是不是目录，以及是否存在</span><br><span class="line"><span class="meta">#</span> -f 判断是不是普通文件，以及是否存在</span><br><span class="line"><span class="meta">#</span> -r 判断是否有读权限</span><br><span class="line"><span class="meta">#</span> -w 判断是否有写权限</span><br><span class="line"><span class="meta">#</span> -x 判断是否可执行</span><br><span class="line"></span><br><span class="line">if [ -e /home/ ]; then echo ok ;fi</span><br><span class="line"></span><br><span class="line">if [ -f /home/ ]; then echo ok ;fi</span><br><span class="line"></span><br><span class="line">if [ -f /home/chen/shell-learn/if1.sh ]; then echo ok ;fi</span><br></pre></td></tr></table></figure>
+<h2 id="case-逻辑判断"><a href="#case-逻辑判断" class="headerlink" title="case 逻辑判断"></a>case 逻辑判断</h2><p>java中有if之外还有switch，shell中除了if之外还有case,如果总结一下啊，可以发现if中的结束用fi，case中结束用esac，刚好是倒过来的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> case语句，value可以任意个，*指代其它值。类似java switch default</span><br><span class="line"> case 变量 in</span><br><span class="line"> value1)</span><br><span class="line"> 	command</span><br><span class="line"> 	;;</span><br><span class="line"> value2)</span><br><span class="line"> 	command</span><br><span class="line"> 	;;</span><br><span class="line"> value3)</span><br><span class="line"> 	command</span><br><span class="line"> 	;;</span><br><span class="line"> *)</span><br><span class="line"> 	command</span><br><span class="line"> 	;;</span><br><span class="line"> esac</span><br></pre></td></tr></table></figure>
+<p>实例脚本，判断奇偶数字：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">num=$1</span><br><span class="line">n=$[$num%2]</span><br><span class="line"></span><br><span class="line">case $n in</span><br><span class="line">1)</span><br><span class="line">	echo "奇数"</span><br><span class="line">	;;</span><br><span class="line">0)</span><br><span class="line">	echo "偶数"</span><br><span class="line">	;;</span><br><span class="line">*)</span><br><span class="line">	echo "其它的值"</span><br><span class="line">	;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<p>之前跟同事学的一个很有用的基础脚本：<a href="http://chenzhijun.me/2018/05/10/a-easy-script/">地址</a></p>
+<h2 id="shell中的循环：for，while"><a href="#shell中的循环：for，while" class="headerlink" title="shell中的循环：for，while"></a>shell中的循环：for，while</h2><p>常用到的循环就是for和while了，</p>
+<p>for的使用方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 脚本循环</span><br><span class="line"><span class="meta">#</span>for 变量名 in 循环的条件; do</span><br><span class="line"><span class="meta">#</span>	command</span><br><span class="line"><span class="meta">#</span>done</span><br><span class="line"></span><br><span class="line">for i in 1 2 3 4 5 6; do</span><br><span class="line">	echo $i</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for filename in `ls`; do</span><br><span class="line">	echo $filename</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>while 的使用方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> while 条件; do</span><br><span class="line"><span class="meta">#</span> 	command</span><br><span class="line"><span class="meta">#</span> done</span><br><span class="line"></span><br><span class="line">num=5 </span><br><span class="line"></span><br><span class="line">while [ $num -ge 1 ]; do</span><br><span class="line">	echo $num</span><br><span class="line">	num=$[ $num-1 ]</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>while 中如果是<code>while :; do</code>那么就是死循环了，有些地方可以这样使用。</p>
+<h2 id="shell-函数"><a href="#shell-函数" class="headerlink" title="shell 函数"></a>shell 函数</h2><p>shell的函数一定要在被调用之前声明，生命函数的关键字是<code>function</code>,函数的参数个数需要在调用的时候指定，如<code>func.sh</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">function sum()</span><br><span class="line">&#123;	</span><br><span class="line">	sum=$[$1+$2]</span><br><span class="line">	echo $sum</span><br><span class="line">	echo "第三个变量：" $3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum $1 $2</span><br><span class="line"></span><br><span class="line">echo "======================="</span><br><span class="line"></span><br><span class="line">sum $1 $2 $3</span><br></pre></td></tr></table></figure>
+<p>调用的方式<code>./func.sh 1 2 3</code> 输出结果为：<br><img src="/images/qiniu/2018-05-13-18-56-53.png" alt="2018-05-13-18-56-53"></p>
+<p>可以看到第一个函数里面的<code>$1 $2 $3</code>跟shell脚本预设的变量是不相关的，函数里面能用的参数都是<code>sum</code>传递进去的。</p>
+<blockquote>
+<p>ps: 如果每次写完脚本都需要使用<code>chmod +x xxx.sh</code>这样也挺烦的，不如写个脚本吧，<code>x.sh</code>。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x *.sh</span><br></pre></td></tr></table></figure>
+<p>这样就可以使用<code>./x.sh</code>，直接执行脚本就好了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+        <div>
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/05/13/shell-script/">shell 脚本学习</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
+  <p><span>发布时间:</span>2018-05-13 18:02:31</p>
+ <!-- <p><span>最后更新:</span>2018-05-13 19:00:48</p> -->
+  <p><span>原始链接:</span><a href="/2018/05/13/shell-script/" title="shell 脚本学习">http://chenzhijun.me/2018/05/13/shell-script/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/05/13/shell-script/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        <div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>鼓励一下</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt="陈志军 WeChat Pay"/>
+        <p>微信赞助</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/reward/alipay.jpg" alt="陈志军 Alipay"/>
+        <p>支付宝赞助</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/10/a-easy-script/" rel="next" title="基础脚本">
+                <i class="fa fa-chevron-left"></i> 基础脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/22/problem-cmrh-2018522/" rel="prev" title="最近遇到的小问题总结-2018522">
+                最近遇到的小问题总结-2018522 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微薄</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="陈志军" />
+          <p class="site-author-name" itemprop="name">陈志军</p>
+           
+              <p class="site-description motion-element" itemprop="description">自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">109</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzhijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://git.oschina.net/chenzhijun" target="_blank" title="GitEE">
+                  
+                    <i class="fa fa-fw fa-git"></i>
+                  
+                    
+                      GitEE
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3075356421" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:chenzhijun319@163.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐阅读
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://chenzhijun.github.com/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xkupc.github.io/" title="许凯的个人站" target="_blank">许凯的个人站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shell-脚本学习"><span class="nav-number">1.</span> <span class="nav-text">shell 脚本学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-脚本的创建与执行"><span class="nav-number">1.1.</span> <span class="nav-text">shell 脚本的创建与执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-脚本的变量"><span class="nav-number">1.2.</span> <span class="nav-text">shell 脚本的变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本预定义变量"><span class="nav-number">1.2.1.</span> <span class="nav-text">脚本预定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义变量"><span class="nav-number">1.2.2.</span> <span class="nav-text">自定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制台变量值传递"><span class="nav-number">1.2.3.</span> <span class="nav-text">控制台变量值传递</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数值运算"><span class="nav-number">1.3.</span> <span class="nav-text">数值运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if-else-条件逻辑语句"><span class="nav-number">1.4.</span> <span class="nav-text">if-else 条件逻辑语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的数值判断"><span class="nav-number">1.4.1.</span> <span class="nav-text">常用的数值判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if中常用的跟文档相关的判断"><span class="nav-number">1.4.2.</span> <span class="nav-text">if中常用的跟文档相关的判断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case-逻辑判断"><span class="nav-number">1.5.</span> <span class="nav-text">case 逻辑判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell中的循环：for，while"><span class="nav-number">1.6.</span> <span class="nav-text">shell中的循环：for，while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-函数"><span class="nav-number">1.7.</span> <span class="nav-text">shell 函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈志军</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://chenzhijun-me.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://chenzhijun.me/2018/05/13/shell-script/';
+          this.page.identifier = '2018/05/13/shell-script/';
+          this.page.title = 'shell 脚本学习';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://chenzhijun-me.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3Ipv4LCq5xwYkaKUFvu27F0x-gzGzoHsz", "fAbLTc2xazR7sRtkfvQ7uIiO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
