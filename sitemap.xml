@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://chenzhijun.me/2018/06/09/prometheus-alertmanager-external-url/</loc>
+    <loc>http://chenzhijun.me/2018/07/16/conclusion-2018-07-16/</loc>
     
-    <lastmod>2018-06-09T08:51:05.658Z</lastmod>
+    <lastmod>2018-07-16T09:22:05.114Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/</loc>
     
-    <lastmod>2018-06-09T08:32:57.987Z</lastmod>
+    <lastmod>2018-06-09T08:52:27.205Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://chenzhijun.me/2018/06/09/prometheus-alertmanager-external-url/</loc>
+    
+    <lastmod>2018-06-09T08:51:05.658Z</lastmod>
     
   </url>
   
@@ -611,14 +618,14 @@
   </url>
   
   <url>
-    <loc>http://chenzhijun.me/2017/03/15/first-blog/</loc>
+    <loc>http://chenzhijun.me/2017/04/22/git/</loc>
     
     <lastmod>2018-04-12T08:22:57.317Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://chenzhijun.me/2017/04/22/git/</loc>
+    <loc>http://chenzhijun.me/2017/03/15/first-blog/</loc>
     
     <lastmod>2018-04-12T08:22:57.317Z</lastmod>
     

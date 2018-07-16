@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="prometheus 使用远端存储使用Prometheus的过程中，我们可以发现Prometheus默认是自己带有存储的，不过保存的时间为15天。但是对于公司而言，可能有时候会对数据进行统计分析，那么15天的数据将不会满足要求了。所以我们希望能够将数据永久存储起来，或者说能够让我们自己将数据进行处理。 这里我们要讲的就是Prometheus的 remote_storage 功能。Prometheu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-09T08:32:57.987Z">
+<meta property="og:updated_time" content="2018-06-09T08:52:27.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="prometheus 使用influxdb 做永久存储">
 <meta name="twitter:description" content="prometheus 使用远端存储使用Prometheus的过程中，我们可以发现Prometheus默认是自己带有存储的，不过保存的时间为15天。但是对于公司而言，可能有时候会对数据进行统计分析，那么15天的数据将不会满足要求了。所以我们希望能够将数据永久存储起来，或者说能够让我们自己将数据进行处理。 这里我们要讲的就是Prometheus的 remote_storage 功能。Prometheu">
@@ -447,7 +447,9 @@
 <p>之后我们启动prometheus就可以看到influxdb中会有相应的数据了。如果验证我们采集的metrics数据被存储起来了呢？我们选取一个metric，过几分钟然后将prometheus停止，并且将data目录删除，重启prometheus，然后我们再查询这个metric，可以看到之前几分钟的数据还在那里。</p>
 <h3 id="prometheus-高可用"><a href="#prometheus-高可用" class="headerlink" title="prometheus 高可用"></a>prometheus 高可用</h3><p>最近在实践一个事情，就是Prometheus的高可用，我的想法是将所有数据都存储到influxdb，但是influxdb集群版本竟然是闭源的。我擦。。。不过这个事情倒不是最重要，实在不行我们自己弄集群版本。我的高可用选择是有多个prometheus进行的是采集，在yaml种只配置remote_write，然后让某几台Prometheus机器做查询，只配置remote_read，并且查询的prometheus不做scape-config，也就是没有采集任务，完全的查询客户端，当然还有规则报警。在实际中要注意<code>global.external_labels.monitor</code>这个配置必须是 <strong>相同的值</strong>。不然的话查询客户端不能查询到相应的metric。当然你也可以不设置这个值。<br>另外实践中我发现federate机器也就是prometheus的联邦机器，在另一个prometheus配置了一台federate之后，它会将从federate采集到的数据收集起来，并且存储到influxdb中，也就是相应的做了持久化存储。</p>
 <p>目前还有两个问题没有解决：多个查询客户端prometheus如果都配置了报警rule的话，会不会产生单个报警重复报？另外还有就是influxdb的集群方案，该怎么操作？还要进一步研究才行啊。~~</p>
-
+<h3 id="附录，influxdb的一些操作："><a href="#附录，influxdb的一些操作：" class="headerlink" title="附录，influxdb的一些操作："></a>附录，influxdb的一些操作：</h3><p>influxdb常用操作：<br>    显示数据库：show databases<br>    创建一个库：create database database_name<br>    删除一个库：drop database database_name<br>    使用库：use database<br>    表操作：show measurements<br>    插入数据<br>    <code>insert &lt;tbname&gt;,&lt;tags&gt; &lt;values&gt; [timestamp]</code><br>    说明：<br>    tbname : 数据表名称<br>    tags : 表的tag域<br>    values : 表的value域<br>    timestamp ：当前数据的时间戳（可选，没有提供的话系统会自带添加）</p>
+<pre><code>示例如下：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; use testdb;</span><br><span class="line">Using database testdb</span><br><span class="line">&gt; insert students,stuid=s123 score=89</span><br><span class="line">&gt; show measurements;</span><br><span class="line">name: measurements</span><br><span class="line">name</span><br><span class="line">----</span><br><span class="line">students</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -467,7 +469,7 @@
   <p><span>本文标题:</span><a href="/2018/06/09/prometheus-storage-influxdb/">prometheus 使用influxdb 做永久存储</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2018-06-09 16:04:43</p>
- <!-- <p><span>最后更新:</span>2018-06-09 16:32:57</p> -->
+ <!-- <p><span>最后更新:</span>2018-06-09 16:52:27</p> -->
   <p><span>原始链接:</span><a href="/2018/06/09/prometheus-storage-influxdb/" title="prometheus 使用influxdb 做永久存储">http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/"  aria-label="复制成功！"></i></span>
   </p>
@@ -665,7 +667,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">109</span>
+                <span class="site-state-item-count">110</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -676,7 +678,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -687,7 +689,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -786,7 +788,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#prometheus-使用远端存储"><span class="nav-number">1.</span> <span class="nav-text">prometheus 使用远端存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载安装influxdb"><span class="nav-number">1.1.</span> <span class="nav-text">下载安装influxdb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备remote-storage-adapter"><span class="nav-number">1.2.</span> <span class="nav-text">准备remote_storage_adapter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-prometheus-yml-配置对接adapter"><span class="nav-number">1.3.</span> <span class="nav-text">修改 prometheus.yml 配置对接adapter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#prometheus-高可用"><span class="nav-number">1.3.1.</span> <span class="nav-text">prometheus 高可用</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#prometheus-使用远端存储"><span class="nav-number">1.</span> <span class="nav-text">prometheus 使用远端存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载安装influxdb"><span class="nav-number">1.1.</span> <span class="nav-text">下载安装influxdb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备remote-storage-adapter"><span class="nav-number">1.2.</span> <span class="nav-text">准备remote_storage_adapter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-prometheus-yml-配置对接adapter"><span class="nav-number">1.3.</span> <span class="nav-text">修改 prometheus.yml 配置对接adapter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#prometheus-高可用"><span class="nav-number">1.3.1.</span> <span class="nav-text">prometheus 高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附录，influxdb的一些操作："><span class="nav-number">1.3.2.</span> <span class="nav-text">附录，influxdb的一些操作：</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

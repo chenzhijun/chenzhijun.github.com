@@ -4,16 +4,34 @@
 
     
   <url>
-    <loc>http://chenzhijun.me/2018/06/09/prometheus-alertmanager-external-url/</loc>
-    <lastmod>2018-06-09T08:51:05.658Z</lastmod>
+    <loc>http://chenzhijun.me/2018/07/16/conclusion-2018-07-16/</loc>
+    <lastmod>2018-07-16T09:22:05.114Z</lastmod>
     <data>
         <display>
-        <title>alertmanager发送的邮件中external-url修改机器名为IP地址</title>
-        <pubTime>2018-06-09T08:33:37.000Z</pubTime>
+        <title>最近总结-2018-07-16</title>
+        <pubTime>2018-07-16T08:15:29.000Z</pubTime>
+        
+        <tag>总结</tag>
+         
+         
+           
+             
+              <breadCrumb title="总结" url="http://chenzhijun.me/categories/%E6%80%BB%E7%BB%93/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/</loc>
+    <lastmod>2018-06-09T08:52:27.205Z</lastmod>
+    <data>
+        <display>
+        <title>prometheus 使用influxdb 做永久存储</title>
+        <pubTime>2018-06-09T08:04:43.000Z</pubTime>
         
         <tag>prometheus</tag>
-         
-        <tag>alertmanager</tag>
          
          
            
@@ -26,14 +44,16 @@
 
     
   <url>
-    <loc>http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/</loc>
-    <lastmod>2018-06-09T08:32:57.987Z</lastmod>
+    <loc>http://chenzhijun.me/2018/06/09/prometheus-alertmanager-external-url/</loc>
+    <lastmod>2018-06-09T08:51:05.658Z</lastmod>
     <data>
         <display>
-        <title>prometheus 使用influxdb 做永久存储</title>
-        <pubTime>2018-06-09T08:04:43.000Z</pubTime>
+        <title>alertmanager发送的邮件中external-url修改机器名为IP地址</title>
+        <pubTime>2018-06-09T08:33:37.000Z</pubTime>
         
         <tag>prometheus</tag>
+         
+        <tag>alertmanager</tag>
          
          
            
@@ -168,9 +188,9 @@
         <title>nginx 设置prometheus和grafana的反向代理</title>
         <pubTime>2018-05-02T14:57:50.000Z</pubTime>
         
-        <tag>nginx</tag>
-         
         <tag>prometheus</tag>
+         
+        <tag>nginx</tag>
          
         <tag>grafana</tag>
          
@@ -1681,26 +1701,6 @@
 
     
   <url>
-    <loc>http://chenzhijun.me/2017/03/15/first-blog/</loc>
-    <lastmod>2018-04-12T08:22:57.317Z</lastmod>
-    <data>
-        <display>
-        <title>第一篇博客</title>
-        <pubTime>2017-03-15T15:22:03.000Z</pubTime>
-        
-        <tag>Life</tag>
-         
-         
-           
-             
-              <breadCrumb title="Life" url="http://chenzhijun.me/categories/Life/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://chenzhijun.me/2017/04/22/git/</loc>
     <lastmod>2018-04-12T08:22:57.317Z</lastmod>
     <data>
@@ -1714,6 +1714,26 @@
            
              
               <breadCrumb title="Git" url="http://chenzhijun.me/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/03/15/first-blog/</loc>
+    <lastmod>2018-04-12T08:22:57.317Z</lastmod>
+    <data>
+        <display>
+        <title>第一篇博客</title>
+        <pubTime>2017-03-15T15:22:03.000Z</pubTime>
+        
+        <tag>Life</tag>
+         
+         
+           
+             
+              <breadCrumb title="Life" url="http://chenzhijun.me/categories/Life/"/>
           
         </display>
     </data>
