@@ -97,7 +97,7 @@
 <meta name="description" content="自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙">
 <meta property="og:type" content="website">
 <meta property="og:title" content="饺子">
-<meta property="og:url" content="http://chenzhijun.me/categories/elk/index.html">
+<meta property="og:url" content="http://chenzhijun.me/categories/ELK/index.html">
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙">
 <meta property="og:locale" content="zh-Hans">
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://chenzhijun.me/categories/elk/"/>
+  <link rel="canonical" href="http://chenzhijun.me/categories/ELK/"/>
 
 
 
 
 
-  <title>分类: elk | 饺子</title>
+  <title>分类: ELK | 饺子</title>
   
 
 
@@ -311,7 +311,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>elk<small>分类</small>
+        <h1>ELK<small>分类</small>
         </h1>
       </div>
 
@@ -323,9 +323,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/04/02/logstash-output-elasticsearch-document-id/" itemprop="url">
+            <a class="post-title-link" href="/2018/01/09/logstash-send-email/" itemprop="url">
               
-                <span itemprop="name">解决 logstash 输出到 Elasticsearch 时指定 document_id</span>
+                <span itemprop="name">使用Logstash发送异常邮件</span>
               
             </a>
         
@@ -333,9 +333,65 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-02T17:05:32+08:00"
-              content="2018-04-02" >
-          04-02
+              datetime="2018-01-09T14:01:10+08:00"
+              content="2018-01-09" >
+          01-09
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/12/27/elk-docker/" itemprop="url">
+              
+                <span itemprop="name">使用Docker搭建ELK日志系统</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-12-27T14:28:14+08:00"
+              content="2017-12-27" >
+          12-27
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/12/12/elasticsearch-logstash-kibana-part/" itemprop="url">
+              
+                <span itemprop="name">基于ELK+Filebeat搭建日志中心</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-12-12T16:32:02+08:00"
+              content="2017-12-12" >
+          12-12
         </time>
       </div>
 
@@ -1112,65 +1168,6 @@
     $(function() {
       var Counter = AV.Object.extend("Counter");
       if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-
-  
-
-  
-
-</body>
-</html>
-1) {
         addCount(Counter);
       } else if ($('.post-title-link').length > 1) {
         showTime(Counter);
