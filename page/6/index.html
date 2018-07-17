@@ -320,6 +320,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/18/elasaticearch-shard-replicas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/18/elasaticearch-shard-replicas/" itemprop="url">elasticsearch 集群主分片和副本分片</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T16:20:45+08:00">
+                2017-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/18/elasaticearch-shard-replicas/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/18/elasaticearch-shard-replicas/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/12/18/elasaticearch-shard-replicas/" class="leancloud_visitors" data-flag-title="elasticsearch 集群主分片和副本分片">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>集群的健康状态查询：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET 'localhost:9200/_cluster/health?pretty'</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="attr">"cluster_name"</span>:          <span class="string">"elasticsearch"</span>,</span><br><span class="line">   <span class="attr">"status"</span>:                <span class="string">"green"</span>, </span><br><span class="line">   <span class="attr">"timed_out"</span>:             <span class="literal">false</span>,</span><br><span class="line">   <span class="attr">"number_of_nodes"</span>:       <span class="number">1</span>,</span><br><span class="line">   <span class="attr">"number_of_data_nodes"</span>:  <span class="number">1</span>,</span><br><span class="line">   <span class="attr">"active_primary_shards"</span>: <span class="number">0</span>,</span><br><span class="line">   <span class="attr">"active_shards"</span>:         <span class="number">0</span>,</span><br><span class="line">   <span class="attr">"relocating_shards"</span>:     <span class="number">0</span>,</span><br><span class="line">   <span class="attr">"initializing_shards"</span>:   <span class="number">0</span>,</span><br><span class="line">   <span class="attr">"unassigned_shards"</span>:     <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>status</code>字段是最为重要的，有三个值：green，yellow，red。三者的含义：</p>
+<ol>
+<li>green：所有主分片和副分片都能正常运行；</li>
+<li>yellow: 所有主分片都能正常运行，但不是所有副分片都能正常运行；</li>
+<li>red：有主分片没能正常运行。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/18/elasaticearch-shard-replicas/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/12/elasticsearch-logstash-kibana-part/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1910,180 +2066,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/11/02/unit-error-and-param-log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/02/unit-error-and-param-log/" itemprop="url">参数-异常统一打印</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-02T11:39:39+08:00">
-                2017-11-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/02/unit-error-and-param-log/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/02/unit-error-and-param-log/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/11/02/unit-error-and-param-log/" class="leancloud_visitors" data-flag-title="参数-异常统一打印">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>先说明我们业务开发基础框架使用的是 SpringBoot </p>
-</blockquote>
-<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>在项目开发中总是需要知道一些常用信息打印，比如出现异常了你可能需要打印日志，为了便于分析，你可能也需要打印埋点数据，或者请求参数之类的。</p>
-<p>这类操作可能在任何地方都有，如果分别取处理，感觉上不是特别合适。需要写大量代码并且维护量大。我的做法就是使用<code>@Aspect</code>,<code>@ControllerAdvice</code>利用切面来做统一的参数和异常处理。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/02/unit-error-and-param-log/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2134,7 +2116,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">111</span>
+                <span class="site-state-item-count">112</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2156,7 +2138,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
