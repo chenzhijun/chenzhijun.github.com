@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Windows使用sshkey连接GitHub]]></title>
+    <url>%2F2018%2F07%2F17%2Fwindows-connect-github-with-sshkey%2F</url>
+    <content type="text"><![CDATA[Windows使用sshkey连接GitHub经常连接github上传东西，经常push的时候需要输入用户名和密码。下面是使用ssh-key免密的方式访问自己的github仓库。 首先在本地生成ssh-key: 进入到~/,用户根目录，查看.ssh文件夹是否有相关的公钥私钥如果没有新生成： 1ssh-keygen -t rsa -C &quot;xxx@yy.com&quot; 之后再打开~/.ssh/id_rsa.pub拿到公钥内容，复制所有内容； 在github找到设置，add-sshkey，新建一个ssh-key。将内容粘贴进去。 之后再本地的git仓库下使用： ssh -T git@github.com 进行验证。]]></content>
+      <categories>
+        <category>ssh</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用Ansible批量操作服务器]]></title>
     <url>%2F2018%2F07%2F16%2Fhow-to-use-ansible-to-do-something%2F</url>
     <content type="text"><![CDATA[使用Ansible批量操作服务器Anbible 是干嘛的？对于一个非专业运维人士（我）来说，它就是我批量操作服务器的一个神器。试想一个场景：公司内部DNS还未搭建好，业务系统使用了域名做请求，这个时候需要你将域名制定到某台机器上，你这个时候就只能修改hosts文件了。嗯，如果是一两台服务器就算了，大不了手动ssh上去改一改，但是如果是10台了？10台不够，100台了？这个时候怎么办？你可能说我召集了一帮兄弟，大家一人改几个。OK，好不容易你改完了，这个时候业务跟你说，嗯，那台服务器挂了，不稳定，暂时换到另一台服务器上另一个IP地址。兄弟，听说醉经淘宝刀打折，买一把吧。哈哈 但是如果这个时候我们使用ansible，这个时候你就可以早点干完，早点回家陪老婆孩子了。接下来我们看看怎么使用ansible，请注意，我只是说怎么使用，是的，怎么使用，没有任何理论，不会讲解任何深的东西，只是用而已。1：批量操作服务器。 ansible的一个简单目录结构： install.yml文件内容： 123456789---- hosts: all remote_user: rhlog gather_facts: no roles: - role: oam become: yes become_method: su become_user: root hosts 文件内容： 1210.0.80.34 ansible_become=true ansible_become_method=su ansible_user=ssh_user ansible_ssh_pass=&quot;password&quot; ansible_become_pass=&quot;ax=n@#*!EM&quot; ansible_become_user=root10.07.80.37 ansible_become=true ansible_become_method=su ansible_user=ssh_user ansible_ssh_pass=&quot;W)PIukAa&quot; ansible_become_pass=&quot;r.*o)Hg!z&quot; ansible_become_user=root 这两个是ansible的根目录里面比较重要的文件。install.yml里面remote_user是指登录到服务器的用户，通常大家不会让root用户远程登录的。roles是指在roles文件里面有哪些角色，你要用使用哪个角色。hosts文件一般保存的账号密码。按照这个模式登录就好了。之后我会提供这个安装包，大家可以自己照着改。哈哈。 oam角色里文件内容为：主要看tasks目录里面： 123456789101112131415161718---# tasks file for oam- name: upload file copy: src=/app/installation/resource/moving/test/roles/oam/files/data.sh dest=/home/data.sh mode=755- name: excute shell: bash /home/data.sh- name: find file find: paths: /home/ patterns: &quot;*.log&quot; recurse: no register: file_2_fetch- name: fetch fetch: src: &quot;&#123;&#123; item.path &#125;&#125;&quot; dest: /home/diskdata/ flat: yes with_items: &quot;&#123;&#123; file_2_fetch.files &#125;&#125;&quot; 1234# !/bin/bashname=$(hostname -i)file=$&#123;name%% *&#125;df -h &gt;/home/rhlog/$file.log 在ansible根目录我怎么使用了？ansible-playbook -i hosts install.yml 我的这个程序就是将files目录下的data.sh上传到hosts里面的所有主机中，然后执行data.sh，将df -h的内容输出到ip.log文件中，然后将文件下载到本地/home/diskdata中。这样就相当于批量操作了所有的机器。 另外一个使用方式，不使用上面那种方式，而是直接使用命令行的方式： 1： 判断所有机器是否可以访问某个地址 1ansible all -i hosts -m get_url -a &quot;url=http://192.168.11.32:8088/srv/releaseService?wsdl dest=./&quot; 2: 判断所有机器是否可以ping通某个地址 1ansible all -i hosts -m shell -a &quot;ping -c 3 10.7.18.3&quot; 3: 查找所有机器上某个应用是否启动 1ansible all -i hosts -m shell -a &quot;ps -ef | grep haproxy | grep -v grep&quot; 4: 判断所有机器能否连通某个端口 1ansible all -i hosts -m shell -a &quot;telnet 192.167.180.3 25&quot; 5: 批量修改某个文件 1ansible all -i ./hosts -s -m shell -a &quot;echo \&quot;127.0.0.1 test.local.com\&quot; &gt;&gt; /etc/hosts&quot; ps: -s,是指使用root账户]]></content>

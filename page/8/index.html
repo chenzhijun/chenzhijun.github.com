@@ -320,6 +320,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/25/message-rabbitmq-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/25/message-rabbitmq-5/" itemprop="url">RabbitMQ-消息中间件（五）Topics</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T16:29:45+08:00">
+                2017-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RabbitMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">RabbitMQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/25/message-rabbitmq-5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/09/25/message-rabbitmq-5/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/25/message-rabbitmq-5/" class="leancloud_visitors" data-flag-title="RabbitMQ-消息中间件（五）Topics">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="RabbitMQ-消息中间件（五）Topics"><a href="#RabbitMQ-消息中间件（五）Topics" class="headerlink" title="RabbitMQ-消息中间件（五）Topics"></a>RabbitMQ-消息中间件（五）Topics</h2><h3 id="Topics-前言"><a href="#Topics-前言" class="headerlink" title="Topics 前言"></a>Topics 前言</h3><p>上一章我们写了个路由日志系统，用<code>direct</code>的放交换机，比较了<code>fanout</code>和它之间的区别，一个是广播，一个是绑定。<br>尽管我们使用<code>direct</code>交换机做了改进，但是它还是有一些限制，它没法根据不同的几个规则了区分。我们之前的日志是分了四种:info、debug、warn、error。但是我们可能实际中了，对error又分为系统错误或者业务错误。有时候我们针对业务开发，就不想去管理系统错误，那怎么办？<br>为了再一次提高我们的日志系统，我们需要学习另一种交换机：<code>topic</code>交换机。</p>
+<h3 id="Topic-exchange"><a href="#Topic-exchange" class="headerlink" title="Topic exchange"></a>Topic exchange</h3><p>发送给<code>top</code>交换机的消息不能随意定义<code>routing_key</code>,它必须是一串单词，并且用点<code>.</code>分开。这些单词可以任意定义，通常他们是描叙这些消息的共同特点。<code>routing key</code>示范例如：<code>stock.usd.nyse</code>,<code>nyse.vmw</code>,<code>quick.orange.rabbit</code>。你可以定义你喜欢的任何单词，不过记得总共不能超过<code>255 bytes</code>。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/25/message-rabbitmq-5/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/25/message-rabbitmq-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1895,177 +2066,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/12/java-design-pattern-strategy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/12/java-design-pattern-strategy/" itemprop="url">Java设计模式-策略模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-12T15:22:23+08:00">
-                2017-09-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/12/java-design-pattern-strategy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/09/12/java-design-pattern-strategy/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/09/12/java-design-pattern-strategy/" class="leancloud_visitors" data-flag-title="Java设计模式-策略模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Java设计模式-策略模式"><a href="#Java设计模式-策略模式" class="headerlink" title="Java设计模式-策略模式"></a>Java设计模式-策略模式</h2><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>策略，什么是策略？就在不同情况下用不同的方式去处理。那么策略模式是什么？ 模式，模式简而言之就是套路，就是前人总结下来得到验证的套路。所以策略模式其实就是用策略去解决一类事情的套路。</p>
-<h3 id="策略模式的一个小思考"><a href="#策略模式的一个小思考" class="headerlink" title="策略模式的一个小思考"></a>策略模式的一个小思考</h3><p>说到套路，那么一个套路就要有组成部分，不然怎么套路？而策略模式中，它的主要点就是变化的情况，以及应对变化的处理方法。比如有一家超市打折，可能为了吸引顾客、庆祝节日等，但是可能中途来个产品经理，他说为了利润最大化，要根据付款总数来对顾客实行不同打折额度。这种时候程序员心中都是千万匹马儿在奔腾，就不能为为别人做点好事么？（其实心里就是想着，tmd，又改需求，我还想回家陪老婆孩子的）~~~咳咳，走远了。 就这个超市打折来说，打折这种事情是一定存在的，而对打折的方式可能还会有各种变化。那么怎么去应对这种变化？再说一个例子，如果有个制造鸭子的工厂，我们都知道鸭子有很多类（比如死的，活的），死的就像玩具类~，活的就像烤鸭类(貌似烤之前才是活的.),不管怎样，我想说大多数鸭子都有一些基本行为，比如：飞？叫？游泳？诸如此类..但是我们会发现，鸭厂产出的鸭子最终还是要卖出去的，那么这个鸭子能不能飞？能不能叫？能不能游泳？那都是买家说了算，谁给钱听谁的。那么好了A可能要一个能飞，但不能叫，也不能游泳；B呢想要个能飞，能叫，能游泳；这下如果鸭厂只能生产一种只会飞，或者只会叫的鸭子，那肯定是不行的，但是也不能为了A专门搞个生产线，B专门搞个生产线，这样搞，要是N多客户，N多需求，那可怎么办？说了这么多，基本是废话，那么还是来代码看看。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/12/java-design-pattern-strategy/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2116,7 +2116,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">112</span>
+                <span class="site-state-item-count">113</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2127,7 +2127,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
