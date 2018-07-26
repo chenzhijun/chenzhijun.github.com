@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[linux 挂载磁盘]]></title>
+    <url>%2F2018%2F07%2F26%2Flinux-mount-disk%2F</url>
+    <content type="text"><![CDATA[linux 挂载磁盘最近需要挂载磁盘，记录一下。 一个500G的磁盘。使用fdisk查看，如果没有就使用lsblk可以查看到现在有哪个磁盘没有挂载。 之后就是挂载操作了。切换成root用户,查看磁盘使用的卷类型：ext4 , xfs 1: 然后使用mkfs -t xfs（或ext4） /dev/vdb xfs,ext4 ：是指格式化成什么磁盘类型 /dev/vdb ：是指要挂载的磁盘 2: 挂载点 mkdir /data ，建立一个挂载点 3：挂载磁盘mount /dev/vdb /data 将刚刚格式化的磁盘挂载到/data目录 4：修改/etc/fstab文件，复制一行然后修改就可以了，将最后一个数字改为2。]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Windows使用sshkey连接GitHub]]></title>
     <url>%2F2018%2F07%2F17%2Fwindows-connect-github-with-sshkey%2F</url>
     <content type="text"><![CDATA[Windows使用sshkey连接GitHub经常连接github上传东西，经常push的时候需要输入用户名和密码。下面是使用ssh-key免密的方式访问自己的github仓库。 首先在本地生成ssh-key: 进入到~/,用户根目录，查看.ssh文件夹是否有相关的公钥私钥如果没有新生成： 1ssh-keygen -t rsa -C &quot;xxx@yy.com&quot; 之后再打开~/.ssh/id_rsa.pub拿到公钥内容，复制所有内容； 在github找到设置，add-sshkey，新建一个ssh-key。将内容粘贴进去。 之后再本地的git仓库下使用： ssh -T git@github.com 进行验证。]]></content>
