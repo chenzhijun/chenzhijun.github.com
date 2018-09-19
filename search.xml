@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[conclusion-201809]]></title>
+    <url>%2F2018%2F09%2F08%2Fconclusion-201809%2F</url>
+    <content type="text"><![CDATA[# 1: linux命令行替换文本中的字符串。sed -i &quot;s/100.69.224.18:10099/100.69.224.27:9999/g&quot; /file.xml 2: rancher平台的相关监控。 123456789101112131415mysql:获取mysql用户是否可以远程登陆CREATE USER &apos;exporter&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;exporter&apos;;GRANT PROCESS, REPLICATION CLIENT ON *.* TO &apos;exporter&apos;@&apos;localhost&apos;;GRANT SELECT ON cattle.* TO &apos;exporter&apos;@&apos;%&apos; with MAX_USER_CONNECTIONS 3;help flush;show grants for &apos;exporter&apos;@&apos;localhost&apos;;flush PRIVILEGES;docker run -d -p 9104:9104 -e DATA_SOURCE_NAME=&quot;exporter:exporter@(127.0.0.1:3306)/&quot; prom/mysqld-exporter:latesthaproxy:docker run -d -p 9101:9101 prom/haproxy-exporter:latest --haproxy.scrape-uri=&quot;http://www.haproxy.com/haproxy?stats;csv&quot; 3: sort 根据低三列排序 docker stats -a –no-stream |awk ‘{print $1,$8,$3,$4}’|sort -k 2,4n sort -k a,bna为第几列，b为几个字符，n为数字比较，1234，1222，从第一个字符开始，到第四个字符都会比较 4: 给基础镜像安装常用工具：ping,curl,wget,netstat。一般源里面就已经包含了，ping的源为：apt install inetutils-ping或者 apt install net-tools 5：某次给rancher平台扩容，直接将主机加上之后，将原来的应用直接*2启动，平台爆掉了。server不到。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[linux 挂载磁盘]]></title>
     <url>%2F2018%2F07%2F26%2Flinux-mount-disk%2F</url>
     <content type="text"><![CDATA[linux 挂载磁盘最近需要挂载磁盘，记录一下。 一个500G的磁盘。使用fdisk查看，如果没有就使用lsblk可以查看到现在有哪个磁盘没有挂载。 之后就是挂载操作了。切换成root用户,查看磁盘使用的卷类型：ext4 , xfs 1: 然后使用mkfs -t xfs（或ext4） /dev/vdb xfs,ext4 ：是指格式化成什么磁盘类型 /dev/vdb ：是指要挂载的磁盘 2: 挂载点 mkdir /data ，建立一个挂载点 3：挂载磁盘mount /dev/vdb /data 将刚刚格式化的磁盘挂载到/data目录 4：修改/etc/fstab文件，复制一行然后修改就可以了，将最后一个数字改为2。]]></content>
