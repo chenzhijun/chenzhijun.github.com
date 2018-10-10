@@ -84,6 +84,8 @@
 
 
 
+  <link rel="alternate" href="/rss.xml" title="饺子" type="application/atom+xml" />
+
 
 
 
@@ -102,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="今天使用elk搜集日志的时候想到一个事情，是否可以指定es索引中的document_id。查了资料之后发现还真有这个： 123456elasticsearch &amp;#123;        hosts =&amp;gt; [ &quot;localhost:9200&quot; ]        index =&amp;gt; &quot;%&amp;#123;[fields][service_name]&amp;#125;-%&amp;#123;+YYYY.MM.d">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-24T04:11:13.417Z">
+<meta property="og:updated_time" content="2018-10-10T07:16:15.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决 logstash 输出到 Elasticsearch 时指定 document_id">
 <meta name="twitter:description" content="今天使用elk搜集日志的时候想到一个事情，是否可以指定es索引中的document_id。查了资料之后发现还真有这个： 123456elasticsearch &amp;#123;        hosts =&amp;gt; [ &quot;localhost:9200&quot; ]        index =&amp;gt; &quot;%&amp;#123;[fields][service_name]&amp;#125;-%&amp;#123;+YYYY.MM.d">
@@ -459,7 +461,7 @@
   <p><span>本文标题:</span><a href="/2018/04/02/logstash-output-elasticsearch-document-id/">解决 logstash 输出到 Elasticsearch 时指定 document_id</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2018-04-02 17:05:32</p>
- <!-- <p><span>最后更新:</span>2018-09-24 12:11:13</p> -->
+ <!-- <p><span>最后更新:</span>2018-10-10 15:16:15</p> -->
   <p><span>原始链接:</span><a href="/2018/04/02/logstash-output-elasticsearch-document-id/" title="解决 logstash 输出到 Elasticsearch 时指定 document_id">http://chenzhijun.me/2018/04/02/logstash-output-elasticsearch-document-id/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/04/02/logstash-output-elasticsearch-document-id/"  aria-label="复制成功！"></i></span>
   </p>
@@ -678,6 +680,13 @@ var jiathis_config={
 
         </nav>
 
+        
+          <div class="feed-link motion-element">
+            <a href="/rss.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
         
 
         <div class="links-of-author motion-element">
