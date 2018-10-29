@@ -322,6 +322,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/08/04/apec-804-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/04/apec-804-problem/" itemprop="url">apec-804-problem</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-04T11:29:40+08:00">
+                2017-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Question/" itemprop="url" rel="index">
+                    <span itemprop="name">Question</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/04/apec-804-problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/08/04/apec-804-problem/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/08/04/apec-804-problem/" class="leancloud_visitors" data-flag-title="apec-804-problem">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="7月25日问题"><a href="#7月25日问题" class="headerlink" title="7月25日问题"></a>7月25日问题</h2><h3 id="Persistable-QModel生成。"><a href="#Persistable-QModel生成。" class="headerlink" title="Persistable QModel生成。?"></a>Persistable QModel生成。?</h3><p>A: 其实这是一个QSL框架生成的，所有Entity都会生成一个QEntity类。</p>
+<h2 id="8月1日问题"><a href="#8月1日问题" class="headerlink" title="8月1日问题"></a>8月1日问题</h2><h3 id="maven-complier-install-package-的区别？"><a href="#maven-complier-install-package-的区别？" class="headerlink" title="maven complier install package 的区别？"></a>maven complier install package 的区别？</h3><p>A:complier只是编译，不会生成jar包，package生成jar包，但是不会将包发布到仓库，只在项目下，install会将jar包发布到仓库让别人也可以用</p>
+<h3 id="maven-install-跳过测试"><a href="#maven-install-跳过测试" class="headerlink" title="maven install 跳过测试?"></a>maven install 跳过测试?</h3><p>A: 执行的时候加上 -Dmaven.test.skip=true</p>
+<h3 id="jpa-插入枚举值得时候默认为1？"><a href="#jpa-插入枚举值得时候默认为1？" class="headerlink" title="jpa 插入枚举值得时候默认为1？"></a>jpa 插入枚举值得时候默认为1？</h3><p>A:默认使用 ordinal 值，其实应该为string</p>
+<h3 id="maven-设置java版本？"><a href="#maven-设置java版本？" class="headerlink" title="maven 设置java版本？"></a>maven 设置java版本？</h3><p>A: pom文件中加入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;source&gt;1.8&lt;/source&gt;</span><br><span class="line">                &lt;target&gt;1.8&lt;/target&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">        &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="springboot-使用jrebel热加载？"><a href="#springboot-使用jrebel热加载？" class="headerlink" title="springboot 使用jrebel热加载？"></a>springboot 使用jrebel热加载？</h3><p>A: 现在pom文件里面加入<code>devtools</code>: 之后使用<code>ctrl+alt+shift+/</code>  选中<code>Registry</code>   勾上<code>app.running</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="8月3日问题"><a href="#8月3日问题" class="headerlink" title="8月3日问题"></a>8月3日问题</h2><h3 id="SimpleDateFormate-日期格式类使用注意？"><a href="#SimpleDateFormate-日期格式类使用注意？" class="headerlink" title="SimpleDateFormate 日期格式类使用注意？"></a>SimpleDateFormate 日期格式类使用注意？</h3><p>A:日期工具类里面使用了SimpleDataFormate=&gt; format方法里面有个<code>calendar.setTime(date);</code>.<br>如果是多线程中，这个方法没有做同步Thread-A，有一个date，然后Thread-B有一个date，那么造成出现预料之外的结果，当然这种情况出现在共享一个SimpleDateFormate当中，既设置一个全局的simpleDateformat。如果在方法中设置局部变量的simpledateformate，那么局部变量是线程安全的。<br>当然追求效率可以使用ThreadLocal,设置局部缓存</p>
+<h3 id="Java-反射获取属性？"><a href="#Java-反射获取属性？" class="headerlink" title="Java 反射获取属性？"></a>Java 反射获取属性？</h3><p>A:注解是分为执行状态（运行，编译），执行位置（类，方法，属性），如果用<code>declared</code>， 包括所有非父类属性。如果不用<code>declared</code>，获取所有为public的属性<br><code>getFields()</code>===&gt; 获取所有属性为public的<br><code>getDeclaredFields()</code>===&gt; 获取所有非继承的数据(public,protect,default….)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/07/24/apec-724-problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1920,179 +2095,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/04/26/how-to-connect-virtual-box-with-ssh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/26/how-to-connect-virtual-box-with-ssh/" itemprop="url">怎样用SSH连接VirtualBox</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T23:52:47+08:00">
-                2017-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/26/how-to-connect-virtual-box-with-ssh/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/04/26/how-to-connect-virtual-box-with-ssh/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/04/26/how-to-connect-virtual-box-with-ssh/" class="leancloud_visitors" data-flag-title="怎样用SSH连接VirtualBox">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="用-iterm2-ssh连接virtual-box中运行的centos-minimal版本"><a href="#用-iterm2-ssh连接virtual-box中运行的centos-minimal版本" class="headerlink" title="用 iterm2 ssh连接virtual box中运行的centos minimal版本"></a>用 iterm2 ssh连接virtual box中运行的centos minimal版本</h3><h4 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h4><ul>
-<li>安装好虚拟机vb</li>
-<li>centos官网下载minimal版本，也可以下载dvd版本之后只安装minimal</li>
-<li>iterm2</li>
-</ul>
-<p>安装过程很简单，直接点击vb的new，之后按照提示一步一步点下去就可以了。<br><a href="http://www.jianshu.com/p/2a853d569228" target="_blank" rel="noopener">给个安装教程网址</a></p>
-<h4 id="特殊注意点"><a href="#特殊注意点" class="headerlink" title="特殊注意点"></a>特殊注意点</h4><p>如果选择<code>host-only adapter</code>的时候出现无法确认，或者无法选择的情况。这种情况下是因为虚拟机本身没有开一个host-only adapter。可以打开vb的系统设置，然后找到网络(network),选择Host-Only Networks。新建一个就可以了<br><img src="/images/vb-host-only-sys.png" alt=""></p>
-<p>有问题欢迎留言，一起交流学习。 </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2143,7 +2145,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">116</span>
+                <span class="site-state-item-count">117</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
