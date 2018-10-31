@@ -5,218 +5,8 @@
     
     
   <url>
-    <loc>http://chenzhijun.me/2017/09/14/java-design-pattern-observer/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java设计模式-观察者模式</title>
-        <pubTime>2017-09-14T07:22:00.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/09/23/java-design-pattern-single/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java设计模式-单例模式</title>
-        <pubTime>2017-09-23T08:53:22.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/09/12/java-design-pattern-strategy/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java设计模式-策略模式</title>
-        <pubTime>2017-09-12T07:22:23.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/10/09/java-design-pattern-template-method/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java设计模式-模板方法模式</title>
-        <pubTime>2017-10-09T12:55:53.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/05/10/java-encode/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java-encode 编码注意事项</title>
-        <pubTime>2017-05-10T15:10:01.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>Encode</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2018/03/22/java-enum-anotation/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java 枚举和注解总结</title>
-        <pubTime>2018-03-22T14:38:32.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/08/19/java-fastjson-map/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>FastJson 转换Map问题</title>
-        <pubTime>2017-08-19T12:38:07.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/09/20/java-io/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java IO流</title>
-        <pubTime>2017-09-20T08:35:43.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/12/11/java-poi-operation/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>使用Apache POI操作生成Execl</title>
-        <pubTime>2017-12-11T07:17:02.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/08/19/java-sensitive/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java 特殊字段脱敏</title>
-        <pubTime>2017-08-19T12:02:16.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://chenzhijun.me/2018/03/23/java-thread-guidance/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Java 多线程随笔</title>
@@ -238,7 +28,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/28/java-thread-local/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>ThreadLocal 类解析</title>
@@ -255,7 +45,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/14/java-transaction/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Java 事务处理（包括spring事务管理）</title>
@@ -275,7 +65,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/05/java-virtual-machine/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Java 虚拟机（一）</title>
@@ -295,7 +85,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/21/java-xml-xstream/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Java 使用 XStream 操作 XML</title>
@@ -317,7 +107,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/12/java%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>java性能优化</title>
@@ -337,7 +127,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/08/10/jenkins-ci/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>使用jenkins对springboot进行CI</title>
@@ -354,7 +144,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/07/just-write-something/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>随笔20180306</title>
@@ -374,7 +164,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/05/08/klook-508-problem/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>klook-508-problem</title>
@@ -394,7 +184,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/06/07/klook-607-problem/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>klook-607-problem</title>
@@ -413,8 +203,28 @@
 
     
   <url>
+    <loc>http://chenzhijun.me/2018/10/30/linux-auto-excute-shell-script-after-rebooting/</loc>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
+    <data>
+        <display>
+        <title>重启Linux主机后自动运行任务或者脚本</title>
+        <pubTime>2018-10-30T13:13:40.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://chenzhijun.me/categories/Linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenzhijun.me/2017/04/18/linux-command-ls/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>常用的 Linux 基础命令</title>
@@ -434,7 +244,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/10/29/linux-crontab-clean-ndays-log/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Linux cron clean log files older than N days</title>
@@ -454,7 +264,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/18/linux-java-command/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>常用 Linux 命令</title>
@@ -473,7 +283,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/07/26/linux-mount-disk/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>linux 挂载磁盘</title>
@@ -493,7 +303,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/04/02/logstash-output-elasticsearch-document-id/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>解决 logstash 输出到 Elasticsearch 时指定 document_id</title>
@@ -513,7 +323,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/01/09/logstash-send-email/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>使用Logstash发送异常邮件</title>
@@ -535,7 +345,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/22/message-rabbitmq-3/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>RabbitMQ-消息中间件（三）订阅与发布</title>
@@ -557,7 +367,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/25/message-rabbitmq-5/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>RabbitMQ-消息中间件（五）Topics</title>
@@ -579,7 +389,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/15/message-rabbitmq/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>RabbitMQ-消息中间件（一）</title>
@@ -601,7 +411,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/12/mysql-optimization/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>数据库查询优化</title>
@@ -621,7 +431,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/22/mysql-optimize/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>MySQL 优化</title>
@@ -641,7 +451,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/21/mysql_draft/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>数据库常用函数汇总</title>
@@ -661,7 +471,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/03/13/new-step/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>简</title>
@@ -681,7 +491,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/05/02/nginx-proxy-promethues-grafana/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>nginx 设置prometheus和grafana的反向代理</title>
@@ -705,7 +515,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/29/oauth2-github-login/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>第三方授权登录(oauth2)--Github授权登录</title>
@@ -729,7 +539,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/05/22/problem-cmrh-2018522/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>最近遇到的小问题总结-2018522</title>
@@ -749,7 +559,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/06/09/prometheus-alertmanager-external-url/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>alertmanager发送的邮件中external-url修改机器名为IP地址</title>
@@ -771,7 +581,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/05/09/prometheus-monitor-tomcat/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Prometheus 监控 Java 应用</title>
@@ -791,7 +601,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/04/16/prometheus-pre-use/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>prometheus 初体验</title>
@@ -811,7 +621,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/07/16/prometheus-query/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>prometheus 常用的查询语句</title>
@@ -831,7 +641,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>prometheus 使用influxdb 做永久存储</title>
@@ -851,7 +661,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/05/10/promethues-federate/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>promethues 联邦集群</title>
@@ -871,7 +681,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/04/18/rancher-experience/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Rancher 体验</title>
@@ -893,7 +703,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/06/reverse-node-md/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>翻转链表</title>
@@ -913,7 +723,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/01/08/shell-get-param-from-console/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>从命令行参数获取Shell脚本参数</title>
@@ -933,7 +743,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/05/13/shell-script/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>shell 脚本学习</title>
@@ -953,7 +763,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/17/shell-sort/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>希尔排序算法</title>
@@ -973,7 +783,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/17/shenzhen-xianxia-fenxianghui/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>极光推送线下交流分享会</title>
@@ -993,7 +803,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/11/02/spring-boot-actuator-prometheus-grafana/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Spring Boot 应用可视化监控</title>
@@ -1013,7 +823,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/10/09/spring-io-weekly-newspaper/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Spring周报翻译 - 2017年10月3日周报</title>
@@ -1035,7 +845,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/04/02/svn-to-git/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>从 SVN 迁移到 Git （二）</title>
@@ -1057,7 +867,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/02/23/thinkinjava-20180223/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>重温Java编程思想的一些感悟-20180223</title>
@@ -1077,7 +887,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/05/thinkinjava-20180305/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>重温Java编程思想的一些感悟-20180305</title>
@@ -1097,7 +907,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/27/top-k-pid-memory-cpu-linux/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Linux如何查看当前占用CPU或内存最多的K个进程</title>
@@ -1112,7 +922,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/05/02/ubuntu-change-source-list/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>ubuntu 怎么修改源？</title>
@@ -1132,7 +942,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/11/02/unit-error-and-param-log/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>参数-异常统一打印</title>
@@ -1152,7 +962,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/01/09/use-curl-to-http-request/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>使用CURL发送http请求</title>
@@ -1172,7 +982,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/05/09/vim-start/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Vim 初步使用</title>
@@ -1192,7 +1002,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/07/17/windows-connect-github-with-sshkey/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Windows使用sshkey连接GitHub</title>
@@ -1212,7 +1022,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/09/%E5%88%9D%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>初级排序算法</title>
@@ -1231,50 +1041,8 @@
 
     
   <url>
-    <loc>http://chenzhijun.me/2017/10/04/java-design-pattern-factory/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>Java设计模式-工厂模式</title>
-        <pubTime>2017-10-04T05:06:49.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenzhijun.me/2017/08/08/java-string/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
-    <data>
-        <display>
-        <title>java-基础之string</title>
-        <pubTime>2017-08-08T12:11:39.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://chenzhijun.me/2017/09/18/message-rabbitmq-2/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>RabbitMQ-消息中间件（二）任务队列</title>
@@ -1296,7 +1064,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/25/message-rabbitmq-4/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>RabbitMQ-消息中间件（四）路由</title>
@@ -1318,7 +1086,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/26/message-rabbitmq-6/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>RabbitMQ-消息中间件（六）RPC</title>
@@ -1340,7 +1108,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/11/21/mysql-stored-procedure/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>MySQL 存储过程</title>
@@ -1360,7 +1128,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/04/26/prometheus-grafana-monitor/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>Prometheus+Grafana 搭建监控系统</title>
@@ -1380,7 +1148,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/10/thinkinjava-20180310/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>重温Java编程思想的一些感悟-20180310</title>
@@ -1400,7 +1168,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/02/06/jdk-util-hashmap/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>JDK-HashMap解析</title>
@@ -1422,7 +1190,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/06/09/self-dns-server-install/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>DNS 服务器搭建</title>
@@ -1437,7 +1205,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/23/mysql-optimization-index/</loc>
-    <lastmod>2018-10-29T14:46:11.599Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.906Z</lastmod>
     <data>
         <display>
         <title>数据库索引优化实例</title>
@@ -1461,7 +1229,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/07/16/2018-06and07-conclusion/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>2018-06月至07月的一些总结</title>
@@ -1481,7 +1249,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/05/10/a-easy-script/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>基础脚本</title>
@@ -1501,7 +1269,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/03/16/algorithm-bubble/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>排序算法-冒泡排序</title>
@@ -1521,7 +1289,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/03/23/algorithm-queue/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>数据结构-队列</title>
@@ -1541,7 +1309,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/03/16/algorithm-quick-sort/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>排序算法-快速排序</title>
@@ -1561,7 +1329,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/07/24/apec-724-problem/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>问题总结</title>
@@ -1581,7 +1349,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/08/04/apec-804-problem/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>apec-804-problem</title>
@@ -1601,7 +1369,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/30/code-in-gitlab/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>gitlab 安装与配置（一）</title>
@@ -1621,7 +1389,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/01/18/conclusion-2017/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>迟到的总结</title>
@@ -1636,7 +1404,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/07/16/conclusion-2018-07-16/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>最近总结-2018-07-16</title>
@@ -1656,7 +1424,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/09/08/conclusion-201809/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>conclusion-201809</title>
@@ -1671,7 +1439,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/05/13/docker-container/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Docker 容器</title>
@@ -1691,7 +1459,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/05/13/docker-data/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Docker 数据管理</title>
@@ -1711,7 +1479,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/05/13/docker-image/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Docker 镜像</title>
@@ -1731,7 +1499,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/05/14/docker-network/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Docker 网络</title>
@@ -1751,7 +1519,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/12/docker-start/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Docker简单入门-搭建 JavaWeb Docker 运行环境</title>
@@ -1771,7 +1539,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/02/28/effective-java-0228/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Effective Java 0228</title>
@@ -1791,7 +1559,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/18/elasaticearch-shard-replicas/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>elasticsearch 集群主分片和副本分片</title>
@@ -1806,7 +1574,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/03/elastic-search-introduce/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>ElasticSearch 简介与使用</title>
@@ -1826,7 +1594,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/19/elasticsearch-document-data/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>elasticsearch-document-data</title>
@@ -1846,7 +1614,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/01/elasticsearch-install/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>ElasticSearch 安装 (单机单节点/伪集群)</title>
@@ -1866,7 +1634,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/21/elasticsearch-routing-data-to-shards/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>分布式文档存储</title>
@@ -1886,7 +1654,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/21/elasticsearch-search-base/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Elasticsearch 搜索基础</title>
@@ -1906,7 +1674,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/08/19/essay-8-19/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>随笔-8-19</title>
@@ -1926,7 +1694,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/03/15/first-blog/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>第一篇博客</title>
@@ -1946,7 +1714,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/22/git/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Git 基础</title>
@@ -1966,7 +1734,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/04/02/gitlab-customer-settings/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>gitlab 自定义配置 （三）</title>
@@ -1986,7 +1754,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/12/go-language-start/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Go 语言简单基础介绍</title>
@@ -2006,7 +1774,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/19/hexo-travis-ci/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>使用Travis-CI持续构建Hexo博客</title>
@@ -2026,7 +1794,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/01/31/hibernater-validate-properties/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Hibernate 校验参数</title>
@@ -2046,7 +1814,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/01/31/how-to-build-springboot-starter/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>编写属于自己的springboot-starter</title>
@@ -2063,7 +1831,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/04/26/how-to-connect-virtual-box-with-ssh/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>怎样用SSH连接VirtualBox</title>
@@ -2083,7 +1851,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/11/02/how-to-print-error-stack/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>异常堆栈信息打印</title>
@@ -2103,7 +1871,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/07/16/how-to-use-ansible-to-do-something/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>使用Ansible批量操作服务器</title>
@@ -2123,7 +1891,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/26/idea-linux-vim-command-shortcut/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>idea-linux-vim等常用快捷键</title>
@@ -2143,7 +1911,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/11/29/java-8-date/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Java8中的日期时间</title>
@@ -2163,7 +1931,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/11/21/java-8-functional-programming/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Java 8 函数式编程-前言</title>
@@ -2183,7 +1951,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/03/21/java-basic-type/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Java 基础数据类型</title>
@@ -2203,7 +1971,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/03/21/java-datastructure-priority-queue-heap/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>优先队列和堆排序</title>
@@ -2223,7 +1991,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/10/04/java-design-pattern-command/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Java设计模式-命令模式</title>
@@ -2244,8 +2012,218 @@
 
     
   <url>
+    <loc>http://chenzhijun.me/2017/09/14/java-design-pattern-observer/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java设计模式-观察者模式</title>
+        <pubTime>2017-09-14T07:22:00.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/09/23/java-design-pattern-single/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java设计模式-单例模式</title>
+        <pubTime>2017-09-23T08:53:22.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/09/12/java-design-pattern-strategy/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java设计模式-策略模式</title>
+        <pubTime>2017-09-12T07:22:23.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/10/09/java-design-pattern-template-method/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java设计模式-模板方法模式</title>
+        <pubTime>2017-10-09T12:55:53.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/05/10/java-encode/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java-encode 编码注意事项</title>
+        <pubTime>2017-05-10T15:10:01.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>Encode</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2018/03/22/java-enum-anotation/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java 枚举和注解总结</title>
+        <pubTime>2018-03-22T14:38:32.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/08/19/java-fastjson-map/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>FastJson 转换Map问题</title>
+        <pubTime>2017-08-19T12:38:07.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/09/20/java-io/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java IO流</title>
+        <pubTime>2017-09-20T08:35:43.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/12/11/java-poi-operation/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>使用Apache POI操作生成Execl</title>
+        <pubTime>2017-12-11T07:17:02.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/08/19/java-sensitive/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java 特殊字段脱敏</title>
+        <pubTime>2017-08-19T12:02:16.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenzhijun.me/2017/09/19/docker-dockerfile/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Dockerfile 编写</title>
@@ -2265,7 +2243,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2018/01/08/docker-swarm-practice/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Docker Swarm 实践的一些经验总结</title>
@@ -2287,7 +2265,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/12/elasticsearch-logstash-kibana-part/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>基于ELK+Filebeat搭建日志中心</title>
@@ -2307,7 +2285,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/12/27/elk-docker/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>使用Docker搭建ELK日志系统</title>
@@ -2327,7 +2305,7 @@
     
   <url>
     <loc>http://chenzhijun.me/2017/09/19/java-design-pattern-decorate/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Java设计模式-装饰者模式</title>
@@ -2348,8 +2326,50 @@
 
     
   <url>
+    <loc>http://chenzhijun.me/2017/10/04/java-design-pattern-factory/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>Java设计模式-工厂模式</title>
+        <pubTime>2017-10-04T05:06:49.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenzhijun.me/2017/08/08/java-string/</loc>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
+    <data>
+        <display>
+        <title>java-基础之string</title>
+        <pubTime>2017-08-08T12:11:39.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://chenzhijun.me/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenzhijun.me/2017/11/29/docker-swarm-guide/</loc>
-    <lastmod>2018-10-29T14:46:11.595Z</lastmod>
+    <lastmod>2018-10-31T01:13:01.902Z</lastmod>
     <data>
         <display>
         <title>Docker swarm 入门</title>

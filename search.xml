@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[重启Linux主机后自动运行任务或者脚本]]></title>
+    <url>%2F2018%2F10%2F30%2Flinux-auto-excute-shell-script-after-rebooting%2F</url>
+    <content type="text"><![CDATA[重启Linux主机后自动运行任务或者脚本有时候我们在主机上做了一些agent应用，这些应用平常都是主机启动，agent就需要启动。相当于“伴生”。尽管第一次或者第二次我们能依靠记忆或者自我约束来启动这些agent，但是有时候还是会免不了忘记。那么有没有办法让这种agent做成开机启动呢？下面提供两种Linux设置开机启动应用的方法。 1. crontab 实现脚本(应用)开机启动crontab的介绍在我的另一个博客里面crontab使用linux crontab定时清理n天前的日志文件，这里我们介绍一个使用它来实现开机启动的用法。 使用crontab -e，在crontab的编辑页面增加下面的内容:@reboot sleep 10 &amp;&amp; bash /root/test.sh，sleep 10 是指在开机10秒后启动，启动的脚本是/root/test.sh。里面的内容，可以自己根据需要编写。最后要记住 将test.sh脚本设置为可执行权限 744 或者 777 或者 a+x。这样一个简单的开启启动任务就完成了。 2. systemd 服务实现脚本(应用)开机启动systemd 是linux机器的一个daemon服务。主要是创建一个.service文件，然后进行开机启动。下面来看一下实际使用过程。 vi /etc/systemd/system/auto_exe.service 1234567891011[Unit]Description=auto exec after reboot[Service]Type=oneshotExecStart=/usr/local/bin/auto.shRemainAfterExit=yes[Install]WantedBy=multi-user.target 一个systemd的service由三部分构成:Unit,Service,Install。详细的内容或者介绍可以使用man，或者google。 我这里表示的是在机器启动后，执行/usr/local/bin/auto.sh。 auto.sh，记得将权限赋值为a+x，777，或者744123#!/bin/bashecho "hello" &gt;&gt; /home/auto_exe.log 之后使用systemctl daemon-reload刷新service，我们可以使用systemctl start auto_exe 进行调试，看脚本是否执行。使用systemctl status auto_exe查看服务状态。如果成功，那么就可以加入确保启动执行脚本，使用systemctl enable auto_exe，这样就设置好了。 简单的linux应用开机启动就设置好了。]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux cron clean log files older than N days]]></title>
     <url>%2F2018%2F10%2F29%2Flinux-crontab-clean-ndays-log%2F</url>
     <content type="text"><![CDATA[使用linux crontab定时清理n天前的日志文件最近有个需求，需要在linux机器上定时执行清理n天前的日志文件。其实我开始做了个更有意思的清理工具，根据alertmanager做webhook，然后在每个Linux机器上开启一个agent，收到请求再执行清理。不过使用crontab也是一个非常有用的工具。 crontab是Linux的一个守护进程，定时执行的工具。详细的内容可以使用man crontab查看。废话不多说，直接来看怎么使用它。只有用起来，才是属于自己的。 查看当前有哪些定时任务crontab -l 查看当前已经存在的定时任务。 可以看到，你需要的就是准备一个shell脚本（任务指令），一个定时时间（执行频率），一条触发指令（程序入口）。准备好这三个东西就可以。 下面我们以一个简单的需求来演示。 需要删除 /data 目录下文件名存在的带 log 的文件，修改这些文件的大小为0。 设置一个新的定时任务crontab -e 可以进入crontab编辑页面。将带‘*’的那行复制成新的行，如下： 可能会问，前面的‘*’的时间怎么设置。可以使用cat /etc/crontab查看解释： 之前的需求，我将clean3dayslog.sh文件放到/root目录下，然后执行文件，clear3dayslogs.sh的内容为： 123#!/bin/bashfind /data -mtime +3 -name "*.log*"|grep rtlog|xargs -i truncate -s 0 &#123;&#125; 这个demo比较简单，不过用处确实很大，一般清除的都在开发环境上，日志输出。]]></content>
