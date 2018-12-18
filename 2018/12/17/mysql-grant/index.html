@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="多走走,多看看,多想想">
+  <meta name="keywords" content="MySQL,">
 
 
 
@@ -96,17 +96,18 @@
 
 
 
-<meta name="description" content="自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙">
+<meta name="description" content="MySQL 用户与权限设置这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql-grant">
+<meta property="og:title" content="MySQL 用户与权限设置">
 <meta property="og:url" content="http://chenzhijun.me/2018/12/17/mysql-grant/index.html">
 <meta property="og:site_name" content="饺子">
-<meta property="og:description" content="自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙">
+<meta property="og:description" content="MySQL 用户与权限设置这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-17T09:55:54.746Z">
+<meta property="og:updated_time" content="2018-12-18T15:00:32.945Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql-grant">
-<meta name="twitter:description" content="自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙">
+<meta name="twitter:title" content="MySQL 用户与权限设置">
+<meta name="twitter:description" content="MySQL 用户与权限设置这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。">
 
 
 
@@ -141,7 +142,7 @@
 
 
 
-  <title>mysql-grant | 饺子</title>
+  <title>MySQL 用户与权限设置 | 饺子</title>
   
 
 
@@ -336,7 +337,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mysql-grant</h1>
+          <h1 class="post-title" itemprop="name headline">MySQL 用户与权限设置</h1>
         
 
         <div class="post-meta">
@@ -359,6 +360,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -376,7 +399,7 @@
 
           
           
-             <span id="/2018/12/17/mysql-grant/" class="leancloud_visitors" data-flag-title="mysql-grant">
+             <span id="/2018/12/17/mysql-grant/" class="leancloud_visitors" data-flag-title="MySQL 用户与权限设置">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -412,7 +435,20 @@
       
 
       
-        
+        <h1 id="MySQL-用户与权限设置"><a href="#MySQL-用户与权限设置" class="headerlink" title="MySQL 用户与权限设置"></a>MySQL 用户与权限设置</h1><p>这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。<br><a id="more"></a></p>
+<h2 id="MySQL创建用户"><a href="#MySQL创建用户" class="headerlink" title="MySQL创建用户"></a>MySQL创建用户</h2><p>第一个就是创建一个普通用户。使用root登陆后，创建一个用户：<code>CREATE USER &#39;username&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;paasword&#39;;</code>其中<code>username</code>,<code>paasword</code>按需修改。一般来说这里需要注意的就是<code>localhost</code>，为什么？因为这个字段稍不注意就会才坑，这里的<code>localhost</code>和<code>%</code>，其实指代的是只允许本地登录和允许所有地方登陆。如果你的应用部署在同一台机器上，那么你用localhost没问题，但是如果应用和数据库是分开机器部署的，那么这里要写成<code>%</code>，不然就会出现远程无法连接。当然还有很多其他的设置，比如什么过期时间啊，证书登录啊，具体的可以看下官方文档:<a href="https://dev.mysql.com/doc/refman/8.0/en/create-user.html" target="_blank" rel="noopener">Create User</a>。</p>
+<h2 id="给MySQL用户赋权限"><a href="#给MySQL用户赋权限" class="headerlink" title="给MySQL用户赋权限"></a>给MySQL用户赋权限</h2><p>如果做开发的话，你就会发现，你的jdbc或者其他语言连接数据库，都需要选择选择一个库。也就是你必须先在数据库里面建立一个database，但是如果你用root建立一个database，比如：<code>create database DB_USER;</code>这个时候上一步创建的用户是无法访问这个库的。如果你切换到刚刚的用户，那么你也是没有权限建立数据库的。但我们通常开发都会写上库名，那这个时候怎么操作了？嗯，就是先用root建库，然后将权限库的权限赋值给新用户。具体操作如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> db_user;</span><br><span class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> db_user.* <span class="keyword">TO</span> <span class="string">'username'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure>
+<p>这里一定要注意<code>%</code>,<code>localhost</code>，如果这里不同，那就是两个用户。</p>
+<p>当然，如果你觉得只给查的权限就足够了，那么只需要<code>GRANT SELECT ON db_user.* TO &#39;test&#39;@&#39;%&#39;;</code>。那么有没有更详细的了了？当然有，文档始终是最详细的，我只是记录我使用的过程。文档地址：<a href="https://dev.mysql.com/doc/refman/8.0/en/grant.html#grant-overview" target="_blank" rel="noopener">grant</a></p>
+<p>一些比较使用的使用方式：</p>
+<ol>
+<li><p>查看当前用户：<code>select CURRENT_USER();</code></p>
+</li>
+<li><p>查看当前用户权限：<code>show grants;</code></p>
+</li>
+</ol>
+
       
     </div>
     
@@ -429,11 +465,11 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2018/12/17/mysql-grant/">mysql-grant</a></p>
+  <p><span>本文标题:</span><a href="/2018/12/17/mysql-grant/">MySQL 用户与权限设置</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2018-12-17 17:00:27</p>
- <!-- <p><span>最后更新:</span>2018-12-17 17:55:54</p> -->
-  <p><span>原始链接:</span><a href="/2018/12/17/mysql-grant/" title="mysql-grant">http://chenzhijun.me/2018/12/17/mysql-grant/</a>
+ <!-- <p><span>最后更新:</span>2018-12-18 23:00:32</p> -->
+  <p><span>原始链接:</span><a href="/2018/12/17/mysql-grant/" title="MySQL 用户与权限设置">http://chenzhijun.me/2018/12/17/mysql-grant/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/12/17/mysql-grant/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
@@ -493,6 +529,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
 
       
       
@@ -511,6 +553,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/18/today-2018-12-18/" rel="prev" title="Today-2018-12-18">
+                Today-2018-12-18 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -595,8 +641,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
@@ -609,7 +664,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">120</span>
+                <span class="site-state-item-count">121</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -620,7 +675,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -631,7 +686,7 @@ var jiathis_config={
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -727,6 +782,22 @@ var jiathis_config={
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL-用户与权限设置"><span class="nav-number">1.</span> <span class="nav-text">MySQL 用户与权限设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL创建用户"><span class="nav-number">1.1.</span> <span class="nav-text">MySQL创建用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给MySQL用户赋权限"><span class="nav-number">1.2.</span> <span class="nav-text">给MySQL用户赋权限</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -892,7 +963,7 @@ var jiathis_config={
         var disqus_config = function () {
           this.page.url = 'http://chenzhijun.me/2018/12/17/mysql-grant/';
           this.page.identifier = '2018/12/17/mysql-grant/';
-          this.page.title = 'mysql-grant';
+          this.page.title = 'MySQL 用户与权限设置';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://chenzhijun-me.disqus.com/embed.js';
