@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Today-2018-12-18]]></title>
     <url>%2F2018%2F12%2F18%2Ftoday-2018-12-18%2F</url>
-    <content type="text"><![CDATA[Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster A: vi /data/mysql/grastate.dat safe_to_bootstrap 0 改为1]]></content>
+    <content type="text"><![CDATA[Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster A: vi /data/mysql/grastate.dat safe_to_bootstrap 0 改为1 mysql字符问题。 A： 今日遇到遇到一个mysql诡异的问题，用docker-compose启动的应用，第一次新建的时候字符乱码，重启一次就好了。这个问题异常诡异。找了许久没有找到原因。暂且记录一下。 squid 代理access deny。 A: 搭建完squid代理，在squid机器上通过curl -xlocalhost:3128 www.baidu.com可以访问，但是在其他机器使用curl -x192.168.12.1:3128 www.baidu.com出现access deny。将/etc/squid/squid.conf中在http_access deny all前面添加http_access allow all golang template A： 这个变量如果不定义loop将会引起golang template异常。使用funcMap()]]></content>
       <categories>
         <category>Daily</category>
       </categories>

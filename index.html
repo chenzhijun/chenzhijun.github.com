@@ -439,8 +439,17 @@
 </ol>
 <p>A: vi /data/mysql/grastate.dat<br>   safe_to_bootstrap 0 改为1 </p>
 <ol start="2">
-<li></li>
+<li>mysql字符问题。</li>
 </ol>
+<p>A： 今日遇到遇到一个mysql诡异的问题，用docker-compose启动的应用，第一次新建的时候字符乱码，重启一次就好了。这个问题异常诡异。找了许久没有找到原因。暂且记录一下。</p>
+<ol start="3">
+<li>squid 代理access deny。</li>
+</ol>
+<p>A: 搭建完squid代理，在squid机器上通过<code>curl -xlocalhost:3128 www.baidu.com</code>可以访问，但是在其他机器使用<code>curl -x192.168.12.1:3128 www.baidu.com</code>出现access deny。将<code>/etc/squid/squid.conf</code>中在<code>http_access deny all</code>前面添加<code>http_access allow all</code></p>
+<ol start="4">
+<li>golang template </li>
+</ol>
+<p>A：<code></code> 这个变量如果不定义<code>loop</code>将会引起golang template异常。使用<code>funcMap()</code></p>
 
           
         

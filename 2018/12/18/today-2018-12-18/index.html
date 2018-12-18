@@ -96,18 +96,18 @@
 
 
 
-<meta name="description" content="Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster  A: vi /data/mysql/grastate.dat   safe_to_bootstrap 0 改为1">
+<meta name="description" content="Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster  A: vi /data/mysql/grastate.dat   safe_to_bootstrap 0 改为1   mysql字符问题。  A： 今日遇到遇到一个mysql诡异的问题，用docker-compose启动的应用，第一次新建的时候字符乱码，重启一次就好了。这个">
 <meta name="keywords" content="daily">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Today-2018-12-18">
 <meta property="og:url" content="http://chenzhijun.me/2018/12/18/today-2018-12-18/index.html">
 <meta property="og:site_name" content="饺子">
-<meta property="og:description" content="Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster  A: vi /data/mysql/grastate.dat   safe_to_bootstrap 0 改为1">
+<meta property="og:description" content="Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster  A: vi /data/mysql/grastate.dat   safe_to_bootstrap 0 改为1   mysql字符问题。  A： 今日遇到遇到一个mysql诡异的问题，用docker-compose启动的应用，第一次新建的时候字符乱码，重启一次就好了。这个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-18T15:00:32.945Z">
+<meta property="og:updated_time" content="2018-12-18T15:05:46.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Today-2018-12-18">
-<meta name="twitter:description" content="Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster  A: vi /data/mysql/grastate.dat   safe_to_bootstrap 0 改为1">
+<meta name="twitter:description" content="Today-2018-12-18 mysql pxc 无法启动，not the lastone leave cluster  A: vi /data/mysql/grastate.dat   safe_to_bootstrap 0 改为1   mysql字符问题。  A： 今日遇到遇到一个mysql诡异的问题，用docker-compose启动的应用，第一次新建的时候字符乱码，重启一次就好了。这个">
 
 
 
@@ -440,8 +440,17 @@
 </ol>
 <p>A: vi /data/mysql/grastate.dat<br>   safe_to_bootstrap 0 改为1 </p>
 <ol start="2">
-<li></li>
+<li>mysql字符问题。</li>
 </ol>
+<p>A： 今日遇到遇到一个mysql诡异的问题，用docker-compose启动的应用，第一次新建的时候字符乱码，重启一次就好了。这个问题异常诡异。找了许久没有找到原因。暂且记录一下。</p>
+<ol start="3">
+<li>squid 代理access deny。</li>
+</ol>
+<p>A: 搭建完squid代理，在squid机器上通过<code>curl -xlocalhost:3128 www.baidu.com</code>可以访问，但是在其他机器使用<code>curl -x192.168.12.1:3128 www.baidu.com</code>出现access deny。将<code>/etc/squid/squid.conf</code>中在<code>http_access deny all</code>前面添加<code>http_access allow all</code></p>
+<ol start="4">
+<li>golang template </li>
+</ol>
+<p>A：<code></code> 这个变量如果不定义<code>loop</code>将会引起golang template异常。使用<code>funcMap()</code></p>
 
       
     </div>
@@ -462,7 +471,7 @@
   <p><span>本文标题:</span><a href="/2018/12/18/today-2018-12-18/">Today-2018-12-18</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2018-12-18 22:38:04</p>
- <!-- <p><span>最后更新:</span>2018-12-18 23:00:32</p> -->
+ <!-- <p><span>最后更新:</span>2018-12-18 23:05:46</p> -->
   <p><span>原始链接:</span><a href="/2018/12/18/today-2018-12-18/" title="Today-2018-12-18">http://chenzhijun.me/2018/12/18/today-2018-12-18/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/12/18/today-2018-12-18/" aria-label="复制成功！"></i></span>
   </p>
