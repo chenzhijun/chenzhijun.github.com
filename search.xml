@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Java 大数据中的敏感词汇处理]]></title>
+    <url>%2F2019%2F03%2F31%2Fjava-big-data-sensitive-word%2F</url>
+    <content type="text"><![CDATA[Java 大数据中的敏感词汇处理]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[golang 包项目结构]]></title>
+    <url>%2F2019%2F03%2F31%2Fgolang-package-struct%2F</url>
+    <content type="text"><![CDATA[golang 包项目结构]]></content>
+      <categories>
+        <category>Golang</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Java 开发遇到的两个问题]]></title>
+    <url>%2F2019%2F03%2F31%2Fjava-develop-normal-error%2F</url>
+    <content type="text"><![CDATA[Java开发遇到的两个问题Object 反序列化失败使用@ReponseBody返回一个json串，返回的类型是Object，我们知道如果是@RestController，都会已restful返回，也就是返回json格式的数据，但是如果你是使用Object返回值，然后Object只是一个null或者仅仅只是new Object()，那么就会返回下面的异常： 12com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class java.lang.Object and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: java.util.ArrayList[1]) RestTemplate使用中path有{}问题RestTemplate 默认就是将path中的{}作为一个赋值表达式的，它会认为你需要替换{}中的内容。所以在path中最好特别注意下。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[怎样将shell中命令执行的结果赋值给变量]]></title>
+    <url>%2F2019%2F03%2F31%2Fhow-to-transfer-linux-command-result-to-variable-in-shell%2F</url>
+    <content type="text"><![CDATA[怎样将shell中命令执行的结果赋值给变量其实这个比较简单。只需要将命令使用反单引号起来就可以了。 12srvname=`docker inspect 1swd3|grep "name"|awk -F "," '&#123;print $1&#125;'|awk '&#123;print $NF&#125;'`]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[byte 在golang和Java中的区别]]></title>
+    <url>%2F2019%2F03%2F31%2Fjava-byte-golang-byte%2F</url>
+    <content type="text"><![CDATA[byte 在golang和Java中的区别最近做一个项目，想用到md5，做一次数据的校验。因为是两个系统，一个golang开发，一个java开发。首先用Java生成md5值，然后传给golang，发现原始数据一致，但是生成的md5值却不一致。 深究其原因，最终发现是golang和java中对于byte的定义一个是无符号的，一个是有符号的，所以两者最后生成的md5值不一致。现在我发现有的时候真的需要注意到一些比较基础的东西，不然就会成为面向api的工程师。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>byte</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[golang编译成Linux环境下的二进制文件]]></title>
+    <url>%2F2019%2F03%2F31%2Fwindows-compile-golang-to-linux-running-script%2F</url>
+    <content type="text"><![CDATA[golang编译成Linux环境下的二进制文件最近需要将golang项目编译成Linux下可执行的脚本，手中只有windows笔记本，服务器上又各种网络限制。于是干脆就再本地打成Linux二进制文件，然后传到服务器直接启动。 在本地上（win10）打开控制台，然后进入到项目根路径。之后设置当前几个值： 123SET CGO_ENABLED=0SET GOOS=linux SET GOARCH=amd64 最后使用go build .就可以了。 也算是异常简单。]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[dev-ops]]></title>
+    <url>%2F2019%2F03%2F31%2Fdev-ops%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[Alertmanager 配置邮件模板]]></title>
     <url>%2F2019%2F01%2F08%2Falertmanager-email%2F</url>
     <content type="text"><![CDATA[Alertmanager 配置邮件模板Alertmanager 配置alertmanager 的配置主要是要配置邮箱（通知方式）和模板地址；文档地址：Alertmanager 地址，配置完之后就只需要在模板中定义就好了。 12345678910111213141516171819202122232425....# Whether or not to notify about resolved alerts.[ send_resolved: &lt;boolean&gt; | default = false ]# The email address to send notifications to.to: &lt;tmpl_string&gt;# The sender address.[ from: &lt;tmpl_string&gt; | default = global.smtp_from ]# The SMTP host through which emails are sent.[ smarthost: &lt;string&gt; | default = global.smtp_smarthost ]# The hostname to identify to the SMTP server.[ hello: &lt;string&gt; | default = global.smtp_hello ]# SMTP authentication information.[ auth_username: &lt;string&gt; | default = global.smtp_auth_username ][ auth_password: &lt;secret&gt; | default = global.smtp_auth_password ][ auth_secret: &lt;secret&gt; | default = global.smtp_auth_secret ][ auth_identity: &lt;string&gt; | default = global.smtp_auth_identity ]templates:- '/etc/alertmanager/templates/xxx.tmpl' 模板配置下面给出一份模板配置的文件： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990&#123;&#123; define &quot;email.common.html&quot; &#125;&#125;&lt;div&gt;this is test....&lt;/div&gt; &#123;&#123; .Alerts | len &#125;&#125; alert&#123;&#123; if gt (len .Alerts) 1 &#125;&#125;s&#123;&#123; end &#125;&#125; for &#123;&#123; range .GroupLabels.SortedPairs &#125;&#125; &#123;&#123; .Name &#125;&#125;=&#123;&#123; .Value &#125;&#125; &#123;&#123; end &#125;&#125;在Alertmanager中查看 ：&lt;a href=&quot;&#123;&#123; template &quot;__alertmanagerURL&quot; . &#125;&#125;&quot;&gt;View in &#123;&#123; template &quot;__alertmanager&quot; . &#125;&#125;&lt;/a&gt; &#123;&#123; if gt (len .Alerts.Firing) 0 &#125;&#125; &lt;tr&gt; &lt;strong&gt;[&#123;&#123; .Alerts.Firing | len &#125;&#125;] Firing&lt;/strong&gt; &lt;/tr&gt; &#123;&#123; end &#125;&#125; &#123;&#123; range .Alerts.Firing &#125;&#125; &lt;tr style=&quot;font-family: &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot;&gt; &lt;td style=&quot;font-family: &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;&quot; valign=&quot;top&quot;&gt; &lt;strong&gt;Labels&lt;/strong&gt; &#123;&#123; range .Labels.SortedPairs &#125;&#125;&#123;&#123; .Name &#125;&#125; = &#123;&#123; .Value &#125;&#125;&#123;&#123; end &#125;&#125; &#123;&#123; if gt (len .Annotations) 0 &#125;&#125; &lt;strong&gt;Annotations&lt;/strong&gt; &lt;br&gt; &#123;&#123; end &#125;&#125; &#123;&#123; range .Annotations.SortedPairs &#125;&#125; &#123;&#123; .Name &#125;&#125; = &#123;&#123; .Value &#125;&#125; &#123;&#123; end &#125;&#125; &lt;a href=&quot;&#123;&#123; .GeneratorURL &#125;&#125;&quot; style=&quot;font-family: &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; color: #348eda; text-decoration: underline; margin: 0;&quot;&gt; Source &lt;/a&gt; &lt;br style=&quot;font-family: &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot; /&gt; &lt;/td&gt; &lt;/tr&gt; &#123;&#123; end &#125;&#125;&lt;p&gt;&lt;p&gt;&lt;p&gt; &#123;&#123; if gt (len .Alerts.Resolved) 0 &#125;&#125; &#123;&#123; if gt (len .Alerts.Firing) 0 &#125;&#125; &#123;&#123; end &#125;&#125; &lt;td&gt; &lt;strong&gt;[&#123;&#123; .Alerts.Resolved | len &#125;&#125;] Resolved&lt;/strong&gt; &lt;/td&gt; &#123;&#123; end &#125;&#125; &#123;&#123; range .Alerts.Resolved &#125;&#125; &lt;tr&gt; &lt;td&gt; &lt;strong&gt;Labels&lt;/strong&gt; &lt;br/&gt; &#123;&#123; range .Labels.SortedPairs &#125;&#125; &#123;&#123; .Name &#125;&#125; = &#123;&#123; .Value &#125;&#125; &#123;&#123; end &#125;&#125; &#123;&#123; if gt (len .Annotations) 0 &#125;&#125; &lt;strong&gt;Annotations&lt;/strong&gt; &#123;&#123; end &#125;&#125; &#123;&#123; range .Annotations.SortedPairs &#125;&#125; &#123;&#123; .Name &#125;&#125; = &#123;&#123; .Value &#125;&#125; &#123;&#123; end &#125;&#125; &lt;a href=&quot;&#123;&#123; .GeneratorURL &#125;&#125;&quot; style=&quot;font-family: &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; color: #348eda; text-decoration: underline; margin: 0;&quot;&gt; Source &lt;/a&gt; &lt;br style=&quot;font-family: &apos;Helvetica Neue&apos;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot; /&gt; &lt;/td&gt; &#123;&#123; end &#125;&#125;&#123;&#123;end&#125;&#125; 这里要注意的是第一行:define &quot;email.common.html&quot;记住结尾一定要有 end 与之对应，因为 golang 的 template 模板限制。其实这个 tmpl 文件就是 golang 的 template 模板。以前看到还有点懵，用过一次 golang 中 template 功能之后，会有很多明白的地方。 在一个文件中也是可以定义多个模板的只需要有多个define &quot;xxx&quot;即可。记住在 alertmanager 的配置文件alertmanager.yml中一定要有 html: {{template "email.common.html" }} . 这里的email.common.html要与tmpl文件中定义的相同。 源码中有示例: alertmanager template 而tmpl文件里面的内容都在这个go文件中 template.go 可以看到里面有个Datastruct。这里就是它的详细信息了。 扩展阅读package text/template package html/template 模板处理 golang 模板(template)的常用基本语法]]></content>
