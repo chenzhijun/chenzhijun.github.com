@@ -320,6 +320,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/05/thinkinjava-20180305/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/05/thinkinjava-20180305/" itemprop="url">重温Java编程思想的一些感悟-20180305</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T23:43:32+08:00">
+                2018-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/05/thinkinjava-20180305/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/05/thinkinjava-20180305/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/05/thinkinjava-20180305/" class="leancloud_visitors" data-flag-title="重温Java编程思想的一些感悟-20180305">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="重温Java编程思想的一些感悟-20180305"><a href="#重温Java编程思想的一些感悟-20180305" class="headerlink" title="重温Java编程思想的一些感悟-20180305"></a>重温Java编程思想的一些感悟-20180305</h1><p>JIT(just-in-time) 即时编译技术：将程序全部或者部分翻译成本地机器码，程序运行速度因此得到提升。<br>对于hotspot来说，代码每次被执行，都会做一些优化，执行的次数越多，速度也就越快。</p>
+<p>java会给所有的默认域做一个初始化，非基本类型对象不初始化值的情况下，默认为null。<br>初始化顺序:static-&gt;{}-&gt;构造器；</p>
+<p>static的数据指向同一份存储区域，不能用于局部变量。</p>
+<p>final对于基本类型，其数值永不改变。final对于引用类型，其引用永不改变。<br>必须在定义final或者在构造器中对final进行赋值。</p>
+<p>final类无法继承，方法无法重写或修改。private的方法其实是隐式的final。</p>
+<p>compareTo,如果是两个int，最好不要直接返回i-i2，如果是有符号的int类型，一个正数最大，一个负数最大，那么将永远返回负数。所以如果重写compareTo，最好是不要直接返回return i-i2;</p>
+<p>集合是fail-fast的，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.add(aa);</span><br><span class="line">list.iterator();</span><br><span class="line">list.add(cc);</span><br></pre></td></tr></table></figure>
+<p>需要明确在添加或者修改完容器所有元素之后再获取迭代器。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/02/28/effective-java-0228/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1873,179 +2046,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/08/shell-get-param-from-console/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/08/shell-get-param-from-console/" itemprop="url">从命令行参数获取Shell脚本参数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T17:03:58+08:00">
-                2018-01-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/01/08/shell-get-param-from-console/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/08/shell-get-param-from-console/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/01/08/shell-get-param-from-console/" class="leancloud_visitors" data-flag-title="从命令行参数获取Shell脚本参数">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="从命令行参数获取Shell脚本参数"><a href="#从命令行参数获取Shell脚本参数" class="headerlink" title="从命令行参数获取Shell脚本参数"></a>从命令行参数获取Shell脚本参数</h1><p>很多时候我们写完脚本都需要指定一些变量，这些变量可能根据实际的环境而值不同。所以如何在 shell 脚本中接收到不同的变量值了？</p>
-<h2 id="获取参数"><a href="#获取参数" class="headerlink" title="获取参数"></a>获取参数</h2><p>shell 脚本获取参数的方式很多，我只记录我用过的一种：<code>filebeat.sh</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">if [ ! -n "$1" ] ;then</span><br><span class="line">    echo "请输入日志文件目录,比如/path/to/xxx.log,输入/path/to:"  </span><br><span class="line">    exit 1;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo "日志文件目录：$1" #log_path</span><br><span class="line"></span><br><span class="line">if [ ! -n "$2" ] ;then</span><br><span class="line">    echo "请输入项目名称,比如customer,notice ...:"  </span><br><span class="line">    exit 1;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo "项目名称:$2" #log_type</span><br><span class="line"></span><br><span class="line">cd $(pwd)/filebeat</span><br><span class="line"><span class="meta">#</span> copy a filebeat.yml to filebeat_log_type.yml</span><br><span class="line">cp config/filebeat.yml config/filebeat_$2.yml</span><br><span class="line">sed -i "s#PATH#$1#g" config/filebeat_$2.yml</span><br><span class="line">sed -i "s#DOCTYPE#$2#g" config/filebeat_$2.yml</span><br><span class="line">nohup ./filebeat -e -c config/filebeat_$2.yml &gt;&gt; logs/$2.log &amp;</span><br><span class="line">tail -f logs/$2.log</span><br></pre></td></tr></table></figure>
-<p>shell 文件都是用<code>#!/bin/bash</code>作为第一行，我们在 filebeat.sh 中获取两个参数，如何使用这个脚本了？<br><code>sh filebeat.sh param1 param2</code></p>
-<p>param1 我们在脚本中使用<code>$1</code>获取，param2 我们在脚本中使用<code>$2</code>获取，以此类推。</p>
-<p>如果要在文件中替换某个特殊文字或者字符如果值中带有<code>/path/to/file</code>,这种带有<code>/</code>的字符，在脚本中可以使用<code>#</code>来转义。之前用的是<code>sed -i &quot;s/path/$1/g&quot; config/file.yml</code>,后来改成<code>sed -i &quot;s#path#$1#g config/file.yml</code>。</p>
-<p>参考文档：<br><a href="http://www.jb51.net/article/56549.htm" target="_blank" rel="noopener">http://www.jb51.net/article/56549.htm</a></p>
-<p><a href="https://www.jianshu.com/p/d3cd36c97abc" target="_blank" rel="noopener">https://www.jianshu.com/p/d3cd36c97abc</a></p>
-<p><a href="http://blog.51cto.com/w55554/1223870" target="_blank" rel="noopener">http://blog.51cto.com/w55554/1223870</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2094,7 +2094,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2105,7 +2105,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2116,7 +2116,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -320,6 +320,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/20/java-io/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/20/java-io/" itemprop="url">Java IO流</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T16:35:43+08:00">
+                2017-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/20/java-io/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/20/java-io/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/20/java-io/" class="leancloud_visitors" data-flag-title="Java IO流">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Java-IO流"><a href="#Java-IO流" class="headerlink" title="Java IO流"></a>Java IO流</h2><h3 id="Java-IO流简述"><a href="#Java-IO流简述" class="headerlink" title="Java IO流简述"></a>Java IO流简述</h3><p>JavaIO 中流都分别在java.io包中，主要分为几类：</p>
+<ul>
+<li>字节流：Byte Stream-&gt;InputStream/OutputStream</li>
+<li>字符流: Character Stream-&gt;Reader/Writer</li>
+<li>缓冲流：Buffered Stream</li>
+<li>数据流：Data Stream 只针对基本数据类型：(boolean, char, byte, short, int, long, float, double) 还有String</li>
+<li>对象流: Object Stream,继承自Serializable,必须序列化</li>
+<li>控制台的流..</li>
+</ul>
+<h3 id="InputStream"><a href="#InputStream" class="headerlink" title="InputStream"></a>InputStream</h3><p>字节流其实又叫做二进制流，因为它是最基本的二进制的数据的读取，也就是010101的读取与传输。如果读取的数据全是文字类型，那么推荐使用字符流的，如果是图片或者其它的图片可以使用字节流。看下<code>InputStream</code> 类里面的相关方法：</p>
+<p><img src="/images/qiniu/2017-09-20-17-24-13.png" alt="2017-09-20-17-24-13"></p>
+<p>InputStream实现了Closeble,Closeble继承了AutoCloseable，其实就是相当与一个标记，AutoCloseable是1.7才出来的，主要是为了<code>t-w-r</code>语法主动关闭流。</p>
+<p>InputStream是<code>abstract</code>的，一定要注意它是一个抽象类。我们说的装饰者模式里面，InputStream的实际实现(实现了InputStream的相关方法)基本都是类似于组件，而InputStream相当与一个超类。里面的主要构成是8个方法一个属性。</p>
+<h4 id="available"><a href="#available" class="headerlink" title="available()"></a>available()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">available</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先看我们的第一个方法<code>available()</code>,它的作用是返回流中估计的长度，而这个长度怎么设置？看源码中的介绍最后归结两句话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 永远也不要调用此方法来确认分配多大的缓存空间，因为它永远返回0。</span><br><span class="line">2. 任何继承`InputStream`的子类必须重写该方法。</span><br></pre></td></tr></table></figure>
+<p>意思就是子类自己去实现这个方法。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/20/java-io/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/19/docker-dockerfile/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1866,162 +2051,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/08/10/jenkins-ci/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/10/jenkins-ci/" itemprop="url">使用jenkins对springboot进行CI</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-10T20:40:49+08:00">
-                2017-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/08/10/jenkins-ci/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/10/jenkins-ci/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/08/10/jenkins-ci/" class="leancloud_visitors" data-flag-title="使用jenkins对springboot进行CI">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="写给小白看的jenkins-CI教程"><a href="#写给小白看的jenkins-CI教程" class="headerlink" title="写给小白看的jenkins CI教程"></a>写给小白看的jenkins CI教程</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>使用jenkins持续部署一个springboot项目,项目使用jar包发布.从安装jenkins的机器将jar包发布到指定的服务器目录,并且使用脚本运行springboot. (<em>前面几张图可能看不见,以后补上</em>)</p>
-<h3 id="个人背景"><a href="#个人背景" class="headerlink" title="个人背景"></a>个人背景</h3><p>Java工程师毕业一年,Linux一般熟悉,Java初阶,所以不用担心难度,如果有疑问可以联系我:<a href="mailto:`vbookchen@gmail.com" target="_blank" rel="noopener">`vbookchen@gmail.com</a>`</p>
-<h3 id="系统环境与准备"><a href="#系统环境与准备" class="headerlink" title="系统环境与准备"></a>系统环境与准备</h3><p><strong>jenkins就是相当于一个web服务,与环境没有太大关系</strong></p>
-<p>1) Linux/Windows 操作</p>
-<p>2) jenkins.jar/jenkins.msi //安装就是了,其他的是系统可以下载war包在tomcat里面运行</p>
-<p>3) gitlab.com 账号</p>
-<p>4) gitlab 公有仓库放置 spring-boot 源码</p>
-<p>5) maven // 可以用jenkins安装也可以用本地的</p>
-<p>6) JDK 安装jenkins的主机必须要有jdk, docker版本除外</p>
-<p>7) 部署服务的Linux服务器</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/10/jenkins-ci/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2070,7 +2099,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">128</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2081,7 +2110,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2092,7 +2121,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
