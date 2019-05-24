@@ -320,6 +320,553 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/09/prometheus-storage-influxdb/" itemprop="url">prometheus 使用influxdb 做永久存储</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-09T16:04:43+08:00">
+                2018-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/监控/" itemprop="url" rel="index">
+                    <span itemprop="name">监控</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/09/prometheus-storage-influxdb/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/09/prometheus-storage-influxdb/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/06/09/prometheus-storage-influxdb/" class="leancloud_visitors" data-flag-title="prometheus 使用influxdb 做永久存储">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="prometheus-使用远端存储"><a href="#prometheus-使用远端存储" class="headerlink" title="prometheus 使用远端存储"></a>prometheus 使用远端存储</h1><p>使用Prometheus的过程中，我们可以发现Prometheus默认是自己带有存储的，不过保存的时间为15天。但是对于公司而言，可能有时候会对数据进行统计分析，那么15天的数据将不会满足要求了。所以我们希望能够将数据永久存储起来，或者说能够让我们自己将数据进行处理。</p>
+<p>这里我们要讲的就是Prometheus的 remote_storage 功能。Prometheus的remote_storage 其实是一个adapter，至于在adapter的另一端是什么类型的时序数据库它根本不关心，如果你愿意，你也可以编写自己的adpater。我这里采用官网提供的influxdb作为远端存储的实例。</p>
+<p>存储的方式为：Prometheus —-发送数据—- &gt; remote_storage_adapter —- 存储数据 —-&gt; influxdb。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/09/prometheus-storage-influxdb/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/06/09/self-dns-server-install/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/09/self-dns-server-install/" itemprop="url">DNS 服务器搭建</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-09T15:24:01+08:00">
+                2018-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/09/self-dns-server-install/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/09/self-dns-server-install/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/06/09/self-dns-server-install/" class="leancloud_visitors" data-flag-title="DNS 服务器搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="搭建公司内部DNS服务器"><a href="#搭建公司内部DNS服务器" class="headerlink" title="搭建公司内部DNS服务器"></a>搭建公司内部DNS服务器</h1><p>平常有很多时候可能会通过改hosts文件的方式来访问自定义的某个域名，但仅限于单机而已。如果能用dns解析的方式来统一管理那将会很方便。</p>
+<h2 id="搭建-DNS-服务器"><a href="#搭建-DNS-服务器" class="headerlink" title="搭建 DNS 服务器"></a>搭建 DNS 服务器</h2><p>实验基于centos7实践。切换到root用户（以下所有操作都在root下执行）：</p>
+<ol>
+<li>安装软件：</li>
+</ol>
+<p>我们使用dns软件 bind9 系列安装包。</p>
+<p><code>yum -y install bind*</code></p>
+<p>安装后的部分日志:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Installed:</span><br><span class="line">  bind.x86_64 32:9.9.4-61.el7               bind-chroot.x86_64 32:9.9.4-61.el7        bind-devel.x86_64 32:9.9.4-61.el7       </span><br><span class="line">  bind-dyndb-ldap.x86_64 0:11.1-4.el7       bind-libs.x86_64 32:9.9.4-61.el7          bind-lite-devel.x86_64 32:9.9.4-61.el7  </span><br><span class="line">  bind-pkcs11.x86_64 32:9.9.4-61.el7        bind-pkcs11-devel.x86_64 32:9.9.4-61.el7  bind-pkcs11-libs.x86_64 32:9.9.4-61.el7 </span><br><span class="line">  bind-pkcs11-utils.x86_64 32:9.9.4-61.el7  bind-sdb.x86_64 32:9.9.4-61.el7           bind-sdb-chroot.x86_64 32:9.9.4-61.el7  </span><br><span class="line">  bind-utils.x86_64 32:9.9.4-61.el7        </span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  postgresql-libs.x86_64 0:9.2.23-3.el7_4                                                                                      </span><br><span class="line"></span><br><span class="line">Updated:</span><br><span class="line">  bind-libs-lite.x86_64 32:9.9.4-61.el7                           bind-license.noarch 32:9.9.4-61.el7</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/09/self-dns-server-install/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/05/22/problem-cmrh-2018522/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/22/problem-cmrh-2018522/" itemprop="url">最近遇到的小问题总结-2018522</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T18:47:28+08:00">
+                2018-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/problem/" itemprop="url" rel="index">
+                    <span itemprop="name">problem</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/22/problem-cmrh-2018522/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/22/problem-cmrh-2018522/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/22/problem-cmrh-2018522/" class="leancloud_visitors" data-flag-title="最近遇到的小问题总结-2018522">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="最近遇到的小问题总结-2018522"><a href="#最近遇到的小问题总结-2018522" class="headerlink" title="最近遇到的小问题总结-2018522"></a>最近遇到的小问题总结-2018522</h1><ol>
+<li><p>Excel将两列合并成一列：<code>=CONCATENATE()</code></p>
+</li>
+<li><p>linux统计文件,<a href="http://blog.sina.com.cn/s/blog_464f6dba01012vwv.html" target="_blank" rel="noopener">原文链接</a>:</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">统计某文件夹下文件的个数</span><br><span class="line">ls -l |grep "^-"|wc -l</span><br><span class="line"></span><br><span class="line">统计某文件夹下目录的个数</span><br><span class="line">ls -l |grep "^ｄ"|wc -l</span><br><span class="line"></span><br><span class="line">统计文件夹下文件的个数，包括子文件夹里的</span><br><span class="line">ls -lR|grep "^-"|wc -l</span><br><span class="line"></span><br><span class="line">如统计/home/han目录(包含子目录)下的所有js文件则：</span><br><span class="line">ls -lR /home/han|grep js|wc -l 或 ls -l "/home/han"|grep "js"|wc -l</span><br><span class="line"></span><br><span class="line">统计文件夹下目录的个数，包括子文件夹里的</span><br><span class="line">ls -lR|grep "^d"|wc -l</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>linux sort的一些用法：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">去除重复行</span><br><span class="line">sort file |uniq</span><br><span class="line"></span><br><span class="line">查找非重复行</span><br><span class="line">sort file |uniq -u</span><br><span class="line"></span><br><span class="line">查找重复行</span><br><span class="line">sort file |uniq -d</span><br><span class="line"></span><br><span class="line">统计</span><br><span class="line">sort file | uniq -c</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>什么是linux vip：<a href="https://www.zhihu.com/question/67682565" target="_blank" rel="noopener">https://www.zhihu.com/question/67682565</a>，<a href="https://www.novell.com/documentation/bcc/bcc11_admin_nw/data/bq7ucwl.html" target="_blank" rel="noopener">https://www.novell.com/documentation/bcc/bcc11_admin_nw/data/bq7ucwl.html</a>。</p>
+</li>
+<li><p>Linux scp命令，上传或下载文件</p>
+</li>
+</ol>
+<p>复制本地文件到远程服务器：<code>scp local_file remote_username@remote_ip:remote_folder</code>；<br>例如：<code>scp /home/chen/file.md chen@192.168.1.1:/home/chen/test.md</code></p>
+<p>复制远程文件到本地：<code>scp remote_username@remote_ip:remote_folder local_file</code><br>例如：<code>scp chen@192.168.1.1:/home/chen/test.md /home/chen/file.md</code></p>
+<ol start="5">
+<li>修改文件所属用户和组信息</li>
+</ol>
+<p><code>chown username:usergroup /path/to/file</code></p>
+<ol start="6">
+<li>修改文件权限: ugo,a<br>user,group,other,all</li>
+</ol>
+<p><code>chmod a+x /path/to/file</code></p>
+<p><code>chmod u+w /path/to/file</code></p>
+<ol start="7">
+<li>linux 查看ip：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br><span class="line">ifconfig</span><br><span class="line">hostname -I</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>解压缩文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解压文件：tar -zvxf xxx.tar.gz</span><br><span class="line"></span><br><span class="line">压缩文件： tar -zvcf xxx.tar.gz /path/to/file/tozip</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>vim 一些操作</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vim 全文件内替换  ： :%s/old/new/g</span><br><span class="line">当前行替换：:s/old/new/g</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vim 打开多个文件： split/vsplit     </span><br><span class="line">文件切换ctrl w w， 获取CTRL w (上下左右或者jkhl)，CTRL F6 6</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>docker 删除容器状态为exited的容器：</li>
+</ol>
+<p><code>docker rm -v $(docker ps -aq -f status=exited)</code></p>
+<ol start="10">
+<li>删除所有none的tag的镜像</li>
+</ol>
+<p><code>docker images |grep none |awk &#39;{print $3}&#39;|xargs -i docker rmi {}</code></p>
+<ol start="11">
+<li>idea重置配置文件。</li>
+</ol>
+<p>D:\Users\chenzj001.IntelliJIdea2018.1 删除这个文件就好了，全部重置。也可以只删除config。<br>windows找到用户–&gt;.i</p>
+<p>也就是在<code>用户目录</code>下,删除<code>.IntelliJIdea2018</code></p>
+<ol start="12">
+<li>windows 查找端口占用进程</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -aon|findstr &quot;端口号&quot;</span><br><span class="line"></span><br><span class="line">tasklist|findstr “端口号”</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/05/13/shell-script/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1502,516 +2049,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/04/18/rancher-experience/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/rancher-experience/" itemprop="url">Rancher 体验</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T22:34:13+08:00">
-                2018-04-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/18/rancher-experience/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/18/rancher-experience/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/18/rancher-experience/" class="leancloud_visitors" data-flag-title="Rancher 体验">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Rancher-体验"><a href="#Rancher-体验" class="headerlink" title="Rancher 体验"></a>Rancher 体验</h1><p>Rancher是一个开源的企业级容器管理平台。花了大概3个小时从零到自己搭建一个能运行的服务，真的容易啊。而且文档很丰富，官方还有中文版。哈~，地址：<a href="https://rancher.com/docs/rancher/v1.6/zh/" target="_blank" rel="noopener">文档</a>。</p>
-<h2 id="安装-Rancher"><a href="#安装-Rancher" class="headerlink" title="安装 Rancher"></a>安装 Rancher</h2><p>安装Rancher其实很简单，因为它本身就提供了image，所以只需要在本地安装docker，然后下载镜像，之后再启动就完事了。整个过程非常顺利。唯一一个需要主要的地方是，它需要两台机器。一个作为rancher主节点，一个作为工作节点。所以，如果想体验一下 Rancher 的能力，最好能有两台ip不一样的机器，并且两台都安装了docker，当然也可以用虚拟机。</p>
-<p><code>docker run -d --name rancher -p 8080:8080 --restart=unless-stopped rancher/server:stable</code></p>
-<p>安装完 Rancher 之后，需要配置一下主机。Rancher 做了非常棒的国际化，支持中文。��[笑哭.png]</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/18/rancher-experience/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/04/16/prometheus-pre-use/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/16/prometheus-pre-use/" itemprop="url">prometheus 初体验</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T13:55:50+08:00">
-                2018-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/监控/" itemprop="url" rel="index">
-                    <span itemprop="name">监控</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/16/prometheus-pre-use/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/16/prometheus-pre-use/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/16/prometheus-pre-use/" class="leancloud_visitors" data-flag-title="prometheus 初体验">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="prometheus-监控"><a href="#prometheus-监控" class="headerlink" title="prometheus 监控"></a>prometheus 监控</h1><p>普罗米修斯主要的是从被监控项目中获取metrics。架构全景图：</p>
-<p><img src="/images/qiniu/2018-04-16-14-32-33.png" alt="2018-04-16-14-32-33"></p>
-<h2 id="安装与使用"><a href="#安装与使用" class="headerlink" title="安装与使用"></a>安装与使用</h2><p>Prometheus 的安装方式很多，我在本地是使用windows的包，Prometheus自打出生就支持docker所以，如果是*inx机器，建议安装docker然后体验。在本地我仅仅只需要执行目录下的<code>prometheus.exe</code>就可以就可以进行体验了。Prometheus服务自身也会暴露出metrics，用来对自身进行指标收集和监控。在根目录最重要的一个配置文件是<code>prometheus.yml</code>，里面有三类大属性：global，rule_files，scrape_configs。具体的配置信息可以看这个：<br><a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/" target="_blank" rel="noopener">https://prometheus.io/docs/prometheus/latest/configuration/configuration/</a>，也可以看看中文文档：<a href="https://songjiayang.gitbooks.io/prometheus/configuration/" target="_blank" rel="noopener">https://songjiayang.gitbooks.io/prometheus/configuration/</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/16/prometheus-pre-use/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/04/02/logstash-output-elasticsearch-document-id/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/02/logstash-output-elasticsearch-document-id/" itemprop="url">解决 logstash 输出到 Elasticsearch 时指定 document_id</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T17:05:32+08:00">
-                2018-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/elk/" itemprop="url" rel="index">
-                    <span itemprop="name">elk</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/02/logstash-output-elasticsearch-document-id/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/02/logstash-output-elasticsearch-document-id/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/02/logstash-output-elasticsearch-document-id/" class="leancloud_visitors" data-flag-title="解决 logstash 输出到 Elasticsearch 时指定 document_id">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天使用elk搜集日志的时候想到一个事情，是否可以指定es索引中的document_id。查了资料之后发现还真有这个：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">elasticsearch</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">hosts</span> <span class="string">=&gt;</span> <span class="string">[</span> <span class="string">"localhost:9200"</span> <span class="string">]</span></span><br><span class="line">        <span class="string">index</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[fields][service_name]&#125;</span>-<span class="template-variable">%&#123;+YYYY.MM.dd&#125;</span>"</span></span><br><span class="line">        <span class="string">document_id</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;@timestamp&#125;</span>"</span></span><br><span class="line">  <span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>就是在<code>logstash.conf</code>中的output中，设置elasticsearch里面document_id就可以了。就是这么简单。当然我这里是用timestamp做的id，其实可以自己换成一个其它的。<br>es 对一个 id 添加两次是支持的，里面的字段 version 会加 1。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2060,7 +2097,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">135</span>
+                <span class="site-state-item-count">138</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2082,7 +2119,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">59</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
