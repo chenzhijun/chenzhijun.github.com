@@ -320,6 +320,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/22/java-enum-anotation/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/22/java-enum-anotation/" itemprop="url">Java 枚举和注解总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T22:38:32+08:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/22/java-enum-anotation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/22/java-enum-anotation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/22/java-enum-anotation/" class="leancloud_visitors" data-flag-title="Java 枚举和注解总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Java-枚举和注解总结"><a href="#Java-枚举和注解总结" class="headerlink" title="Java 枚举和注解总结"></a>Java 枚举和注解总结</h1><h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><h3 id="没有枚举前我们基本上常量来定义值："><a href="#没有枚举前我们基本上常量来定义值：" class="headerlink" title="没有枚举前我们基本上常量来定义值："></a>没有枚举前我们基本上常量来定义值：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Color</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> GREEN = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RED   = <span class="number">1</span>;</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有了枚举后我们会怎样了？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color&#123;</span><br><span class="line">    GREEN,RED,BLACk,.......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码是不是就清晰很多了？而且使用的时候输出的值我们是可以使用GREEN，是不是可以很明白的知道是什么颜色？</p>
+<h3 id="枚举的创建"><a href="#枚举的创建" class="headerlink" title="枚举的创建"></a>枚举的创建</h3><p>枚举是继承自<code>Enum</code>，使用<code>enum</code>关键字。</p>
+<h3 id="枚举的使用场景"><a href="#枚举的使用场景" class="headerlink" title="枚举的使用场景"></a>枚举的使用场景</h3><p>枚举适合在<strong>固定的常量</strong>下使用，比如四季，月份，星期；这种基本公认的而且不会有改变的场景下使用。</p>
+<h3 id="编译器中的枚举"><a href="#编译器中的枚举" class="headerlink" title="编译器中的枚举"></a>编译器中的枚举</h3><p>编译器默认帮我们实现了很多枚举中的方法，比如equals(),hashCode(),toString,values(),valueOf(String)等。这些都是编译器帮我们做的。</p>
+<h3 id="枚举中的注意事项"><a href="#枚举中的注意事项" class="headerlink" title="枚举中的注意事项"></a>枚举中的注意事项</h3><ol>
+<li>不能使用static，final修饰枚举，因为它是隐式的final类型的；</li>
+<li>因为是final类型，所以我们也就知道它是<strong>不能被继承</strong>的；</li>
+<li>从Enum继承的clone是final类型的，枚举是不能重写clone方法的，并且Enum里面的clone方法直接抛出异常，所以enum是不能被clone的;</li>
+<li>enum中的ordinal是强依赖于枚举实例的定义顺序的，所以用ordinal来做判断顺序是不推荐的，因为只要在非最后加入实例，那么就会改变整体的顺序;如果是需要顺序可以自定义属性。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/22/java-enum-anotation/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/21/java-datastructure-priority-queue-heap/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1945,179 +2126,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/05/thinkinjava-20180305/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/05/thinkinjava-20180305/" itemprop="url">重温Java编程思想的一些感悟-20180305</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T23:43:32+08:00">
-                2018-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/05/thinkinjava-20180305/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/05/thinkinjava-20180305/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/05/thinkinjava-20180305/" class="leancloud_visitors" data-flag-title="重温Java编程思想的一些感悟-20180305">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="重温Java编程思想的一些感悟-20180305"><a href="#重温Java编程思想的一些感悟-20180305" class="headerlink" title="重温Java编程思想的一些感悟-20180305"></a>重温Java编程思想的一些感悟-20180305</h1><p>JIT(just-in-time) 即时编译技术：将程序全部或者部分翻译成本地机器码，程序运行速度因此得到提升。<br>对于hotspot来说，代码每次被执行，都会做一些优化，执行的次数越多，速度也就越快。</p>
-<p>java会给所有的默认域做一个初始化，非基本类型对象不初始化值的情况下，默认为null。<br>初始化顺序:static-&gt;{}-&gt;构造器；</p>
-<p>static的数据指向同一份存储区域，不能用于局部变量。</p>
-<p>final对于基本类型，其数值永不改变。final对于引用类型，其引用永不改变。<br>必须在定义final或者在构造器中对final进行赋值。</p>
-<p>final类无法继承，方法无法重写或修改。private的方法其实是隐式的final。</p>
-<p>compareTo,如果是两个int，最好不要直接返回i-i2，如果是有符号的int类型，一个正数最大，一个负数最大，那么将永远返回负数。所以如果重写compareTo，最好是不要直接返回return i-i2;</p>
-<p>集合是fail-fast的，比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.add(aa);</span><br><span class="line">list.iterator();</span><br><span class="line">list.add(cc);</span><br></pre></td></tr></table></figure>
-<p>需要明确在添加或者修改完容器所有元素之后再获取迭代器。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2166,7 +2174,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">138</span>
+                <span class="site-state-item-count">139</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2177,7 +2185,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2188,7 +2196,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
