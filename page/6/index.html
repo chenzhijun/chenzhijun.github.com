@@ -320,6 +320,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/23/mysql-optimization-index/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/23/mysql-optimization-index/" itemprop="url">数据库索引优化实例</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T14:47:25+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/23/mysql-optimization-index/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/23/mysql-optimization-index/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/23/mysql-optimization-index/" class="leancloud_visitors" data-flag-title="数据库索引优化实例">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="数据库索引优化实例"><a href="#数据库索引优化实例" class="headerlink" title="数据库索引优化实例"></a>数据库索引优化实例</h1><p>索引对于查找小表或者需要处理表中大部分或全部行的大型表的查询不太重要，适合的才是最好的。</p>
+<h2 id="数据库索引的操作"><a href="#数据库索引的操作" class="headerlink" title="数据库索引的操作"></a>数据库索引的操作</h2><ol>
+<li>快速找到匹配where条件的行结果；</li>
+<li>如果有多个索引，MySQL通常会使用能检索除最少结果行的索引；</li>
+<li>如果有多列索引，优化器可以使用索引的最左边的前缀来查找行；比如有col1,col2,col3三列索引，那么你就可以使用(col1)，（col1,col2）,(col1,col2,col3)三个索引；</li>
+<li>如果有多表连接join的语句，mysql会将varchar(10)和char(10)看成同一个类型并且有效的使用索引；两个表使用的字符要一样比如utf8,和latin，就不行；</li>
+<li>在查找最小值和最大值的时候，优化器会先优化你是否在where条件中有常量值；</li>
+<li>索引排序会使用最左边的索引列前缀；</li>
+<li>在某些情况下，可以优化查询来检索值，而不必咨询数据行</li>
+</ol>
+<h2 id="主键与外键优化"><a href="#主键与外键优化" class="headerlink" title="主键与外键优化"></a>主键与外键优化</h2><p>主键索引的查询优化得益于主键不能为NULL值。表的数据在物理存储上就被组织为基于主键列或多列进行快速查找和排序。如果你的表很大又非常重要，然而却没有声明主键，或者组合主键，那么你需要新建一个新的列使用auto-increment来作为主键。</p>
+<p>外键优化，如果有一个大表，有许多列，可以考虑将表的列进行拆分成小表，并且用外键关联。每个小表都有主键，这样可以让查找数据更加快速，而需要数据的时候也可以是使用join关联查询。由于数据是分散的，查询可以有更少的I/O,并且会使用更少的缓存。因为相关的列在磁盘中存储在一块。</p>
+<h2 id="组合索引"><a href="#组合索引" class="headerlink" title="组合索引"></a>组合索引</h2><p>建立一个表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">test</span> (</span><br><span class="line">    <span class="keyword">id</span>         <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    last_name  <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    first_name <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>),</span><br><span class="line">    <span class="keyword">INDEX</span> <span class="keyword">name</span> (last_name,first_name)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我们有组合索引name，在索引查询中使用最左列查询是会使用索引的。也就是如下面的列子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span> <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span></span><br><span class="line">  <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span> <span class="keyword">AND</span> first_name=<span class="string">'Michael'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span></span><br><span class="line">  <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span></span><br><span class="line">  <span class="keyword">AND</span> (first_name=<span class="string">'Michael'</span> <span class="keyword">OR</span> first_name=<span class="string">'Monty'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span></span><br><span class="line">  <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span></span><br><span class="line">  <span class="keyword">AND</span> first_name &gt;=<span class="string">'M'</span> <span class="keyword">AND</span> first_name &lt; <span class="string">'N'</span>;</span><br></pre></td></tr></table></figure>
+<p>即只要有最左侧的索引列，那么索引就会生效。但是如果是单独使用的<code>first_name</code>，那么索引将不会生效，如下面的示例：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/23/mysql-optimization-index/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/22/java-enum-anotation/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1961,171 +2146,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/07/just-write-something/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/07/just-write-something/" itemprop="url">随笔20180306</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T00:15:17+08:00">
-                2018-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/07/just-write-something/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/07/just-write-something/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/07/just-write-something/" class="leancloud_visitors" data-flag-title="随笔20180306">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="随笔20180306"><a href="#随笔20180306" class="headerlink" title="随笔20180306"></a>随笔20180306</h1><p>时间算算是真快啊，确实，转眼毕业快两年了。参加工作已经两年了。很多事情真是感觉像是昨天才发生的一样。<br>这几天静下心来想想自己。每日的计划做的很满，却是非常飘。很多时候我在对各种新技术去了解，去有想法，却忽略了一个很简单的事情，技术的更新特别快，今天有A，明天就有B，如果只是跟着潮流，那么未来的方向是哪里呢？我反思，我这一年里经历了很多，自己也在周末，下班都在弄一些技术相关的新的东西。然而，我却只教会了自己怎么用。没有教会自己为什么。过去的日子已经追不回来，努力的过好当下的日子才是最重要的。2018年立了很多的flag，其实最大的flag就只有一个，那就是-行动。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2174,7 +2194,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">139</span>
+                <span class="site-state-item-count">140</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
