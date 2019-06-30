@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux 工具-tar]]></title>
+    <url>%2F2019%2F06%2F30%2Flinux-tool-tar%2F</url>
+    <content type="text"><![CDATA[Linux 工具-tartar 命令应该是我们经常用的了，它主要的功能是用来对文件的解压缩操作。如果要看tar的具体操作可以使用:man tar，Linux的发行版本默认都会有 tar 命令 解压文件tar 常用来解压tar.gz,tar的文件。使用的方式：tar -zxvf xxx.tar.gz 压缩文件通常我们也会有需要将多个文件压缩成一个文件的需求，比如传输文件。这个时候我们就可以使用tar -zvcf xxx.tar.gz file-dir-path1 file-dir-path2 file-dir-path-n 其中path1,path2,path-n可以是多个或者单个。]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux 工具-socat]]></title>
     <url>%2F2019%2F06%2F30%2Flinux-tool-socat%2F</url>
     <content type="text"><![CDATA[Linux 工具-socatsocat是一个多功能的网络工具，官网：http://www.dest-unreach.org/socat/ 安装socat安装方式很简单：yum install -y socat,就可以了，当然如果是ubuntu的机器就是用apt 使用socat公司内部的网络限制比较严格，只有一些常用的端口能正常访问，因此调试的时候非常麻烦，比如你的应用程序端口是19995，但是公司只能是8080来访问，这个时候怎么办？使用nginx或haproxy当然可以，但是麻烦啊，配置搞一堆。。但是使用socat就很方便了:socat TCP4-LISTEN:{port1},reuseaddr,fork TCP4:{ip:port2} ，比如你有三台机器A(127.0.0.1)；B(127.0.0.2）；C（192.168.1.1）。B能访问A的8080端口，但是不能访问C的9090端口，而服务又监听的是C的9090端口，A能访问C的9090端口。所以很当然会想到B–&gt;A:8080–&gt;C:9090。也就是在A做一层反向代理。socat就是这样的。在A上我们执行：socat TCP4-LISTEN:8080,reuseaddr,fork TCP4:192.168.1.1:9090。然后B就访问A:8080,就能访问到C的9090端口了。]]></content>

@@ -320,6 +320,176 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/12/java-design-pattern-strategy/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/12/java-design-pattern-strategy/" itemprop="url">Java设计模式-策略模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-12T15:22:23+08:00">
+                2017-09-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/12/java-design-pattern-strategy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/12/java-design-pattern-strategy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/12/java-design-pattern-strategy/" class="leancloud_visitors" data-flag-title="Java设计模式-策略模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Java设计模式-策略模式"><a href="#Java设计模式-策略模式" class="headerlink" title="Java设计模式-策略模式"></a>Java设计模式-策略模式</h2><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>策略，什么是策略？就在不同情况下用不同的方式去处理。那么策略模式是什么？ 模式，模式简而言之就是套路，就是前人总结下来得到验证的套路。所以策略模式其实就是用策略去解决一类事情的套路。</p>
+<h3 id="策略模式的一个小思考"><a href="#策略模式的一个小思考" class="headerlink" title="策略模式的一个小思考"></a>策略模式的一个小思考</h3><p>说到套路，那么一个套路就要有组成部分，不然怎么套路？而策略模式中，它的主要点就是变化的情况，以及应对变化的处理方法。比如有一家超市打折，可能为了吸引顾客、庆祝节日等，但是可能中途来个产品经理，他说为了利润最大化，要根据付款总数来对顾客实行不同打折额度。这种时候程序员心中都是千万匹马儿在奔腾，就不能为为别人做点好事么？（其实心里就是想着，tmd，又改需求，我还想回家陪老婆孩子的）~~~咳咳，走远了。 就这个超市打折来说，打折这种事情是一定存在的，而对打折的方式可能还会有各种变化。那么怎么去应对这种变化？再说一个例子，如果有个制造鸭子的工厂，我们都知道鸭子有很多类（比如死的，活的），死的就像玩具类~，活的就像烤鸭类(貌似烤之前才是活的.),不管怎样，我想说大多数鸭子都有一些基本行为，比如：飞？叫？游泳？诸如此类..但是我们会发现，鸭厂产出的鸭子最终还是要卖出去的，那么这个鸭子能不能飞？能不能叫？能不能游泳？那都是买家说了算，谁给钱听谁的。那么好了A可能要一个能飞，但不能叫，也不能游泳；B呢想要个能飞，能叫，能游泳；这下如果鸭厂只能生产一种只会飞，或者只会叫的鸭子，那肯定是不行的，但是也不能为了A专门搞个生产线，B专门搞个生产线，这样搞，要是N多客户，N多需求，那可怎么办？说了这么多，基本是废话，那么还是来代码看看。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/12/java-design-pattern-strategy/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/08/19/java-fastjson-map/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1861,183 +2031,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/05/13/docker-data/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/13/docker-data/" itemprop="url">Docker 数据管理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-13T22:20:30+08:00">
-                2017-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/05/13/docker-data/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/13/docker-data/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/05/13/docker-data/" class="leancloud_visitors" data-flag-title="Docker 数据管理">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>Docker 的数据管理应该核心中的核心。因为不管哪个公司，数据应该永远是第一位。</p>
-</blockquote>
-<h3 id="1-Docker-数据卷简介"><a href="#1-Docker-数据卷简介" class="headerlink" title="1,Docker 数据卷简介"></a>1,Docker 数据卷简介</h3><p>Docker 的数据卷是一个可供容器使用的特殊目录，它绕过文件系统，提供很多的特性:</p>
-<ul>
-<li>数据卷可以在容器之间共享和重用</li>
-<li>对数据卷的修改会立马生效</li>
-<li>对数据卷的更新，不会影响镜像</li>
-<li>卷会一直存在，直到没有容器使用<br>数据卷的使用，类似于Linux下对目录或文件进行mount操作。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/13/docker-data/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2086,7 +2079,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">142</span>
+                <span class="site-state-item-count">143</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
