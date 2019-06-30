@@ -320,6 +320,343 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/06/30/linux-tool-socat/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/30/linux-tool-socat/" itemprop="url">Linux 工具-socat</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T16:20:53+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/30/linux-tool-socat/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/30/linux-tool-socat/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/30/linux-tool-socat/" class="leancloud_visitors" data-flag-title="Linux 工具-socat">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Linux-工具-socat"><a href="#Linux-工具-socat" class="headerlink" title="Linux 工具-socat"></a>Linux 工具-socat</h1><p>socat是一个多功能的网络工具，官网：<a href="http://www.dest-unreach.org/socat/" target="_blank" rel="noopener">http://www.dest-unreach.org/socat/</a></p>
+<h2 id="安装socat"><a href="#安装socat" class="headerlink" title="安装socat"></a>安装socat</h2><p>安装方式很简单：<code>yum install -y socat</code>,就可以了，当然如果是ubuntu的机器就是用<code>apt</code></p>
+<h2 id="使用socat"><a href="#使用socat" class="headerlink" title="使用socat"></a>使用socat</h2><p>公司内部的网络限制比较严格，只有一些常用的端口能正常访问，因此调试的时候非常麻烦，比如你的应用程序端口是19995，但是公司只能是8080来访问，这个时候怎么办？使用nginx或haproxy当然可以，但是麻烦啊，配置搞一堆。。但是使用socat就很方便了:<code>socat TCP4-LISTEN:{port1},reuseaddr,fork TCP4:{ip:port2}</code> ，比如你有三台机器A(127.0.0.1)；B(127.0.0.2）；C（192.168.1.1）。B能访问A的8080端口，但是不能访问C的9090端口，而服务又监听的是C的9090端口，A能访问C的9090端口。所以很当然会想到B–&gt;A:8080–&gt;C:9090。也就是在A做一层反向代理。socat就是这样的。在A上我们执行：<code>socat TCP4-LISTEN:8080,reuseaddr,fork TCP4:192.168.1.1:9090</code>。然后B就访问A:8080,就能访问到C的9090端口了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/06/30/docker-registry-clean/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/30/docker-registry-clean/" itemprop="url">Docker 镜像仓库清理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T16:07:52+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/30/docker-registry-clean/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/30/docker-registry-clean/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/30/docker-registry-clean/" class="leancloud_visitors" data-flag-title="Docker 镜像仓库清理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Docker-镜像仓库清理"><a href="#Docker-镜像仓库清理" class="headerlink" title="Docker 镜像仓库清理"></a>Docker 镜像仓库清理</h1><p>公司使用registry作为镜像仓库管理，由于只对内使用并且只暴露给jenkins，不对其它人公开，因此也就没有做registry的限制。不过由于我们在jenkins构建的时候使用docker 的一个插件，但是我们公司又系统在构建的时候不还tag，因此造成同一个名字有很多历史的layer都保存在了镜像仓库中，占用的空间随着时间越来越大。经过这次清理，由原来的占用1.9T清理空间到占用195G，效果还是非常的明显。</p>
+<p>清理的步骤如下，下面的步骤适用于镜像名和tag都相同，然后重复push的情景下：<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/30/docker-registry-clean/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/06/30/docker-lxc-cgroup/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1669,326 +2006,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/05/05/restful-api/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/05/restful-api/" itemprop="url">Restful 接口返回响应码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-05T21:10:41+08:00">
-                2019-05-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/05/restful-api/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/05/restful-api/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/05/05/restful-api/" class="leancloud_visitors" data-flag-title="Restful 接口返回响应码">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Restful-接口返回响应码"><a href="#Restful-接口返回响应码" class="headerlink" title="Restful 接口返回响应码"></a>Restful 接口返回响应码</h1><p>最近用restful做接口，突然想想返回状态码该怎么返回给客户端或者调用者。毕竟那么多的状态码。</p>
-<p>后来找到一个状态码解释:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1xx：信息响应类，表示接收到请求并且继续处理</span><br><span class="line">2xx：处理成功响应类，表示动作被成功接收、理解和接受</span><br><span class="line">3xx：重定向响应类，为了完成指定的动作，必须接受进一步处理</span><br><span class="line">4xx：客户端错误，客户请求包含语法错误或者是不能正确执行</span><br><span class="line">5xx：服务端错误，服务器不能正确执行一个正确的请求</span><br><span class="line"></span><br><span class="line">100——客户必须继续发出请求</span><br><span class="line">101——客户要求服务器根据请求转换HTTP协议版本</span><br><span class="line"></span><br><span class="line">200——交易成功</span><br><span class="line">201——提示知道新文件的URL</span><br><span class="line">202——接受和处理、但处理未完成</span><br><span class="line">203——返回信息不确定或不完整</span><br><span class="line">204——请求收到，但返回信息为空</span><br><span class="line">205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件</span><br><span class="line">206——服务器已经完成了部分用户的GET请求</span><br><span class="line"></span><br><span class="line">300——请求的资源可在多处得到</span><br><span class="line">301——删除请求数据</span><br><span class="line">302——在其他地址发现了请求数据</span><br><span class="line">303——建议客户访问其他URL或访问方式</span><br><span class="line">304——客户端已经执行了GET，但文件未变化</span><br><span class="line">305——请求的资源必须从服务器指定的地址得到</span><br><span class="line">306——前一版本HTTP中使用的代码，现行版本中不再使用</span><br><span class="line">307——申明请求的资源临时性删除</span><br><span class="line"></span><br><span class="line">400——错误请求，如语法错误</span><br><span class="line">401——请求授权失败</span><br><span class="line">402——保留有效ChargeTo头响应</span><br><span class="line">403——请求不允许</span><br><span class="line">404——没有发现文件、查询或URl</span><br><span class="line">405——用户在Request-Line字段定义的方法不允许</span><br><span class="line">406——根据用户发送的Accept拖，请求资源不可访问</span><br><span class="line">407——类似401，用户必须首先在代理服务器上得到授权</span><br><span class="line">408——客户端没有在用户指定的饿时间内完成请求</span><br><span class="line">409——对当前资源状态，请求不能完成</span><br><span class="line">410——服务器上不再有此资源且无进一步的参考地址</span><br><span class="line">411——服务器拒绝用户定义的Content-Length属性请求</span><br><span class="line">412——一个或多个请求头字段在当前请求中错误</span><br><span class="line">413——请求的资源大于服务器允许的大小</span><br><span class="line">414——请求的资源URL长于服务器允许的长度</span><br><span class="line">415——请求资源不支持请求项目格式</span><br><span class="line">416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段</span><br><span class="line">417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求</span><br><span class="line"></span><br><span class="line">500——服务器产生内部错误</span><br><span class="line">501——服务器不支持请求的函数</span><br><span class="line">502——服务器暂时不可用，有时是为了防止发生系统过载</span><br><span class="line">503——服务器过载或暂停维修</span><br><span class="line">504——关口过载，服务器使用另一个关口或服务来响应用户，等待时间设定值较长</span><br><span class="line">505——服务器不支持或拒绝支请求头中指定的HTTP版本</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" itemprop="url">nginx从docker容器的环境变量中获取值</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T22:56:33+08:00">
-                2019-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" class="leancloud_visitors" data-flag-title="nginx从docker容器的环境变量中获取值">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="nginx从docker容器的环境变量中获取值"><a href="#nginx从docker容器的环境变量中获取值" class="headerlink" title="nginx从docker容器的环境变量中获取值"></a>nginx从docker容器的环境变量中获取值</h1><p>这篇接上一篇<a href="http://chenzhijun.me/2019/04/08/vuejs-starter/">vuejs 从拷项目到开发上线</a></p>
-<h2 id="Docker-部署"><a href="#Docker-部署" class="headerlink" title="Docker 部署"></a>Docker 部署</h2><p>另外一个问题就是如何制作成镜像了？可以看到我们在nginx.conf中有api服务的地址，这个地址可能在不同的环境(di,sit,prd)都不一样，那能否通过容器的env来改变nginx.conf中的值呢？</p>
-<p>不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李template的方式，来生成conf文件话不多说，直接上代码，先创建一个<code>nginx.conf.template</code>的文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80 default_server;</span><br><span class="line">    listen       [::]:80 default_server;</span><br><span class="line">    server_name  _;</span><br><span class="line">    root         /app/html;</span><br><span class="line"></span><br><span class="line">    # Load configuration files for the default server block.</span><br><span class="line">    include /etc/nginx/default.d/*.conf;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /m-web/ &#123;</span><br><span class="line">        root /app/html/dist;</span><br><span class="line">    &#125;</span><br><span class="line">    location /m-web/m-api/ &#123;</span><br><span class="line">        proxy_pass http://$&#123;M_API_SITE&#125;/m-api/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 404 /404.html;</span><br><span class="line">        location = /40x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 500 502 503 504 /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>之后准备Dockerfile：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:latest</span><br><span class="line"><span class="keyword">RUN</span> rm -rf /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/nginx.conf</span><br><span class="line">ENV M_API_SITE 192.168.1.19:8089</span><br><span class="line">ADD nginx.conf.template /etc/nginx/conf.d/nginx.conf.template</span><br><span class="line">ADD dist /app/html/dist</span><br><span class="line">CMD ["/bin/bash", "-c", "envsubst &lt; /etc/nginx/conf.d/nginx.conf.template &gt; /etc/nginx/conf.d/nginx.conf &amp;&amp; exec nginx -g 'daemon off;'"]</span><br></pre></td></tr></table></figure>
-<p>之后<code>docker build -t xxx:latest .</code>，之后我们就可以通过<code>-e M_API_SITE=192.168.123.1:8080</code>设置容器的环境变量来设置不同的api地址了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2032,7 +2054,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">140</span>
+                <span class="site-state-item-count">142</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
