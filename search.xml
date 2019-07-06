@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[PaaS 平台应当具备的能力]]></title>
     <url>%2F2019%2F07%2F06%2Fthe-ability-of-a-paas-platform%2F</url>
-    <content type="text"><![CDATA[PaaS 平台应当具备的能力一个完善的paas平台应该具备的能力: 代码管理中有gitlab，github，gitee. etc…]]></content>
+    <content type="text"><![CDATA[PaaS 平台应当具备的能力一个完善的paas平台应该具备的能力: 代码管理中有gitlab，github，gitee. etc… 配置管理中：开发，测试，生产一致性。]]></content>
       <categories>
         <category>Paas</category>
       </categories>
