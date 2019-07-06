@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[PaaS 平台应当具备的能力]]></title>
+    <url>%2F2019%2F07%2F06%2Fthe-ability-of-a-paas-platform%2F</url>
+    <content type="text"><![CDATA[PaaS 平台应当具备的能力一个完善的paas平台应该具备的能力: 代码管理中有gitlab，github，gitee. etc…]]></content>
+      <categories>
+        <category>Paas</category>
+      </categories>
+      <tags>
+        <tag>PaaS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Java 类转 Json 时属性名使用下划线]]></title>
     <url>%2F2019%2F07%2F06%2Fjava-json-generate-with-underline%2F</url>
     <content type="text"><![CDATA[Java 类转 Json 时属性名使用下划线很多时候和其它系统对接的时候，不太喜欢用驼峰的方式，毕竟如果是给前端的api，写个驼峰总感觉有点怪异，总喜欢将属性使用下划线。也就是一个bookName,给前端的时候是：book_name，当然如果是后台系统，还是使用驼峰啊。 Java 统一 json 为下划线在 Java 中有两种方式可以实现这种方式，一种是全局的，一种是局部。 全局修改属性的json名为下划线格式如果需要全局的修改，那么只需要在类上面使用@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)即可。 12345678910111213141516171819202122232425262728293031323334package me.chenzhijun.enumjson;import com.fasterxml.jackson.databind.PropertyNamingStrategy;import com.fasterxml.jackson.databind.annotation.JsonNaming;@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)public class Instance &#123; Object state; private String bookName; public Instance(Object state)&#123; this.state=state; this.bookName="《json转换》"; &#125; public Instance() &#123; &#125; public Object getState() &#123; return state; &#125; public void setState(Object state) &#123; this.state = state; &#125; public String getBookName() &#123; return bookName; &#125; public void setBookName(String bookName) &#123; this.bookName = bookName; &#125;&#125; 转换后的json为： 1234&#123; "state": "Success", "book_name": "《json转换》"&#125; 局部修改属性的json名为下划线格式局部的方式就是使用@JsonProperty(value = &quot;book_name&quot;)这个作用在属性上： 12345678910111213141516171819202122232425262728293031323334package me.chenzhijun.enumjson;import com.fasterxml.jackson.annotation.JsonProperty;public class Instance &#123; String state; @JsonProperty(value = "book_name") private String bookName; public Instance(String state) &#123; this.state = state; this.bookName = "《json转换》"; &#125; public Instance() &#123; &#125; public Object getState() &#123; return state; &#125; public void setState(String state) &#123; this.state = state; &#125; public String getBookName() &#123; return bookName; &#125; public void setBookName(String bookName) &#123; this.bookName = bookName; &#125;&#125; 测试类为：12345@Testpublic void jsonTest() throws JsonProcessingException &#123; Instance instance = new Instance("success"); System.out.println(objectMapper.writeValueAsString(instance));&#125;]]></content>
