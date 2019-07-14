@@ -320,6 +320,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/08/08/java-string/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/08/java-string/" itemprop="url">java-基础之string</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-08T20:11:39+08:00">
+                2017-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/08/java-string/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/08/java-string/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/08/08/java-string/" class="leancloud_visitors" data-flag-title="java-基础之string">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Java-基础-String"><a href="#Java-基础-String" class="headerlink" title="Java 基础-String"></a>Java 基础-String</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. Case mapping is based on the Unicode Standard version specified by the Character class.</span><br><span class="line"></span><br><span class="line">`String`类包括了一系列字符的方法，比如：比较字符，查找字符，子字符串，创建一个全是大写或者全是小写的字符。匹配是在unicode标准版本规范在`Character` 类的基础上。</span><br><span class="line"></span><br><span class="line">The Java language provides special support for the string concatenation operator ( + ), and for conversion of other objects to strings. String concatenation is implemented through the StringBuilder(or StringBuffer) class and its append method. String conversions are implemented through the method toString, defined by Object and inherited by all classes in Java. For additional information on string concatenation and conversion, see Gosling, Joy, and Steele, The Java Language Specification.</span><br><span class="line"></span><br><span class="line">Java语言提供了对字符的操作符`+`做了特殊的支持,并且对其他的objects转换成string也做了相应支持。String的连接是StringBuilder(或者说StringBuffer)来实现的它的append方法的。String转换是通过实现定义在Object(所有的java方法都继承了它)的toString方法。更多的额外的字符操作和转换的特殊操作，看看gosling，joy，steele，写的《java语言规范》。</span><br><span class="line"></span><br><span class="line">Unless otherwise noted, passing a null argument to a constructor or method in this class will cause a NullPointerException to be thrown.</span><br><span class="line"></span><br><span class="line">除非有额外的标记，传递一个null参数给一个构造方法或者非构造方法在这个类中，会导致`NullPointerException`被抛出。</span><br><span class="line"></span><br><span class="line">A String represents a string in the UTF-16 format in which supplementary characters are represented by surrogate pairs (see the section Unicode Character Representations in the Character class for more information). Index values refer to char code units, so a supplementary character uses two positions in a String.</span><br><span class="line"></span><br><span class="line">一个String呈现的字符串是用UTF-16格式，不够的补位。</span><br><span class="line"></span><br><span class="line">The String class provides methods for dealing with Unicode code points (i.e., characters), in addition to those for dealing with Unicode code units (i.e., char values).</span><br><span class="line"></span><br><span class="line">这个String类提供方法处理Unicode代码点和unicode代码单元。</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/08/java-string/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/08/04/apec-804-problem/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1895,194 +2064,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/05/08/klook-508-problem/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/08/klook-508-problem/" itemprop="url">klook-508-problem</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-08T23:27:55+08:00">
-                2017-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Question/" itemprop="url" rel="index">
-                    <span itemprop="name">Question</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/05/08/klook-508-problem/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/08/klook-508-problem/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/05/08/klook-508-problem/" class="leancloud_visitors" data-flag-title="klook-508-problem">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="5月8日问题"><a href="#5月8日问题" class="headerlink" title="5月8日问题"></a>5月8日问题</h2><h3 id="MySQL二进制运算"><a href="#MySQL二进制运算" class="headerlink" title="MySQL二进制运算:"></a>MySQL二进制运算:</h3><p>mysql可以直接使用位运算。我们现在是否支持多平台<code>platform</code>使用的就是位运算的方式。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">web</th>
-<th style="text-align:center">mobile web</th>
-<th style="text-align:center">ios</th>
-<th style="text-align:center">Android</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-</tbody>
-</table>
-<p>这种设置的好处是以后扩展起来可以加位就可以了。其实我觉得很蛋疼，可读性真的差，但是想想linux的权限控制系统rwx其实感觉也还可以接受。不过要是位数异常多的话~GG吧。这种其实也有好处，平常设计表中可能需要多条记录，或者用另一个表关联，这种位运算就可以直接在一个表里面做选择了。那么如何操作位运算了？ 只要记着，你想要那个平台，比如<code>web</code>，它就是<code>8</code>，因为它指代的是二进制的<code>1000</code>,如果你想找出支持<code>web</code>平台的记录，那么只要用<code>platform&amp;8</code>那么就可以找出所有<code>web</code>位是<code>1</code>的记录。<code>select * from tbl_aa where platform&amp;8</code> 千万别写成<code>select * from tbl_aa where platform=platform&amp;8</code> 这样的结果，是将platform进行了赋值，将位运算的结果赋值给了platform再去做查找筛选。
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/08/klook-508-problem/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2131,7 +2112,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">147</span>
+                <span class="site-state-item-count">148</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

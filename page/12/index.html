@@ -320,6 +320,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/19/docker-dockerfile/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/docker-dockerfile/" itemprop="url">Dockerfile 编写</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T15:05:08+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/19/docker-dockerfile/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/19/docker-dockerfile/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/19/docker-dockerfile/" class="leancloud_visitors" data-flag-title="Dockerfile 编写">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Dockerfile-文件导读"><a href="#Dockerfile-文件导读" class="headerlink" title="Dockerfile 文件导读"></a>Dockerfile 文件导读</h2><p>Dockerfile 是一个包含了很多指令的文本文件，基于这些指令我们可以使用build创建一个image。</p>
+<p>docker build创建image是从dockerfile和context。构建中的上下文(context)是PATH和URL的文件集合，PATH是指本地的文件系统，URL是一个Git仓库地址。一个上下文通常是递归的，对于PATH包含了子目录，URL包含了它的子模块。<code>docker build .</code></p>
+<p>build是有Docker 守护进程执行的，执行的第一件事就是将完整的上下文路径（包括递归的子目录）都会发送给守护进程，在大多场景下，最好的方式是用一个空目录作为上下文路径，然后里面放一个Dockerfile.然后在构建(build)将需要的文件加入到目录里面来。</p>
+<p>千万注意不要使用根路径”/“作为PATH，它会导致将整个硬盘的文件都会发送给Docker的守护进程</p>
+<p>如果要在构建上下文中使用一个文件，Dockerfile 引用了一些特殊的指令，比如COPY指令，为了优化构建，不需要的文件和目录可以加入到上下文目录的.dockerignore文件中。<a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file" target="_blank" rel="noopener">dockerignore file</a></p>
+<p>一般地，Dockerfile被称作Dockerfile，并且放在上下文目录的根目录。你也可以在构建的时候使用 -f 标记来指定一个你文件系统任何地方中的Dockerfile。<br><code>docker build -f /path/to/a/Dockerfile .</code></p>
+<p>你也可以在构建成功后保存image时指定远端源仓库(repositories)和标签。</p>
+<p><code>docker build -t shykes/myapp .</code></p>
+<p>如果要在构建之后给多个仓库(repositories) 打tag，使用多个-t参数就可以了：<br><code>docker build -t shykes/myapp:1.0.2 -t shykes/myapp:latest .</code></p>
+<p>在Docker守护进程执行Dockerfile中的指令之前，它都会进行一下预编译来校验语法是否准确，如果有错误的话会返回error。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t test/myapp .</span><br><span class="line">Sending build context to Docker daemon 2.048 kB</span><br><span class="line">Error response from daemon: Unknown instruction: RUNCMD</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/19/docker-dockerfile/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/19/java-design-pattern-decorate/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1844,175 +2022,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/08/08/java-string/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/08/java-string/" itemprop="url">java-基础之string</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-08T20:11:39+08:00">
-                2017-08-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/08/08/java-string/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/08/java-string/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/08/08/java-string/" class="leancloud_visitors" data-flag-title="java-基础之string">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Java-基础-String"><a href="#Java-基础-String" class="headerlink" title="Java 基础-String"></a>Java 基础-String</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. Case mapping is based on the Unicode Standard version specified by the Character class.</span><br><span class="line"></span><br><span class="line">`String`类包括了一系列字符的方法，比如：比较字符，查找字符，子字符串，创建一个全是大写或者全是小写的字符。匹配是在unicode标准版本规范在`Character` 类的基础上。</span><br><span class="line"></span><br><span class="line">The Java language provides special support for the string concatenation operator ( + ), and for conversion of other objects to strings. String concatenation is implemented through the StringBuilder(or StringBuffer) class and its append method. String conversions are implemented through the method toString, defined by Object and inherited by all classes in Java. For additional information on string concatenation and conversion, see Gosling, Joy, and Steele, The Java Language Specification.</span><br><span class="line"></span><br><span class="line">Java语言提供了对字符的操作符`+`做了特殊的支持,并且对其他的objects转换成string也做了相应支持。String的连接是StringBuilder(或者说StringBuffer)来实现的它的append方法的。String转换是通过实现定义在Object(所有的java方法都继承了它)的toString方法。更多的额外的字符操作和转换的特殊操作，看看gosling，joy，steele，写的《java语言规范》。</span><br><span class="line"></span><br><span class="line">Unless otherwise noted, passing a null argument to a constructor or method in this class will cause a NullPointerException to be thrown.</span><br><span class="line"></span><br><span class="line">除非有额外的标记，传递一个null参数给一个构造方法或者非构造方法在这个类中，会导致`NullPointerException`被抛出。</span><br><span class="line"></span><br><span class="line">A String represents a string in the UTF-16 format in which supplementary characters are represented by surrogate pairs (see the section Unicode Character Representations in the Character class for more information). Index values refer to char code units, so a supplementary character uses two positions in a String.</span><br><span class="line"></span><br><span class="line">一个String呈现的字符串是用UTF-16格式，不够的补位。</span><br><span class="line"></span><br><span class="line">The String class provides methods for dealing with Unicode code points (i.e., characters), in addition to those for dealing with Unicode code units (i.e., char values).</span><br><span class="line"></span><br><span class="line">这个String类提供方法处理Unicode代码点和unicode代码单元。</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/08/java-string/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2061,7 +2070,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">147</span>
+                <span class="site-state-item-count">148</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
