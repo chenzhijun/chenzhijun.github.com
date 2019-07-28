@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="10月3号周报 今日突然兴起，想翻译文章，其实之前的我在LinuxCN上也翻译过，只是那边大多是Linux的文章，其实我想翻译Java周边的。那边的文章我也有翻译过，只是总觉得缺少什么，后来接触了Spring4ALL,也就随口问了下，没想到还竟然有人回复了我,所以也就有了下面这篇文章，算作投名状吧。  其实，能翻译我还是很高兴的，因为我觉得那26个字母非常可爱。^_^ 下面是是10月3号在Spri">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-14T15:19:42.607Z">
+<meta property="og:updated_time" content="2019-07-28T04:41:24.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring周报翻译 - 2017年10月3日周报">
 <meta name="twitter:description" content="10月3号周报 今日突然兴起，想翻译文章，其实之前的我在LinuxCN上也翻译过，只是那边大多是Linux的文章，其实我想翻译Java周边的。那边的文章我也有翻译过，只是总觉得缺少什么，后来接触了Spring4ALL,也就随口问了下，没想到还竟然有人回复了我,所以也就有了下面这篇文章，算作投名状吧。  其实，能翻译我还是很高兴的，因为我觉得那26个字母非常可爱。^_^ 下面是是10月3号在Spri">
@@ -125,9 +125,9 @@
       author: 'chenzhijun'
     },
     algolia: {
-      applicationID: '',
+      applicationID: 'JPAPDSUEBG',
       apiKey: '',
-      indexName: '',
+      indexName: 'BBOX',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -274,20 +274,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -664,7 +670,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">148</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1312,6 +1318,19 @@ var jiathis_config={
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 

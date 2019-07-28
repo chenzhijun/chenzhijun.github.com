@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="Linux如何查看当前占用CPU或内存最多的K个进程一、可以使用以下命令查使用内存最多的K个进程 方法1：  1ps -aux | sort -k4nr | head -K 如果是10个进程，K=10，如果是最高的三个，K=3 说明：ps -aux中（a指代all——所有的进程，u指代userid——执行该进程的用户id，x指代显示所有程序，不以终端机来区分） ​        ps -aux的输">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-14T15:19:42.607Z">
+<meta property="og:updated_time" content="2019-07-28T04:41:24.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux如何查看当前占用CPU或内存最多的K个进程">
 <meta name="twitter:description" content="Linux如何查看当前占用CPU或内存最多的K个进程一、可以使用以下命令查使用内存最多的K个进程 方法1：  1ps -aux | sort -k4nr | head -K 如果是10个进程，K=10，如果是最高的三个，K=3 说明：ps -aux中（a指代all——所有的进程，u指代userid——执行该进程的用户id，x指代显示所有程序，不以终端机来区分） ​        ps -aux的输">
@@ -124,9 +124,9 @@
       author: 'chenzhijun'
     },
     algolia: {
-      applicationID: '',
+      applicationID: 'JPAPDSUEBG',
       apiKey: '',
-      indexName: '',
+      indexName: 'BBOX',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -273,20 +273,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -613,7 +619,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">148</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1261,6 +1267,19 @@ var jiathis_config={
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 

@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="MySQL 存储过程MySQL存储过程是一个存储在MySQL数据库中的一段SQL代码，类似于我们平常在程序语言中的一个自定义函数。其实说到底，SQL也是一种语言，它也可以定义函数，定时器等等。只不过它是直接操作的数据库中的数据。 平常能用到存储过程的机会不多，以前在支付公司的时候更别说直接操作存储过程了，这根本不可能。任何需要做的处理逻辑都需要在代码中处理，所以这次接到写存储过程的任务，我还是有点">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-14T15:19:42.607Z">
+<meta property="og:updated_time" content="2019-07-28T04:41:24.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 存储过程">
 <meta name="twitter:description" content="MySQL 存储过程MySQL存储过程是一个存储在MySQL数据库中的一段SQL代码，类似于我们平常在程序语言中的一个自定义函数。其实说到底，SQL也是一种语言，它也可以定义函数，定时器等等。只不过它是直接操作的数据库中的数据。 平常能用到存储过程的机会不多，以前在支付公司的时候更别说直接操作存储过程了，这根本不可能。任何需要做的处理逻辑都需要在代码中处理，所以这次接到写存储过程的任务，我还是有点">
@@ -125,9 +125,9 @@
       author: 'chenzhijun'
     },
     algolia: {
-      applicationID: '',
+      applicationID: 'JPAPDSUEBG',
       apiKey: '',
-      indexName: '',
+      indexName: 'BBOX',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -274,20 +274,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -660,7 +666,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">148</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1308,6 +1314,19 @@ var jiathis_config={
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 

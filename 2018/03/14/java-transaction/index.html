@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="Java 事务处理（包括spring事务管理）JDBC 的事务处理Java 中的事务处理有三部分：  自动提交模式 事务隔离级别 保护点  其实实际上java中的事务处理最终依赖的是各数据库的事务处理实现。如果使用的数据库不支持事务，或者提供的数据库驱动程序没有支持事务，那么也是巧妇难为无米之炊。 事务自动提交的方式有：DML（DML），DDL（create），select 查询后结果集关闭，储存">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-14T15:19:42.603Z">
+<meta property="og:updated_time" content="2019-07-28T04:41:24.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 事务处理（包括spring事务管理）">
 <meta name="twitter:description" content="Java 事务处理（包括spring事务管理）JDBC 的事务处理Java 中的事务处理有三部分：  自动提交模式 事务隔离级别 保护点  其实实际上java中的事务处理最终依赖的是各数据库的事务处理实现。如果使用的数据库不支持事务，或者提供的数据库驱动程序没有支持事务，那么也是巧妇难为无米之炊。 事务自动提交的方式有：DML（DML），DDL（create），select 查询后结果集关闭，储存">
@@ -125,9 +125,9 @@
       author: 'chenzhijun'
     },
     algolia: {
-      applicationID: '',
+      applicationID: 'JPAPDSUEBG',
       apiKey: '',
-      indexName: '',
+      indexName: 'BBOX',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -274,20 +274,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -645,7 +651,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">148</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1293,6 +1299,19 @@ var jiathis_config={
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 

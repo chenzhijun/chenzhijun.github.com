@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-18-17-13-33.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-18-17-13-59.png">
-<meta property="og:updated_time" content="2019-07-14T15:19:42.603Z">
+<meta property="og:updated_time" content="2019-07-28T04:41:24.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RabbitMQ-消息中间件（二）任务队列">
 <meta name="twitter:description" content="消息中间件 RabbitMQ (二) 任务队列 第一篇中简单介绍了mq的使用，那么第二节中来了解下mq的其它内容.  工作队列这节我们将建立一个工作队列来讲任务分发到不同的消费工作者中去。工作队列的主要思想是避免在做资源密集型任务的同时又不得不等待一个个完成。这种时候我们像消息一样封装所要完成的任务然后将它发送到队列中，在后台运行的工作线程会将任务拿出，然后执行这个任务。当运行多个工作线程的时候，">
@@ -128,9 +128,9 @@
       author: 'chenzhijun'
     },
     algolia: {
-      applicationID: '',
+      applicationID: 'JPAPDSUEBG',
       apiKey: '',
-      indexName: '',
+      indexName: 'BBOX',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -277,20 +277,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -670,7 +676,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">148</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1318,6 +1324,19 @@ var jiathis_config={
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 

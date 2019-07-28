@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="年度问题日结,将今年每天遇到的问题做一个记录: &amp;lt;月.日 问题&amp;gt;  6.7 问题 Hashmap寻找的时间复杂度  hashmap的实现是”数组+链表”的形式，  12341. 先根据key值计算出hash值以及h值（h值是java实现中处理得到的更优的index索引值）2. 查找table数组中的h位置，得到相应的键值对链表3.	根据key值，遍历键值对链表，找到相应的键值对，4.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-14T15:19:42.603Z">
+<meta property="og:updated_time" content="2019-07-28T04:41:24.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="klook-607-problem">
 <meta name="twitter:description" content="年度问题日结,将今年每天遇到的问题做一个记录: &amp;lt;月.日 问题&amp;gt;  6.7 问题 Hashmap寻找的时间复杂度  hashmap的实现是”数组+链表”的形式，  12341. 先根据key值计算出hash值以及h值（h值是java实现中处理得到的更优的index索引值）2. 查找table数组中的h位置，得到相应的键值对链表3.	根据key值，遍历键值对链表，找到相应的键值对，4.">
@@ -125,9 +125,9 @@
       author: 'chenzhijun'
     },
     algolia: {
-      applicationID: '',
+      applicationID: 'JPAPDSUEBG',
       apiKey: '',
-      indexName: '',
+      indexName: 'BBOX',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -274,20 +274,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -741,7 +747,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">148</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1389,6 +1395,19 @@ var jiathis_config={
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 

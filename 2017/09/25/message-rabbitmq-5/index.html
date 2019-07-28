@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-25-16-47-25.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-25-17-30-02.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-25-17-28-06.png">
-<meta property="og:updated_time" content="2019-07-14T15:19:42.607Z">
+<meta property="og:updated_time" content="2019-07-28T04:41:24.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RabbitMQ-消息中间件（五）Topics">
 <meta name="twitter:description" content="RabbitMQ-消息中间件（五）TopicsTopics 前言上一章我们写了个路由日志系统，用direct的放交换机，比较了fanout和它之间的区别，一个是广播，一个是绑定。尽管我们使用direct交换机做了改进，但是它还是有一些限制，它没法根据不同的几个规则了区分。我们之前的日志是分了四种:info、debug、warn、error。但是我们可能实际中了，对error又分为系统错误或者业务错">
@@ -129,9 +129,9 @@
       author: 'chenzhijun'
     },
     algolia: {
-      applicationID: '',
+      applicationID: 'JPAPDSUEBG',
       apiKey: '',
-      indexName: '',
+      indexName: 'BBOX',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -278,20 +278,26 @@
   
     <div class="site-search">
       
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
     <span class="popup-btn-close">
       <i class="fa fa-times-circle"></i>
     </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
   </div>
-  <div id="local-search-result"></div>
-</div>
+
 
 
 
@@ -655,7 +661,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">148</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1303,6 +1309,19 @@ var jiathis_config={
   </script>
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
 
 
 
