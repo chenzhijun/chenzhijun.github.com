@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[过去一段时间遇到的一些问题]]></title>
+    <url>%2F2019%2F08%2F17%2Frecord-last%2F</url>
+    <content type="text"><![CDATA[随笔-过去一段时间遇到的一些问题 Q: Ansible 远程执行无法找到命令的问题。 A: 实际上是bash / sh的问题，执行的时候使用ansible all -i hosts -m shell -a &#39;PATH=&quot;/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/bin:/usr/bin&quot;;source /etc/profile;groupadd docker&#39; Q：kubernetes 一个节点的ip被加入到集群中，使得节点ip变成了kube-ipvs0里面的子网 A: 创建了外部服务，但是外部服务的ip地址为node的一个节点ip，产生的后果为这个节点与其它节点直接无法ping通。 Q: Docker 使用非Root用户管理或者 Docker无权限 A: https://docs.docker.com/install/linux/linux-postinstall/ Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.26/build?buildargs=%7B%7D&amp;buildbinds=null&amp;cachefrom=%5B%5D&amp;cgroupparent=&amp;cpuperiod=0&amp;cpuquota=0&amp;cpusetcpus=&amp;cpusetmems=&amp;cpushares=0&amp;dockerfile=Dockerfile&amp;labels=%7B%7D&amp;memory=0&amp;memswap=0&amp;networkmode=default&amp;pull=1&amp;rm=1&amp;shmsize=0&amp;t=harbor.uat.cmft.com%2Fcmft-library%2Fadms-app-0627%3A170&amp;ulimits=null: dial unix /var/run/docker.sock: connect: permission denied Q: Docker 的远程仓库用户权限文件。 A: $HOME/.dockercfg 在用户根目录的.dockercfg目录。如果要查当前仓库登陆的用户docker login hub.xxx.com Q：kubernetes 直接运行一个pod A: kubectl run testconfig --image=harob -o yaml --dry-run Q：kubernetes 获取某个资源的解释或者yaml的定义解释 A：kubectl explain pods.spec Q: git 使用代理 A: 1234567git config --global http.proxy http://proxy.example.com:8888git config --global --unset http.proxygit config --global --add remote.origin.proxy "socks5://127.0.0.1:18001"git config --unset-all Q：docker删除不需要的镜像。 A: docker images|grep &#39;none&#39;|awk &#39;{print $3}&#39;|xargs -r docker rmi -f Q：MySQL 集群无法重启 A: 123show variables like &apos;wsrep_provider_options&apos;;/data/mysql/grastate.dat 修改safe_to_bootstrap: 1 Q: linux某个进程无响应 A: https://blog.csdn.net/jctian000/article/details/80695025 /proc/进程号/fd /proc/进程/stack Q：Linux逻辑卷扩容 A: 1234vgextend vg00 /dev/vdclvextend -L +20G /dev/vg00/homexfs_growfs /dev/vg00/home Q: curl timeout A: curl --connect-timeout 2 -m 5 100.66.7.2:25]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[jenkins-docker-plugin-error]]></title>
     <url>%2F2019%2F07%2F24%2Fjenkins-docker-plugin-error%2F</url>
     <content type="text"><![CDATA[Jenkins Docker 模块无法切换Registry credentials问题产生，一次公司Jenkins迁移过程中，发现一个问题，dockers模块选择不同用户的 Registry credentials 但就是无法推送到私有仓库上去。 像上图一样，选择了用户，deployop 或者其它，但是Jenkins push的时候就是报没有权限： 就算我选的的是harbor的admin账号也没用。 后来想到jenkins的机器我是都手动执行过docker login的，不知道会不会有影响，于是手动去机器上docker build –&gt; docker push 发现结果一样。也是没有权限。然后用docker login harbor.xxx.com 查看当前用户却不是admin账户，这就有点奇怪了，我当时在jenkins模块docker中选的就是admin啊。为什么docker 还是用之前的权限较小的账户了？然后我在~/.docker/config.json 查看到确实有两个账户，这个可以说明其实Docker 模块的Registry credentials其实际是起到了作用的。应该是我们一开始使用了docker login 所以造成了有”默认账户”。jenkins应该就是使用了默认账户才导致这个问题的。 解决的方式很简单，一个是删除~/.docker这个文件夹；一个是使用docker logout harbor.xxx.com就可以了。再用Jenkins构建的时候就可以看到该文件内容： 如果你是删除了~/.docker文件夹，然后重启docker，那么你再次构建的时候应该会看到~/.docker文件夹变空了。但是在用户目录多出一个~/.dockercfg文件。里面的内容和config.json一致。如果你是使用docker logout，那么就还是会在~/.docker/config.json文件中看到你每次选择的用户。 ps 如果想在jenkins启动的时候就指定其工作目录，可以这样设置export JENKINS_HOME=/data/jenkins/.jenkins]]></content>
