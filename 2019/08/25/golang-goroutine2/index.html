@@ -96,18 +96,18 @@
 
 
 
-<meta name="description" content="golang 并发基础（二）上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。 竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是原子化的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。 同步操作方式–锁住共享资">
+<meta name="description" content="golang 并发基础（二）上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。 竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是原子化的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。">
 <meta name="keywords" content="golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang 并发基础（二）">
 <meta property="og:url" content="http://chenzhijun.me/2019/08/25/golang-goroutine2/index.html">
 <meta property="og:site_name" content="饺子">
-<meta property="og:description" content="golang 并发基础（二）上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。 竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是原子化的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。 同步操作方式–锁住共享资">
+<meta property="og:description" content="golang 并发基础（二）上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。 竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是原子化的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-25T14:55:24.320Z">
+<meta property="og:updated_time" content="2019-08-25T14:56:10.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang 并发基础（二）">
-<meta name="twitter:description" content="golang 并发基础（二）上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。 竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是原子化的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。 同步操作方式–锁住共享资">
+<meta name="twitter:description" content="golang 并发基础（二）上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。 竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是原子化的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。">
 
 
 
@@ -442,7 +442,7 @@
 
       
         <h1 id="golang-并发基础（二）"><a href="#golang-并发基础（二）" class="headerlink" title="golang 并发基础（二）"></a>golang 并发基础（二）</h1><p>上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。</p>
-<p>竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是<strong>原子化</strong>的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。</p>
+<p>竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是<strong>原子化</strong>的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。<br><a id="more"></a></p>
 <h2 id="同步操作方式–锁住共享资源"><a href="#同步操作方式–锁住共享资源" class="headerlink" title="同步操作方式–锁住共享资源"></a>同步操作方式–锁住共享资源</h2><p>golang提供atomic和sync包，两个包里的函数提供了很好的解决方案。</p>
 <h3 id="原子函数-atomic-包"><a href="#原子函数-atomic-包" class="headerlink" title="原子函数 atomic 包"></a>原子函数 atomic 包</h3><p>我们可以看一下atomic提供的原子函数，它提供底层加锁的方式来同步访问整形变量和指针，示例代码:</p>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	counter <span class="keyword">int64</span></span><br><span class="line"></span><br><span class="line">	wg sync.WaitGroup</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	wg.Add(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> incCounter(<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">go</span> incCounter(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">"Final Counter:"</span>, counter)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">incCounter</span><span class="params">(id <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> wg.Done()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> count := <span class="number">0</span>; count &lt; <span class="number">2</span>; count++ &#123;</span><br><span class="line">		atomic.AddInt64(&amp;counter, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">		runtime.Gosched()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -484,7 +484,7 @@
   <p><span>本文标题:</span><a href="/2019/08/25/golang-goroutine2/">golang 并发基础（二）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2019-08-25 22:49:36</p>
- <!-- <p><span>最后更新:</span>2019-08-25 22:55:24</p> -->
+ <!-- <p><span>最后更新:</span>2019-08-25 22:56:10</p> -->
   <p><span>原始链接:</span><a href="/2019/08/25/golang-goroutine2/" title="golang 并发基础（二）">http://chenzhijun.me/2019/08/25/golang-goroutine2/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2019/08/25/golang-goroutine2/" aria-label="复制成功！"></i></span>
   </p>
