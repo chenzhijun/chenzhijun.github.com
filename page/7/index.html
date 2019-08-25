@@ -326,6 +326,358 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/30/code-in-gitlab/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/code-in-gitlab/" itemprop="url">gitlab 安装与配置（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T23:28:38+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/30/code-in-gitlab/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/30/code-in-gitlab/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/30/code-in-gitlab/" class="leancloud_visitors" data-flag-title="gitlab 安装与配置（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>很多公司都是使用的 svn 来管理代码，其实我感觉 git 肯定是未来的潮流。最近闲暇时间，在公司搭建了一个 GitLab ，正好可以记录一下。</p>
+<blockquote>
+<p>gitlab 的搭建环境推荐使用 &gt;=4G 内存</p>
+</blockquote>
+<h2 id="使用-Docker-部署-gitlab"><a href="#使用-Docker-部署-gitlab" class="headerlink" title="使用 Docker 部署 gitlab"></a>使用 Docker 部署 gitlab</h2><p>首先需要安装 Docker。推荐使用docker官网的安装方式：<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">Centos 安装docker</a>，如果访问docker官网过于太慢，可以使用DaoCloud下载docker：<a href="https://download.daocloud.io/Docker_Mirror/Docker" target="_blank" rel="noopener">daocloud 安装docker</a>。有时候下载镜像，有一些比较显而易见的原因，所以可以使用<a href="https://www.daocloud.io/mirror#accelerator-doc" target="_blank" rel="noopener">docker镜像加速器</a>。</p>
+<p>安装docker之后，下载镜像<code>gitlab/gitlab-ce:latest</code>，之后参照<a href="https://docs.gitlab.com/omnibus/docker/README.html#run-the-image" target="_blank" rel="noopener">安装文档</a>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --detach \</span><br><span class="line">    --hostname gitlab.example.com \</span><br><span class="line">    --publish 443:443 --publish 80:80 --publish 22:22 \</span><br><span class="line">    --name gitlab \</span><br><span class="line">    --restart always \</span><br><span class="line">    --volume /srv/gitlab/config:/etc/gitlab \</span><br><span class="line">    --volume /srv/gitlab/logs:/var/log/gitlab \</span><br><span class="line">    --volume /srv/gitlab/data:/var/opt/gitlab \</span><br><span class="line">    gitlab/gitlab-ce:latest</span><br></pre></td></tr></table></figure>
+<p>一个gitlab就搭建好了。<strong>默认的帐号为<code>root</code></strong>。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/30/code-in-gitlab/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/26/idea-linux-vim-command-shortcut/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/26/idea-linux-vim-command-shortcut/" itemprop="url">idea-linux-vim等常用快捷键</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T20:24:56+08:00">
+                2018-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/All/" itemprop="url" rel="index">
+                    <span itemprop="name">All</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/26/idea-linux-vim-command-shortcut/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/26/idea-linux-vim-command-shortcut/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/26/idea-linux-vim-command-shortcut/" class="leancloud_visitors" data-flag-title="idea-linux-vim等常用快捷键">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近经常看到一些有意思的快捷键，但是又不是经常用到，平常经常用的肯定都能很熟悉了。</p>
+<h2 id="idea-常用快捷键"><a href="#idea-常用快捷键" class="headerlink" title="idea 常用快捷键"></a>idea 常用快捷键</h2><p>最常用的肯定是 find action :<code>ctrl shift A</code>，这简直就是神器，如果忘记快捷键，尝试使用这个，然后输入快捷键的功能名称就有可能找到相应 功能了。</p>
+<ol>
+<li><p>idea 弹出当前类里面的方法框：<code>ctrl o</code>, 类结构图，<code>file structure</code>：<code>ctrl F12</code></p>
+</li>
+<li><p>跳转： navigate -&gt; back/forward; navigate -&gt; last edit location/next edit location</p>
+</li>
+<li><p>最近的文件：recent file/recent changed file    <code>ctrl + E</code></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/26/idea-linux-vim-command-shortcut/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ol></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/23/java-thread-guidance/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1750,399 +2102,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/12/java性能优化/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/12/java性能优化/" itemprop="url">java性能优化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T21:42:52+08:00">
-                2018-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/12/java性能优化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/12/java性能优化/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/12/java性能优化/" class="leancloud_visitors" data-flag-title="java性能优化">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Java性能优化"><a href="#Java性能优化" class="headerlink" title="Java性能优化"></a>Java性能优化</h1><p>今日在图书馆看java编程思想，看了一下午，就起身到处走走。没想到走到了《java性能优化》这本书这里，本来不想拿起来的，后来想着为啥不去看看呢。就拿起来读了一些感兴趣的章节。<br>前面一章主要讲了一些优化的大纲，已经四个测试。我记得有一个微基准测试。实在无奈，回到家，具体的是那几个测试也忘记了。当时额外看得只有几章，都是挑的感兴趣的读的。有一章讲的是jdbc，又想起之前别人为我的一个问题：spring的事务是怎么实现的？我当时有点懵逼，其实仔细一想，java中链接数据库不就是通过jdbc来操作的么？那我回答jdbc怎么控制事务的是不是就可以了？可那会脑袋一片空，神之尴尬。<br>java性能优化里面也提到了jpa，Java persistence api。谈到对它进行优化的时候，讲了一些点，预处理语句和语句池。比如使用PreparedStatement而不是直接使用Statement。对一些处理也可以进行批处理。jdbc的事务是基于Connection的。事务的隔离模式有，开销从大到小：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Transaction_Serializable</span><br><span class="line">Transaction_Repeatable_Read</span><br><span class="line">Transaction_Read_Commited</span><br><span class="line">Transaction_read_uncommited</span><br></pre></td></tr></table></figure>
-<p>其实这些就是数据的事务隔离级别，当然java里面还有一个<code>NONE</code>。其实这些事务控制还是根据各数据库提供商来控制的。mysql就提供了上面的四种事务隔离级别。事务也会造成一些问题比如：脏读，幻读，不可重复读。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">事务隔离级别</th>
-<th style="text-align:center">脏读</th>
-<th style="text-align:center">不可重复读</th>
-<th style="text-align:center">幻读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">读未提交（read-uncommitted)</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">不可重复读（read-committed）</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">可重复读(repeatable-read)</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">串行化（serializable）</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-</tr>
-</tbody>
-</table>
-<p>JPA的性能直接受底层jdbc驱动程序的影响，可以尝试减少写入的字段，读取更少的数据或一次读取更多的数据(延时加载)(什么是延时加载？有什么好处？怎么实现？)</p>
-<p>事务分为两种：声明式事务管理，编程式事务管理。（spring的事务怎么实现？）</p>
-<p>JPA 缓存</p>
-<p>缓存分为全局缓存和实体管理器缓存，实体管理器中的缓存通常称为一级缓存L1,全局缓存又称为二级缓存。（spring data jpa中是否也是这样实现？）</p>
-<p>实体管理器实例都有自己的缓存，它会在本地缓存事务中取得数据，在本地缓存事务中写入的数据。只有在事务提交时，这些缓存的数据才会发送到数据库。</p>
-<p>JPA缓存只在通过逐渐去访问实体的时候才有效。实体管理器通过主键查找数据时，会先从L2缓存中找。</p>
-<p>任何时候用流都记得用缓存流。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/10/thinkinjava-20180310/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/thinkinjava-20180310/" itemprop="url">重温Java编程思想的一些感悟-20180310</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T21:54:14+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/10/thinkinjava-20180310/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/10/thinkinjava-20180310/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/10/thinkinjava-20180310/" class="leancloud_visitors" data-flag-title="重温Java编程思想的一些感悟-20180310">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="重温Java编程思想的一些感悟-20180310"><a href="#重温Java编程思想的一些感悟-20180310" class="headerlink" title="重温Java编程思想的一些感悟-20180310"></a>重温Java编程思想的一些感悟-20180310</h1><blockquote>
-<p>人的懒惰，是思想上的懒惰</p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天说个有趣的事情，起床的时间是9点。周末9点起床其实也不算过分，但是吧。拖着拖着在床上又赖到了10点。然后找不到理由再拖下去了。321起床，洗脸刷牙。然后脑袋在思考了：现在要是去大学城吧，10点了。这过去就得半小时吧，然后吃午饭吧，花半小时吧，然后去图书馆路上走个20分钟吧，嗯，好像差不多就12点了。这样下去吧，晚上6点又要吃饭。等会中午说不定还要睡觉。那还去图书馆干嘛。在家里也一样的啊，反正一张大桌子，一个人，很安静。那我先去吃个肠粉当早午饭，吃完回来看书。嗯，出门记得把垃圾扔出去。嗯是的。故事就是这样开始的。当我拿着垃圾扔到楼下垃圾桶。看着太阳这么明媚，天气这么暖和，不知咋地，我竟然生出一种感觉，回家拿书包，去图书馆，而且一分钟也没有思考其它的。直接就又返回来。拿着书包，就出去了。吃完肠粉就去图书馆了。<br>最后得出一个结论：人啊，要想战胜懒惰，先的开始行动。</p>
-<p>今日看了《Java编程思想》的多态，接口，内部类。总共花费蕃茄钟5.5个，当然这只是有效的蕃茄中，天知道我分心走神了几次。。。</p>
-<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态，继承，抽象统称为《面向对象三大核心系统》。多态传统上的用法有点像：基类的方法调用，子类的方法实现。它的作用就是消除类型之间的耦合关系。<br>了解多态就得先了解下<strong>绑定</strong>，绑定分为前期绑定和后期绑定。</p>
-<p>前期绑定：默认的绑定方式，方法直接调用，在编译期就能知道。</p>
-<p>后期绑定：根据运行时的对象的类型进行绑定。又称为动态绑定或者运行时绑定。</p>
-<p>Java中除了static方法和final方法之外其它都是后期绑定。（private方法是final方法）。只有普通方法的调用是多态的，静态方法不能使用多态的。构造器实际上是static方法，不过是隐式的。酒席那个private的方法是final一样，也是隐式的。</p>
-<p>动态绑定只有在运行时才知道，因为无法知道它是属于方法所在的那个类，还是属于那个类的子类。</p>
-<p>编写构造器的一条准则：尽可能简单的方法是对象进入正常状态，如果可以的话，避免去调用其它方法。</p>
-<p>使用继承还是使用组合？推荐使用组合。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Actor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">act</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HappyActor</span> <span class="keyword">extends</span> <span class="title">Actor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">act</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"Happy Actor"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SadActor</span> <span class="keyword">extends</span> <span class="title">Actor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">act</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"Sad Actor"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stage</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Actor actor = <span class="keyword">new</span> HappyActor();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">()</span></span>&#123;</span><br><span class="line">        actor = <span class="keyword">new</span> SadActor();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performPlay</span><span class="params">()</span></span>&#123;</span><br><span class="line">        actor.act();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        Stage stage = <span class="keyword">new</span> Stage();</span><br><span class="line">        stage.performPlay();</span><br><span class="line">        stage.change();</span><br><span class="line">        stage.performPlay();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码用到了<strong>状态模式</strong>，使用组合还是继承有一条通用准则：用继承表达行为间的差异，并用字段表达状态上的变化。代码中，通过继承获得了两个不同的类，用于表达act()方法的差异。stage通过使用组合的方式通过change()方法试自己的状态发生改变。状态的改变也产生了行为的改变。</p>
-<p>一个子类向上转型成父类，总是安全的。但是父类向子类转型就不一定了，毕竟子类的实现可能有很多，直接强转可能会出错（ClassCastException）。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/10/thinkinjava-20180310/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2191,7 +2150,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">151</span>
+                <span class="site-state-item-count">153</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2202,7 +2161,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

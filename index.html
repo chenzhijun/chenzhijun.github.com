@@ -326,6 +326,371 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/08/25/golang-goroutine2/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/25/golang-goroutine2/" itemprop="url">golang 并发基础（二）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-25T22:49:36+08:00">
+                2019-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/25/golang-goroutine2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/25/golang-goroutine2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/08/25/golang-goroutine2/" class="leancloud_visitors" data-flag-title="golang 并发基础（二）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="golang-并发基础（二）"><a href="#golang-并发基础（二）" class="headerlink" title="golang 并发基础（二）"></a>golang 并发基础（二）</h1><p>上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。</p>
+<p>竞争状态：如果两个或多个goroutine在没有同步的情况下对同一个资源进行读写操作，就处于相互竞争的状态，称为竞争状态。对一个共享资源的操作必须是<strong>原子化</strong>的，即同一时刻只能由一个goroutine对共享资源进行读和写操作。</p>
+<h2 id="同步操作方式–锁住共享资源"><a href="#同步操作方式–锁住共享资源" class="headerlink" title="同步操作方式–锁住共享资源"></a>同步操作方式–锁住共享资源</h2><p>golang提供atomic和sync包，两个包里的函数提供了很好的解决方案。</p>
+<h3 id="原子函数-atomic-包"><a href="#原子函数-atomic-包" class="headerlink" title="原子函数 atomic 包"></a>原子函数 atomic 包</h3><p>我们可以看一下atomic提供的原子函数，它提供底层加锁的方式来同步访问整形变量和指针，示例代码:</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	counter <span class="keyword">int64</span></span><br><span class="line"></span><br><span class="line">	wg sync.WaitGroup</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	wg.Add(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> incCounter(<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">go</span> incCounter(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">"Final Counter:"</span>, counter)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">incCounter</span><span class="params">(id <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> wg.Done()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> count := <span class="number">0</span>; count &lt; <span class="number">2</span>; count++ &#123;</span><br><span class="line">		atomic.AddInt64(&amp;counter, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">		runtime.Gosched()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="互斥锁-mutex"><a href="#互斥锁-mutex" class="headerlink" title="互斥锁 mutex"></a>互斥锁 mutex</h3><p>使用互斥锁也是一种同步访问共享资源的方式，互斥的概念就是AB只有一个可以访问，要不就是A，要不就是B。相当于一张门，只能一个人进入，第一个进入的人就把门锁了，其它人都不可以进来，只有等这个人把锁打开了，其它人才能重新竞争锁。</p>
+<p>看一下代码：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	counter <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">	wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line">	mutex sync.Mutex</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	wg.Add(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> incCounter(<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">go</span> incCounter(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line">	fmt.Printf(<span class="string">"Final Counter: %d\n"</span>, counter)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">incCounter</span><span class="params">(id <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> wg.Done()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> count := <span class="number">0</span>; count &lt; <span class="number">2</span>; count++ &#123;</span><br><span class="line">		mutex.Lock() <span class="comment">//锁住</span></span><br><span class="line">		&#123;</span><br><span class="line">			value := counter</span><br><span class="line"></span><br><span class="line">			runtime.Gosched()</span><br><span class="line"></span><br><span class="line">			value++</span><br><span class="line"></span><br><span class="line">			counter = value</span><br><span class="line">		&#125;</span><br><span class="line">		mutex.Unlock()<span class="comment">//释放锁</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="通道-channel"><a href="#通道-channel" class="headerlink" title="通道 channel"></a>通道 channel</h3><p>在goroutine之间还可以通过通道来发送和接受需要共享的资源，在goroutine之间做同步。当一个资源需要被goroutine共享时，通道在goroutine之间架起了一个管道，并提供了确保同步交换数据的机制。声明通道，需要指定被共享的数据类型。go中需要使用内置函数make来创建一个通道。</p>
+<p>通道的类型由两种：无缓冲通道与有缓冲通道。定义的方式如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//无缓冲</span></span><br><span class="line">unbuffered := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有缓冲 </span></span><br><span class="line">buffered := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>通道的赋值和取值如下:</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//定义</span></span><br><span class="line">buffered := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//赋值</span></span><br><span class="line">buffered &lt;- <span class="string">"ok, set channel value"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//取值</span></span><br><span class="line">value := &lt;- buffered</span><br></pre></td></tr></table></figure>
+<p>无缓冲通道就像“接力跑步赛”，数据就是那个“接力棒”，通道就是两个运动员之间的跑道。如果运动员A拿到接力棒，不将接力棒传到运动员B的手中，那么B就无法开始跑（阻塞），而A因为B没有拿到接力棒，A也无法去做其它的事情。所以A其实也是阻塞在了传递的这个过程中。可以看到传递“接力棒”和接受“接力棒”这两个过程其实是个同步的，两个都无法独立存在。</p>
+<p>有缓存通道就像是吃转转火锅，通道就是传送带，数据就是传送带上的每碟食物，goroutine就是厨师和顾客。缓冲数量就是传送带可以放的碟子数量。所以一个厨师(goroutine)将餐碟放到传送带上，传送带本身就只能存放固定数量的餐碟，也就是缓冲带。如果缓冲带满了，那么厨师只能等待着，等到某个餐碟空了，再放食物。而顾客也是从传送带上取餐碟，只要传送带上面有餐碟，就会吃么。如果顾客拿到手中的餐碟没吃完，传送带上还有空位，那么厨师可以继续放，如果没有空位了，就只能等顾客，吃完再从传送带上取出餐碟，这样才能继续。</p>
+<p>两者的区别：无缓冲通道保证接受和发送的goroutine会在同一时间进行数据交换；有缓冲通道就不提供这种保证。</p>
+<p>要注意通道的关闭操作，当通道关闭后，goroutine依旧可以从通道接收数据，但是不能再往里面发送数据了。从通道获取数据的时候会返回一个ok标志，如果值为false，那说明通道已经关闭了。</p>
+<p>看一下示例。</p>
+<p>无缓冲通道：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This sample program demonstrates how to use an unbuffered</span></span><br><span class="line"><span class="comment">// channel to simulate a relay race between four goroutines.</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// wg is used to wait for the program to finish.</span></span><br><span class="line"><span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line"><span class="comment">// main is the entry point for all Go programs.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// Create an unbuffered channel.</span></span><br><span class="line">	baton := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Add a count of one for the last runner.</span></span><br><span class="line">	wg.Add(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// First runner to his mark.</span></span><br><span class="line">	<span class="keyword">go</span> Runner(baton)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Start the race.</span></span><br><span class="line">	baton &lt;- <span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Wait for the race to finish.</span></span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Runner simulates a person running in the relay race.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Runner</span><span class="params">(baton <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> newRunner <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Wait to receive the baton.</span></span><br><span class="line">	runner := &lt;-baton</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Start running around the track.</span></span><br><span class="line">	fmt.Printf(<span class="string">"Runner %d Running With Baton\n"</span>, runner)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// New runner to the line.</span></span><br><span class="line">	<span class="keyword">if</span> runner != <span class="number">2</span> &#123;</span><br><span class="line">		newRunner = runner + <span class="number">1</span></span><br><span class="line">		fmt.Printf(<span class="string">"Runner %d To The Line\n"</span>, newRunner)</span><br><span class="line">		<span class="keyword">go</span> Runner(baton)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Running around the track.</span></span><br><span class="line">	time.Sleep(<span class="number">100</span> * time.Millisecond)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Is the race over.</span></span><br><span class="line">	<span class="keyword">if</span> runner == <span class="number">2</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"Runner %d Finished, Race Over\n"</span>, runner)</span><br><span class="line">		wg.Done()</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Exchange the baton for the next runner.</span></span><br><span class="line">	fmt.Printf(<span class="string">"Runner %d Exchange With Runner %d\n"</span>,</span><br><span class="line">		runner,</span><br><span class="line">		newRunner)</span><br><span class="line"></span><br><span class="line">	baton &lt;- newRunner</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有缓冲通道：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This sample program demonstrates how to use a buffered</span></span><br><span class="line"><span class="comment">// channel to work on multiple tasks with a predefined number</span></span><br><span class="line"><span class="comment">// of goroutines.</span></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	numberGoroutines = <span class="number">4</span>  <span class="comment">// Number of goroutines to use.</span></span><br><span class="line">	taskLoad         = <span class="number">10</span> <span class="comment">// Amount of work to process.</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// wg is used to wait for the program to finish.</span></span><br><span class="line"><span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line"><span class="comment">// init is called to initialize the package by the</span></span><br><span class="line"><span class="comment">// Go runtime prior to any other code being executed.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// Seed the random number generator.</span></span><br><span class="line">	rand.Seed(time.Now().Unix())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main is the entry point for all Go programs.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// Create a buffered channel to manage the task load.</span></span><br><span class="line">	tasks := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, taskLoad)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Launch goroutines to handle the work.</span></span><br><span class="line">	wg.Add(numberGoroutines)</span><br><span class="line">	<span class="keyword">for</span> gr := <span class="number">1</span>; gr &lt;= numberGoroutines; gr++ &#123;</span><br><span class="line">		<span class="keyword">go</span> worker(tasks, gr)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Add a bunch of work to get done.</span></span><br><span class="line">	<span class="keyword">for</span> post := <span class="number">1</span>; post &lt;= taskLoad; post++ &#123;</span><br><span class="line">		tasks &lt;- fmt.Sprintf(<span class="string">"Task : %d"</span>, post)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Close the channel so the goroutines will quit</span></span><br><span class="line">	<span class="comment">// when all the work is done.</span></span><br><span class="line">	<span class="built_in">close</span>(tasks)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Wait for all the work to get done.</span></span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// worker is launched as a goroutine to process work from</span></span><br><span class="line"><span class="comment">// the buffered channel.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">worker</span><span class="params">(tasks <span class="keyword">chan</span> <span class="keyword">string</span>, worker <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// Report that we just returned.</span></span><br><span class="line">	<span class="keyword">defer</span> wg.Done()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="comment">// Wait for work to be assigned.</span></span><br><span class="line">		task, ok := &lt;-tasks</span><br><span class="line">		<span class="keyword">if</span> !ok &#123;</span><br><span class="line">			<span class="comment">// This means the channel is empty and closed.</span></span><br><span class="line">			fmt.Printf(<span class="string">"Worker: %d : Shutting Down\n"</span>, worker)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Display we are starting the work.</span></span><br><span class="line">		fmt.Printf(<span class="string">"Worker: %d : Started %s\n"</span>, worker, task)</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Randomly wait to simulate work time.</span></span><br><span class="line">		sleep := rand.Int63n(<span class="number">100</span>)</span><br><span class="line">		time.Sleep(time.Duration(sleep) * time.Millisecond)</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Display we finished the work.</span></span><br><span class="line">		fmt.Printf(<span class="string">"Worker: %d : Completed %s\n"</span>, worker, task)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p>提到goroutine的channel，通常都会与select一起使用。官网的说明：<a href="https://golang.google.cn/ref/spec#Select_statements" target="_blank" rel="noopener">select</a>。简单的说一下select的用法：<br>1：select 的case一定是一个chan的表达式<br>2：select监听的是当前运行的goroutine，如果当前没有运行的goroutine会直接抛出panic；<br>3：如果没有default语句，而多个case都可以执行，那么随机取一个；<br>4：如果有default语句，且case多个可以执行，执行default</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"testing"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Chann</span><span class="params">(ch <span class="keyword">chan</span> <span class="keyword">int</span>, stopCh <span class="keyword">chan</span> <span class="keyword">bool</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> i = <span class="number">10</span></span><br><span class="line">	<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="number">10</span>; j++ &#123;</span><br><span class="line">	<span class="comment">//for &#123;</span></span><br><span class="line">		time.Sleep(time.Second)</span><br><span class="line">		<span class="comment">//ch &lt;- i</span></span><br><span class="line">		<span class="comment">//fmt.Println(i)</span></span><br><span class="line">		fmt.Println(i)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	stopCh &lt;- <span class="literal">true</span></span><br><span class="line">	fmt.Println(<span class="string">"ok"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestChan</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">	c := <span class="number">0</span></span><br><span class="line">	stopCh := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> Chann(ch, stopCh)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> ch &lt;- <span class="number">10</span>:</span><br><span class="line">			fmt.Println(<span class="string">"ok"</span>)</span><br><span class="line">		<span class="keyword">case</span> &lt;-ch:</span><br><span class="line">			fmt.Println(<span class="string">"Recvice c1"</span>, c)</span><br><span class="line">			fmt.Println(<span class="string">"channel"</span>)</span><br><span class="line">		<span class="keyword">case</span> &lt;-ch:</span><br><span class="line">			fmt.Println(<span class="string">"Receive s"</span>, ch)</span><br><span class="line">			<span class="comment">//case _ = &lt;-stopCh:</span></span><br><span class="line">			<span class="comment">//	fmt.Println("stop")</span></span><br><span class="line">			<span class="comment">//	goto end</span></span><br><span class="line">			<span class="comment">//default:</span></span><br><span class="line">			<span class="comment">//	fmt.Println("default")</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//end:</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/08/25/golang-goroutine1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/25/golang-goroutine1/" itemprop="url">golang 并发基础（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-25T20:40:13+08:00">
+                2019-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/25/golang-goroutine1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/25/golang-goroutine1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/08/25/golang-goroutine1/" class="leancloud_visitors" data-flag-title="golang 并发基础（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="golang-并发基础（一）"><a href="#golang-并发基础（一）" class="headerlink" title="golang 并发基础（一）"></a>golang 并发基础（一）</h1><p>golang 在语言的语法和运行时方面内置了对并发的支持。在了解golang的并发之前，我们先看一下操作系统的两个概念：线程和进程。你应该知道，在系统中运行一个程序，其实就是启动了一个进程，而要运行起来，对外来说肯定是需要资源的，比如cpu，内存空间，文件句柄，线程等等..每个进程至少有一个线程，每个进程的初始线程被称为主线程。了解到这些，你大概可以类比一下，比如你创建一个项目，肯定要有main方法（主线程），你的项目中可能还有不同的业务逻辑，这个时候就可以让主进程创建多个线程去运行求结果。线程可以共享进程的空间。另外我们要知道，cpu的执行方式是轮询时间分片的，也就是可能这个线程有10ms的cpu执行时间，所以如果是单核cpu，就是每个线程执行一会，抢占式执行。并发(concurrency)不是并行(parallelism)。并行是在相同的时候让不同的代码都能在不同的处理器上执行，也就是同时做很多事情。并发是指同时管理很多事情，这些事情可能只做了一半就被暂停去做别的事情了。</p>
+<h2 id="并发通信模型"><a href="#并发通信模型" class="headerlink" title="并发通信模型"></a>并发通信模型</h2><p>golang 采用的并发同步模型为通信顺序进程（Communicating Sequential Process,CSP)的模型，通过在goroutine之间传递数据来传递消息，而不是对数据进行加锁来实现同步访问。并发通信模型还有一种是Actor，比较著名的例子就是akka.io。</p>
+<h2 id="golang-并发工作模式"><a href="#golang-并发工作模式" class="headerlink" title="golang 并发工作模式"></a>golang 并发工作模式</h2><p>操作系统会在物理处理器上调度线程来运行，而Go语言的运行时会在逻辑处理器上调度goroutine来执行，每个逻辑处理器又分别绑定到单个的操作系统线程。像下图，如果一个Goroutine可以运行的时候，就会被放入到逻辑处理器的执行队列中，逻辑处理器有绑定到一个唯一的操作系统线程中。</p>
+<p><img src="/images/qiniu/2019-08-25-20-03-52.png" alt="2019-08-25-20-03-52"></p>
+<p>如果一个goroutine执行的是一个阻塞的系统调用，比如打开文件，那岂不是队列中的就绪态goroutine都的阻塞了？当出现这类调用时候，当前线程和当前的goroutine就会从逻辑处理器上分离，当前线程继续阻塞，等待刚刚的系统调用的放回。同时，逻辑处理器失去用来运行的线程。所以调度器就会创建一个新线程，并将其绑定到逻辑处理器上。当阻塞的系统完成调用并且返回，对应的goroutine会放回到本地运行队列，而之前的线程会保存好，一遍之后可以继续使用。如下图，线程A本来是绑定在P0的，后来有阻塞调用，就脱离出去了，然后线程B又绑定了P0。</p>
+<p><img src="/images/qiniu/2019-08-25-20-21-14.png" alt="2019-08-25-20-21-14"></p>
+<p>golang默认可以创建的线程数量为10000个线程，可以通过runtime/debug包的SetMaxThreads方法来更改。</p>
+<!-- golang由于天生的支持高并发的应用，得到了很多大的基础项目的青睐。在golang的并发中最小的单元即为goroutine。今天来聊一下goroutine是怎么和chan配合的。
+
+## channel的分类
+
+channel分为非缓存chan和有缓存chan，  -->
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>The C10K problem</p>
+<p><a href="https://cloud.tencent.com/developer/article/1346210" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1346210</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/08/17/record-last/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1652,340 +2017,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/06/30/linux-tool-tar/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/30/linux-tool-tar/" itemprop="url">Linux 工具-tar</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T16:32:24+08:00">
-                2019-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/30/linux-tool-tar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/30/linux-tool-tar/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/06/30/linux-tool-tar/" class="leancloud_visitors" data-flag-title="Linux 工具-tar">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Linux-工具-tar"><a href="#Linux-工具-tar" class="headerlink" title="Linux 工具-tar"></a>Linux 工具-tar</h1><p>tar 命令应该是我们经常用的了，它主要的功能是用来对文件的解压缩操作。如果要看tar的具体操作可以使用:<code>man tar</code>，Linux的发行版本默认都会有 tar 命令</p>
-<h2 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h2><p>tar 常用来解压<code>tar.gz</code>,<code>tar</code>的文件。使用的方式：<code>tar -zxvf xxx.tar.gz</code></p>
-<h2 id="压缩文件"><a href="#压缩文件" class="headerlink" title="压缩文件"></a>压缩文件</h2><p>通常我们也会有需要将多个文件压缩成一个文件的需求，比如传输文件。这个时候我们就可以使用<code>tar -zvcf xxx.tar.gz file-dir-path1 file-dir-path2 file-dir-path-n</code> 其中<code>path1</code>,<code>path2</code>,<code>path-n</code>可以是多个或者单个。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/06/30/linux-tool-socat/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/30/linux-tool-socat/" itemprop="url">Linux 工具-socat</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T16:20:53+08:00">
-                2019-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/30/linux-tool-socat/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/30/linux-tool-socat/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/06/30/linux-tool-socat/" class="leancloud_visitors" data-flag-title="Linux 工具-socat">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Linux-工具-socat"><a href="#Linux-工具-socat" class="headerlink" title="Linux 工具-socat"></a>Linux 工具-socat</h1><p>socat是一个多功能的网络工具，官网：<a href="http://www.dest-unreach.org/socat/" target="_blank" rel="noopener">http://www.dest-unreach.org/socat/</a></p>
-<h2 id="安装socat"><a href="#安装socat" class="headerlink" title="安装socat"></a>安装socat</h2><p>安装方式很简单：<code>yum install -y socat</code>,就可以了，当然如果是ubuntu的机器就是用<code>apt</code></p>
-<h2 id="使用socat"><a href="#使用socat" class="headerlink" title="使用socat"></a>使用socat</h2><p>公司内部的网络限制比较严格，只有一些常用的端口能正常访问，因此调试的时候非常麻烦，比如你的应用程序端口是19995，但是公司只能是8080来访问，这个时候怎么办？使用nginx或haproxy当然可以，但是麻烦啊，配置搞一堆。。但是使用socat就很方便了:<code>socat TCP4-LISTEN:{port1},reuseaddr,fork TCP4:{ip:port2}</code> ，比如你有三台机器A(127.0.0.1)；B(127.0.0.2）；C（192.168.1.1）。B能访问A的8080端口，但是不能访问C的9090端口，而服务又监听的是C的9090端口，A能访问C的9090端口。所以很当然会想到B–&gt;A:8080–&gt;C:9090。也就是在A做一层反向代理。socat就是这样的。在A上我们执行：<code>socat TCP4-LISTEN:8080,reuseaddr,fork TCP4:192.168.1.1:9090</code>。然后B就访问A:8080,就能访问到C的9090端口了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2034,7 +2065,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">151</span>
+                <span class="site-state-item-count">153</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2045,7 +2076,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
