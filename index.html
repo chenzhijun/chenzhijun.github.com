@@ -326,6 +326,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/09/09/datastruct-list-normal-action/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/09/datastruct-list-normal-action/" itemprop="url">数据结构单链表的一些简单操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-09T20:42:20+08:00">
+                2019-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/09/datastruct-list-normal-action/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/09/datastruct-list-normal-action/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/09/09/datastruct-list-normal-action/" class="leancloud_visitors" data-flag-title="数据结构单链表的一些简单操作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="数据结构单链表的一些简单操作"><a href="#数据结构单链表的一些简单操作" class="headerlink" title="数据结构单链表的一些简单操作"></a>数据结构单链表的一些简单操作</h1><p>Node的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Node nextNode;</span><br><span class="line">    <span class="keyword">private</span> T v;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(T v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.v = v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(Node nextNode, T v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.nextNode = nextNode;</span><br><span class="line">        <span class="keyword">this</span>.v = v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Node <span class="title">getNextNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> nextNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNextNode</span><span class="params">(Node nextNode)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.nextNode = nextNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getV</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setV</span><span class="params">(T v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.v = v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printAllNode</span><span class="params">()</span> </span>&#123;<span class="comment">//我这里是有一个headNode不做数据存储</span></span><br><span class="line">        Node tmpN = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">while</span> (tmpN.getNextNode() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.print(tmpN.getNextNode().getV());</span><br><span class="line">            System.out.print((tmpN.getNextNode().getNextNode() == <span class="keyword">null</span> ? <span class="string">""</span> : <span class="string">","</span>));</span><br><span class="line">            tmpN = tmpN.getNextNode();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="反转链表"><a href="#反转链表" class="headerlink" title="反转链表"></a>反转链表</h2><p>平常一条链表大多是<code>a-&gt;b-&gt;c-&gt;d</code>;链表反转后为:<code>a&lt;-b&lt;-c&lt;-d</code>;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.gk_time_datastruct.chapter7;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReverseNode</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Node head = <span class="keyword">new</span> Node();</span><br><span class="line">        Node tmp = head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            Node newNode = <span class="keyword">new</span> Node();</span><br><span class="line">            newNode.setV(i);</span><br><span class="line">            tmp.setNextNode(newNode);</span><br><span class="line">            tmp = tmp.getNextNode();</span><br><span class="line">        &#125;</span><br><span class="line">        head.printAllNode();</span><br><span class="line">        System.out.println();</span><br><span class="line">        Node node = reverseNode(head);</span><br><span class="line">        node.printAllNode();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//反转链表实际的代码</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseNode</span><span class="params">(Node pHead)</span> </span>&#123;</span><br><span class="line">        Node prev = <span class="keyword">null</span>;</span><br><span class="line">        Node pNode = pHead.getNextNode();</span><br><span class="line">        <span class="keyword">while</span> (pNode!= <span class="keyword">null</span>) &#123;</span><br><span class="line">            Node next = pNode.getNextNode();</span><br><span class="line">            pNode.setNextNode(prev);</span><br><span class="line">            prev = pNode;</span><br><span class="line">            pNode = next;</span><br><span class="line">        &#125;</span><br><span class="line">        Node reverseNode = <span class="keyword">new</span> Node();</span><br><span class="line">        reverseNode.setNextNode(prev);</span><br><span class="line">        <span class="keyword">return</span> reverseNode;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先用<code>prev</code>，<code>pNode</code>作两个指针，prev 指的是前一个node，pNode 是指当前node。可以这样理解，pNode指向链表遍历时的当前node，prev指向pNode的链条中前一个节点。</p>
+<p>我们先用一个临时变量<code>next</code>存储当前pNode的下一个节点位置，然后将当前pNode的位置反转，设置为prev的位置，然后prev移动到pNode的位置上，这样pNode的这个位置就存在了prev，所以pNode可以继续向下遍历节点，而我们之前刚好将pNode的下一个节点存储在了next临时变量中，所以有 pNode=next ；一直遍历到pNode为null，说明链表已经遍历完了。这时如果不喜欢头节点就可以直接返回prev，如果喜欢设置头节点，就可以new一个新节点，然后将nextNode设置为prev。这样一条新的链就完成了，链表就被反转了。</p>
+<p>一开始初始化，普通链表：</p>
+<p><img src="/images/qiniu/2019-09-09-20-04-33.png" alt="2019-09-09-20-04-33"></p>
+<p>之后我们开始做操作，先获取0-next节点位置，然后将1-nextNode指向prev所指向的位置，之后2-prev指向pNode所指向的位置，之后3-pNode指向next。</p>
+<p><img src="/images/qiniu/2019-09-09-20-15-02.png" alt="2019-09-09-20-15-02"></p>
+<p>这样一直循环后，我们就可以实际得到一个反转如下的链表：</p>
+<p><img src="/images/qiniu/2019-09-09-20-20-10.png" alt="2019-09-09-20-20-10"></p>
+<p>可以看到，其实如果直接返回prev就已经是一个反转链表了。</p>
+<p>复杂度分析：</p>
+<p>时间复杂度：O(n)，取决与链表长度；</p>
+<p>空间复杂度：O(1)，只新建了pNode,next,prev指针变量,没有额外空间的；</p>
+<h2 id="两个排序链表的合并"><a href="#两个排序链表的合并" class="headerlink" title="两个排序链表的合并"></a>两个排序链表的合并</h2><p>链表的操作中还有一个是假设两个有序链表的合并，如果[1,3,5],[2,4,6,7]合并为[1,2,3,4,5,6,7]，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">mergeNode1AndNode2</span><span class="params">(Node head1, Node head2)</span> </span>&#123;</span><br><span class="line">        Node node = <span class="keyword">new</span> Node();</span><br><span class="line">        Node head = node;</span><br><span class="line">        Node tmp = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span> (head1 != <span class="keyword">null</span> &amp;&amp; head2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">int</span>) head1.getV() &lt; (<span class="keyword">int</span>) head2.getV()) &#123;</span><br><span class="line">                tmp = head1;</span><br><span class="line">                head1 = head1.getNextNode();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tmp = head2;</span><br><span class="line">                head2 = head2.getNextNode();</span><br><span class="line">            &#125;</span><br><span class="line">            node.setNextNode(tmp);</span><br><span class="line">            node = node.getNextNode();</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//        if (head1 != null) &#123;</span></span><br><span class="line"><span class="comment">//            node.setNextNode(head1);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"><span class="comment">//        if (head2 != null) &#123;</span></span><br><span class="line"><span class="comment">//            node.setNextNode(head2);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line">        node.setNextNode(head1 != <span class="keyword">null</span> ? head1 : head2);</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们肯定都是要循环链表的，那么循环到一个链表为空的时候，将另一个链表的值加进来即可。</p>
+<p>如<code>while (head1 != null &amp;&amp; head2 != null)</code>这里就是判断链表1和链表2两者看是否为空。如果有一个为空的条件，就退出循环。</p>
+<p>你可能看到<code>node.setNextNode(head1 != null ? head1 : head2);</code>这句话的作用其实就是说，如果head1不为空，那我们就将head1加入到设置为nextNode，反之就是head2。</p>
+<p>合并两个列表的关键点在于，一个要判断两个链表是否为空，这是退出链表循环的条件。（当然如果是个循环链表，这里可能就得改一下了）。另外就是，当链表退出后，要记得将另一个非空链表的剩余值加入到新链中，保证不丢值。</p>
+<h2 id="删除链表倒数第-n-个结点"><a href="#删除链表倒数第-n-个结点" class="headerlink" title="删除链表倒数第 n 个结点"></a>删除链表倒数第 n 个结点</h2><p>有一个链表，然后需要删除链表的倒数第n个位置的节点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除倒数第n个位置的node</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">removeNode</span><span class="params">(Node node, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= <span class="number">0</span> || node.getNextNode() == <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.out.println(<span class="string">"i为0或者node为空，不改动，i从1开始"</span>);</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node tmp = node;</span><br><span class="line">    <span class="keyword">while</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        tmp = tmp.getNextNode();</span><br><span class="line">        <span class="keyword">if</span> (tmp == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//长度不够</span></span><br><span class="line">            System.out.println(<span class="string">"node长度不够,不改动"</span>);</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">        i--;</span><br><span class="line">    &#125;</span><br><span class="line">    Node n0 = node;</span><br><span class="line">    Node n1 = node;</span><br><span class="line">    <span class="comment">//两个指针，一个先走i步，另一个再开始走</span></span><br><span class="line">    <span class="keyword">while</span> (tmp != <span class="keyword">null</span>) &#123;</span><br><span class="line">        tmp = tmp.getNextNode();</span><br><span class="line">        n0 = n1;</span><br><span class="line">        n1 = n1.getNextNode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    n0.setNextNode(n1.getNextNode());</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="链表中间节点"><a href="#链表中间节点" class="headerlink" title="链表中间节点"></a>链表中间节点</h2><p>计算链表中间节点位置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Node <span class="title">computeNode</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">    Node quick = head.getNextNode();</span><br><span class="line">    Node slow = head.getNextNode();</span><br><span class="line">    <span class="keyword">while</span> (quick != <span class="keyword">null</span> &amp;&amp; quick.getNextNode() != <span class="keyword">null</span>) &#123;</span><br><span class="line">        slow = slow.getNextNode();</span><br><span class="line">        quick = quick.getNextNode().getNextNode();</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println();</span><br><span class="line">    System.out.println(slow.getV());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="是否为循环链表"><a href="#是否为循环链表" class="headerlink" title="是否为循环链表"></a>是否为循环链表</h2><p>判断一个链表是否为循环链表：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isCycleList2</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">    Set&lt;Node&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    <span class="keyword">while</span> (head != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (set.contains(head)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            set.add(head);</span><br><span class="line">            head = head.getNextNode();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isCycleList</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">    Node n1 = head;</span><br><span class="line">    Node n2 = head;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (n1 != <span class="keyword">null</span> &amp;&amp; n2.getNextNode() != <span class="keyword">null</span>) &#123;</span><br><span class="line">        n1 = n1.getNextNode();</span><br><span class="line">        n2 = n2.getNextNode().getNextNode();</span><br><span class="line">        <span class="keyword">if</span> (n1 == n2) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/09/07/shell-learn-1/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1822,180 +2014,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/07/06/java-enum-how-to-generate-json/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/06/java-enum-how-to-generate-json/" itemprop="url">Java Enum 与 Json 的互相转换</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T00:24:55+08:00">
-                2019-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/06/java-enum-how-to-generate-json/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/06/java-enum-how-to-generate-json/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/07/06/java-enum-how-to-generate-json/" class="leancloud_visitors" data-flag-title="Java Enum 与 Json 的互相转换">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Java-Enum-与-Json-的互相转换"><a href="#Java-Enum-与-Json-的互相转换" class="headerlink" title="Java Enum 与 Json 的互相转换"></a>Java Enum 与 Json 的互相转换</h1><p>在Java中使用Enum的频率很高，我们也经常使用 Enum 作为类的一个属性定义。那么如果需要将Enum转换成Json或者将Json传转换成Enum该怎么操作了？接下来我们看一下。Enum序列化成Json的几种方式。</p>
-<blockquote>
-<p>本实例使用的是<code>jackson</code>的包，用的是<code>ObjectMapper</code>.</p>
-</blockquote>
-<p>首先我们定义一个类<code>Instance</code>，里面有一个<code>Enum</code>的参数: <strong>state</strong> ; 在这里我们为了方便观察几种不同 Enum 的json序列化方式，state定义为<code>Object</code>,<code>Instance</code>类定义如下;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.PropertyNamingStrategy;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.annotation.JsonNaming;</span><br><span class="line"></span><br><span class="line"><span class="meta">@JsonNaming</span>(PropertyNamingStrategy.SnakeCaseStrategy.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    Object state;</span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(Object state)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state=state;</span><br><span class="line">        <span class="keyword">this</span>.bookName=<span class="string">"《Java枚举类-json转换》"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(Object state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/06/java-enum-how-to-generate-json/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2044,7 +2062,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">154</span>
+                <span class="site-state-item-count">155</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2055,7 +2073,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2066,7 +2084,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
