@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -105,7 +105,7 @@
 <meta property="og:description" content="Java 虚拟机Java 运行时数据区Java 虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。不同的区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有的则随着线程的启动和结束而建立和销毁。数据区分为5大区域：程序计数器，Java虚拟机栈，本地方法区，Java堆，方法区。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://chenzhijun.me/images/jvm-data.png">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.440Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 虚拟机（一）">
 <meta name="twitter:description" content="Java 虚拟机Java 运行时数据区Java 虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。不同的区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有的则随着线程的启动和结束而建立和销毁。数据区分为5大区域：程序计数器，Java虚拟机栈，本地方法区，Java堆，方法区。">
@@ -175,7 +175,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -185,7 +185,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -317,20 +317,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/04/05/java-virtual-machine/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -373,7 +373,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -438,7 +438,7 @@
 
       
         <h2 id="Java-虚拟机"><a href="#Java-虚拟机" class="headerlink" title="Java 虚拟机"></a>Java 虚拟机</h2><h3 id="Java-运行时数据区"><a href="#Java-运行时数据区" class="headerlink" title="Java 运行时数据区"></a>Java 运行时数据区</h3><p>Java 虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。不同的区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有的则随着线程的启动和结束而建立和销毁。数据区分为5大区域：程序计数器，Java虚拟机栈，本地方法区，Java堆，方法区。<br><a id="more"></a></p>
-<p><img src="/images/jvm-data.png" alt=""></p>
+<p><img src="/images/jvm-data.png" alt></p>
 <h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>内存中较小的一块空间，可以当做是当前线程所执行的字节码的行号指示器。简单点其实应该算是空着着当前线程的下一步操作。Java虚拟机的多线程其实是线程轮流分配执行时间的方式来实现的，意思就是一个处理器在任何一个确定的时间，只会执行一条线程的指令。想想如果线程没执行完，cpu的时间没了，另一个线程占去了cpu，那么下次cpu如何知道当前线程执行到哪里了呢？要解决这个问题，是不是的有个区域必须的保持独立性，不能被非当前线程干扰？所以把程序计数器设置成<strong><em><code>线程私有</code></em></strong>，这样就完美解决这个问题了。如果线程执行的是Java方法，计数器就是记录的正在执行的虚拟机字节码指令地址。如果正在执行的是native方法，计数器的值就为空(undefined)。另外非常要注意的点就是程序计数器是<strong><em>唯一一个没有规定任何OutOfMemoryError</em></strong>。</p>
 <h4 id="Java-虚拟机栈"><a href="#Java-虚拟机栈" class="headerlink" title="Java 虚拟机栈"></a>Java 虚拟机栈</h4><p>虚拟机栈也是线程私有的，它的生命周期与线程相同。都跟线程同生共死了，当然虚拟机栈也是<strong><em>线程私有的</em></strong>。虚拟机栈描叙的是java方法执行的内存模型：每个方法在执行的时候都会创建一个栈帧，栈帧主要用来存储局部变量表、操作数栈、动态链接、方法出口的信息。每一个方法从调用到完成，对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。经常说方法中的局部变量是线程安全的，从这里可以得到解释，局部变量定义在虚拟机栈中，那么它是属于线程私有的，就不会存在多线程中共享变量的情况，所以说局部变量在多线程环境下是线程安全的。栈的局部变量表存放了编译期（注意是<code>编译</code>，不是<code>编辑</code>）可知的各种基本数据类型（boolean,byte,char,short,int,float,long,double)、对象引用和returnAddress类型。<br>局部变量表的最小单位为局部变量空间（slot）。其中64位长度的long和double类型的数据会占用2个局部变量空间。局部变量表所需的内存空间在编译期间就完成分配，进入一个方法需要在栈中分配多大的局部变量空间是完全确定的，运行期间不会改变局部变量表的大小。<br>Java虚拟机规范中，如果这个区域线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverFlowError异常；如果虚拟机栈可以动态扩展，在扩展期间无法申请到足够的内存，就会抛出OutOfMemoryError异常。</p>
 <h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>本地方法栈与虚拟机栈所发挥的作用比较类型，区别是虚拟机栈为虚拟机执行Java方法服务，而本地方法栈则为虚拟机使用到的Native方法服务。很多Java的源代码中就有这种native方法。此区域也会抛出StackOverFlowError 和 OutOfMemoryError。</p>
@@ -617,7 +617,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -629,7 +629,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

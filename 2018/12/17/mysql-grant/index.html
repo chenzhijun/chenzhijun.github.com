@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="MySQL 用户与权限设置这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.444Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 用户与权限设置">
 <meta name="twitter:description" content="MySQL 用户与权限设置这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。">
@@ -173,7 +173,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -183,7 +183,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -315,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/12/17/mysql-grant/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -371,7 +371,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/MySQL/" itemprop="url" rel="index">
                     <span itemprop="name">MySQL</span>
                   </a>
@@ -438,7 +438,7 @@
         <h1 id="MySQL-用户与权限设置"><a href="#MySQL-用户与权限设置" class="headerlink" title="MySQL 用户与权限设置"></a>MySQL 用户与权限设置</h1><p>这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。<br><a id="more"></a></p>
 <h2 id="MySQL创建用户"><a href="#MySQL创建用户" class="headerlink" title="MySQL创建用户"></a>MySQL创建用户</h2><p>第一个就是创建一个普通用户。使用root登陆后，创建一个用户：<code>CREATE USER &#39;username&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;paasword&#39;;</code>其中<code>username</code>,<code>paasword</code>按需修改。一般来说这里需要注意的就是<code>localhost</code>，为什么？因为这个字段稍不注意就会才坑，这里的<code>localhost</code>和<code>%</code>，其实指代的是只允许本地登录和允许所有地方登陆。如果你的应用部署在同一台机器上，那么你用localhost没问题，但是如果应用和数据库是分开机器部署的，那么这里要写成<code>%</code>，不然就会出现远程无法连接。当然还有很多其他的设置，比如什么过期时间啊，证书登录啊，具体的可以看下官方文档:<a href="https://dev.mysql.com/doc/refman/8.0/en/create-user.html" target="_blank" rel="noopener">Create User</a>。</p>
 <h2 id="给MySQL用户赋权限"><a href="#给MySQL用户赋权限" class="headerlink" title="给MySQL用户赋权限"></a>给MySQL用户赋权限</h2><p>如果做开发的话，你就会发现，你的jdbc或者其他语言连接数据库，都需要选择选择一个库。也就是你必须先在数据库里面建立一个database，但是如果你用root建立一个database，比如：<code>create database DB_USER;</code>这个时候上一步创建的用户是无法访问这个库的。如果你切换到刚刚的用户，那么你也是没有权限建立数据库的。但我们通常开发都会写上库名，那这个时候怎么操作了？嗯，就是先用root建库，然后将权限库的权限赋值给新用户。具体操作如下：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> db_user;</span><br><span class="line"><span class="keyword">GRANT</span> ALL <span class="keyword">ON</span> db_user.* <span class="keyword">TO</span> <span class="string">'username'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> db_user;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> db_user.* <span class="keyword">TO</span> <span class="string">'username'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure>
 <p>这里一定要注意<code>%</code>,<code>localhost</code>，如果这里不同，那就是两个用户。</p>
 <p>当然，如果你觉得只给查的权限就足够了，那么只需要<code>GRANT SELECT ON db_user.* TO &#39;test&#39;@&#39;%&#39;;</code>。那么有没有更详细的了了？当然有，文档始终是最详细的，我只是记录我使用的过程。文档地址：<a href="https://dev.mysql.com/doc/refman/8.0/en/grant.html#grant-overview" target="_blank" rel="noopener">grant</a></p>
 <p>一些比较使用的使用方式：</p>
@@ -468,7 +468,7 @@
   <p><span>本文标题:</span><a href="/2018/12/17/mysql-grant/">MySQL 用户与权限设置</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2018-12-17 17:00:27</p>
- <!-- <p><span>最后更新:</span>2019-09-24 09:24:28</p> -->
+ <!-- <p><span>最后更新:</span>2019-12-03 20:27:49</p> -->
   <p><span>原始链接:</span><a href="/2018/12/17/mysql-grant/" title="MySQL 用户与权限设置">http://chenzhijun.me/2018/12/17/mysql-grant/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/12/17/mysql-grant/" aria-label="复制成功！"></i></span>
   </p>
@@ -652,7 +652,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -664,7 +664,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

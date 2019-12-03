@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -171,7 +171,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -183,7 +183,7 @@
  ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -315,20 +315,222 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/02/28/effective-java-0228/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/28/effective-java-0228/" itemprop="url">Effective Java 0228</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T14:30:33+08:00">
+                2018-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/28/effective-java-0228/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/02/28/effective-java-0228/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/02/28/effective-java-0228/" class="leancloud_visitors" data-flag-title="Effective Java 0228">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Effective-Java-0228"><a href="#Effective-Java-0228" class="headerlink" title="Effective Java 0228"></a>Effective Java 0228</h1><h2 id="覆盖equals时候请遵守通用规定"><a href="#覆盖equals时候请遵守通用规定" class="headerlink" title="覆盖equals时候请遵守通用规定"></a>覆盖equals时候请遵守通用规定</h2><pre><code>翻开书，看到了书的第3章-对于所有对象都通用的方法。我们知道，java中一切类都继承自Object，在Object类里面有
+两个非常重要的方法：`hashCode()`,`equals()`;
+
+其实Object类里面很多方法的注释非常详细，有一些比较通用的约定。作为我们在重写的时候我们最好是遵守这些约定。
+</code></pre><p>如果我们要覆盖equals方法，我们需要思考几个问题：</p>
+<ol>
+<li>我们为什么要覆盖？可不可以不覆盖？各自场景是什么？</li>
+<li>怎么覆盖？</li>
+<li>有什么需要特别注意的？</li>
+</ol>
+<p>覆盖equals看起来非常简单，其实坑有蛮多。最好的避免方式当然就是不覆盖了，这样我们可以看到在Object里面的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>默认equals比较的就是类只与它自身的相等。在何种情况下我们不需要覆盖呢？书上说有四点：</p>
+<ol>
+<li>类的每个实例本质上是唯一的。</li>
+<li>不关心类是否提供“逻辑相等”的测试功能。</li>
+<li>超类已经覆盖了equals，从超类继承过来的行为对于子类也合适。</li>
+<li>类是私有的或是包级私有的，可以确定它的equals方法永远不会被调用。</li>
+</ol>
+<p>什么时候需要覆盖，那么肯定就是上面四个的反例或者其它的情况了。一般我们需要比较逻辑上的关系时候，我们可能需要重写equals。这种被称为“值类”。值类也有不需要覆盖的场景:比如单例模式，每个值至多存在一个对象。那么比较值相等的意义就不大了;另一种就是枚举，枚举类型逻辑相同与对象等同是一个意义，因此这两个方式就算不覆盖Object的equals方法也可以。</p>
+<p>覆盖equals时候最好也是必须遵守它的通用约定：</p>
+<ol>
+<li>自反性，x.equals(x) 返回true</li>
+<li>对称性，x.eq(y),y.eq(x) 返回true</li>
+<li>传递性，x.eq(y),y.eq(z),x.eq(z) 返回true</li>
+<li>一致性，多次调用x.eq(y),都应该返回true</li>
+<li>与null进行equals(null)的时候必须返回false</li>
+</ol>
+<p>高质量equals方法的建议：</p>
+<ol>
+<li>使用==操作符号，查看是否当前比较参数是本身这个对象的引用。如果是返回true。</li>
+<li>使用instanceof操作符检查“参数是否是正确的类型”，这个可以帮助我们排序非当前类型的比较，也可以排除null值。</li>
+<li>转换instanceof之后的类型为当前this指向的对象的类型。</li>
+<li>检查参数中的每个域，是否和该对象中对应的域相等。</li>
+</ol>
+<p>对于不是float和double的基本类型可以用“==”比较，另两个调用他们的compare方法(为什么compare方法可以了？)。<br>另外可以将最有可能不一样的域提前比较。</p>
+<p>覆盖equals的时候一定要一定要一定要覆盖<strong>hashCode()</strong>。</p>
+<p>那么hashCode()该怎么覆盖了？下次分享。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/02/23/thinkinjava-20180223/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -373,7 +575,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -489,20 +691,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/02/06/jdk-util-hashmap/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -547,7 +749,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -664,20 +866,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/31/hibernater-validate-properties/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -722,7 +924,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -787,7 +989,7 @@
 <p>这个时候通常是在User对象里面使用一些注解来判断如：@NotNull,@NotEmpty。这些bean验证方法是遵循JSR303和JSR380规范的，目前的情况可以去这里查看详情：<a href="http://beanvalidation.org/2.0/" target="_blank" rel="noopener">http://beanvalidation.org/2.0/</a>。</p>
 <p>实现规范的这些中有一个包是<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints-simple" target="_blank" rel="noopener">Hibernate Validator</a>，这个包不是我们的ORM框架，可能是orm太出名了，以致于提到Hibernate大家都会想到SSH的Hibernate ORM，其实Hibernate Validator是一个非常完善的bean Validator。如果我们不想自己去实现一套，其实是可以引入这个包的。开源社区遇到的情况肯定会比我们自己要多。而且它也支持我们自定义注解来进行校验。</p>
 <p>在我们的系统中，是无法采用@Valid这种方式的，因为我们有一些特别的操作处理所以不能使用它。如果你想自己使用的话，可能可以像我这样，写一个Validtor工具类，然后在需要的地方调用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator.class).configure().failFast(<span class="keyword">true</span>).buildValidatorFactory().getValidator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">"message:"</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">"messageKey:"</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">"参数校验失败:%s"</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator<span class="class">.<span class="keyword">class</span>).<span class="title">configure</span>().<span class="title">failFast</span>(<span class="title">true</span>).<span class="title">buildValidatorFactory</span>().<span class="title">getValidator</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">"message:"</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">"messageKey:"</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">"参数校验失败:%s"</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>之后你可以在属性上面这样定义：</p>
 <p><img src="/images/qiniu/2018-01-31-20-00-07.png" alt="2018-01-31-20-00-07"></p>
 <p>如果需要使用校验的，只需要使用
@@ -841,20 +1043,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/31/how-to-build-springboot-starter/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -989,20 +1191,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/18/conclusion-2017/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -1136,20 +1338,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/09/logstash-send-email/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -1194,7 +1396,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/ELK/" itemprop="url" rel="index">
                     <span itemprop="name">ELK</span>
                   </a>
@@ -1266,7 +1468,7 @@
 <!--
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  beats &#123;</span><br><span class="line">    host =&gt; &quot;localhost&quot;</span><br><span class="line">    port =&gt; &quot;5044&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter &#123;</span><br><span class="line">    grok &#123;</span><br><span class="line">			match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;TIMESTAMP_ISO8601:timestamp&#125; %&#123;LOGLEVEL:level&#125; %&#123;JAVALOGMESSAGE:msg&#125;&quot; &#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line">  stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line"></span><br><span class="line">  if &quot;ERROR&quot; == [level] or [message] =~ /xception/ &#123;</span><br><span class="line">    email &#123;</span><br><span class="line">        to =&gt; &quot;xukai@ap-ec.cn,wangfei@ap-ec.cn,xiaoxq@ap-ec.cn,zhangchi@ap-ec.cn,shangxw@ap-ec.cn,guisw@ap-ec.cn,chenzj@ap-ec.cn&quot;</span><br><span class="line">        #to =&gt; &quot;chenzj@ap-ec.cn&quot;</span><br><span class="line">        cc =&gt; &quot;noreply_czj@163.com&quot;</span><br><span class="line">        via =&gt; &quot;smtp&quot;</span><br><span class="line">        subject =&gt; &quot;请注意项目可能出现异常,异常文件:%&#123;source&#125;&quot;</span><br><span class="line">        # htmlbody =&gt; &quot;消息主体：%&#123;message&#125;&quot;</span><br><span class="line">        body =&gt; &quot;日志信息:\n%&#123;message&#125;\n\n请在日志文件中查看详细信息,机器地址：%&#123;[fields][server_ip]&#125;。\n\n\n\n\n-----------------------------华丽的分割线---------------------\n这是系统发送邮件，请勿回复。\n如有需要请联系chenzhijun。chenzj@ap-ec.cn&quot;</span><br><span class="line">        from =&gt; &quot;noreply_czj@163.com&quot;</span><br><span class="line">        address =&gt; &quot;smtp.163.com&quot;</span><br><span class="line">        username =&gt; &quot;noreply_czj@163.com&quot;</span><br><span class="line">        password =&gt; &quot;noreplyczj123&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    http &#123;</span><br><span class="line">        url =&gt; &quot;https://oapi.dingtalk.com/robot/send?access_token=3f39f66edc27dbd5c8206183741c372ec459b653af0cd90841edffbbb872cf1b&quot;</span><br><span class="line">        content_type =&gt; &quot;application/json&quot;</span><br><span class="line">        http_method =&gt; &quot;post&quot;</span><br><span class="line">        message =&gt; &apos;&#123;&quot;msgtype&quot;: &quot;text&quot;,&quot;text&quot;: &#123;&quot;content&quot;: &quot;%&#123;message&#125;&quot;&#125;&#125;&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">filebeat.prospectors:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Each - is a prospector. Most options can be set at the prospector level, so</span></span><br><span class="line"><span class="comment"># you can use different prospectors for various configurations.</span></span><br><span class="line"><span class="comment"># Below are the prospector specific configurations.</span></span><br><span class="line"></span><br><span class="line"><span class="attr">- type:</span> <span class="string">log</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Change to true to enable this prospector configuration.</span></span><br><span class="line"><span class="attr">  enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Paths that should be crawled and fetched. Glob based paths.</span></span><br><span class="line"><span class="attr">  paths:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/home/cncsen/*/*.log</span></span><br><span class="line">    <span class="comment">#- /home/cncsen/customer/*/*.log</span></span><br><span class="line">    <span class="comment">#- /home/cncsen/contract/*.log</span></span><br><span class="line">    <span class="comment">#- c:\programdata\elasticsearch\logs\*</span></span><br><span class="line"><span class="attr">  multiline:</span></span><br><span class="line"><span class="attr">      pattern:</span> <span class="string">^\d&#123;4&#125;</span></span><br><span class="line"><span class="attr">      negate:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">      match:</span> <span class="string">after</span></span><br><span class="line"><span class="attr">  fields:</span></span><br><span class="line"><span class="attr">    server_ip:</span> <span class="number">221</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">filebeat.prospectors:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Each - is a prospector. Most options can be set at the prospector level, so</span></span><br><span class="line"><span class="comment"># you can use different prospectors for various configurations.</span></span><br><span class="line"><span class="comment"># Below are the prospector specific configurations.</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">log</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Change to true to enable this prospector configuration.</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Paths that should be crawled and fetched. Glob based paths.</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/home/cncsen/*/*.log</span></span><br><span class="line">    <span class="comment">#- /home/cncsen/customer/*/*.log</span></span><br><span class="line">    <span class="comment">#- /home/cncsen/contract/*.log</span></span><br><span class="line">    <span class="comment">#- c:\programdata\elasticsearch\logs\*</span></span><br><span class="line">  <span class="attr">multiline:</span></span><br><span class="line">      <span class="attr">pattern:</span> <span class="string">^\d&#123;4&#125;</span></span><br><span class="line">      <span class="attr">negate:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">match:</span> <span class="string">after</span></span><br><span class="line">  <span class="attr">fields:</span></span><br><span class="line">    <span class="attr">server_ip:</span> <span class="number">221</span></span><br></pre></td></tr></table></figure>
 <p>–&gt;</p>
 -->
           
@@ -1313,20 +1515,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/09/use-curl-to-http-request/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -1371,7 +1573,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/CURL/" itemprop="url" rel="index">
                     <span itemprop="name">CURL</span>
                   </a>
@@ -1483,20 +1685,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/08/docker-swarm-practice/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -1541,7 +1743,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Docker/" itemprop="url" rel="index">
                     <span itemprop="name">Docker</span>
                   </a>
@@ -1615,19 +1817,19 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create -d overlay springcloud-overlay</span><br></pre></td></tr></table></figure>
 <h4 id="2-2-准备镜像"><a href="#2-2-准备镜像" class="headerlink" title="2.2 准备镜像"></a>2.2 准备镜像</h4><p>创建网络后，就开始准备相应的镜像和Dockerfile。根据每个人的环境不同可以准备相应的Dockerfile：</p>
 <p>eureka.Dockerfile: 主要作为注册中心用</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line">ADD ./*.jar app.jar</span><br><span class="line">RUN sh -c 'touch /app.jar'</span><br><span class="line">ENTRYPOINT ["java","-jar","/app.jar"]</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line"><span class="keyword">ADD</span> ./*.jar app.jar</span><br><span class="line"><span class="keyword">RUN</span> sh -c 'touch /app.jar'</span><br><span class="line"><span class="keyword">ENTRYPOINT</span> ["java","-jar","/app.jar"]</span><br></pre></td></tr></table></figure>
 <p>booksrv.Dockerfile: 做一个无需连接数据库的服务提供者</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line">ADD ./*.jar app.jar</span><br><span class="line">RUN sh -c 'touch /app.jar'</span><br><span class="line">ENTRYPOINT ["java","-jar","/app.jar"]</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line"><span class="keyword">ADD</span> ./*.jar app.jar</span><br><span class="line"><span class="keyword">RUN</span> sh -c 'touch /app.jar'</span><br><span class="line"><span class="keyword">ENTRYPOINT</span> ["java","-jar","/app.jar"]</span><br></pre></td></tr></table></figure>
 <p>warehouse.Dockerfile：连接数据库的服务提供者</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line">ADD ./*.jar app.jar</span><br><span class="line">RUN sh -c 'touch /app.jar'</span><br><span class="line">ENTRYPOINT ["java","-jar","/app.jar","--cacheType=single"]</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line"><span class="keyword">ADD</span> ./*.jar app.jar</span><br><span class="line"><span class="keyword">RUN</span> sh -c 'touch /app.jar'</span><br><span class="line"><span class="keyword">ENTRYPOINT</span> ["java","-jar","/app.jar","--cacheType=single"]</span><br></pre></td></tr></table></figure>
 <p>web.Dockerfile：客户端调用booksrv和warehouse服务的接口</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line">ADD ./*.jar app.jar</span><br><span class="line">RUN sh -c 'touch /app.jar'</span><br><span class="line">ENTRYPOINT ["java","-jar","/app.jar"]</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span> /tmp</span><br><span class="line"><span class="keyword">ADD</span> ./*.jar app.jar</span><br><span class="line"><span class="keyword">RUN</span> sh -c 'touch /app.jar'</span><br><span class="line"><span class="keyword">ENTRYPOINT</span> ["java","-jar","/app.jar"]</span><br></pre></td></tr></table></figure>
 <p>在不同的文件夹下将dockerfile文件准备好之后，我们可以使用<code>docker build -t chenzhijun/imagename .</code>；（chenzhijun/iamgename可以自定义）</p>
 <h4 id="2-3-准备yml文件"><a href="#2-3-准备yml文件" class="headerlink" title="2.3 准备yml文件"></a>2.3 准备yml文件</h4><p>我们准备好镜像文件之后，可以使用docker stack的方式部署服务。</p>
 <p>eureka.yml</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  eureka1:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">chenzhijun/eureka</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="attr">      springcloud-overlay:</span></span><br><span class="line"><span class="attr">        aliases:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">eureka</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"1111:1111"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">ADDITIONAL_EUREKA_SERVER_LIST=http://eureka2:1111/eureka/</span></span><br><span class="line"><span class="attr">  eureka2:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">chenzhijun/eureka</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="attr">      springcloud-overlay:</span></span><br><span class="line"><span class="attr">        aliases:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">eureka</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"1112:1111"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">ADDITIONAL_EUREKA_SERVER_LIST=http://eureka1:1111/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  springcloud-overlay:</span></span><br><span class="line"><span class="attr">    external:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">springcloud-overlay</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">eureka1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/eureka</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">springcloud-overlay:</span></span><br><span class="line">        <span class="attr">aliases:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">eureka</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"1111:1111"</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ADDITIONAL_EUREKA_SERVER_LIST=http://eureka2:1111/eureka/</span></span><br><span class="line">  <span class="attr">eureka2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/eureka</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">springcloud-overlay:</span></span><br><span class="line">        <span class="attr">aliases:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">eureka</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"1112:1111"</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ADDITIONAL_EUREKA_SERVER_LIST=http://eureka1:1111/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">springcloud-overlay:</span></span><br><span class="line">    <span class="attr">external:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">springcloud-overlay</span></span><br></pre></td></tr></table></figure>
 <p>service.yml</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  web:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">chenzhijun/web</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">springcloud-overlay</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8888"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  bookservice:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">chenzhijun/booksrv</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">springcloud-overlay</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  warehouse:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">chenzhijun/warehouse</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">springcloud-overlay</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  springcloud-overlay:</span></span><br><span class="line"><span class="attr">    external:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">springcloud-overlay</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/web</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">springcloud-overlay</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"8888"</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">bookservice:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/booksrv</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">springcloud-overlay</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">warehouse:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/warehouse</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">springcloud-overlay</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">springcloud-overlay:</span></span><br><span class="line">    <span class="attr">external:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">springcloud-overlay</span></span><br></pre></td></tr></table></figure>
 <p>我们可以使用<code>docker stack deploy -c eureka.yml(service.yml) eureka(service)</code>。<br>之后可以使用<code>docker stack ls</code>查看启动了哪些服务，使用<code>docker stack services eureka(service)</code>来查看具体的信息。</p>
 <p>这个时候，你可以使用<code>docker ps</code>来看机器上启动了哪些服务，然后使用<code>docker logs -f containerid</code>来看输出的日志记录。</p>
 <p>嗯基本上就可以看到相应的输出。。</p>
@@ -1679,20 +1881,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/08/shell-get-param-from-console/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -1737,7 +1939,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -1844,181 +2046,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/27/elk-docker/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/27/elk-docker/" itemprop="url">使用Docker搭建ELK日志系统</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T14:28:14+08:00">
-                2017-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/ELK/" itemprop="url" rel="index">
-                    <span itemprop="name">ELK</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/27/elk-docker/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/27/elk-docker/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/12/27/elk-docker/" class="leancloud_visitors" data-flag-title="使用Docker搭建ELK日志系统">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="使用Docker搭建ELK日志系统"><a href="#使用Docker搭建ELK日志系统" class="headerlink" title="使用Docker搭建ELK日志系统"></a>使用Docker搭建ELK日志系统</h1><p>之前用本地版本安装了ELK之后，就没有再去弄它了。年底没那么忙，心里一直惦记，所以最近又开始折腾了。去elastic官网看一下，果然版本帝就是版本帝，一周一版本。现在我用的版本是基于6.1.1版本的。</p>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ol>
-<li>收集Java日志文件，并且根据文件的不同将日志分类，比如：订单日志，客户日志等。</li>
-<li>日志文件多行处理</li>
-</ol>
-<h2 id="总体架构图"><a href="#总体架构图" class="headerlink" title="总体架构图"></a>总体架构图</h2><p><img src="/images/qiniu/2017-12-28-11-23-36.png" alt="2017-12-28-11-23-36"></p>
-<h2 id="准备镜像"><a href="#准备镜像" class="headerlink" title="准备镜像"></a>准备镜像</h2><p>6.0之后官方开始自己维护镜像版本:<a href="https://www.docker.elastic.co/" target="_blank" rel="noopener">https://www.docker.elastic.co/</a>。找到需要的ELK镜像地址，pull下来就好了。官方pull下来之后镜像名太长了，所以我将镜像全部重新打了tag，命令：<code>docker tag docker.elastic.co/elasticsearch/elasticsearch:6.1.1 elasticsearch:latest</code>。<br>使用<code>docker images</code>查看：<br><img src="/images/qiniu/2017-12-27-14-49-10.png" alt="2017-12-27-14-49-10"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/27/elk-docker/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2055,7 +2082,7 @@
       
 
       <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -2067,7 +2094,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

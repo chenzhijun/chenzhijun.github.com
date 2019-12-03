@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="Docker Registry 磁盘空间清理使用 Docker 的时候用的是 Docker Registry 来存储镜像。一开始的时候给了500G数据盘，日积月累的累积的数据就开始变多了。没办法只好想办法去清理。看了下官网的api文档：Docker Registry API 其实还挺简单的，主要是用http接口先将镜像和层删除，然后使用镜像仓库的garbage-collect。 默认HTTP接口是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.436Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker Registry 磁盘空间清理">
 <meta name="twitter:description" content="Docker Registry 磁盘空间清理使用 Docker 的时候用的是 Docker Registry 来存储镜像。一开始的时候给了500G数据盘，日积月累的累积的数据就开始变多了。没办法只好想办法去清理。看了下官网的api文档：Docker Registry API 其实还挺简单的，主要是用http接口先将镜像和层删除，然后使用镜像仓库的garbage-collect。 默认HTTP接口是">
@@ -173,7 +173,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -183,7 +183,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -315,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/05/09/docker-registry-clean-disk/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -371,7 +371,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Docker/" itemprop="url" rel="index">
                     <span itemprop="name">Docker</span>
                   </a>
@@ -438,7 +438,7 @@
         <h1 id="Docker-Registry-磁盘空间清理"><a href="#Docker-Registry-磁盘空间清理" class="headerlink" title="Docker Registry 磁盘空间清理"></a>Docker Registry 磁盘空间清理</h1><p>使用 Docker 的时候用的是 Docker Registry 来存储镜像。一开始的时候给了500G数据盘，日积月累的累积的数据就开始变多了。<br>没办法只好想办法去清理。看了下官网的api文档：<a href="https://docs.docker.com/registry/spec/api/" target="_blank" rel="noopener">Docker Registry API</a></p>
 <p>其实还挺简单的，主要是用http接口先将镜像和层删除，然后使用镜像仓库的garbage-collect。</p>
 <p>默认HTTP接口是不支持DELETE方法的，需要修改配置文件中<code>storage.delete.enabled: true</code>，配置文件的解释可以在这里看到地址<a href="https://docs.docker.com/registry/configuration/#delete" target="_blank" rel="noopener">Registry 配置文件</a></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">storage:</span></span><br><span class="line"><span class="attr">  delete:</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">storage:</span></span><br><span class="line">  <span class="attr">delete:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>镜像仓库的<a href="https://docs.docker.com/registry/garbage-collection/" target="_blank" rel="noopener">garbage-collection</a>可以看下官网文档。主要看懂一个图就可以了：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A -----&gt; a &lt;----- B</span><br><span class="line">    \--&gt; b     |</span><br><span class="line">         c &lt;--/</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A -----&gt; a     B</span><br><span class="line">    \--&gt; b</span><br><span class="line">         c</span><br></pre></td></tr></table></figure>
@@ -469,7 +469,7 @@
   <p><span>本文标题:</span><a href="/2019/05/09/docker-registry-clean-disk/">Docker Registry 磁盘空间清理</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2019-05-09 23:06:39</p>
- <!-- <p><span>最后更新:</span>2019-09-24 09:24:28</p> -->
+ <!-- <p><span>最后更新:</span>2019-12-03 20:27:49</p> -->
   <p><span>原始链接:</span><a href="/2019/05/09/docker-registry-clean-disk/" title="Docker Registry 磁盘空间清理">http://chenzhijun.me/2019/05/09/docker-registry-clean-disk/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2019/05/09/docker-registry-clean-disk/" aria-label="复制成功！"></i></span>
   </p>
@@ -653,7 +653,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -665,7 +665,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

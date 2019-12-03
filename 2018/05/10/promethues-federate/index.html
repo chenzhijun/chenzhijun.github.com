@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -105,7 +105,7 @@
 <meta property="og:description" content="Prometheus 联邦集群Prometheus的联邦集群我们使用它来作为Prometheus代理。因为我们是在监控rancher平台里面的docker容器里面的应用，那么拿到的就是容器的ip，而我们实际的Prometheus是部署在外部虚拟机上面的。这个时候外部的Prometheus就无法拿到rancher平台内部容器应用的metrics，所以部署一台prometheus到rancher组成联">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2018-05-10-12-59-05.png">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.444Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="promethues 联邦集群">
 <meta name="twitter:description" content="Prometheus 联邦集群Prometheus的联邦集群我们使用它来作为Prometheus代理。因为我们是在监控rancher平台里面的docker容器里面的应用，那么拿到的就是容器的ip，而我们实际的Prometheus是部署在外部虚拟机上面的。这个时候外部的Prometheus就无法拿到rancher平台内部容器应用的metrics，所以部署一台prometheus到rancher组成联">
@@ -175,7 +175,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -185,7 +185,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -317,20 +317,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/05/10/promethues-federate/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -373,7 +373,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/监控/" itemprop="url" rel="index">
                     <span itemprop="name">监控</span>
                   </a>
@@ -439,7 +439,7 @@
       
         <h1 id="Prometheus-联邦集群"><a href="#Prometheus-联邦集群" class="headerlink" title="Prometheus 联邦集群"></a>Prometheus 联邦集群</h1><p>Prometheus的联邦集群我们使用它来作为Prometheus代理。因为我们是在监控rancher平台里面的docker容器里面的应用，那么拿到的就是容器的ip，而我们实际的Prometheus是部署在外部虚拟机上面的。这个时候外部的Prometheus就无法拿到rancher平台内部容器应用的metrics，所以部署一台prometheus到rancher组成联邦机，详细的官网有解释:<a href="https://prometheus.io/docs/prometheus/latest/federation/" target="_blank" rel="noopener">federate</a>，总体架构图如下<br><a id="more"></a><br><img src="/images/qiniu/2018-05-10-12-59-05.png" alt="2018-05-10-12-59-05"></p>
 <p>外部连接方式：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">  <span class="comment"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span></span><br><span class="line">  <span class="comment"># - job_name: 'prometheus'</span></span><br><span class="line">  <span class="comment">#   # metrics_path defaults to '/metrics'</span></span><br><span class="line">  <span class="comment">#   # scheme defaults to 'http'.</span></span><br><span class="line">  <span class="comment">#   static_configs:</span></span><br><span class="line">  <span class="comment">#     - targets: ['localhost:9091']</span></span><br><span class="line"><span class="attr">  - job_name:</span> <span class="string">'federate'</span></span><br><span class="line"><span class="attr">    scrape_interval:</span> <span class="number">15</span><span class="string">s</span></span><br><span class="line">    <span class="comment"># honor_labels: true</span></span><br><span class="line"><span class="attr">    metrics_path:</span> <span class="string">'/federate'</span></span><br><span class="line"><span class="attr">    params:</span></span><br><span class="line">       <span class="string">'match[]'</span><span class="string">:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">'&#123;job=~"prometheus"&#125;'</span></span><br><span class="line">        <span class="comment">#- '&#123;job="*"&#125;'</span></span><br><span class="line">    <span class="comment">#     - '&#123;job="prometheus"&#125;'</span></span><br><span class="line">    <span class="comment">#     - '&#123;__name__=~"job:.*"&#125;'</span></span><br><span class="line">        <span class="comment">#  - '&#123;job="rancher_network_monitor"&#125;'</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">'&#123;job="targets-server"&#125;'</span></span><br><span class="line"><span class="attr">    static_configs:</span></span><br><span class="line"><span class="attr">     - targets:</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">'localhost:9090'</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">'10.62.14.129:9090'</span></span><br><span class="line">      <span class="comment">#  - '10.62.12.3:9090'</span></span><br><span class="line">      <span class="comment">#  - '10.0.11.23:80'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">  <span class="comment"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span></span><br><span class="line">  <span class="comment"># - job_name: 'prometheus'</span></span><br><span class="line">  <span class="comment">#   # metrics_path defaults to '/metrics'</span></span><br><span class="line">  <span class="comment">#   # scheme defaults to 'http'.</span></span><br><span class="line">  <span class="comment">#   static_configs:</span></span><br><span class="line">  <span class="comment">#     - targets: ['localhost:9091']</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">'federate'</span></span><br><span class="line">    <span class="attr">scrape_interval:</span> <span class="string">15s</span></span><br><span class="line">    <span class="comment"># honor_labels: true</span></span><br><span class="line">    <span class="attr">metrics_path:</span> <span class="string">'/federate'</span></span><br><span class="line">    <span class="attr">params:</span></span><br><span class="line">       <span class="string">'match[]'</span><span class="string">:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">'&#123;job=~"prometheus"&#125;'</span></span><br><span class="line">        <span class="comment">#- '&#123;job="*"&#125;'</span></span><br><span class="line">    <span class="comment">#     - '&#123;job="prometheus"&#125;'</span></span><br><span class="line">    <span class="comment">#     - '&#123;__name__=~"job:.*"&#125;'</span></span><br><span class="line">        <span class="comment">#  - '&#123;job="rancher_network_monitor"&#125;'</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">'&#123;job="targets-server"&#125;'</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">targets:</span></span><br><span class="line">       <span class="bullet">-</span> <span class="string">'localhost:9090'</span></span><br><span class="line">       <span class="bullet">-</span> <span class="string">'10.62.14.129:9090'</span></span><br><span class="line">      <span class="comment">#  - '10.62.12.3:9090'</span></span><br><span class="line">      <span class="comment">#  - '10.0.11.23:80'</span></span><br></pre></td></tr></table></figure>
 <p>额外注意就是这里的job_name下有一个match，这个好像必须要填写，嗯就是这样，只要在内部的Prometheus代理将job那么定义好，在外部再像上面的配置文件一个配置，就能在外部访问内部的prometheus的数据，而且可以保存这些数据在外部的Prometheus。</p>
 
       
@@ -461,7 +461,7 @@
   <p><span>本文标题:</span><a href="/2018/05/10/promethues-federate/">promethues 联邦集群</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2018-05-10 12:47:24</p>
- <!-- <p><span>最后更新:</span>2019-09-24 09:24:28</p> -->
+ <!-- <p><span>最后更新:</span>2019-12-03 20:27:49</p> -->
   <p><span>原始链接:</span><a href="/2018/05/10/promethues-federate/" title="promethues 联邦集群">http://chenzhijun.me/2018/05/10/promethues-federate/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/05/10/promethues-federate/" aria-label="复制成功！"></i></span>
   </p>
@@ -645,7 +645,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -657,7 +657,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-12-13-10-02-27.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-12-13-10-04-07.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-12-13-10-07-04.png">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.440Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于ELK+Filebeat搭建日志中心">
 <meta name="twitter:description" content="基于ELK+Filebeat搭建日志中心实验环境 ubuntu 16 jdk 1.8 elasticesearch 6.0, kibana 6.0, logstash 6.0, filebeat 6.0   我也在windows10下安装过，win10下只需要修改filebeat的文件路径配置就可以了。  概念介绍elastic提供了非常多的工具，官方称为Elastic Stack。它提供了一些解">
@@ -180,7 +180,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -190,7 +190,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -322,20 +322,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/12/elasticsearch-logstash-kibana-part/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -378,7 +378,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/ELK/" itemprop="url" rel="index">
                     <span itemprop="name">ELK</span>
                   </a>
@@ -473,7 +473,7 @@
 <h4 id="Logstash安装与配置"><a href="#Logstash安装与配置" class="headerlink" title="Logstash安装与配置"></a>Logstash安装与配置</h4><p>Logstash的作用主要是用来处理数据，当然它也可以直接从日志文件读取记录然后进行处理。在Logstash的<strong>根目录</strong>，我们需要建立一个新文件<code>logstash.conf</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 配置logstash输入源</span><br><span class="line">input &#123;</span><br><span class="line">  beats &#123;</span><br><span class="line">    host =&gt; &quot;localhost&quot;</span><br><span class="line">    port =&gt; &quot;5043&quot; #注意要和filebeat的输出端口一致</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 配置输出的地方</span><br><span class="line">output &#123;</span><br><span class="line">  # 控制台</span><br><span class="line">  stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line">  # es</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">        hosts =&gt; [ &quot;localhost:9200&quot; ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Filebeat安装与配置"><a href="#Filebeat安装与配置" class="headerlink" title="Filebeat安装与配置"></a>Filebeat安装与配置</h4><p>Filebeat作为日志搜集器，肯定是需要指定输入源和输出地，所以我们需要先配置它。在Filebeat的根目录下我们需要在<code>filebeat.yml</code>中:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 输入源</span></span><br><span class="line"><span class="string">filebeat.prospectors:</span></span><br><span class="line"><span class="attr">- type:</span> <span class="string">log</span></span><br><span class="line"><span class="attr">  paths:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/var/log/*.log</span> <span class="comment"># 日志文件以log结尾并且需要放在/var/log目录下</span></span><br><span class="line">    <span class="comment"># 如果是windows,如下</span></span><br><span class="line">    <span class="comment"># - C:\Users\chen\Desktop\elastic\elkjava\log\*.log</span></span><br><span class="line"><span class="comment"># 输出地</span></span><br><span class="line"><span class="string">output.logstash:</span></span><br><span class="line">  <span class="comment"># The Logstash hosts</span></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">["localhost:5043"]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 输入源</span></span><br><span class="line"><span class="attr">filebeat.prospectors:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">log</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/var/log/*.log</span> <span class="comment"># 日志文件以log结尾并且需要放在/var/log目录下</span></span><br><span class="line">    <span class="comment"># 如果是windows,如下</span></span><br><span class="line">    <span class="comment"># - C:\Users\chen\Desktop\elastic\elkjava\log\*.log</span></span><br><span class="line"><span class="comment"># 输出地</span></span><br><span class="line"><span class="attr">output.logstash:</span></span><br><span class="line">  <span class="comment"># The Logstash hosts</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">["localhost:5043"]</span></span><br></pre></td></tr></table></figure>
 <h4 id="Elasticsearch和Kibana安装与配置"><a href="#Elasticsearch和Kibana安装与配置" class="headerlink" title="Elasticsearch和Kibana安装与配置"></a>Elasticsearch和Kibana安装与配置</h4><p>这次演示我们对es和kibana不做特别的配置，就默认就好了。</p>
 <h4 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h4><p>其实没有特别的顺序，我一般的启动顺序是elasticsearch-&gt;logsatsh-&gt;kibana-&gt;filebeat。其实差别都不大，特别注意一个就是，如果你想要测试的话，logstash支持配置自动更新，如果是日志文件更新，想让filebeat重新再搜索一次，删除掉filebeat根目录下<code>data/registry</code>文件。其实类推，如果要删除其它的软件(elk)的的数据，删掉<code>data</code>目录,很直接很暴力，但不建议在正式场景直接这样弄。</p>
 <p>启动es:</p>
@@ -492,10 +492,10 @@
 <p>不管怎么样，一定要动手实验才知道能不能行。</p>
 <h3 id="进阶实战：收集Java日志"><a href="#进阶实战：收集Java日志" class="headerlink" title="进阶实战：收集Java日志"></a>进阶实战：收集Java日志</h3><p>上面搭建的elk是可以用的，但是在实际中我发现一些需要处理的地方，比如Java的日志文件经常将堆栈打印出来，这个时候如果还是按照上面的配置，我们无法正确的显示在kibana中，因为我们上面实际配置的是按行读取的。但是堆栈信息应该是一条。所以我们需要对日志进行一些多行处理。<br>可以在filebeat中处理，也可以在logstash中处理。<br>我们今天直接在filebeat中处理，让logstash只做日志的过滤。</p>
 <p>首先准备一份Java的日志文件,大致的日志文件都会像下面这样格式：<code>date log-level log-message</code>=》<code>时间 日志级别 日志内容</code>，下面是一个抛出空指针的文件(有删减)：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2017</span>-<span class="number">12</span>-<span class="number">06</span> <span class="number">16</span>:<span class="number">59</span>:<span class="number">38</span>,<span class="number">927</span> WARN ExceptionHandlerExceptionResolver:<span class="number">391</span> Failed to invoke <span class="meta">@ExceptionHandler</span> method: <span class="keyword">public</span> com.framework.common.model.ResultData com.elasticsearch.exception.IntegralExceptionHandler.exceptionHandler(java.lang.Exception)</span><br><span class="line">java.lang.NullPointerException</span><br><span class="line">	at com.framework.common.util.SpringUtils.getMessage(SpringUtils.java:<span class="number">152</span>) ~[classes/:?]</span><br><span class="line">	at com.framework.common.util.SpringUtils.getMessage(SpringUtils.java:<span class="number">138</span>) ~[classes/:?]</span><br><span class="line">	at com.framework.common.util.SpringUtils.getMessage(SpringUtils.java:<span class="number">57</span>) ~[classes/:?]</span><br><span class="line">	at com.elasticsearch.exception.IntegralExceptionHandler.exceptionHandler(IntegralExceptionHandler.java:<span class="number">33</span>) ~[classes/:?]</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:<span class="number">1.8</span>.0_121]</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>) ~[?:<span class="number">1.8</span>.0_121]</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>) ~[?:<span class="number">1.8</span>.0_121]</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>) ~[?:<span class="number">1.8</span>.0_121]</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2017</span>-<span class="number">12</span>-<span class="number">06</span> <span class="number">16</span>:<span class="number">59</span>:<span class="number">38</span>,<span class="number">927</span> WARN ExceptionHandlerExceptionResolver:<span class="number">391</span> Failed to invoke <span class="meta">@ExceptionHandler</span> method: <span class="keyword">public</span> com.framework.common.model.ResultData com.elasticsearch.exception.IntegralExceptionHandler.exceptionHandler(java.lang.Exception)</span><br><span class="line">java.lang.NullPointerException</span><br><span class="line">	at com.framework.common.util.SpringUtils.getMessage(SpringUtils.java:<span class="number">152</span>) ~[classes/:?]</span><br><span class="line">	at com.framework.common.util.SpringUtils.getMessage(SpringUtils.java:<span class="number">138</span>) ~[classes/:?]</span><br><span class="line">	at com.framework.common.util.SpringUtils.getMessage(SpringUtils.java:<span class="number">57</span>) ~[classes/:?]</span><br><span class="line">	at com.elasticsearch.exception.IntegralExceptionHandler.exceptionHandler(IntegralExceptionHandler.java:<span class="number">33</span>) ~[classes/:?]</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:<span class="number">1.8</span><span class="number">.0_121</span>]</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>) ~[?:<span class="number">1.8</span><span class="number">.0_121</span>]</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>) ~[?:<span class="number">1.8</span><span class="number">.0_121</span>]</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>) ~[?:<span class="number">1.8</span><span class="number">.0_121</span>]</span><br></pre></td></tr></table></figure>
 <p>在filebeat中主要是将堆栈信息的内容合并到一行中，也就是说发送给logstash的时候将下面的异常堆栈当作log-message，让filebeat读取到堆栈的时候将空行转义成字符串然后将这行的信息补充到第一行后面。我们可以使用filebeat的multiline配置,详情：<a href="https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html</a></p>
 <p><code>filebeat.yml</code>:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">filebeat.prospectors:</span></span><br><span class="line"><span class="attr">- type:</span> <span class="string">log</span></span><br><span class="line"><span class="attr">  paths:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">/var/log/*.log</span> <span class="comment"># 日志文件以log结尾并且需要放在/var/log目录下</span></span><br><span class="line">    <span class="comment"># 如果是windows,如下</span></span><br><span class="line">    <span class="comment"># - C:\Users\chen\Desktop\elastic\elkjava\log\*.log</span></span><br><span class="line"><span class="attr">  multiline:</span> <span class="comment"># 多行处理，正则表示如果前面几个数字不是4个数字开头，那么就会合并到一行</span></span><br><span class="line"><span class="attr">      pattern:</span> <span class="string">^\d&#123;4&#125;</span></span><br><span class="line"><span class="attr">      negate:</span> <span class="literal">true</span> <span class="comment"># 正则是否开启，默认false不开启</span></span><br><span class="line"><span class="attr">      match:</span> <span class="string">after</span> <span class="comment"># 不匹配的正则的行是放在上面一行的前面还是后面</span></span><br><span class="line"></span><br><span class="line"><span class="string">output.logstash:</span></span><br><span class="line">  <span class="comment"># The Logstash hosts</span></span><br><span class="line"><span class="attr">  hosts:</span> <span class="string">["localhost:5043"]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">filebeat.prospectors:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">log</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/var/log/*.log</span> <span class="comment"># 日志文件以log结尾并且需要放在/var/log目录下</span></span><br><span class="line">    <span class="comment"># 如果是windows,如下</span></span><br><span class="line">    <span class="comment"># - C:\Users\chen\Desktop\elastic\elkjava\log\*.log</span></span><br><span class="line">  <span class="attr">multiline:</span> <span class="comment"># 多行处理，正则表示如果前面几个数字不是4个数字开头，那么就会合并到一行</span></span><br><span class="line">      <span class="attr">pattern:</span> <span class="string">^\d&#123;4&#125;</span></span><br><span class="line">      <span class="attr">negate:</span> <span class="literal">true</span> <span class="comment"># 正则是否开启，默认false不开启</span></span><br><span class="line">      <span class="attr">match:</span> <span class="string">after</span> <span class="comment"># 不匹配的正则的行是放在上面一行的前面还是后面</span></span><br><span class="line"></span><br><span class="line"><span class="attr">output.logstash:</span></span><br><span class="line">  <span class="comment"># The Logstash hosts</span></span><br><span class="line">  <span class="attr">hosts:</span> <span class="string">["localhost:5043"]</span></span><br></pre></td></tr></table></figure>
 <p>同样的这次我们对Java日志做一些信息提炼，也就是使用过滤规则，将date，log-level,log-message等提取出来：</p>
 <p><code>logstash.conf</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  beats &#123;</span><br><span class="line">    host =&gt; &quot;localhost&quot;</span><br><span class="line">    port =&gt; &quot;5043&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">filter &#123;</span><br><span class="line">    grok &#123;</span><br><span class="line">			match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;TIMESTAMP_ISO8601:timestamp&#125; %&#123;LOGLEVEL:level&#125; %&#123;JAVALOGMESSAGE:msg&#125;&quot; &#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br><span class="line">output &#123;</span><br><span class="line">  stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">        hosts =&gt; [ &quot;localhost:9200&quot; ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -682,7 +682,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -694,7 +694,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

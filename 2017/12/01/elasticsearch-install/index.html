@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-12-03-14-57-03.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-12-01-16-09-24.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-12-01-16-23-25.png">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.440Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ElasticSearch 安装 (单机单节点&#x2F;伪集群)">
 <meta name="twitter:description" content="ElasticSearch 安装 (单机单节点/单机多节点)ElasticSearch 简介ElasticSearch(ES) 现在已经随着技术发展越来越火爆了。它基于Lucence搜索引擎，实现RestFul风格，开箱即用。广泛用于在网站上做站内搜索。 下载这个忒简单了，会上网的人应该都会。 安装ES 下载解压后，配置文件主要在config目录下，包含文件：elasticsearch.yml,j">
@@ -179,7 +179,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -189,7 +189,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -321,20 +321,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/01/elasticsearch-install/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -377,7 +377,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Elasticsearch/" itemprop="url" rel="index">
                     <span itemprop="name">Elasticsearch</span>
                   </a>
@@ -456,10 +456,10 @@
 <p><img src="/images/qiniu/2017-12-01-16-09-24.png" alt="2017-12-01-16-09-24"></p>
 <p>我的本地ip地址为：<code>192.168.11.21</code>,</p>
 <p>master 的 elasticsearch.yml:</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cluster.name:</span> <span class="string">notice-application</span></span><br><span class="line"><span class="string">node.name:</span> <span class="string">master</span></span><br><span class="line"><span class="string">node.master:</span> <span class="literal">true</span></span><br><span class="line"><span class="string">network.host:</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.21</span></span><br><span class="line"><span class="comment"># network.bind_host: 192.168.11.21</span></span><br><span class="line"><span class="string">http.port:</span> <span class="number">9200</span></span><br><span class="line"><span class="string">transport.tcp.port:</span> <span class="number">9300</span></span><br><span class="line"><span class="string">discovery.zen.ping.unicast.hosts:</span> <span class="string">["192.168.11.21:9300","192.168.11.21:9310","192.168.11.21:9320"]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cluster.name:</span> <span class="string">notice-application</span></span><br><span class="line"><span class="attr">node.name:</span> <span class="string">master</span></span><br><span class="line"><span class="attr">node.master:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">network.host:</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.21</span></span><br><span class="line"><span class="comment"># network.bind_host: 192.168.11.21</span></span><br><span class="line"><span class="attr">http.port:</span> <span class="number">9200</span></span><br><span class="line"><span class="attr">transport.tcp.port:</span> <span class="number">9300</span></span><br><span class="line"><span class="attr">discovery.zen.ping.unicast.hosts:</span> <span class="string">["192.168.11.21:9300","192.168.11.21:9310","192.168.11.21:9320"]</span></span><br></pre></td></tr></table></figure>
 <p>slave1 的 elasticsearch.yml:</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cluster.name:</span> <span class="string">notice-application</span></span><br><span class="line"><span class="string">node.name:</span> <span class="string">slave1</span></span><br><span class="line"><span class="comment"># network.publish_host: 192.168.11.21</span></span><br><span class="line"><span class="comment"># network.bind_host: 192.168.11.21</span></span><br><span class="line"><span class="string">network.host:</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.21</span></span><br><span class="line"><span class="string">http.port:</span> <span class="number">9210</span></span><br><span class="line"><span class="string">transport.tcp.port:</span> <span class="number">9310</span></span><br><span class="line"><span class="string">discovery.zen.ping.unicast.hosts:</span> <span class="string">["192.168.11.21:9300","192.168.11.21:9310","192.168.11.21:9320"]</span></span><br></pre></td></tr></table></figure>
-<p>slave2 的 elasticsearch.yml:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">cluster.name:</span> <span class="string">notice-application</span></span><br><span class="line"><span class="string">node.name:</span> <span class="string">slave2</span></span><br><span class="line"><span class="comment"># network.publish_host: 192.168.11.21</span></span><br><span class="line"><span class="comment"># network.bind_host: 192.168.11.21</span></span><br><span class="line"><span class="string">network.host:</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.21</span></span><br><span class="line"><span class="string">http.port:</span> <span class="number">9220</span></span><br><span class="line"><span class="string">transport.tcp.port:</span> <span class="number">9320</span></span><br><span class="line"><span class="string">discovery.zen.ping.unicast.hosts:</span> <span class="string">["192.168.11.21:9300","192.168.11.21:9310","192.168.11.21:9320"]</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cluster.name:</span> <span class="string">notice-application</span></span><br><span class="line"><span class="attr">node.name:</span> <span class="string">slave1</span></span><br><span class="line"><span class="comment"># network.publish_host: 192.168.11.21</span></span><br><span class="line"><span class="comment"># network.bind_host: 192.168.11.21</span></span><br><span class="line"><span class="attr">network.host:</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.21</span></span><br><span class="line"><span class="attr">http.port:</span> <span class="number">9210</span></span><br><span class="line"><span class="attr">transport.tcp.port:</span> <span class="number">9310</span></span><br><span class="line"><span class="attr">discovery.zen.ping.unicast.hosts:</span> <span class="string">["192.168.11.21:9300","192.168.11.21:9310","192.168.11.21:9320"]</span></span><br></pre></td></tr></table></figure>
+<p>slave2 的 elasticsearch.yml:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cluster.name:</span> <span class="string">notice-application</span></span><br><span class="line"><span class="attr">node.name:</span> <span class="string">slave2</span></span><br><span class="line"><span class="comment"># network.publish_host: 192.168.11.21</span></span><br><span class="line"><span class="comment"># network.bind_host: 192.168.11.21</span></span><br><span class="line"><span class="attr">network.host:</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.21</span></span><br><span class="line"><span class="attr">http.port:</span> <span class="number">9220</span></span><br><span class="line"><span class="attr">transport.tcp.port:</span> <span class="number">9320</span></span><br><span class="line"><span class="attr">discovery.zen.ping.unicast.hosts:</span> <span class="string">["192.168.11.21:9300","192.168.11.21:9310","192.168.11.21:9320"]</span></span><br></pre></td></tr></table></figure></p>
 <p>上面的配置，如果要你要体验下可以拷贝到你自己的ES中，将IP改成你的本地ip就可以看到了。</p>
 <p>推荐一个图形化工具：<a href="https://github.com/mobz/elasticsearch-head" target="_blank" rel="noopener">elasticsearh-head</a>,这货尽然还推出了<a href="https://chrome.google.com/webstore/detail/elasticsearch-head/ffmkiejjmecolpfloofpjologoblkegm?utm_source=chrome-ntp-icon" target="_blank" rel="noopener">Chrome 插件</a>。简直完美。</p>
 <p>安装之后你就可以head插件看到集群配置了，下面是我的集群启动，电脑配置不太够，只启动了两台服务。<br><img src="/images/qiniu/2017-12-01-16-23-25.png" alt="2017-12-01-16-23-25"></p>
@@ -490,7 +490,7 @@
 <!--
 在`elasticsearch.yml`中配置默认的分词器：
 
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">index.analysis.analyzer.default.tokenizer</span> <span class="string">:</span> <span class="string">"ik_max_word"</span></span><br><span class="line"><span class="string">index.analysis.analyzer.default.type:</span> <span class="string">"ik_max_word"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">index.analysis.analyzer.default.tokenizer :</span> <span class="string">"ik_max_word"</span></span><br><span class="line"><span class="attr">index.analysis.analyzer.default.type:</span> <span class="string">"ik_max_word"</span></span><br></pre></td></tr></table></figure>
 <p>–&gt;<br>注意：如果要使用IK，你需要进行配置analyzer（字段文本的分词器），search_analyzer（搜索词的分词器）</p>
 <h3 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h3><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html</a></p>
 <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html</a></p>
@@ -671,7 +671,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -683,7 +683,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

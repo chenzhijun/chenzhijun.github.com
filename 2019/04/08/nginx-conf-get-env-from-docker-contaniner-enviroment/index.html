@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="nginx从docker容器的环境变量中获取值这篇接上一篇vuejs 从拷项目到开发上线 Docker 部署另外一个问题就是如何制作成镜像了？可以看到我们在nginx.conf中有api服务的地址，这个地址可能在不同的环境(di,sit,prd)都不一样，那能否通过容器的env来改变nginx.conf中的值呢？ 不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李temp">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.444Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx从docker容器的环境变量中获取值">
 <meta name="twitter:description" content="nginx从docker容器的环境变量中获取值这篇接上一篇vuejs 从拷项目到开发上线 Docker 部署另外一个问题就是如何制作成镜像了？可以看到我们在nginx.conf中有api服务的地址，这个地址可能在不同的环境(di,sit,prd)都不一样，那能否通过容器的env来改变nginx.conf中的值呢？ 不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李temp">
@@ -172,7 +172,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -182,7 +182,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -314,20 +314,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -417,7 +417,7 @@
 <p>不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李template的方式，来生成conf文件话不多说，直接上代码，先创建一个<code>nginx.conf.template</code>的文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80 default_server;</span><br><span class="line">    listen       [::]:80 default_server;</span><br><span class="line">    server_name  _;</span><br><span class="line">    root         /app/html;</span><br><span class="line"></span><br><span class="line">    # Load configuration files for the default server block.</span><br><span class="line">    include /etc/nginx/default.d/*.conf;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /m-web/ &#123;</span><br><span class="line">        root /app/html/dist;</span><br><span class="line">    &#125;</span><br><span class="line">    location /m-web/m-api/ &#123;</span><br><span class="line">        proxy_pass http://$&#123;M_API_SITE&#125;/m-api/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 404 /404.html;</span><br><span class="line">        location = /40x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 500 502 503 504 /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>之后准备Dockerfile：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:latest</span><br><span class="line"><span class="keyword">RUN</span> rm -rf /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/nginx.conf</span><br><span class="line">ENV M_API_SITE 192.168.1.19:8089</span><br><span class="line">ADD nginx.conf.template /etc/nginx/conf.d/nginx.conf.template</span><br><span class="line">ADD dist /app/html/dist</span><br><span class="line">CMD ["/bin/bash", "-c", "envsubst &lt; /etc/nginx/conf.d/nginx.conf.template &gt; /etc/nginx/conf.d/nginx.conf &amp;&amp; exec nginx -g 'daemon off;'"]</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:latest</span><br><span class="line"><span class="keyword">RUN</span> rm -rf /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/nginx.conf</span><br><span class="line"><span class="keyword">ENV</span> M_API_SITE <span class="number">192.168</span>.<span class="number">1.19</span>:<span class="number">8089</span></span><br><span class="line"><span class="keyword">ADD</span> nginx.conf.template /etc/nginx/conf.d/nginx.conf.template</span><br><span class="line"><span class="keyword">ADD</span> dist /app/html/dist</span><br><span class="line"><span class="keyword">CMD</span> ["/bin/bash", "-c", "envsubst &lt; /etc/nginx/conf.d/nginx.conf.template &gt; /etc/nginx/conf.d/nginx.conf &amp;&amp; exec nginx -g 'daemon off;'"]</span><br></pre></td></tr></table></figure>
 <p>之后<code>docker build -t xxx:latest .</code>，之后我们就可以通过<code>-e M_API_SITE=192.168.123.1:8080</code>设置容器的环境变量来设置不同的api地址了。</p>
 
       
@@ -439,7 +439,7 @@
   <p><span>本文标题:</span><a href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/">nginx从docker容器的环境变量中获取值</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2019-04-08 22:56:33</p>
- <!-- <p><span>最后更新:</span>2019-09-24 09:24:28</p> -->
+ <!-- <p><span>最后更新:</span>2019-12-03 20:27:49</p> -->
   <p><span>原始链接:</span><a href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" title="nginx从docker容器的环境变量中获取值">http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" aria-label="复制成功！"></i></span>
   </p>
@@ -617,7 +617,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -629,7 +629,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

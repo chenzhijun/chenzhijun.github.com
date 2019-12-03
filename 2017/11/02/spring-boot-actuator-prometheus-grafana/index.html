@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -113,7 +113,7 @@
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-11-02-16-52-58.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-11-02-16-54-12.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-11-02-17-03-01.png">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.444Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot 应用可视化监控">
 <meta name="twitter:description" content="Spring Boot 应用可视化监控 使用spring-actuator 并且使用prometheus, grafana 做可视化视图展示  总体过程图：  监控SpringBoot 应用监控SpringBoot 其实也整合了 ops 的功能，也就是运维的部分能力。通过引入包spring-boot-starter-actuator来监控相关的指标信息,详情文档：Actuator 介绍。另外在新版">
@@ -183,7 +183,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -193,7 +193,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -325,20 +325,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/11/02/spring-boot-actuator-prometheus-grafana/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -381,7 +381,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -456,10 +456,10 @@
 <h3 id="指标采集"><a href="#指标采集" class="headerlink" title="指标采集"></a>指标采集</h3><p>采集应用的指标信息，我们使用的是<code>prometheus</code>,相应的我们引入包:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.prometheus<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>simpleclient_spring_boot<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.26<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>之后在程序中开启相应的配置：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnablePrometheusEndpoint</span></span><br><span class="line"><span class="meta">@EnableSpringBootMetricsCollector</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnablePrometheusEndpoint</span></span><br><span class="line"><span class="meta">@EnableSpringBootMetricsCollector</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(DemoApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个时候我们可以开始启动我们的应用程序，并且访问相关接口:<a href="http://localhost:8099/admin/prometheus" target="_blank" rel="noopener">http://localhost:8099/admin/prometheus</a></p>
 <p>输入 properties 文件中的账号密码，就能看到下图：<br><img src="/images/qiniu/2017-11-02-16-26-20.png" alt="2017-11-02-16-26-20"></p>
-<h2 id="数据收集"><a href="#数据收集" class="headerlink" title="数据收集"></a>数据收集</h2><p>我们采集了指标信息之后就可以开始数据收集了，这个时候我们需要用到<code>Prometheus</code>工具，注意这里是工具，不再是 jar 包了。我使用的是 prometheus 的 docker 镜像，当然你也可以根据需要自己选择,先准备一份 Promethus 的配置文件,更多的配置文档请查看：<a href="https://prometheus.io/docs/operating/configuration/" target="_blank" rel="noopener">配置文档</a>：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">global:</span></span><br><span class="line"><span class="attr">  scrape_interval:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">  scrape_timeout:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">  evaluation_interval:</span> <span class="number">10</span><span class="string">m</span></span><br><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line"><span class="attr">  - job_name:</span> <span class="string">spring-boot</span></span><br><span class="line"><span class="attr">    scrape_interval:</span> <span class="number">5</span><span class="string">s</span></span><br><span class="line"><span class="attr">    scrape_timeout:</span> <span class="number">5</span><span class="string">s</span></span><br><span class="line"><span class="attr">    metrics_path:</span> <span class="string">/admin/prometheus</span></span><br><span class="line"><span class="attr">    scheme:</span> <span class="string">http</span></span><br><span class="line"><span class="attr">    basic_auth:</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="number">123456</span></span><br><span class="line"><span class="attr">    static_configs:</span></span><br><span class="line"><span class="attr">      - targets:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.54</span><span class="string">:8099</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="数据收集"><a href="#数据收集" class="headerlink" title="数据收集"></a>数据收集</h2><p>我们采集了指标信息之后就可以开始数据收集了，这个时候我们需要用到<code>Prometheus</code>工具，注意这里是工具，不再是 jar 包了。我使用的是 prometheus 的 docker 镜像，当然你也可以根据需要自己选择,先准备一份 Promethus 的配置文件,更多的配置文档请查看：<a href="https://prometheus.io/docs/operating/configuration/" target="_blank" rel="noopener">配置文档</a>：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">global:</span></span><br><span class="line">  <span class="attr">scrape_interval:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">scrape_timeout:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">evaluation_interval:</span> <span class="string">10m</span></span><br><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">spring-boot</span></span><br><span class="line">    <span class="attr">scrape_interval:</span> <span class="string">5s</span></span><br><span class="line">    <span class="attr">scrape_timeout:</span> <span class="string">5s</span></span><br><span class="line">    <span class="attr">metrics_path:</span> <span class="string">/admin/prometheus</span></span><br><span class="line">    <span class="attr">scheme:</span> <span class="string">http</span></span><br><span class="line">    <span class="attr">basic_auth:</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">admin</span></span><br><span class="line">      <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="number">192.168</span><span class="number">.11</span><span class="number">.54</span><span class="string">:8099</span></span><br></pre></td></tr></table></figure></p>
 <p>之后我们准备服务：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name prometheus -p 9090:9090 -v D:\chenzhijun\test\actuator\prometheus\prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</span><br></pre></td></tr></table></figure>
 <p>请注意，<code>D:\chenzhijun\test\actuator\prometheus\prometheus.yml</code> ，是我的配置文件存放地址，我们需要将它放到容器里面去，所以用了<code>-v</code>来做文件映射。<code>/etc/prometheus/prometheus.yml</code>这个是容器启动的时候去取的默认配置，这里我是直接覆盖掉了它。<code>prom/prometheus</code>这是镜像，如果本地没有，就回去你设置好的镜像仓库去取。</p>
@@ -665,7 +665,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -677,7 +677,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

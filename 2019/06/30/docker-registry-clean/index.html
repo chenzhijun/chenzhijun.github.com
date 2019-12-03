@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="Docker 镜像仓库清理公司使用registry作为镜像仓库管理，由于只对内使用并且只暴露给jenkins，不对其它人公开，因此也就没有做registry的限制。不过由于我们在jenkins构建的时候使用docker 的一个插件，但是我们公司又系统在构建的时候不还tag，因此造成同一个名字有很多历史的layer都保存在了镜像仓库中，占用的空间随着时间越来越大。经过这次清理，由原来的占用1.9T清">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.436Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 镜像仓库清理">
 <meta name="twitter:description" content="Docker 镜像仓库清理公司使用registry作为镜像仓库管理，由于只对内使用并且只暴露给jenkins，不对其它人公开，因此也就没有做registry的限制。不过由于我们在jenkins构建的时候使用docker 的一个插件，但是我们公司又系统在构建的时候不还tag，因此造成同一个名字有很多历史的layer都保存在了镜像仓库中，占用的空间随着时间越来越大。经过这次清理，由原来的占用1.9T清">
@@ -173,7 +173,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -183,7 +183,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -315,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/06/30/docker-registry-clean/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -371,7 +371,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Docker/" itemprop="url" rel="index">
                     <span itemprop="name">Docker</span>
                   </a>
@@ -444,7 +444,7 @@
 </blockquote>
 <h2 id="registry-的清理"><a href="#registry-的清理" class="headerlink" title="registry 的清理"></a>registry 的清理</h2><p>执行完上面的步骤还不够，还需要调用registry的清理功能才能实际释放空间:<code>docker exec registry /bin/registry garbage-collect /etc/docker/registry/config.yml</code></p>
 <p><code>config.yaml</code>:</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.1</span></span><br><span class="line"><span class="attr">log:</span></span><br><span class="line"><span class="attr">  fields:</span></span><br><span class="line"><span class="attr">    service:</span> <span class="string">registry</span></span><br><span class="line"><span class="attr">storage:</span></span><br><span class="line"><span class="attr">  cache:</span></span><br><span class="line"><span class="attr">    blobdescriptor:</span> <span class="string">inmemory</span></span><br><span class="line"><span class="attr">  filesystem:</span></span><br><span class="line"><span class="attr">    rootdirectory:</span> <span class="string">/var/lib/registry</span></span><br><span class="line"><span class="attr">  delete:</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">http:</span></span><br><span class="line"><span class="attr">  addr:</span> <span class="string">:5000</span></span><br><span class="line"><span class="attr">  headers:</span></span><br><span class="line"><span class="attr">    X-Content-Type-Options:</span> <span class="string">[nosniff]</span></span><br><span class="line"><span class="attr">health:</span></span><br><span class="line"><span class="attr">  storagedriver:</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    interval:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">    threshold:</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.1</span></span><br><span class="line"><span class="attr">log:</span></span><br><span class="line">  <span class="attr">fields:</span></span><br><span class="line">    <span class="attr">service:</span> <span class="string">registry</span></span><br><span class="line"><span class="attr">storage:</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">blobdescriptor:</span> <span class="string">inmemory</span></span><br><span class="line">  <span class="attr">filesystem:</span></span><br><span class="line">    <span class="attr">rootdirectory:</span> <span class="string">/var/lib/registry</span></span><br><span class="line">  <span class="attr">delete:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">http:</span></span><br><span class="line">  <span class="attr">addr:</span> <span class="string">:5000</span></span><br><span class="line">  <span class="attr">headers:</span></span><br><span class="line">    <span class="attr">X-Content-Type-Options:</span> <span class="string">[nosniff]</span></span><br><span class="line"><span class="attr">health:</span></span><br><span class="line">  <span class="attr">storagedriver:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">interval:</span> <span class="string">10s</span></span><br><span class="line">    <span class="attr">threshold:</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
 <p>执行完之后再使用<code>df -h</code>你就可以看到磁盘的空间被释放出来了。</p>
 
       
@@ -466,7 +466,7 @@
   <p><span>本文标题:</span><a href="/2019/06/30/docker-registry-clean/">Docker 镜像仓库清理</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2019-06-30 16:07:52</p>
- <!-- <p><span>最后更新:</span>2019-09-24 09:24:28</p> -->
+ <!-- <p><span>最后更新:</span>2019-12-03 20:27:49</p> -->
   <p><span>原始链接:</span><a href="/2019/06/30/docker-registry-clean/" title="Docker 镜像仓库清理">http://chenzhijun.me/2019/06/30/docker-registry-clean/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2019/06/30/docker-registry-clean/" aria-label="复制成功！"></i></span>
   </p>
@@ -650,7 +650,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -662,7 +662,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

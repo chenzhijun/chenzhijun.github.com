@@ -6,7 +6,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2018-01-31-20-00-07.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2018-01-31-20-14-03.png">
-<meta property="og:updated_time" content="2019-09-24T01:24:28.440Z">
+<meta property="og:updated_time" content="2019-12-03T12:27:49.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hibernate 校验参数">
 <meta name="twitter:description" content="Hibernater Validator 校验参数使用方式如果我们使用spring mvc 那么肯定知道在方法中我们可以使用注解对参数进行校验： 12345@PostMapping(&quot;/user)public void addUser(@Valid User user)&amp;#123;    User userP = user;    return ;&amp;#125; 这个时候通常是在User对象里面使用">
@@ -176,7 +176,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -186,7 +186,7 @@
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -318,20 +318,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/31/hibernater-validate-properties/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="饺子">
     </span>
 
@@ -374,7 +374,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -443,7 +443,7 @@
 <p>这个时候通常是在User对象里面使用一些注解来判断如：@NotNull,@NotEmpty。这些bean验证方法是遵循JSR303和JSR380规范的，目前的情况可以去这里查看详情：<a href="http://beanvalidation.org/2.0/" target="_blank" rel="noopener">http://beanvalidation.org/2.0/</a>。</p>
 <p>实现规范的这些中有一个包是<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints-simple" target="_blank" rel="noopener">Hibernate Validator</a>，这个包不是我们的ORM框架，可能是orm太出名了，以致于提到Hibernate大家都会想到SSH的Hibernate ORM，其实Hibernate Validator是一个非常完善的bean Validator。如果我们不想自己去实现一套，其实是可以引入这个包的。开源社区遇到的情况肯定会比我们自己要多。而且它也支持我们自定义注解来进行校验。</p>
 <p>在我们的系统中，是无法采用@Valid这种方式的，因为我们有一些特别的操作处理所以不能使用它。如果你想自己使用的话，可能可以像我这样，写一个Validtor工具类，然后在需要的地方调用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator.class).configure().failFast(<span class="keyword">true</span>).buildValidatorFactory().getValidator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">"message:"</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">"messageKey:"</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">"参数校验失败:%s"</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator<span class="class">.<span class="keyword">class</span>).<span class="title">configure</span>().<span class="title">failFast</span>(<span class="title">true</span>).<span class="title">buildValidatorFactory</span>().<span class="title">getValidator</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">"message:"</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">"messageKey:"</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">"参数校验失败:%s"</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>之后你可以在属性上面这样定义：</p>
 <p><img src="/images/qiniu/2018-01-31-20-00-07.png" alt="2018-01-31-20-00-07"></p>
 <p>如果需要使用校验的，只需要使用<a id="more"></a></p>
@@ -463,7 +463,7 @@
 <ol>
 <li>创建一个注解:<code>CheckCase</code>：</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Constraint;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Payload;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123; FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE &#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Constraint</span>(validatedBy = CheckCaseValidator.class)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CheckCase &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> "</span>&#123;org.hibernate.validator.referenceguide.chapter06.CheckCase.<span class="string">" +</span></span><br><span class="line"><span class="string">            "</span>message&#125;<span class="string">";</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;?&gt;[] groups() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;? extends Payload&gt;[] payload() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    CaseMode value();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Constraint;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Payload;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target</span>(&#123; FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE &#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Constraint</span>(validatedBy = CheckCaseValidator<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">Documented</span></span></span><br><span class="line"><span class="class"><span class="title">public</span> @<span class="title">interface</span> <span class="title">CheckCase</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> "</span>&#123;org.hibernate.validator.referenceguide.chapter06.CheckCase.<span class="string">" +</span></span><br><span class="line"><span class="string">            "</span>message&#125;<span class="string">";</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;?&gt;[] groups() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;? extends Payload&gt;[] payload() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    CaseMode value();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>继承Validator,并且将实现自己的规则逻辑</li>
 </ol>
@@ -647,7 +647,7 @@ var jiathis_config={
       
 
       <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
           <p class="site-author-name" itemprop="name">陈志军</p>
            
@@ -659,7 +659,7 @@ var jiathis_config={
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">158</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
