@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>shell-operation</title>
+    <url>/2019/12/18/shell-operation/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>nginx-http-1.1</title>
+    <url>/2019/12/18/nginx-http-1-1/</url>
+    <content><![CDATA[<h1 id="Nginx-Http-1-1-Host规范"><a href="#Nginx-Http-1-1-Host规范" class="headerlink" title="Nginx Http 1.1 Host规范"></a>Nginx Http 1.1 Host规范</h1><p>最近发现一个异常问题。一个web服务挂载在nginx后端，然后client通过socket连接后，构建成http-post请求，发现最后nginx会直接返回499，发现其实是客户端断链接，其实应该不对。<a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_ignore_client_abort" target="_blank" rel="noopener">http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_ignore_client_abort</a></p>
+<p>之后的是http1.1的规范。<a href="https://tools.ietf.org/html/rfc2616#section-14.23" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc2616#section-14.23</a> http1.1中，如果Host为空会直接返回400的状态码</p>
+]]></content>
+  </entry>
+  <entry>
     <title>ops 操作手册</title>
     <url>/2019/12/01/kubernetes-tips/</url>
     <content><![CDATA[<h2 id="给命令行增加快捷操作提示符"><a href="#给命令行增加快捷操作提示符" class="headerlink" title="给命令行增加快捷操作提示符"></a>给命令行增加快捷操作提示符</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source &lt;(kubectl completion bash) # setup autocomplete in bash into the current shell, bash-completion package should be installed first.echo "source &lt;(kubectl completion bash)" &gt;&gt; ~/.bashrc # add autocomplete permanently to your bash shell.</span><br><span class="line">alias k=kubectl</span><br><span class="line">complete -F __start_kubectl k</span><br></pre></td></tr></table></figure>

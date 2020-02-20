@@ -320,6 +320,372 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/23/mysql-optimization-index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/23/mysql-optimization-index/" itemprop="url">数据库索引优化实例</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T14:47:25+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/23/mysql-optimization-index/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/23/mysql-optimization-index/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/23/mysql-optimization-index/" class="leancloud_visitors" data-flag-title="数据库索引优化实例">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="数据库索引优化实例"><a href="#数据库索引优化实例" class="headerlink" title="数据库索引优化实例"></a>数据库索引优化实例</h1><p>索引对于查找小表或者需要处理表中大部分或全部行的大型表的查询不太重要，适合的才是最好的。</p>
+<h2 id="数据库索引的操作"><a href="#数据库索引的操作" class="headerlink" title="数据库索引的操作"></a>数据库索引的操作</h2><ol>
+<li>快速找到匹配where条件的行结果；</li>
+<li>如果有多个索引，MySQL通常会使用能检索除最少结果行的索引；</li>
+<li>如果有多列索引，优化器可以使用索引的最左边的前缀来查找行；比如有col1,col2,col3三列索引，那么你就可以使用(col1)，（col1,col2）,(col1,col2,col3)三个索引；</li>
+<li>如果有多表连接join的语句，mysql会将varchar(10)和char(10)看成同一个类型并且有效的使用索引；两个表使用的字符要一样比如utf8,和latin，就不行；</li>
+<li>在查找最小值和最大值的时候，优化器会先优化你是否在where条件中有常量值；</li>
+<li>索引排序会使用最左边的索引列前缀；</li>
+<li>在某些情况下，可以优化查询来检索值，而不必咨询数据行</li>
+</ol>
+<h2 id="主键与外键优化"><a href="#主键与外键优化" class="headerlink" title="主键与外键优化"></a>主键与外键优化</h2><p>主键索引的查询优化得益于主键不能为NULL值。表的数据在物理存储上就被组织为基于主键列或多列进行快速查找和排序。如果你的表很大又非常重要，然而却没有声明主键，或者组合主键，那么你需要新建一个新的列使用auto-increment来作为主键。</p>
+<p>外键优化，如果有一个大表，有许多列，可以考虑将表的列进行拆分成小表，并且用外键关联。每个小表都有主键，这样可以让查找数据更加快速，而需要数据的时候也可以是使用join关联查询。由于数据是分散的，查询可以有更少的I/O,并且会使用更少的缓存。因为相关的列在磁盘中存储在一块。</p>
+<h2 id="组合索引"><a href="#组合索引" class="headerlink" title="组合索引"></a>组合索引</h2><p>建立一个表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">test</span> (</span><br><span class="line">    <span class="keyword">id</span>         <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    last_name  <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    first_name <span class="built_in">CHAR</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>),</span><br><span class="line">    <span class="keyword">INDEX</span> <span class="keyword">name</span> (last_name,first_name)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我们有组合索引name，在索引查询中使用最左列查询是会使用索引的。也就是如下面的列子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span> <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span></span><br><span class="line">  <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span> <span class="keyword">AND</span> first_name=<span class="string">'Michael'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span></span><br><span class="line">  <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span></span><br><span class="line">  <span class="keyword">AND</span> (first_name=<span class="string">'Michael'</span> <span class="keyword">OR</span> first_name=<span class="string">'Monty'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">test</span></span><br><span class="line">  <span class="keyword">WHERE</span> last_name=<span class="string">'Widenius'</span></span><br><span class="line">  <span class="keyword">AND</span> first_name &gt;=<span class="string">'M'</span> <span class="keyword">AND</span> first_name &lt; <span class="string">'N'</span>;</span><br></pre></td></tr></table></figure>
+<p>即只要有最左侧的索引列，那么索引就会生效。但是如果是单独使用的<code>first_name</code>，那么索引将不会生效，如下面的示例：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/23/mysql-optimization-index/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/22/java-enum-anotation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/22/java-enum-anotation/" itemprop="url">Java 枚举和注解总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T22:38:32+08:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/22/java-enum-anotation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/22/java-enum-anotation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/22/java-enum-anotation/" class="leancloud_visitors" data-flag-title="Java 枚举和注解总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Java-枚举和注解总结"><a href="#Java-枚举和注解总结" class="headerlink" title="Java 枚举和注解总结"></a>Java 枚举和注解总结</h1><h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><h3 id="没有枚举前我们基本上常量来定义值："><a href="#没有枚举前我们基本上常量来定义值：" class="headerlink" title="没有枚举前我们基本上常量来定义值："></a>没有枚举前我们基本上常量来定义值：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Color</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> GREEN = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RED   = <span class="number">1</span>;</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有了枚举后我们会怎样了？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Color&#123;</span><br><span class="line">    GREEN,RED,BLACk,.......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码是不是就清晰很多了？而且使用的时候输出的值我们是可以使用GREEN，是不是可以很明白的知道是什么颜色？</p>
+<h3 id="枚举的创建"><a href="#枚举的创建" class="headerlink" title="枚举的创建"></a>枚举的创建</h3><p>枚举是继承自<code>Enum</code>，使用<code>enum</code>关键字。</p>
+<h3 id="枚举的使用场景"><a href="#枚举的使用场景" class="headerlink" title="枚举的使用场景"></a>枚举的使用场景</h3><p>枚举适合在<strong>固定的常量</strong>下使用，比如四季，月份，星期；这种基本公认的而且不会有改变的场景下使用。</p>
+<h3 id="编译器中的枚举"><a href="#编译器中的枚举" class="headerlink" title="编译器中的枚举"></a>编译器中的枚举</h3><p>编译器默认帮我们实现了很多枚举中的方法，比如equals(),hashCode(),toString,values(),valueOf(String)等。这些都是编译器帮我们做的。</p>
+<h3 id="枚举中的注意事项"><a href="#枚举中的注意事项" class="headerlink" title="枚举中的注意事项"></a>枚举中的注意事项</h3><ol>
+<li>不能使用static，final修饰枚举，因为它是隐式的final类型的；</li>
+<li>因为是final类型，所以我们也就知道它是<strong>不能被继承</strong>的；</li>
+<li>从Enum继承的clone是final类型的，枚举是不能重写clone方法的，并且Enum里面的clone方法直接抛出异常，所以enum是不能被clone的;</li>
+<li>enum中的ordinal是强依赖于枚举实例的定义顺序的，所以用ordinal来做判断顺序是不推荐的，因为只要在非最后加入实例，那么就会改变整体的顺序;如果是需要顺序可以自定义属性。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/22/java-enum-anotation/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/21/java-datastructure-priority-queue-heap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1780,344 +2146,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/07/just-write-something/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/07/just-write-something/" itemprop="url">随笔20180306</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T00:15:17+08:00">
-                2018-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/07/just-write-something/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/07/just-write-something/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/07/just-write-something/" class="leancloud_visitors" data-flag-title="随笔20180306">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="随笔20180306"><a href="#随笔20180306" class="headerlink" title="随笔20180306"></a>随笔20180306</h1><p>时间算算是真快啊，确实，转眼毕业快两年了。参加工作已经两年了。很多事情真是感觉像是昨天才发生的一样。<br>这几天静下心来想想自己。每日的计划做的很满，却是非常飘。很多时候我在对各种新技术去了解，去有想法，却忽略了一个很简单的事情，技术的更新特别快，今天有A，明天就有B，如果只是跟着潮流，那么未来的方向是哪里呢？我反思，我这一年里经历了很多，自己也在周末，下班都在弄一些技术相关的新的东西。然而，我却只教会了自己怎么用。没有教会自己为什么。过去的日子已经追不回来，努力的过好当下的日子才是最重要的。2018年立了很多的flag，其实最大的flag就只有一个，那就是-行动。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/05/thinkinjava-20180305/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/05/thinkinjava-20180305/" itemprop="url">重温Java编程思想的一些感悟-20180305</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T23:43:32+08:00">
-                2018-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/05/thinkinjava-20180305/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/05/thinkinjava-20180305/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/05/thinkinjava-20180305/" class="leancloud_visitors" data-flag-title="重温Java编程思想的一些感悟-20180305">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="重温Java编程思想的一些感悟-20180305"><a href="#重温Java编程思想的一些感悟-20180305" class="headerlink" title="重温Java编程思想的一些感悟-20180305"></a>重温Java编程思想的一些感悟-20180305</h1><p>JIT(just-in-time) 即时编译技术：将程序全部或者部分翻译成本地机器码，程序运行速度因此得到提升。<br>对于hotspot来说，代码每次被执行，都会做一些优化，执行的次数越多，速度也就越快。</p>
-<p>java会给所有的默认域做一个初始化，非基本类型对象不初始化值的情况下，默认为null。<br>初始化顺序:static-&gt;{}-&gt;构造器；</p>
-<p>static的数据指向同一份存储区域，不能用于局部变量。</p>
-<p>final对于基本类型，其数值永不改变。final对于引用类型，其引用永不改变。<br>必须在定义final或者在构造器中对final进行赋值。</p>
-<p>final类无法继承，方法无法重写或修改。private的方法其实是隐式的final。</p>
-<p>compareTo,如果是两个int，最好不要直接返回i-i2，如果是有符号的int类型，一个正数最大，一个负数最大，那么将永远返回负数。所以如果重写compareTo，最好是不要直接返回return i-i2;</p>
-<p>集合是fail-fast的，比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.add(aa);</span><br><span class="line">list.iterator();</span><br><span class="line">list.add(cc);</span><br></pre></td></tr></table></figure>
-<p>需要明确在添加或者修改完容器所有元素之后再获取迭代器。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2166,7 +2194,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">158</span>
+                <span class="site-state-item-count">160</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
