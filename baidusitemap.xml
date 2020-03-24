@@ -1,102 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://chenzhijun.me/2020/03/18/java-string-stringbuffer-stringbuilder/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/03/10/thinkinjava-20180310/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/12/27/top-k-pid-memory-cpu-linux/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/05/02/ubuntu-change-source-list/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/11/02/unit-error-and-param-log/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/01/09/use-curl-to-http-request/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/05/09/vim-start/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/03/31/windows-compile-golang-to-linux-running-script/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/07/17/windows-connect-github-with-sshkey/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/04/08/vuejs-starter/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/03/09/%E5%88%9D%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/10/04/java-design-pattern-command/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/09/19/java-design-pattern-decorate/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/10/04/java-design-pattern-factory/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/09/14/java-design-pattern-observer/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/09/23/java-design-pattern-single/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/09/12/java-design-pattern-strategy/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/10/09/java-design-pattern-template-method/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/03/31/java-develop-normal-error/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/05/10/java-encode/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/03/22/java-enum-anotation/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/07/06/java-enum-how-to-generate-json/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/08/19/java-fastjson-map/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/09/20/java-io/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/07/06/java-json-generate-with-underline/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/12/11/java-poi-operation/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/08/19/java-sensitive/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/08/08/java-string/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/03/23/java-thread-guidance/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/09/28/java-thread-local/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/03/14/java-transaction/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/04/05/java-virtual-machine/</loc>
-    <lastmod>2020-03-24</lastmod>
-  </url>  <url>
     <loc>http://chenzhijun.me/2017/04/21/java-xml-xstream/</loc>
     <lastmod>2020-03-24</lastmod>
   </url>  <url>
@@ -287,6 +191,36 @@
     <lastmod>2020-03-24</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2018/03/05/thinkinjava-20180305/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/03/10/thinkinjava-20180310/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/12/27/top-k-pid-memory-cpu-linux/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/05/02/ubuntu-change-source-list/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/11/02/unit-error-and-param-log/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/01/09/use-curl-to-http-request/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/05/09/vim-start/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/04/08/vuejs-starter/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/03/31/windows-compile-golang-to-linux-running-script/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/07/17/windows-connect-github-with-sshkey/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/03/09/%E5%88%9D%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2020-03-24</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2018/07/16/2018-06and07-conclusion/</loc>
@@ -482,6 +416,72 @@
     <lastmod>2020-03-24</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2018/03/21/java-datastructure-priority-queue-heap/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/10/04/java-design-pattern-command/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/09/19/java-design-pattern-decorate/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/10/04/java-design-pattern-factory/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/09/14/java-design-pattern-observer/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/09/23/java-design-pattern-single/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/09/12/java-design-pattern-strategy/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/10/09/java-design-pattern-template-method/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/03/31/java-develop-normal-error/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/05/10/java-encode/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/03/22/java-enum-anotation/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/07/06/java-enum-how-to-generate-json/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/08/19/java-fastjson-map/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/09/20/java-io/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/07/06/java-json-generate-with-underline/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/12/11/java-poi-operation/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/08/19/java-sensitive/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2020/03/18/java-string-stringbuffer-stringbuilder/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/08/08/java-string/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/03/23/java-thread-guidance/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/09/28/java-thread-local/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/03/14/java-transaction/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/04/05/java-virtual-machine/</loc>
     <lastmod>2020-03-24</lastmod>
   </url>
 </urlset>
