@@ -320,6 +320,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/08/25/golang-goroutine1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/25/golang-goroutine1/" itemprop="url">golang 并发基础（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-25T20:40:13+08:00">
+                2019-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/25/golang-goroutine1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/25/golang-goroutine1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/08/25/golang-goroutine1/" class="leancloud_visitors" data-flag-title="golang 并发基础（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="golang-并发基础（一）"><a href="#golang-并发基础（一）" class="headerlink" title="golang 并发基础（一）"></a>golang 并发基础（一）</h1><p>golang 在语言的语法和运行时方面内置了对并发的支持。在了解golang的并发之前，我们先看一下操作系统的两个概念：线程和进程。你应该知道，在系统中运行一个程序，其实就是启动了一个进程，而要运行起来，对外来说肯定是需要资源的，比如cpu，内存空间，文件句柄，线程等等..每个进程至少有一个线程，每个进程的初始线程被称为主线程。了解到这些，你大概可以类比一下，比如你创建一个项目，肯定要有main方法（主线程），你的项目中可能还有不同的业务逻辑，这个时候就可以让主进程创建多个线程去运行求结果。线程可以共享进程的空间。另外我们要知道，cpu的执行方式是轮询时间分片的，也就是可能这个线程有10ms的cpu执行时间，所以如果是单核cpu，就是每个线程执行一会，抢占式执行。并发(concurrency)不是并行(parallelism)。并行是在相同的时候让不同的代码都能在不同的处理器上执行，也就是同时做很多事情。并发是指同时管理很多事情，这些事情可能只做了一半就被暂停去做别的事情了。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/25/golang-goroutine1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/08/17/record-last/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1813,173 +1982,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/06/30/linux-tool-socat/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/30/linux-tool-socat/" itemprop="url">Linux 工具-socat</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T16:20:53+08:00">
-                2019-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/30/linux-tool-socat/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/30/linux-tool-socat/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/06/30/linux-tool-socat/" class="leancloud_visitors" data-flag-title="Linux 工具-socat">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Linux-工具-socat"><a href="#Linux-工具-socat" class="headerlink" title="Linux 工具-socat"></a>Linux 工具-socat</h1><p>socat是一个多功能的网络工具，官网：<a href="http://www.dest-unreach.org/socat/" target="_blank" rel="noopener">http://www.dest-unreach.org/socat/</a></p>
-<h2 id="安装socat"><a href="#安装socat" class="headerlink" title="安装socat"></a>安装socat</h2><p>安装方式很简单：<code>yum install -y socat</code>,就可以了，当然如果是ubuntu的机器就是用<code>apt</code></p>
-<h2 id="使用socat"><a href="#使用socat" class="headerlink" title="使用socat"></a>使用socat</h2><p>公司内部的网络限制比较严格，只有一些常用的端口能正常访问，因此调试的时候非常麻烦，比如你的应用程序端口是19995，但是公司只能是8080来访问，这个时候怎么办？使用nginx或haproxy当然可以，但是麻烦啊，配置搞一堆。。但是使用socat就很方便了:<code>socat TCP4-LISTEN:{port1},reuseaddr,fork TCP4:{ip:port2}</code> ，比如你有三台机器A(127.0.0.1)；B(127.0.0.2）；C（192.168.1.1）。B能访问A的8080端口，但是不能访问C的9090端口，而服务又监听的是C的9090端口，A能访问C的9090端口。所以很当然会想到B–&gt;A:8080–&gt;C:9090。也就是在A做一层反向代理。socat就是这样的。在A上我们执行：<code>socat TCP4-LISTEN:8080,reuseaddr,fork TCP4:192.168.1.1:9090</code>。然后B就访问A:8080,就能访问到C的9090端口了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2028,7 +2030,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">161</span>
+                <span class="site-state-item-count">162</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
