@@ -320,6 +320,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/19/hexo-travis-ci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/19/hexo-travis-ci/" itemprop="url">使用Travis-CI持续构建Hexo博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T14:05:44+08:00">
+                2017-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/19/hexo-travis-ci/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/19/hexo-travis-ci/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/12/19/hexo-travis-ci/" class="leancloud_visitors" data-flag-title="使用Travis-CI持续构建Hexo博客">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="使用Travis-CI持续构建Hexo博客"><a href="#使用Travis-CI持续构建Hexo博客" class="headerlink" title="使用Travis-CI持续构建Hexo博客"></a>使用Travis-CI持续构建Hexo博客</h2><p>我是用的 Hexo+Github Page 来构建自己的博客。在 Github 创建<code>your_github_name.github.io</code>仓库的时候，可以直接使用<code>your_github_name.github.io</code>作为你的博客域名站点。详细的话，可以自己去 google 下使用 Hexo搭建个人博客。</p>
+<p>写本文的原因是因为，每次我在写完一篇总结，提交了push之后。如果要更新到博客上，需要经历的过程就是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 提交源文件到仓库</span><br><span class="line">git add .</span><br><span class="line">git commit -m "xxx"</span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 发布到博客站点</span><br><span class="line">hexo clean</span><br><span class="line">hexo d -g</span><br><span class="line"><span class="meta">#</span> 这里还需要输入github账号，密码。</span><br></pre></td></tr></table></figure>
+<p>我觉得如果提交源文件push之后能够直接发布到博客站点就好了。在网上搜了一圈，很多人的资料还是有些缺陷，自己踩了一路坑，所以有了本篇记录。</p>
+<h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>先介绍下我的博客环境，我用了两个repo:<br>一个是存博客源码的<code>blog.git</code>,<br>另一个也就是用来做站点发布的<code>chenzhijun.github.com.git</code>。</p>
+<blockquote>
+<p>网上很多人喜欢用一个库，然后切换分支的做法。之前我也弄过，不过后来发现我经常弄错分支。反正repo不要钱，就无所谓，分开吧。其实就是懒。总之，自己爽就好。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/19/hexo-travis-ci/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></blockquote></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/19/elasticsearch-document-data/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1894,181 +2069,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/11/21/java-8-functional-programming/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/21/java-8-functional-programming/" itemprop="url">Java 8 函数式编程-前言</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T14:35:13+08:00">
-                2017-11-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/21/java-8-functional-programming/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/21/java-8-functional-programming/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/11/21/java-8-functional-programming/" class="leancloud_visitors" data-flag-title="Java 8 函数式编程-前言">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Java-8-函数式编程-前言"><a href="#Java-8-函数式编程-前言" class="headerlink" title="Java 8 函数式编程-前言"></a>Java 8 函数式编程-前言</h2><blockquote>
-<p>从 Java 8 发布到现在已经过去很久了，现在 Java 9 也都已经发布了。国人的习惯总是你发布 8 的时候，我用 7 。你发布 9 的时候，我想 Java 8 应该是普及的时候了。那么正当时，还不来普及下 Java 8 的一个大特性，那就有点说不过去了。</p>
-</blockquote>
-<hr>
-<hr>
-<h3 id="引言-什么是函数式编程"><a href="#引言-什么是函数式编程" class="headerlink" title="引言 - 什么是函数式编程"></a>引言 - 什么是函数式编程</h3><p>函数式编程（Funtional Programming，以下简称 fp ），我想从 Java 8 发布之后大家对这个名词都不陌生，它有很多好处，减少代码，增加可读性等等。但是什么是函数式编程了？它和我们普通的 OOP 又有什么不同？</p>
-<p>先来看一份常规打招呼的代码，在 Java7 之前我们大多是这么玩的：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/21/java-8-functional-programming/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2117,7 +2117,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">163</span>
+                <span class="site-state-item-count">164</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
