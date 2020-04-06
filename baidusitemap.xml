@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://chenzhijun.me/2018/04/26/prometheus-grafana-monitor/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/05/09/prometheus-monitor-tomcat/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/04/16/prometheus-pre-use/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/07/16/prometheus-query/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/05/10/promethues-federate/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/04/18/rancher-experience/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/08/17/record-last/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/05/05/restful-api/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/04/06/reverse-node-md/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/06/09/self-dns-server-install/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/01/08/shell-get-param-from-console/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/09/07/shell-learn-1/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/12/18/shell-operation/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/05/13/shell-script/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/03/17/shell-sort/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
     <loc>http://chenzhijun.me/2018/03/17/shenzhen-xianxia-fenxianghui/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
@@ -46,6 +94,9 @@
     <loc>http://chenzhijun.me/2019/04/08/vuejs-starter/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
+    <loc>http://chenzhijun.me/2020/04/05/what-is-garbage-to-need-collecter/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
     <loc>http://chenzhijun.me/2020/04/04/what-is-jvm-when-we-talk-about-it/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
@@ -56,6 +107,72 @@
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2018/03/09/%E5%88%9D%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/12/21/elasticsearch-search-base/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/12/27/elk-docker/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/08/19/essay-8-19/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/05/23/etcd-cluster-install/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/03/15/first-blog/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/04/22/git/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/04/02/gitlab-customer-settings/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/04/12/go-language-start/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/08/25/golang-goroutine1/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/08/25/golang-goroutine2/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/03/31/golang-package-struct/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/07/14/golang-type/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/07/14/hello-golang/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/12/19/hexo-travis-ci/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/01/31/hibernater-validate-properties/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/01/31/how-to-build-springboot-starter/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/04/26/how-to-connect-virtual-box-with-ssh/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/11/02/how-to-print-error-stack/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2019/03/31/how-to-transfer-linux-command-result-to-variable-in-shell/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/07/16/how-to-use-ansible-to-do-something/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/03/26/idea-linux-vim-command-shortcut/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2017/11/29/java-8-date/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2017/11/21/java-8-functional-programming/</loc>
@@ -223,13 +340,13 @@
     <loc>http://chenzhijun.me/2019/06/30/mysql-autocommit/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
-    <loc>http://chenzhijun.me/2018/12/17/mysql-grant/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
     <loc>http://chenzhijun.me/2018/03/23/mysql-optimization-index/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2018/03/12/mysql-optimization/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>http://chenzhijun.me/2018/12/17/mysql-grant/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2017/04/22/mysql-optimize/</loc>
@@ -260,54 +377,6 @@
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2018/06/09/prometheus-alertmanager-external-url/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/04/26/prometheus-grafana-monitor/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/05/09/prometheus-monitor-tomcat/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/04/16/prometheus-pre-use/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/07/16/prometheus-query/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/06/09/prometheus-storage-influxdb/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/05/10/promethues-federate/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/04/18/rancher-experience/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/08/17/record-last/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/05/05/restful-api/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/04/06/reverse-node-md/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/06/09/self-dns-server-install/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/01/08/shell-get-param-from-console/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/09/07/shell-learn-1/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/12/18/shell-operation/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/05/13/shell-script/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/03/17/shell-sort/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2018/07/16/2018-06and07-conclusion/</loc>
@@ -422,72 +491,6 @@
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.me/2017/12/21/elasticsearch-routing-data-to-shards/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/12/21/elasticsearch-search-base/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/12/27/elk-docker/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/08/19/essay-8-19/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/05/23/etcd-cluster-install/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/03/15/first-blog/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/04/22/git/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/04/02/gitlab-customer-settings/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/04/12/go-language-start/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/08/25/golang-goroutine1/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/08/25/golang-goroutine2/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/03/31/golang-package-struct/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/07/14/golang-type/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/07/14/hello-golang/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/12/19/hexo-travis-ci/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/01/31/hibernater-validate-properties/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/01/31/how-to-build-springboot-starter/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/04/26/how-to-connect-virtual-box-with-ssh/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/11/02/how-to-print-error-stack/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2019/03/31/how-to-transfer-linux-command-result-to-variable-in-shell/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/07/16/how-to-use-ansible-to-do-something/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2018/03/26/idea-linux-vim-command-shortcut/</loc>
-    <lastmod>2020-04-06</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.me/2017/11/29/java-8-date/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>
 </urlset>
