@@ -320,213 +320,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/12/mysql-optimization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/12/mysql-optimization/" itemprop="url">数据库查询优化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T22:16:35+08:00">
-                2018-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/12/mysql-optimization/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/12/mysql-optimization/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/12/mysql-optimization/" class="leancloud_visitors" data-flag-title="数据库查询优化">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="数据库查询优化"><a href="#数据库查询优化" class="headerlink" title="数据库查询优化"></a>数据库查询优化</h1><p>通常笛卡尔积的优化很明显，可以用字查询等来做。</p>
-<p>查询的优化其实实际上很大部分都是来自索引的优化。我是这么认为的。我们很多时候都会查执行计划的方式来优化语句。而这里面我们看得最多的就是表是否使用了索引。其实如果数量量少的情况下，我们用全表扫描可能会比用索引扫描要好。但是一般情况下还是优化成索引查询比较好。使用的方法就是查执行计划。<code>explain</code>，<code>explain extended</code>。</p>
-<p>另外还有一个特别有意思的语句优化： <code>where name like &#39;Abc%&#39;</code>优化成：<code>where name&gt;=&#39;Abc&#39; and name &lt; &#39;Abcd&#39;</code></p>
-<p>本文来自《数据库查询优化器的艺术》-李海翔的读书摘抄。</p>
-<p>今天先给自己挖个坑。等之后我再来填。7天之内必填完，今日是3月12日。3月19日填完此坑。</p>
-<p>来填坑，今天是3月16日。</p>
-<h2 id="性能优化简介"><a href="#性能优化简介" class="headerlink" title="性能优化简介"></a>性能优化简介</h2><p>谈优化，我们先的知道怎么去测量。我们优化的性能其实实际上指的就是响应时间。主要测量也是看时间花在哪里。响应时间一般指的是执行时间和等待时间。在进行优化之前我们必须先明白什么样的优化才值得我们去优化：</p>
-<ol>
-<li>值得优化的查询，如果为了优化1%的查询去浪费20%的人力，那肯定是不合算的；</li>
-<li>异常情况要优化，有异常当然要优化了；</li>
-<li>丢失时间，执行一些语句，发现花费了莫名奇妙的很长一段时间，而且这段时间也没有任何日志记录；这也有点像异常情况，对待异常一定要明白为什么；</li>
-<li>不要相信平均值，毕竟有时候峰值几十秒，然后其它时候几毫秒，这种均值肯定是不能信的</li>
-</ol>
-<p>既然要测量，那当然要有可以测量的点了。比如说从慢查询日志，show status，show profile。下面先介绍下几个常用的测量点：</p>
-<h3 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h3><p>慢查询日志可以通过设置：<code>long_query_time=0</code>来开启。慢查询日志是开销最低，精度最高的测量查询时间的工具。慢查询最大的担心就是消耗大量的磁盘空间，所以建议在只开启某一段时间进行收集即可。推荐一款工具：<code>pt-query-digest</code>。</p>
-<h3 id="show-profile"><a href="#show-profile" class="headerlink" title="show profile"></a>show profile</h3><p>开始profile的命令为：<code>set profiling=1</code>,开启之后，在服务器上执行的所有语句，都会测量其耗费的时间和其它一些查询执行状态变更相关的数据。当一条查询提交给服务器时候，此工具会记录信息到临时表，然后我们可以使用<code>show profiles;</code>来查询结果。当然你可以使用我下面的这个sql来查询：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">set</span> @query_id=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">select</span> state,<span class="keyword">sum</span>(<span class="keyword">duration</span>) <span class="keyword">as</span> Total_R,</span><br><span class="line">	<span class="keyword">ROUND</span>(</span><br><span class="line">			<span class="number">100</span>*<span class="keyword">SUM</span>(<span class="keyword">DURATION</span>) /(<span class="keyword">Select</span> <span class="keyword">sum</span>(<span class="keyword">duration</span>) <span class="keyword">from</span> information_schema.profiling <span class="keyword">where</span> query_id=@query_id),<span class="number">2</span>) <span class="keyword">as</span> Pct_R,</span><br><span class="line">    <span class="keyword">count</span>(*) <span class="keyword">as</span> Calls,</span><br><span class="line">	<span class="keyword">SUM</span>(<span class="keyword">duration</span>) /<span class="keyword">count</span>(*) <span class="keyword">as</span> <span class="string">'R/CALL'</span></span><br><span class="line"><span class="keyword">From</span> information_schema.profiling</span><br><span class="line"><span class="keyword">Where</span> query_id=@query_id</span><br><span class="line"><span class="keyword">Group</span> <span class="keyword">by</span> state</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> Total_R <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="show-status"><a href="#show-status" class="headerlink" title="show status"></a>show status</h3><p>该命令返回一些计数器。既有服务器级别的全局计数器，也有基于某个连接的会话级别的计数器。</p>
-<p>另外还有一些命令：show processlist;show global status;这些命令可能需要在实际使用中再查了。不是我想说的重点。</p>
-<h2 id="优化过程"><a href="#优化过程" class="headerlink" title="优化过程"></a>优化过程</h2><p>谈到优化，其实优化的点有很多，从数据库表开始设计，字段类型，字段索引设置都有很多的可优化之处，我们非专业DBA，但是可以多去尝试理解，至少靠自己，是最靠谱的。</p>
-<h3 id="数据类型优化"><a href="#数据类型优化" class="headerlink" title="数据类型优化"></a>数据类型优化</h3><h4 id="选择优化的数据类型"><a href="#选择优化的数据类型" class="headerlink" title="选择优化的数据类型"></a>选择优化的数据类型</h4><p>比如使用可以正确存储数据的最小数据类型。他们更快，因为更小的数据类型占用更少的磁盘，内存和CPU缓存，并且处理时需要的CPU周期也更少。</p>
-<h4 id="使用更简单的数据类型"><a href="#使用更简单的数据类型" class="headerlink" title="使用更简单的数据类型"></a>使用更简单的数据类型</h4><p>整型比字符操作代价更低，使用内建类型代替字符串存储日期和时间，使用整型存储IP；</p>
-<h4 id="避免使用NULL"><a href="#避免使用NULL" class="headerlink" title="避免使用NULL"></a>避免使用NULL</h4><p>为null的列会使用更多的存储空间；null的列为索引，需要一个额外的存储空间；</p>
-<p>另外还有些优化是选择具体数据类型，设计表时候，列不要太多，太多的列需要考虑分表；少关联多个表，多表查询，MySQL最多关联表61个。</p>
-<h3 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h3><p>很多时候谈优化，最终都无法避免的就是说到索引优化。索引是存储引擎用来快速找到记录的一种数据结构。在MySQL中也成为key。MySQL中索引是存储在存储引擎中的，不是在服务器中。一般我们说的索引都是B-Tree索引，也就是B-Tree数据结构。B-Tree对索引的列是顺序组织存储的（这里可以看到数据结构的威力了！），索引对值进行排序是按照create table时列的顺序来的。B-Tree 索引适用于全键值，键值范围，键前缀值。</p>
-<p>索引的种类有很多，除了上面说的B-tree索引，还有哈希索引，空间数据索引，全文索引。</p>
-<p>索引的优点：快速定位到表的位置，减少服务器需要扫描的数量，帮助服务器避免排序和临时表，将随机I/O变成顺序I/O。不过别太迷信索引，在表数量少的情况下，全表扫描更高效。</p>
-<p>索引查询：</p>
-<ol>
-<li>全值匹配；</li>
-<li>匹配最左前缀，多列索引匹配最左边的索引；</li>
-<li>匹配列前缀，匹配某一列的值的开头部分；</li>
-<li>匹配范围值；</li>
-<li>精确匹配某一列并范围匹配其它列；</li>
-<li>只访问索引的查询</li>
-</ol>
-<p>限制：</p>
-<ol>
-<li>如果不按照索引最左列开始查找，则无法使用索引；</li>
-<li>不能跳过索引列：比如有三个索引列name,address,age;不能跳过address来查询age的索引。</li>
-<li>如果某列为范围查询，其右侧列都无法使用索引查询;如有索引a,b,c;如果在查询中使用了 <code>a between 1 and 15 and b =12</code>,由于a使用了范围查询，a之后的索引b不会生效。</li>
-</ol>
-<h4 id="索引优化实例"><a href="#索引优化实例" class="headerlink" title="索引优化实例"></a>索引优化实例</h4><p>链接地址：<a href="http://chenzhijun.me/2018/03/23/mysql-optimization-index/">http://www.chenzhijun.me/2018/03/23/mysql-optimization-index/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/03/12/java性能优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2151,6 +1944,154 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/31/how-to-build-springboot-starter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/31/how-to-build-springboot-starter/" itemprop="url">编写属于自己的springboot-starter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-31T10:52:56+08:00">
+                2018-01-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/31/how-to-build-springboot-starter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/31/how-to-build-springboot-starter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/01/31/how-to-build-springboot-starter/" class="leancloud_visitors" data-flag-title="编写属于自己的springboot-starter">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="编写属于自己的springboot-starter"><a href="#编写属于自己的springboot-starter" class="headerlink" title="编写属于自己的springboot-starter"></a>编写属于自己的springboot-starter</h1><p>最近手痒，想实现一下自己的starter，感概于springboot的starter导入方便，要是能有一款自己的starter，那样多么好，比起之前的maven导入方式，好像更有意思。<br>主要可以加重对springboot的自动配置装载的理解。</p>
+<h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><p>starter的简易目录如下，”autoconfiguration”,”domain”,”service”,”META-INF”：<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/31/how-to-build-springboot-starter/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2199,7 +2140,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">164</span>
+                <span class="site-state-item-count">163</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

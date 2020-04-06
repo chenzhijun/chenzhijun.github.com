@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>what-is-garbage-to-need-collecter</title>
-    <url>/2020/04/05/what-is-garbage-to-need-collecter/</url>
-    <content><![CDATA[<p># </p>
-<h2 id="这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？"><a href="#这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？" class="headerlink" title="这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？"></a>这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？</h2><h2 id="这个技术的优势和劣势分别是什么，或者说，这个技术的-trade-off-（要什么不要什么）是什么"><a href="#这个技术的优势和劣势分别是什么，或者说，这个技术的-trade-off-（要什么不要什么）是什么" class="headerlink" title="这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么"></a>这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么</h2><h2 id="这个技术适用的场景（技术场景或业务场景）"><a href="#这个技术适用的场景（技术场景或业务场景）" class="headerlink" title="这个技术适用的场景（技术场景或业务场景）"></a>这个技术适用的场景（技术场景或业务场景）</h2><h2 id="这个技术的组成部分和关键点（核心思想，核心组件）"><a href="#这个技术的组成部分和关键点（核心思想，核心组件）" class="headerlink" title="这个技术的组成部分和关键点（核心思想，核心组件）"></a>这个技术的组成部分和关键点（核心思想，核心组件）</h2><h2 id="这个技术的底层原理和关键实现"><a href="#这个技术的底层原理和关键实现" class="headerlink" title="这个技术的底层原理和关键实现"></a>这个技术的底层原理和关键实现</h2><h2 id="已有的实现和它之间的对比"><a href="#已有的实现和它之间的对比" class="headerlink" title="已有的实现和它之间的对比"></a>已有的实现和它之间的对比</h2>]]></content>
-  </entry>
-  <entry>
     <title>查漏补缺 Java 系列 - JVM</title>
     <url>/2020/04/04/what-is-jvm-when-we-talk-about-it/</url>
     <content><![CDATA[<h1 id="查漏补缺-Java-系列-JVM"><a href="#查漏补缺-Java-系列-JVM" class="headerlink" title="查漏补缺 Java 系列 - JVM"></a>查漏补缺 Java 系列 - JVM</h1><p>你知道 JVM 吗?作为Java开发人员，我想你肯定听过吧?那么你了解为什么需要 JVM 吗?它的作用是什么?给我带来了什么好处，又给我们带来了什么缺点了?接下来我们一起看看吧。</p>
