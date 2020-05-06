@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Harbor,">
+
+
+
+
+
+  <link rel="alternate" href="/rss.xml" title="饺子" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Harbor  镜像仓库安装与 Helm Chart 管理Harbor 是一款非常优秀的企业级开源镜像仓库管理器。Harbor 是基于 Docker Registry之上带有用户权限控制，镜像扫描，镜像签名的款工具。用起来很方便，我们公司目前在测试和生产都在使用。从去年 10 月到今天，除去一次 ceph 集群扩容，没有发生一次事故，一直运行很稳定；本文将记录一下我们的使用方式和遇到的一些问题解决">
+<meta name="keywords" content="Harbor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Harbor  镜像仓库安装与 Helm Chart 管理">
+<meta property="og:url" content="http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/index.html">
+<meta property="og:site_name" content="饺子">
+<meta property="og:description" content="Harbor  镜像仓库安装与 Helm Chart 管理Harbor 是一款非常优秀的企业级开源镜像仓库管理器。Harbor 是基于 Docker Registry之上带有用户权限控制，镜像扫描，镜像签名的款工具。用起来很方便，我们公司目前在测试和生产都在使用。从去年 10 月到今天，除去一次 ceph 集群扩容，没有发生一次事故，一直运行很稳定；本文将记录一下我们的使用方式和遇到的一些问题解决">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-21-15-43.png">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-21-43-00.png">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-22-00-25.png">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-22-15-03.png">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-22-16-24.png">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-22-25-53.png">
+<meta property="og:updated_time" content="2020-05-06T03:36:48.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Harbor  镜像仓库安装与 Helm Chart 管理">
+<meta name="twitter:description" content="Harbor  镜像仓库安装与 Helm Chart 管理Harbor 是一款非常优秀的企业级开源镜像仓库管理器。Harbor 是基于 Docker Registry之上带有用户权限控制，镜像扫描，镜像签名的款工具。用起来很方便，我们公司目前在测试和生产都在使用。从去年 10 月到今天，除去一次 ceph 集群扩容，没有发生一次事故，一直运行很稳定；本文将记录一下我们的使用方式和遇到的一些问题解决">
+<meta name="twitter:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-21-15-43.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '6303406395207190000',
+      author: 'chenzhijun'
+    },
+    algolia: {
+      applicationID: 'JPAPDSUEBG',
+      apiKey: '78fc87248cf1aaab283dd8c89df19f39',
+      indexName: 'BBOX',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/">
+
+
+
+
+
+  <title>Harbor  镜像仓库安装与 Helm Chart 管理 | 饺子</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-98129235-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?64f9df4705290b3eaeaf10145b170a11";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">饺子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">优于别人，并不高贵，真正的高贵应该是优于过去的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Harbor  镜像仓库安装与 Helm Chart 管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T21:02:35+08:00">
+                2020-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Harbor/" itemprop="url" rel="index">
+                    <span itemprop="name">Harbor</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/26/harbor-install-and-trouble-shooting/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/26/harbor-install-and-trouble-shooting/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/04/26/harbor-install-and-trouble-shooting/" class="leancloud_visitors" data-flag-title="Harbor  镜像仓库安装与 Helm Chart 管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Harbor-镜像仓库安装与-Helm-Chart-管理"><a href="#Harbor-镜像仓库安装与-Helm-Chart-管理" class="headerlink" title="Harbor  镜像仓库安装与 Helm Chart 管理"></a>Harbor  镜像仓库安装与 Helm Chart 管理</h1><p><a href="https://goharbor.io/" target="_blank" rel="noopener">Harbor</a> 是一款非常优秀的企业级开源镜像仓库管理器。Harbor 是基于 Docker Registry之上带有用户权限控制，镜像扫描，镜像签名的款工具。用起来很方便，我们公司目前在测试和生产都在使用。从去年 10 月到今天，除去一次 ceph 集群扩容，没有发生一次事故，一直运行很稳定；本文将记录一下我们的使用方式和遇到的一些问题解决方式。</p>
+<h2 id="Harbor-资源准备"><a href="#Harbor-资源准备" class="headerlink" title="Harbor 资源准备"></a>Harbor 资源准备</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Harbor 1.7.6 版本</span><br><span class="line">Redis 4.0</span><br><span class="line">Postgres 10.6</span><br><span class="line">Docker 1.13.1</span><br><span class="line">docker-compose 1.18.0</span><br><span class="line">Ceph 12</span><br><span class="line"></span><br><span class="line">haproxy 机器 2 台</span><br><span class="line">VIP 1 个</span><br><span class="line">Harbor 主机 2 台</span><br></pre></td></tr></table></figure>
+<p>公司目前的 harbor 是基于 1.76 搭建的高可用方案，证书的问题，我们是公网使用第三方证书。内网使用自签名的证书；在我这里，我在 harbor 的搭建中采用的是内部 http，外部挂 F5。架构图如下：</p>
+<p><img src="/images/qiniu/2020-04-26-21-15-43.png" alt="2020-04-26-21-15-43"></p>
+<p>生产上我们用 F5 替代 Haproxy。</p>
+<p>我们在 Haproxy/F5 层将 https 转成 http 再转发给内部 harbor。<br><a id="more"></a></p>
+<h3 id="下载-harbor-并进行配置"><a href="#下载-harbor-并进行配置" class="headerlink" title="下载 harbor 并进行配置"></a>下载 harbor 并进行配置</h3><p>直接去github release 下载 1.7.6 的版本（现在最新为 1.10）。下载之后解压，修改里面<code>harbor.cfg</code>配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br></pre></td><td class="code"><pre><span class="line">## Configuration file of Harbor</span><br><span class="line"></span><br><span class="line">#This attribute is for migrator to detect the version of the .cfg file, DO NOT MODIFY!</span><br><span class="line">_version = 1.7.0</span><br><span class="line">#The IP address or hostname to access admin UI and registry service.</span><br><span class="line">#DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.</span><br><span class="line">#DO NOT comment out this line, modify the value of &quot;hostname&quot; directly, or the installation will fail.</span><br><span class="line">hostname = harbor.chenzhijun.me</span><br><span class="line"></span><br><span class="line">#The protocol for accessing the UI and token/notification service, by default it is http.</span><br><span class="line">#It can be set to https if ssl is enabled on nginx.</span><br><span class="line">ui_url_protocol = http</span><br><span class="line"></span><br><span class="line">#Maximum number of job workers in job service</span><br><span class="line">max_job_workers = 10</span><br><span class="line"></span><br><span class="line">#Determine whether or not to generate certificate for the registry&apos;s token.</span><br><span class="line">#If the value is on, the prepare script creates new root cert and private key</span><br><span class="line">#for generating token to access the registry. If the value is off the default key/cert will be used.</span><br><span class="line">#This flag also controls the creation of the notary signer&apos;s cert.</span><br><span class="line">#这里我选择的是 off，开 notary 的话必须指定https，如果不开 notary 的话，可以不用管。</span><br><span class="line">customize_crt = off</span><br><span class="line"></span><br><span class="line">#The path of cert and key files for nginx, they are applied only the protocol is set to https</span><br><span class="line">ssl_cert = /data/cert/server.crt</span><br><span class="line">ssl_cert_key = /data/cert/server.key</span><br><span class="line"></span><br><span class="line">#The path of secretkey storage</span><br><span class="line">secretkey_path = /data</span><br><span class="line"></span><br><span class="line">#Admiral&apos;s url, comment this attribute, or set its value to NA when Harbor is standalone</span><br><span class="line">admiral_url = NA</span><br><span class="line"></span><br><span class="line">#Log files are rotated log_rotate_count times before being removed. If count is 0, old versions are removed rather than rotated.</span><br><span class="line">log_rotate_count = 50</span><br><span class="line">#Log files are rotated only if they grow bigger than log_rotate_size bytes. If size is followed by k, the size is assumed to be in kilobytes.</span><br><span class="line">#If the M is used, the size is in megabytes, and if G is used, the size is in gigabytes. So size 100, size 100k, size 100M and size 100G</span><br><span class="line">#are all valid.</span><br><span class="line">log_rotate_size = 200M</span><br><span class="line"></span><br><span class="line">#Config http proxy for Clair, e.g. http://my.proxy.com:3128</span><br><span class="line">#Clair doesn&apos;t need to connect to harbor internal components via http proxy.</span><br><span class="line">http_proxy =</span><br><span class="line">https_proxy =</span><br><span class="line">no_proxy = 127.0.0.1,localhost,core,registry</span><br><span class="line"></span><br><span class="line">#NOTES: The properties between BEGIN INITIAL PROPERTIES and END INITIAL PROPERTIES</span><br><span class="line">#only take effect in the first boot, the subsequent changes of these properties</span><br><span class="line">#should be performed on web ui</span><br><span class="line"></span><br><span class="line">#************************BEGIN INITIAL PROPERTIES************************</span><br><span class="line"></span><br><span class="line">#Email account settings for sending out password resetting emails.</span><br><span class="line"></span><br><span class="line">#Email server uses the given username and password to authenticate on TLS connections to host and act as identity.</span><br><span class="line">#Identity left blank to act as username.</span><br><span class="line">email_identity =</span><br><span class="line"></span><br><span class="line">email_server = smtp.mydomain.com</span><br><span class="line">email_server_port = 25</span><br><span class="line">email_username = sample_admin@mydomain.com</span><br><span class="line">email_password = abc</span><br><span class="line">email_from = admin &lt;sample_admin@mydomain.com&gt;</span><br><span class="line">email_ssl = false</span><br><span class="line">email_insecure = false</span><br><span class="line"></span><br><span class="line">##The initial password of Harbor admin, only works for the first time when Harbor starts.</span><br><span class="line">#It has no effect after the first launch of Harbor.</span><br><span class="line">#Change the admin password from UI after launching Harbor.</span><br><span class="line">harbor_admin_password = Harbor12345</span><br><span class="line"></span><br><span class="line">##By default the auth mode is db_auth, i.e. the credentials are stored in a local database.</span><br><span class="line">#Set it to ldap_auth if you want to verify a user&apos;s credentials against an LDAP server.</span><br><span class="line">auth_mode = db_auth</span><br><span class="line"></span><br><span class="line">#The url for an ldap endpoint.</span><br><span class="line">ldap_url = ldaps://ldap.mydomain.com</span><br><span class="line"></span><br><span class="line">#A user&apos;s DN who has the permission to search the LDAP/AD server.</span><br><span class="line">#If your LDAP/AD server does not support anonymous search, you should configure this DN and ldap_search_pwd.</span><br><span class="line">#ldap_searchdn = uid=searchuser,ou=people,dc=mydomain,dc=com</span><br><span class="line"></span><br><span class="line">#the password of the ldap_searchdn</span><br><span class="line">#ldap_search_pwd = password</span><br><span class="line"></span><br><span class="line">#The base DN from which to look up a user in LDAP/AD</span><br><span class="line">ldap_basedn = ou=people,dc=mydomain,dc=com</span><br><span class="line"></span><br><span class="line">#Search filter for LDAP/AD, make sure the syntax of the filter is correct.</span><br><span class="line">#ldap_filter = (objectClass=person)</span><br><span class="line"></span><br><span class="line"># The attribute used in a search to match a user, it could be uid, cn, email, sAMAccountName or other attributes depending on your LDAP/AD</span><br><span class="line">ldap_uid = uid</span><br><span class="line"></span><br><span class="line">#the scope to search for users, 0-LDAP_SCOPE_BASE, 1-LDAP_SCOPE_ONELEVEL, 2-LDAP_SCOPE_SUBTREE</span><br><span class="line">ldap_scope = 2</span><br><span class="line"></span><br><span class="line">#Timeout (in seconds)  when connecting to an LDAP Server. The default value (and most reasonable) is 5 seconds.</span><br><span class="line">ldap_timeout = 5</span><br><span class="line"></span><br><span class="line">#Verify certificate from LDAP server</span><br><span class="line">ldap_verify_cert = true</span><br><span class="line"></span><br><span class="line">#The base dn from which to lookup a group in LDAP/AD</span><br><span class="line">ldap_group_basedn = ou=group,dc=mydomain,dc=com</span><br><span class="line"></span><br><span class="line">#filter to search LDAP/AD group</span><br><span class="line">ldap_group_filter = objectclass=group</span><br><span class="line"></span><br><span class="line">#The attribute used to name a LDAP/AD group, it could be cn, name</span><br><span class="line">ldap_group_gid = cn</span><br><span class="line"></span><br><span class="line">#The scope to search for ldap groups. 0-LDAP_SCOPE_BASE, 1-LDAP_SCOPE_ONELEVEL, 2-LDAP_SCOPE_SUBTREE</span><br><span class="line">ldap_group_scope = 2</span><br><span class="line"></span><br><span class="line">#Turn on or off the self-registration feature</span><br><span class="line"># 是否允许自注册</span><br><span class="line">self_registration = on</span><br><span class="line"></span><br><span class="line">#The expiration time (in minute) of token created by token service, default is 30 minutes</span><br><span class="line">token_expiration = 30</span><br><span class="line"></span><br><span class="line">#The flag to control what users have permission to create projects</span><br><span class="line">#The default value &quot;everyone&quot; allows everyone to creates a project.</span><br><span class="line">#Set to &quot;adminonly&quot; so that only admin user can create project.</span><br><span class="line">project_creation_restriction = everyone</span><br><span class="line"></span><br><span class="line">#************************END INITIAL PROPERTIES************************</span><br><span class="line"></span><br><span class="line">#######Harbor DB configuration section#######</span><br><span class="line"></span><br><span class="line">#The address of the Harbor database. Only need to change when using external db.</span><br><span class="line">#db的主机</span><br><span class="line">db_host = 172.88.14.88</span><br><span class="line"></span><br><span class="line">#The password for the root user of Harbor DB. Change this before any production use.</span><br><span class="line">db_password = 123456</span><br><span class="line"></span><br><span class="line">#The port of Harbor database host</span><br><span class="line">db_port = 5432</span><br><span class="line"></span><br><span class="line">#The user name of Harbor database</span><br><span class="line">db_user = postgres</span><br><span class="line"></span><br><span class="line">##### End of Harbor DB configuration#######</span><br><span class="line"></span><br><span class="line">##########Redis server configuration.############</span><br><span class="line"></span><br><span class="line">#Redis connection address</span><br><span class="line">redis_host = 172.88.14.88</span><br><span class="line"></span><br><span class="line">#Redis connection port</span><br><span class="line">redis_port = 6379</span><br><span class="line"></span><br><span class="line">#Redis connection password</span><br><span class="line">redis_password =</span><br><span class="line"></span><br><span class="line">#Redis connection db index</span><br><span class="line">#db_index 1,2,3 is for registry, jobservice and chartmuseum.</span><br><span class="line">#db_index 0 is for UI, it&apos;s unchangeable</span><br><span class="line">redis_db_index = 1,2,3</span><br><span class="line"></span><br><span class="line">########## End of Redis server configuration ############</span><br><span class="line"></span><br><span class="line">##########Clair DB configuration############</span><br><span class="line"></span><br><span class="line">#Clair DB host address. Only change it when using an exteral DB.</span><br><span class="line"></span><br><span class="line">clair_db_host = 172.88.14.88</span><br><span class="line">#The password of the Clair&apos;s postgres database. Only effective when Harbor is deployed with Clair.</span><br><span class="line">#Please update it before deployment. Subsequent update will cause Clair&apos;s API server and Harbor unable to access Clair&apos;s database.</span><br><span class="line">clair_db_password = 123456</span><br><span class="line">#Clair DB connect port</span><br><span class="line">clair_db_port = 5432</span><br><span class="line">#Clair DB username</span><br><span class="line">clair_db_username = postgres</span><br><span class="line">#Clair default database</span><br><span class="line">clair_db = postgres</span><br><span class="line"></span><br><span class="line">#The interval of clair updaters, the unit is hour, set to 0 to disable the updaters.</span><br><span class="line">clair_updaters_interval = 12</span><br><span class="line"></span><br><span class="line">##########End of Clair DB configuration############</span><br><span class="line"></span><br><span class="line">#The following attributes only need to be set when auth mode is uaa_auth</span><br><span class="line">uaa_endpoint = uaa.mydomain.org</span><br><span class="line">uaa_clientid = id</span><br><span class="line">uaa_clientsecret = secret</span><br><span class="line">uaa_verify_cert = true</span><br><span class="line">uaa_ca_cert = /path/to/ca.pem</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### Harbor Storage settings ###</span><br><span class="line">#Please be aware that the following storage settings will be applied to both docker registry and helm chart repository.</span><br><span class="line">#registry_storage_provider can be: filesystem, s3, gcs, azure, etc.</span><br><span class="line">#registry_storage_provider_name = filesystem</span><br><span class="line">registry_storage_provider_name = s3</span><br><span class="line"></span><br><span class="line">#registry_storage_provider_config is a comma separated &quot;key: value&quot; pairs, e.g. &quot;key1: value, key2: value2&quot;.</span><br><span class="line">#To avoid duplicated configurations, both docker registry and chart repository follow the same storage configuration specifications of docker registry.</span><br><span class="line">#Refer to https://docs.docker.com/registry/configuration/#storage for all available configuration.</span><br><span class="line"></span><br><span class="line">#registry_storage_provider_config =</span><br><span class="line">#配置ceph 存储</span><br><span class="line">registry_storage_provider_config = bucket: f4gkewos23fdsf8fnfhG, region: default, accesskey: QaidfneuhgfE2dife, secretkey: qyIJDFNGIDNDKF8f2r3G5QSw, regionendpoint: http://ceph.chenzhijun.me, rootdirectory: /harbor-registry/di</span><br><span class="line"></span><br><span class="line">#registry_custom_ca_bundle is the path to the custom root ca certificate, which will be injected into the truststore</span><br><span class="line">#of registry&apos;s and chart repository&apos;s containers.  This is usually needed when the user hosts a internal storage with self signed certificate.</span><br><span class="line">registry_custom_ca_bundle =</span><br><span class="line"></span><br><span class="line">#If reload_config=true, all settings which present in harbor.cfg take effect after prepare and restart harbor, it overwrites exsiting settings.</span><br><span class="line">#reload_config=true</span><br><span class="line">#Regular expression to match skipped environment variables</span><br><span class="line">#skip_reload_env_pattern=(^EMAIL.*)|(^LDAP.*)</span><br></pre></td></tr></table></figure>
+<p>配置好 cfg 文件后，我们开始我们的操作。</p>
+<ol start="0">
+<li><p>申请或安装 ceph，ceph 版本为 12；</p>
+</li>
+<li><p>安装 pg 数据库(生产应为高可用)：</p>
+</li>
+</ol>
+<p><code>docker run --name pg -e POSTGRES_PASSWORD=123456 -p 5432:5432 -d postgres:10.6</code></p>
+<ol start="2">
+<li>安装 redis（生产因为高可用）：</li>
+</ol>
+<p><code>docker run --name redis -p 6379:6379 -d redis</code></p>
+<ol start="3">
+<li>安装 harbor：</li>
+</ol>
+<p><code>./install.sh --with-clair --with-chartmuseum</code></p>
+<p>这里除了 notaty 必须要有个 https 外，其他的你都可以装。clair 是镜像扫描工具；chartmuseum 是 helm chart ；<br>你需要在两台机器都启动，并且保持cfg 文件一致。</p>
+<ol start="4">
+<li>配置 haproxy(F5)</li>
+</ol>
+<p>如果在 F5 做 https 转 http，那haproxy 就正常启动并将后段指向 harbor 地址就可以了。如果是让 https 做证书认证，那么就按照配置就好。我这边有在 F5 做解证书，贴一份 haproxy 的配置吧<code>haproxy.cfg</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">global</span><br><span class="line">  daemon</span><br><span class="line">  log  127.0.0.1 local0 info</span><br><span class="line">  maxconn  20000</span><br><span class="line">  pidfile  /app/haproxy/run/haproxy.pid</span><br><span class="line">  stats  socket /app/haproxy/lib/haproxy/stats</span><br><span class="line">  tune.bufsize  131072</span><br><span class="line">  user mwop</span><br><span class="line">  group mwop</span><br><span class="line">  tune.ssl.default-dh-param 2048</span><br><span class="line"></span><br><span class="line">defaults</span><br><span class="line">  log  global</span><br><span class="line">  maxconn  10000</span><br><span class="line">  mode  http</span><br><span class="line">  option  dontlog-normal</span><br><span class="line">  option  http-server-close</span><br><span class="line">  retries  3</span><br><span class="line">  #stats  enable</span><br><span class="line">  timeout  http-request 100s</span><br><span class="line">  timeout  queue 1m</span><br><span class="line">  timeout  connect 10s</span><br><span class="line">  timeout  client 1m</span><br><span class="line">  timeout  server 30m</span><br><span class="line">  timeout  check 10s</span><br><span class="line"></span><br><span class="line">listen Stats</span><br><span class="line">  bind 0.0.0.0:10000</span><br><span class="line">  mode http</span><br><span class="line">  stats enable</span><br><span class="line">  stats uri /</span><br><span class="line">  stats refresh 5s</span><br><span class="line">  stats show-node</span><br><span class="line">  stats show-legends</span><br><span class="line">  stats hide-version</span><br><span class="line"></span><br><span class="line">listen app1</span><br><span class="line">    bind :80</span><br><span class="line">    balance     roundrobin</span><br><span class="line">    mode tcp</span><br><span class="line">    server s1  172.0.0.1:80   weight 1</span><br><span class="line">    server s2  172.0.0.2:80   weight 1</span><br><span class="line">    </span><br><span class="line">listen app2</span><br><span class="line">    bind :443 </span><br><span class="line">    balance     roundrobin</span><br><span class="line">    mode tcp</span><br><span class="line">    server s1  172.0.0.1:443   weight 1</span><br><span class="line">    server s2  172.0.0.2:443   weight 1</span><br></pre></td></tr></table></figure>
+<p>访问<code>harbor.chenzhijun.me</code>就可以了。</p>
+<p><img src="/images/qiniu/2020-04-26-21-43-00.png" alt="2020-04-26-21-43-00"></p>
+<h3 id="https-问题-1-docker-login-failed"><a href="#https-问题-1-docker-login-failed" class="headerlink" title="https 问题 1 : docker login failed"></a>https 问题 1 : docker login failed</h3><p>安装完之后，你可能会遇到一些问题，比如在你直接 docker login 出现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error response from daemon: Get https://harbor.chenzhijun.me/v2/: Get http://harbor.chenzhijun.me/service/token?account=admin&amp;client_id=docker&amp;offline_token=true&amp;service=harbor-registry: dial tcp 100.77.53.130:80: getsockopt: connection refused</span><br></pre></td></tr></table></figure>
+<p>你在页面登陆可以，当是你用 docker login却有问题。你可以<code>curl -X GET -I &quot;https://harbor.chenzhijun.me/v2/&quot;</code>看一下是否返回了一个 http 的请求。如果是的话，修改一个参数：<code>sed -i &quot;s/realm: http/realm: https/g&quot; common/config/registry/config.yml</code>;在<code>common/config/registry/config.yml</code>中修改返回值为 https：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">auth:</span></span><br><span class="line">  <span class="attr">token:</span></span><br><span class="line">    <span class="attr">issuer:</span> <span class="string">harbor-token-issuer</span></span><br><span class="line">    <span class="attr">realm:</span> <span class="string">https://harbor.chenzhijun.me/service/token</span> <span class="comment">#就是这里要返回 https 而不是 http</span></span><br><span class="line">    <span class="attr">rootcertbundle:</span> <span class="string">/etc/registry/root.crt</span></span><br><span class="line">    <span class="attr">service:</span> <span class="string">harbor-registry</span></span><br></pre></td></tr></table></figure></p>
+<p>这个地方改不是特别好改，我是在<code>install.sh</code>在 docker-compose启动之前加入的这个 sed 命令；</p>
+<p><img src="/images/qiniu/2020-04-26-22-00-25.png" alt="2020-04-26-22-00-25"></p>
+<p>然后再 curl 一下看是不是返回 https 的结果了。如果是就可以了。</p>
+<h3 id="https-问题2-docker-push-出现-unkown-blob"><a href="#https-问题2-docker-push-出现-unkown-blob" class="headerlink" title="https 问题2 : docker push 出现 unkown blob"></a>https 问题2 : docker push 出现 unkown blob</h3><p>因为我们的架构是：域名 –&gt; dns解析到 –&gt; F5 VIP –&gt; haproxy –&gt; Harbor docker-compose;</p>
+<p>在这个过程中，出现了一个问题。域名到到 F5是 https，而后面的 Harbor 接到的 http；所以在 docker login 成功。在 docker push 的时候出现了问题 <code>unkown blob</code>；这个问题的原因就是在反向代理中 harbor 的 nginx 代理用的还是 https 方式：<a href="https://github.com/goharbor/harbor/blob/release-1.7.0/docs/installation_guide.md#Troubleshooting" target="_blank" rel="noopener">Harbor Troubleshooting</a>。修改<code>common/templates/nginx/nginx.http.conf</code>中的<code>proxy_set_header X-Forwarded-Proto $scheme;</code>把这行注释掉就可以了。</p>
+<p>另外就是要注意 pg 的权限问题。</p>
+<p>我们也安装了 <code>/install.sh --with-clair --with-chartmuseum</code> clair 和 chartmuseum，这两个工具，clair 的主要目的是扫描 CVE 漏洞，所以是不是需要链接一下外网更新一下；chartmuseum 是一个 helm chart 管理器;</p>
+<p><img src="/images/qiniu/2020-04-26-22-15-03.png" alt="2020-04-26-22-15-03"></p>
+<p><img src="/images/qiniu/2020-04-26-22-16-24.png" alt="2020-04-26-22-16-24"></p>
+<h2 id="升级问题"><a href="#升级问题" class="headerlink" title="升级问题"></a>升级问题</h2><p>最近尝试在本地进行了一次 1.7 升级到 1.8，其实还好啊，就是 cfg 文件变成了 yml 文件，其他的还是一样。并且有迁移工具：<br><a href="https://github.com/goharbor/harbor/blob/release-1.8.0/docs/migration_guide.md" target="_blank" rel="noopener">https://github.com/goharbor/harbor/blob/release-1.8.0/docs/migration_guide.md</a></p>
+<p>迁移工具使用方式：</p>
+<p><code>docker run -it --rm -v /data/harbor/harbor/harbor.cfg:/harbor-migration/harbor-cfg/harbor.cfg -v /data/harbor/harbor/harbor.yml:/harbor-migration/harbor-cfg-out/harbor.yml harbor.uat.cmft.com/goharbor/harbor-migrator:v1.8.3 --cfg up</code></p>
+<p>然后就停掉原来的 1.7 使用新的 1.8 的安装包启动就可以了。</p>
+<p>迁移前一定要进行数据备份，一定要备份。</p>
+<h2 id="helm-使用"><a href="#helm-使用" class="headerlink" title="helm 使用"></a>helm 使用</h2><p>helm 在 v3 之后（我只用了 v3）其实特别好用。在 github 上下载 helm 的安装包，然后把 helm 放到 /usr/local/bin 下面就可以直接执行 helm 命令了。当然前提是要本机有 kubectl，并且本地有 kubeconfig 文件<code>~/.kube/config</code>。这样我们就能愉快的使用 helm 了。那我们怎么使用 harbor 来管理我们的 helm chart 了？</p>
+<p><code>helm repo add --username readonly --password Read2019 myharbor http://harbor.chenzhijun.me/chartrepo/helm-repo</code></p>
+<p><code>http://harbor.chenzhijun.me/chartrepo/</code> 这一段是固定的，<code>helm-repo</code>是 harbor 中的 project 名。然后你将一个 chart 包导入：</p>
+<p><img src="/images/qiniu/2020-04-26-22-25-53.png" alt="2020-04-26-22-25-53"></p>
+<p><code>helm search repo myharbor</code></p>
+<p><code>helm repo update</code></p>
+<p><code>helm install myharbor/consul --gernerate-name</code></p>
+<p>好了，就是这么简单粗暴。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+        <div>
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2020/04/26/harbor-install-and-trouble-shooting/">Harbor  镜像仓库安装与 Helm Chart 管理</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
+  <p><span>发布时间:</span>2020-04-26 21:02:35</p>
+ <!-- <p><span>最后更新:</span>2020-05-06 11:36:48</p> -->
+  <p><span>原始链接:</span><a href="/2020/04/26/harbor-install-and-trouble-shooting/" title="Harbor  镜像仓库安装与 Helm Chart 管理">http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        <div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>鼓励一下</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt="陈志军 WeChat Pay">
+        <p>微信赞助</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/reward/alipay.jpg" alt="陈志军 Alipay">
+        <p>支付宝赞助</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Harbor/" rel="tag"># Harbor</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/05/what-is-garbage-to-need-collecter/" rel="next" title="查漏补缺 Java 系列 - JVM 垃圾回收">
+                <i class="fa fa-chevron-left"></i> 查漏补缺 Java 系列 - JVM 垃圾回收
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </div></div></article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微薄</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
+          <p class="site-author-name" itemprop="name">陈志军</p>
+           
+              <p class="site-description motion-element" itemprop="description">自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">165</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/rss.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzhijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://git.oschina.net/chenzhijun" target="_blank" title="GitEE">
+                  
+                    <i class="fa fa-fw fa-git"></i>
+                  
+                    
+                      GitEE
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3075356421" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:chenzhijun319@163.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐阅读
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://chenzhijun.github.com/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xkupc.github.io/" title="许凯的个人站" target="_blank">许凯的个人站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Harbor-镜像仓库安装与-Helm-Chart-管理"><span class="nav-number">1.</span> <span class="nav-text">Harbor  镜像仓库安装与 Helm Chart 管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Harbor-资源准备"><span class="nav-number">1.1.</span> <span class="nav-text">Harbor 资源准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载-harbor-并进行配置"><span class="nav-number">1.1.1.</span> <span class="nav-text">下载 harbor 并进行配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https-问题-1-docker-login-failed"><span class="nav-number">1.1.2.</span> <span class="nav-text">https 问题 1 : docker login failed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https-问题2-docker-push-出现-unkown-blob"><span class="nav-number">1.1.3.</span> <span class="nav-text">https 问题2 : docker push 出现 unkown blob</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升级问题"><span class="nav-number">1.2.</span> <span class="nav-text">升级问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#helm-使用"><span class="nav-number">1.3.</span> <span class="nav-text">helm 使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈志军</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://chenzhijun-me.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/';
+          this.page.identifier = '2020/04/26/harbor-install-and-trouble-shooting/';
+          this.page.title = 'Harbor  镜像仓库安装与 Helm Chart 管理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://chenzhijun-me.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3Ipv4LCq5xwYkaKUFvu27F0x-gzGzoHsz", "fAbLTc2xazR7sRtkfvQ7uIiO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+  <link rel="alternate" href="/rss.xml" title="饺子" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Java 基础-String12345678910111213141516171819The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substring">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-基础之string">
+<meta property="og:url" content="http://chenzhijun.me/2017/08/08/java-string/index.html">
+<meta property="og:site_name" content="饺子">
+<meta property="og:description" content="Java 基础-String12345678910111213141516171819The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substring">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-11-16-13-20.png">
+<meta property="og:updated_time" content="2020-05-06T03:36:48.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java-基础之string">
+<meta name="twitter:description" content="Java 基础-String12345678910111213141516171819The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substring">
+<meta name="twitter:image" content="http://chenzhijun.me/images/qiniu/2017-09-11-16-13-20.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '6303406395207190000',
+      author: 'chenzhijun'
+    },
+    algolia: {
+      applicationID: 'JPAPDSUEBG',
+      apiKey: '78fc87248cf1aaab283dd8c89df19f39',
+      indexName: 'BBOX',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzhijun.me/2017/08/08/java-string/">
+
+
+
+
+
+  <title>java-基础之string | 饺子</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-98129235-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?64f9df4705290b3eaeaf10145b170a11";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">饺子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">优于别人，并不高贵，真正的高贵应该是优于过去的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/08/08/java-string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java-基础之string</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-08T20:11:39+08:00">
+                2017-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/08/java-string/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/08/java-string/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/08/08/java-string/" class="leancloud_visitors" data-flag-title="java-基础之string">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Java-基础-String"><a href="#Java-基础-String" class="headerlink" title="Java 基础-String"></a>Java 基础-String</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. Case mapping is based on the Unicode Standard version specified by the Character class.</span><br><span class="line"></span><br><span class="line">`String`类包括了一系列字符的方法，比如：比较字符，查找字符，子字符串，创建一个全是大写或者全是小写的字符。匹配是在unicode标准版本规范在`Character` 类的基础上。</span><br><span class="line"></span><br><span class="line">The Java language provides special support for the string concatenation operator ( + ), and for conversion of other objects to strings. String concatenation is implemented through the StringBuilder(or StringBuffer) class and its append method. String conversions are implemented through the method toString, defined by Object and inherited by all classes in Java. For additional information on string concatenation and conversion, see Gosling, Joy, and Steele, The Java Language Specification.</span><br><span class="line"></span><br><span class="line">Java语言提供了对字符的操作符`+`做了特殊的支持,并且对其他的objects转换成string也做了相应支持。String的连接是StringBuilder(或者说StringBuffer)来实现的它的append方法的。String转换是通过实现定义在Object(所有的java方法都继承了它)的toString方法。更多的额外的字符操作和转换的特殊操作，看看gosling，joy，steele，写的《java语言规范》。</span><br><span class="line"></span><br><span class="line">Unless otherwise noted, passing a null argument to a constructor or method in this class will cause a NullPointerException to be thrown.</span><br><span class="line"></span><br><span class="line">除非有额外的标记，传递一个null参数给一个构造方法或者非构造方法在这个类中，会导致`NullPointerException`被抛出。</span><br><span class="line"></span><br><span class="line">A String represents a string in the UTF-16 format in which supplementary characters are represented by surrogate pairs (see the section Unicode Character Representations in the Character class for more information). Index values refer to char code units, so a supplementary character uses two positions in a String.</span><br><span class="line"></span><br><span class="line">一个String呈现的字符串是用UTF-16格式，不够的补位。</span><br><span class="line"></span><br><span class="line">The String class provides methods for dealing with Unicode code points (i.e., characters), in addition to those for dealing with Unicode code units (i.e., char values).</span><br><span class="line"></span><br><span class="line">这个String类提供方法处理Unicode代码点和unicode代码单元。</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>上面是摘抄自<code>String</code>类的介绍，翻译的地方有些不是特别理解。</p>
+<h3 id="String-父类"><a href="#String-父类" class="headerlink" title="String 父类"></a>String 父类</h3><p><code>String</code>继承自Object,实现Serializable, CharSequence, Comparable<string><br>重写了Object的toString，equals,hashCode方法;实现了compareTo</string></p>
+<p>hashCode方法重写:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a hash code for this string. The hash code for a</span><br><span class="line"> * &#123;@code String&#125; object is computed as</span><br><span class="line"> * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line"> * s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]</span><br><span class="line"> * &lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line"> * using &#123;@code int&#125; arithmetic, where &#123;@code s[i]&#125; is the</span><br><span class="line"> * &lt;i&gt;i&lt;/i&gt;th character of the string, &#123;@code n&#125; is the length of</span><br><span class="line"> * the string, and &#123;@code ^&#125; indicates exponentiation.</span><br><span class="line"> * (The hash value of the empty string is zero.)</span><br><span class="line"> *</span><br><span class="line"> * @return  a hash code value for this object.</span><br><span class="line"> */</span><br><span class="line">public int hashCode() &#123;</span><br><span class="line">    int h = hash;</span><br><span class="line">    if (h == 0 &amp;&amp; value.length &gt; 0) &#123;</span><br><span class="line">        char val[] = value;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; value.length; i++) &#123;</span><br><span class="line">            h = 31 * h + val[i];</span><br><span class="line">        &#125;</span><br><span class="line">        hash = h;</span><br><span class="line">    &#125;</span><br><span class="line">    return h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到String重写了hashCode方法，计算规则中n为长度。i为坐标就是index.表明如果是空字符串那么hash值为0。hashCode中是31的幂次方。为什么是31不是其他的数，貌似有人说是2的5次方-1，也有说是可以稍微大点的质数都可以。</p>
+<p>重写了equals方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* Compares this string to the specified object.  The result is &#123;@code</span><br><span class="line">* true&#125; if and only if the argument is not &#123;@code null&#125; and is a &#123;@code</span><br><span class="line">* String&#125; object that represents the same sequence of characters as this</span><br><span class="line">* object.</span><br><span class="line">*</span><br><span class="line">* @param  anObject</span><br><span class="line">*         The object to compare this &#123;@code String&#125; against</span><br><span class="line">*</span><br><span class="line">* @return  &#123;@code true&#125; if the given object represents a &#123;@code String&#125;</span><br><span class="line">*          equivalent to this string, &#123;@code false&#125; otherwise</span><br><span class="line">*</span><br><span class="line">* @see  #compareTo(String)</span><br><span class="line">* @see  #equalsIgnoreCase(String)</span><br><span class="line">*/</span><br><span class="line">public boolean equals(Object anObject) &#123;</span><br><span class="line">  if (this == anObject) &#123;</span><br><span class="line">      return true;</span><br><span class="line">  &#125;</span><br><span class="line">  if (anObject instanceof String) &#123;</span><br><span class="line">      String anotherString = (String)anObject;</span><br><span class="line">      int n = value.length;</span><br><span class="line">      if (n == anotherString.value.length) &#123;</span><br><span class="line">          char v1[] = value;</span><br><span class="line">          char v2[] = anotherString.value;</span><br><span class="line">          int i = 0;</span><br><span class="line">          while (n-- != 0) &#123;</span><br><span class="line">              if (v1[i] != v2[i])</span><br><span class="line">                  return false;</span><br><span class="line">              i++;</span><br><span class="line">          &#125;</span><br><span class="line">          return true;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>equals方法中先看到<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">String也实现了compareTo:</span><br></pre></td></tr></table></figure></p>
+<p>/**</p>
+<ul>
+<li>Compares two strings lexicographically.</li>
+<li>The comparison is based on the Unicode value of each character in</li>
+<li>the strings. The character sequence represented by this</li>
+<li>{@code String} object is compared lexicographically to the</li>
+<li>character sequence represented by the argument string. The result is</li>
+<li>a negative integer if this {@code String} object</li>
+<li>lexicographically precedes the argument string. The result is a</li>
+<li>positive integer if this {@code String} object lexicographically</li>
+<li>follows the argument string. The result is zero if the strings</li>
+<li>are equal; {@code compareTo} returns {@code 0} exactly when</li>
+<li>the {@link #equals(Object)} method would return {@code true}.</li>
+<li><p></p></li>
+<li>This is the definition of lexicographic ordering. If two strings are</li>
+<li>different, then either they have different characters at some index</li>
+<li>that is a valid index for both strings, or their lengths are different,</li>
+<li>or both. If they have different characters at one or more index</li>
+<li>positions, let <i>k</i> be the smallest such index; then the string</li>
+<li>whose character at position <i>k</i> has the smaller value, as</li>
+<li>determined by using the &lt; operator, lexicographically precedes the</li>
+<li>other string. In this case, {@code compareTo} returns the</li>
+<li>difference of the two character values at position {@code k} in</li>
+<li>the two string – that is, the value:</li>
+<li><blockquote><pre></pre></blockquote></li>
+<li>this.charAt(k)-anotherString.charAt(k)</li>
+<li></li>
+<li>If there is no index position at which they differ, then the shorter</li>
+<li>string lexicographically precedes the longer string. In this case,</li>
+<li>{@code compareTo} returns the difference of the lengths of the</li>
+<li>strings – that is, the value:</li>
+<li><blockquote><pre></pre></blockquote></li>
+<li>this.length()-anotherString.length()</li>
+<li><br>*</li>
+<li>@param   anotherString   the {@code String} to be compared.</li>
+<li>@return  the value {@code 0} if the argument string is equal to</li>
+<li>this string; a value less than {@code 0} if this string</li>
+<li>is lexicographically less than the string argument; and a</li>
+<li>value greater than {@code 0} if this string is</li>
+<li><p>lexicographically greater than the string argument.<br>*/<br>public int compareTo(String anotherString) {<br>int len1 = value.length;<br>int len2 = anotherString.value.length;<br>int lim = Math.min(len1, len2);<br>char v1[] = value;<br>char v2[] = anotherString.value;</p>
+<p>int k = 0;<br>while (k &lt; lim) {<br>char c1 = v1[k];<br>char c2 = v2[k];<br>if (c1 != c2) {<br>return c1 - c2;<br>}<br>k++;<br>}<br>return len1 - len2;<br>}</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">可以看到hashCode，equals，compareTo 中都有提到value？那么value是什么？稍后看。现在回到compareTo,它是Comparable接口中唯一一个方法，约定俗成的方式是如果大返回1，如果等于返回0，如果小于返回-1。实现Comparable接口还有一个好处可以在集合中排序。</span><br><span class="line"></span><br><span class="line">其中我们讲到`value`，看到String类中value的定义是:`private final char value[];`这说明我们的String类其实底层的实现也是char,这也是为啥String不属于基础类型的一个原因吧,但是语言开发者考虑到String用的比较多所以也做了很多特殊的处理.</span><br><span class="line"></span><br><span class="line">### final ,可变不可变</span><br><span class="line"></span><br><span class="line">可以在源码中看到String为定义为final,并且里面的值也是大多定义为final的.定义为final的类是不能被*继承*的.另外定义为final也就意味着值是不能改变的.既然不能改变值,那么String类其实可以说是安全的. 想想看为啥value不是public而是private,其实这是必须的,因为如果是public那么就可以改变里面的值,记住final是不能改变引用指向的对象,但是对象里面的值还是可以改变的:</span><br></pre></td></tr></table></figure>
+<p>public class StringMe<br>{<br>    public final static char[] aChar = new char[]{‘1’,’2’,’3’};<br>}</p>
+<p>public class StringTest<br>{<br>    public static void main(String[] args)<br>    {<br>        System.out.println(StringMe.aChar);<br>        StringMe.aChar[0] = 34;<br>        System.out.println(StringMe.aChar); //改变了achar[0]</p>
+<pre><code>    //StringMe.aChar = new char[]{&apos;3&apos;};//编译报错,想改变aChar指向的对象
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### String 特殊点</span><br><span class="line"></span><br><span class="line">常常会见到下面这种情况,面试中常有:</span><br></pre></td></tr></table></figure></p>
+<p>//        String a = “a”;<br>//        String a_new = new String(“a”);<br>//<br>//        System.out.println(a == a_new);//false<br>//        System.out.println(a.equals(a_new));//true<br>//<br>//        String abc = “ab” + “c”;<br>//<br>//        String abc_new = new String(“abc”);<br>//        System.out.println(abc == abc_new);//fasle<br>//        System.out.println(abc.equals(abc_new));//true<br>//<br>//        abc_new = “abc”;<br>//        System.out.println(abc == abc_new);//true<br>//        System.out.println(abc.equals(abc_new));//true<br>//<br>        final String ab = “ab”;<br>        String abcd = ab + “cd”;<br>        String abcd_origin = “abcd”;<br>        System.out.println((abcd == abcd_origin)); // true</p>
+<pre><code>final String abcde = &quot;abcde&quot;;
+String abcdef = abcde + &quot;f&quot;;
+String abcdef_origin = new String(&quot;abcdef&quot;);
+System.out.println(abcdef == abcdef_origin); //false
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![String类反编译图片](/images/encode-java-stringtest.png)</span><br><span class="line">反编译的图片</span><br></pre></td></tr></table></figure>
+<p>String ab = “ab”;<br>String cd = “cd”;<br>String abcd1 = ab + cd;<br>String abcd2 = “ab” + cd;<br>String abcd3 = ab + “cd”;<br>String abcd5 = “abcd”;<br>String abcd6 = “ab”+”cd”;<br>System.out.println((abcd1 == abcd2)); // false<br>System.out.println((abcd2 == abcd3)); // false<br>System.out.println((abcd3 == abcd5)); // false<br>System.out.println((abcd5 == abcd6)); // true<br>System.out.println((abcd1 == abcd5)); // false</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![String类反编译图片2](/images/encode-java-stringtest2.png)</span><br><span class="line"></span><br><span class="line">图中可以看出其实String底层的相加也是用的StringBuild</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">....未完待续....</span><br><span class="line">// 相似点，同类</span><br><span class="line"></span><br><span class="line">StringBuilder: 如果不考虑多线程的问题,那么我们就是用Stringbuilder其实在String的底层实现中,也是用的StringBuilder来对字符做操作;</span><br><span class="line"></span><br><span class="line">StringBuffer: StringBuffer的所有方法都是同步的,可以看到源码中都有Synchronize关键字.操作字符串的方法基本类似.</span><br><span class="line"></span><br><span class="line">// 常用方法</span><br><span class="line">indexOf(); 返回第一个匹配的位置,没有匹配返回-1;</span><br><span class="line">append();</span><br><span class="line">split();split中的&quot;abc&quot;.split(&quot;abc&quot;),会返回&quot;abc&quot;,长度为1; </span><br><span class="line">toString();</span><br><span class="line">equals();//复写了Object</span><br><span class="line">hashCode();//复写了Object</span><br><span class="line">trim();去掉两端空格</span><br><span class="line">.....</span><br><span class="line"></span><br><span class="line">// 是否同步，线程安全</span><br><span class="line"></span><br><span class="line">String中的方法是不同步的,但是String是一个final类.final类不能被继承,基本类型的包装类基本都是final的,也就是都不能被继承. 另外记住一个. final修饰的String类, 不是说private String a; 那么a也是final类型的.这是错误的.  如果一个String a = &quot;1234&quot;; a=&quot;1233423&quot;; 这个时候a是重新指向了1233424而不是将原来的值改变了.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### String.intern()</span><br><span class="line"></span><br><span class="line">今天看到一个方法，intern() 方法返回的是strings pool ，由String类独自管理。字符池一开始是空的。如果要两个string1.intern()==string2.intern(),仅仅只有当两个的equals（Object）相等才行，调用intern()如果在字符池里面有就返回字符池里面的，如果没有就会加入到字符池中，能够保证的是调用此方法，一定会返回在字符串池中的唯一一个值。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### String.indexOf()</span><br><span class="line"></span><br><span class="line">总是觉得String应该是Java里面用的最多的，既然String基于char[]数组，那么多String的一些操作是怎样的？看了下indexOf的源码，然后品味了一下,其实暴露给用户使用的只有indexOf(str),indexOf(str,offSet),两个方法，但是看看源码里面indexOf至少有三个，这个不得不让我们想想：为什么有这么多？而这几个indexOf 在里面的实现都是调用了下面的这个函数`indexOf(source,sourceOffset，sourceCount，target，tagetOffset，targetCount)`;其实可以看到就是源字符串，目标字符串，以及一些字符串的属性。这里一开始我觉得用四个参数就可以了，sourceCount貌似完全可以自己算出来。:</span><br></pre></td></tr></table></figure>
+<p>  static int indexOf(char[] source, int sourceOffset, int sourceCount,<br>        char[] target, int targetOffset, int targetCount,<br>        int fromIndex)<br>    {<br>        if(fromIndex &gt;= sourceCount)<br>        { // 起始位置大于等于目标字符的长度<br>            return (targetCount == 0 ? sourceCount : -1); // 目标字符长度是否为0，true，原来的长度，false，-1<br>        }<br>        if(fromIndex &lt; 0)// 设置从源字符串哪个位置开始查找<br>        {<br>            fromIndex = 0;// 设置边界<br>        }<br>        if(targetCount == 0)//如果目标字符长度小于0,长度为空<br>        {<br>            return fromIndex;<br>        }</p>
+<pre><code>    char first = target[targetOffset];// 第一个查找字符为目标字符偏移量的第一个, 我们使用的时候targetOffset 默认为0
+    int max = sourceOffset + (sourceCount - targetCount);//源字符偏移量+（源字符串长度-目标字符的长度） 最大位置。保证源字符串不越界。
+
+    for(int i = sourceOffset + fromIndex; i &lt;= max; i++) // sourceOffset 我们看到的也是0，默认设值。fromIndex 为从源字符串哪个位置开始
+    {
+        /* Look for first character. */
+        if(source[i] != first)
+        {
+            while (++i &lt;= max &amp;&amp; source[i] != first)// 找到一个first字符为值，确定位置
+                ;
+        }
+
+        /* Found first character, now look at the rest of v2 */
+        if(i &lt;= max)//
+        {
+            int j = i + 1;
+            int end = j + targetCount - 1;// 设值找值不超过目标字符串的长度，已经找到第一个位置，所以减1
+            for(int k = targetOffset + 1; j &lt; end &amp;&amp; source[j] == target[k]; j++, k++)
+                //k为目标字符串偏移targetOffset之后的第二个字符位置（上一步已经找到第一个），确定字符。
+                        // 开始找第二个字符，
+                // 假设这里是找到的，所以j++, k++ , 如果不是source[j]==target[k],那么for跳出，执行外层for
+                ;
+
+            if(j == end)
+            {
+                /* Found whole string. */
+                return i - sourceOffset;// 返回的是偏移量之后的位置
+            }
+        }
+    }
+    return -1;
+}
+
+    public static void main(String[] args)
+{
+    String no = &quot;1234567890&quot;;
+    System.out.println(no.length());
+    int i = no.indexOf(&quot;&quot;,110);
+    System.out.println(&quot;i=&quot; + i);
+}
+</code></pre><p><code>`</code></p>
+<p>其实在indexOf这里打个断点，随便启动一个Java带main方法的程序，会发现在执行main之前都会,indexOf会被多次调用,应该是先加载了jdk里面的lib下的jar文件，用idea调试出来是可以看到路径的。</p>
+<p>另外看到indexOf的方法级别上是<code>static int indexOf()</code> 非public，private，而是默认的限定符，附一张限定符的图,<a href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html" target="_blank" rel="noopener">accesscontrol.html</a></p>
+<p><img src="/images/qiniu/2017-09-11-16-13-20.png" alt="2017-09-11-16-13-20"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+        <div>
+          
+        <div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>鼓励一下</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt="陈志军 WeChat Pay">
+        <p>微信赞助</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/reward/alipay.jpg" alt="陈志军 Alipay">
+        <p>支付宝赞助</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/04/apec-804-problem/" rel="next" title="apec-804-problem">
+                <i class="fa fa-chevron-left"></i> apec-804-problem
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/10/jenkins-ci/" rel="prev" title="使用jenkins对springboot进行CI">
+                使用jenkins对springboot进行CI <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </div></div></article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微薄</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
+          <p class="site-author-name" itemprop="name">陈志军</p>
+           
+              <p class="site-description motion-element" itemprop="description">自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">165</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/rss.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzhijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://git.oschina.net/chenzhijun" target="_blank" title="GitEE">
+                  
+                    <i class="fa fa-fw fa-git"></i>
+                  
+                    
+                      GitEE
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3075356421" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:chenzhijun319@163.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐阅读
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://chenzhijun.github.com/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xkupc.github.io/" title="许凯的个人站" target="_blank">许凯的个人站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-基础-String"><span class="nav-number">1.</span> <span class="nav-text">Java 基础-String</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String-父类"><span class="nav-number">1.1.</span> <span class="nav-text">String 父类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈志军</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://chenzhijun-me.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://chenzhijun.me/2017/08/08/java-string/';
+          this.page.identifier = '2017/08/08/java-string/';
+          this.page.title = 'java-基础之string';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://chenzhijun-me.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3Ipv4LCq5xwYkaKUFvu27F0x-gzGzoHsz", "fAbLTc2xazR7sRtkfvQ7uIiO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

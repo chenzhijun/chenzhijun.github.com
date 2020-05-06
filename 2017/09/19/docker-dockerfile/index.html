@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Docker,">
+
+
+
+
+
+  <link rel="alternate" href="/rss.xml" title="饺子" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Dockerfile 文件导读Dockerfile 是一个包含了很多指令的文本文件，基于这些指令我们可以使用build创建一个image。 docker build创建image是从dockerfile和context。构建中的上下文(context)是PATH和URL的文件集合，PATH是指本地的文件系统，URL是一个Git仓库地址。一个上下文通常是递归的，对于PATH包含了子目录，URL包含了">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dockerfile 编写">
+<meta property="og:url" content="http://chenzhijun.me/2017/09/19/docker-dockerfile/index.html">
+<meta property="og:site_name" content="饺子">
+<meta property="og:description" content="Dockerfile 文件导读Dockerfile 是一个包含了很多指令的文本文件，基于这些指令我们可以使用build创建一个image。 docker build创建image是从dockerfile和context。构建中的上下文(context)是PATH和URL的文件集合，PATH是指本地的文件系统，URL是一个Git仓库地址。一个上下文通常是递归的，对于PATH包含了子目录，URL包含了">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-06T03:36:48.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dockerfile 编写">
+<meta name="twitter:description" content="Dockerfile 文件导读Dockerfile 是一个包含了很多指令的文本文件，基于这些指令我们可以使用build创建一个image。 docker build创建image是从dockerfile和context。构建中的上下文(context)是PATH和URL的文件集合，PATH是指本地的文件系统，URL是一个Git仓库地址。一个上下文通常是递归的，对于PATH包含了子目录，URL包含了">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '6303406395207190000',
+      author: 'chenzhijun'
+    },
+    algolia: {
+      applicationID: 'JPAPDSUEBG',
+      apiKey: '78fc87248cf1aaab283dd8c89df19f39',
+      indexName: 'BBOX',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzhijun.me/2017/09/19/docker-dockerfile/">
+
+
+
+
+
+  <title>Dockerfile 编写 | 饺子</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-98129235-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?64f9df4705290b3eaeaf10145b170a11";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">饺子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">优于别人，并不高贵，真正的高贵应该是优于过去的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/09/19/docker-dockerfile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Dockerfile 编写</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T15:05:08+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/19/docker-dockerfile/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/19/docker-dockerfile/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/19/docker-dockerfile/" class="leancloud_visitors" data-flag-title="Dockerfile 编写">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Dockerfile-文件导读"><a href="#Dockerfile-文件导读" class="headerlink" title="Dockerfile 文件导读"></a>Dockerfile 文件导读</h2><p>Dockerfile 是一个包含了很多指令的文本文件，基于这些指令我们可以使用build创建一个image。</p>
+<p>docker build创建image是从dockerfile和context。构建中的上下文(context)是PATH和URL的文件集合，PATH是指本地的文件系统，URL是一个Git仓库地址。一个上下文通常是递归的，对于PATH包含了子目录，URL包含了它的子模块。<code>docker build .</code></p>
+<p>build是有Docker 守护进程执行的，执行的第一件事就是将完整的上下文路径（包括递归的子目录）都会发送给守护进程，在大多场景下，最好的方式是用一个空目录作为上下文路径，然后里面放一个Dockerfile.然后在构建(build)将需要的文件加入到目录里面来。</p>
+<p>千万注意不要使用根路径”/“作为PATH，它会导致将整个硬盘的文件都会发送给Docker的守护进程</p>
+<p>如果要在构建上下文中使用一个文件，Dockerfile 引用了一些特殊的指令，比如COPY指令，为了优化构建，不需要的文件和目录可以加入到上下文目录的.dockerignore文件中。<a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file" target="_blank" rel="noopener">dockerignore file</a></p>
+<p>一般地，Dockerfile被称作Dockerfile，并且放在上下文目录的根目录。你也可以在构建的时候使用 -f 标记来指定一个你文件系统任何地方中的Dockerfile。<br><code>docker build -f /path/to/a/Dockerfile .</code></p>
+<p>你也可以在构建成功后保存image时指定远端源仓库(repositories)和标签。</p>
+<p><code>docker build -t shykes/myapp .</code></p>
+<p>如果要在构建之后给多个仓库(repositories) 打tag，使用多个-t参数就可以了：<br><code>docker build -t shykes/myapp:1.0.2 -t shykes/myapp:latest .</code></p>
+<p>在Docker守护进程执行Dockerfile中的指令之前，它都会进行一下预编译来校验语法是否准确，如果有错误的话会返回error。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t test/myapp .</span><br><span class="line">Sending build context to Docker daemon 2.048 kB</span><br><span class="line">Error response from daemon: Unknown instruction: RUNCMD</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>Docker守护进程在最终生成image输出imageID前都会一条一条执行Dockerfile中的指令并且确认每条指令的结果。最后守护进程会自动清理你发送的上下文。</p>
+<p>注意到每一条指定都是独立执行然后创建一个image。因此 RUN cd /tmp 不会对下一个指令有任何影响。<br>只要允许的话，Docker会重复使用生成的image中的缓存，来加速docker build 执行成功效率。下面的输出中可以明显的看到使用了缓存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t svendowideit/ambassador .</span><br><span class="line">Sending build context to Docker daemon 15.36 kB</span><br><span class="line">Step 1/4 : FROM alpine:3.2</span><br><span class="line"> ---&gt; 31f630c65071</span><br><span class="line">Step 2/4 : MAINTAINER SvenDowideit@home.org.au</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 2a1c91448f5f</span><br><span class="line">Step 3/4 : RUN apk update &amp;&amp;      apk add socat &amp;&amp;        rm -r /var/cache/</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 21ed6e7fbb73</span><br><span class="line">Step 4/4 : CMD env | grep _TCP= | (sed &apos;s/.*_PORT_\([0-9]*\)_TCP=tcp:\/\/\(.*\):\(.*\)/socat -t 100000000 TCP4-LISTEN:\1,fork,reuseaddr TCP4:\2:\3 \&amp;/&apos; &amp;&amp; echo wait) | sh</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 7ea8aef582cc</span><br><span class="line">Successfully built 7ea8aef582cc</span><br></pre></td></tr></table></figure></p>
+<p>镜像构建完就可以尝试将它推送到远程repo;</p>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#comment</span><br><span class="line">INSTRUCTION argumets</span><br><span class="line"></span><br><span class="line">指令 命令 参数</span><br></pre></td></tr></table></figure>
+<p>指令(INSTRUCTION)是大小写无关的，不过大家约定习俗般将它总是大写来区分指令和命令</p>
+<p>Docker 执行Instruction是有顺序的。一个Dockerfile文件必须用<code>FROM</code>指令开始。FROM指令制定了构建的基础镜像。FROM只能在在最前面。</p>
+<p># 是docker的注释符。</p>
+<h3 id="指令解析"><a href="#指令解析" class="headerlink" title="指令解析"></a>指令解析</h3><h3 id="环境变量替换"><a href="#环境变量替换" class="headerlink" title="环境变量替换"></a>环境变量替换</h3><p>环境变量由ENV语句声明也可以用在Dockerfile中；在dockerfile中使用ENV定义的变量可以使用<code>$variable_name</code> 和 <code>${variable_name}</code>,当然也有转义字符：’\’,如果<code>\$variablename</code> ,指代的就是<code>$variable_name</code>;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM busybox</span><br><span class="line">ENV foo /bar</span><br><span class="line">WORKDIR $&#123;foo&#125;     # WORKDIR /bar</span><br><span class="line">ADD . $&#123;foo&#125;       # ADD . /bar</span><br><span class="line">COPY \$foo /quux   # COPY $foo /quux</span><br></pre></td></tr></table></figure>
+<p>环境变量在Dockerfile中可以被以下的执行指令支持：<br><code>ADD, COPY, ENV, EXPOSE, FROM, LABEL, STOPSIGNAL, USER, VOLUME, WORKDIR, ONBUILD</code>,1.4版本之前的ONBUILD不支持。</p>
+<p>在一整条的指令中，环境变量是同一个值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENV abc=hello</span><br><span class="line">ENV abc=bye def=$abc</span><br><span class="line">ENV ghi=$abc</span><br></pre></td></tr></table></figure>
+<p>上文中def会返回hello，而不是bye，ghi会返回bye，因为在第二条指令中，set abc=bye 和def=$abc 并不是同一条指令。</p>
+<h3 id="dockerignore-文件"><a href="#dockerignore-文件" class="headerlink" title=".dockerignore 文件"></a>.dockerignore 文件</h3><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><h4 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h4><ol>
+<li>FROM <image> [AS <name>]</name></image></li>
+<li>FROM <image>[:<tag>] [AS <name>]</name></tag></image></li>
+<li>FROM <image>[@<digest>] [AS <name>]</name></digest></image></li>
+</ol>
+<p>FROM指令初始化了一个构建的舞台，并且为接下的操作设置了基础image。一个有效的Dockerfile必须由FROM开始。</p>
+<p>默认FROM会有一个<code>latest</code> tag。</p>
+<h4 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h4><ol>
+<li>RUN <command>  # shell 形式执行，默认shell执行器，如/bin/sh -c</li>
+<li>RUN [“executable”,”param1”,”param2”] # exec 形式执行</li>
+</ol>
+<p>如果使用shell方式可以使用反斜杠来连接语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN /bin/bash -c &apos;source $HOME/.bashrc; \</span><br><span class="line">echo $HOME&apos;</span><br></pre></td></tr></table></figure></p>
+<p>上面相当于一句话：<code>RUN /bin/bash -c &#39;source $HOME/.bashrc; echo $HOME&#39;</code></p>
+<h4 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h4><p>一个Dockerfile里面只能有执行一个CMD指令,如果有多个CMD，只有最后一个会执行。</p>
+<p>CMD的三种写法</p>
+<ol>
+<li>CMD [“executable”,”param1”,”param2”]</li>
+<li>CMD [“param1”,”param2”]</li>
+<li>CMD command param1 param2</li>
+</ol>
+<p>shell版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line">CMD echo &quot;This is a test.&quot; | wc -</span><br></pre></td></tr></table></figure>
+<h4 id="LABEL"><a href="#LABEL" class="headerlink" title="LABEL"></a>LABEL</h4><p>LABEL是给镜像加源数据，通常是键值对的形式。</p>
+<p><code>LABEL &lt;key&gt;=&lt;value&gt; &lt;key&gt;=&lt;value&gt; &lt;key&gt;=&lt;value&gt; ...</code></p>
+<p>实例：</p>
+<p>1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LABEL &quot;com.example.vendor&quot;=&quot;ACME Incorporated&quot;</span><br><span class="line">LABEL com.example.label-with-value=&quot;foo&quot;</span><br><span class="line">LABEL version=&quot;1.0&quot;</span><br><span class="line">LABEL description=&quot;This text illustrates \</span><br><span class="line">that label-values can span multiple lines.&quot;</span><br></pre></td></tr></table></figure>
+<p>2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LABEL multi.label1=&quot;value1&quot; multi.label2=&quot;value2&quot; other=&quot;value3&quot;</span><br></pre></td></tr></table></figure>
+<p>3:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LABEL multi.label1=&quot;value1&quot; \</span><br><span class="line">      multi.label2=&quot;value2&quot; \</span><br><span class="line">      other=&quot;value3&quot;</span><br></pre></td></tr></table></figure>
+<p>使用<code>docker inspect</code>查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;Labels&quot;: &#123;</span><br><span class="line">    &quot;com.example.vendor&quot;: &quot;ACME Incorporated&quot;</span><br><span class="line">    &quot;com.example.label-with-value&quot;: &quot;foo&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0&quot;,</span><br><span class="line">    &quot;description&quot;: &quot;This text illustrates that label-values can span multiple lines.&quot;,</span><br><span class="line">    &quot;multi.label1&quot;: &quot;value1&quot;,</span><br><span class="line">    &quot;multi.label2&quot;: &quot;value2&quot;,</span><br><span class="line">    &quot;other&quot;: &quot;value3&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h4 id="MAINTAINER-deprecated"><a href="#MAINTAINER-deprecated" class="headerlink" title="MAINTAINER [deprecated]"></a>MAINTAINER [deprecated]</h4><p><code>MAINTAINER &lt;name&gt;</code> 作者信息</p>
+<p>使用LABEL更加灵活：LABEL maintainer=”<a href="mailto:SvenDowideit@home.org.au" target="_blank" rel="noopener">SvenDowideit@home.org.au</a>“</p>
+<h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p><code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code></p>
+<p>在容器运行的时候暴露端口，不会自己和宿主机绑定。如果要和宿主机绑定需要-p，制定端口。或者-P随机系统端口。</p>
+<h4 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key&gt;=&lt;value&gt; ...</span><br></pre></td></tr></table></figure>
+<p>注意第一种没有=号，第二个有等号。<br>实例1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENV myName=&quot;John Doe&quot; myDog=Rex\ The\ Dog \</span><br><span class="line">    myCat=fluffy</span><br></pre></td></tr></table></figure></p>
+<p>实例2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENV myName John Doe</span><br><span class="line">ENV myDog Rex The Dog</span><br><span class="line">ENV myCat fluffy</span><br></pre></td></tr></table></figure></p>
+<p>推荐使用实例1的写法，因为这样只会生成一个单缓存层(single cache layer);</p>
+<h4 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ADD &lt;src&gt;... &lt;dest&gt;</span><br><span class="line">ADD [&quot;&lt;src&gt;&quot;,... &quot;&lt;dest&gt;&quot;] # 如果有空格必须采取这种方式。</span><br></pre></td></tr></table></figure>
+<p>ADD的作用就是将src目录，文件，或者url的内容加入到镜像文件系统的dest目录下。</p>
+<p>实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ADD hom* /mydir/        # adds all files starting with &quot;hom&quot;</span><br><span class="line">ADD hom?.txt /mydir/    # ? is replaced with any single character, e.g., &quot;home.txt&quot;</span><br></pre></td></tr></table></figure></p>
+<p>ADD的匹配规则和golang语言的filepath.Match匹配规则一样。</p>
+<p>dest 是一个绝对路径，或者<code>WORKDIR</code>的相对路径。</p>
+<p>ADD 遵守下面的规则：</p>
+<ol>
+<li>src 目录必须在构建上下文之内。不可以使用<code>ADD ../something /something</code>,因为在第一步使用docker build的时候就已经发送了上下文路径包括子目录给了docker守护进程</li>
+<li>如果src是一个url，而这个url没有斜杠结尾，那么它就以为是一个文件，会下载这个文件然后拷贝到dest目录中。</li>
+<li>如果src是url，dest没有用斜杠结尾，那么就会生成dest/filename.比如<code>ADD http://abc.com/foobar /</code> 会创建成<code>/foobar</code></li>
+<li>如果src是一个目录，目录下的所有文件都会被拷贝，包括文件系统的metadata。本身的文件夹不拷贝。</li>
+</ol>
+<h4 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">COPY &lt;src&gt;... &lt;dest&gt;</span><br><span class="line">COPY [&quot;&lt;src&gt;&quot;,... &quot;&lt;dest&gt;&quot;] #如果路径有空格，采用这种方式</span><br></pre></td></tr></table></figure>
+<p>用法和ADD基本类似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">COPY hom* /mydir/        # adds all files starting with &quot;hom&quot;</span><br><span class="line">COPY hom?.txt /mydir/    # ? is replaced with any single character, e.g., &quot;home.txt&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;] (exec form, preferred)</span><br><span class="line">ENTRYPOINT command param1 param2 (shell form)</span><br></pre></td></tr></table></figure>
+<h4 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h4><p><code>VOLUME [&quot;/data&quot;]</code> 也可以用<code>VOLUME /var/log /var/db</code> <code>VOLUME /var/log</code> 来作为分享的数据卷。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu</span><br><span class="line">RUN mkdir /myvol</span><br><span class="line">RUN echo &quot;hello world&quot; &gt; /myvol/greeting</span><br><span class="line">VOLUME /myvol</span><br></pre></td></tr></table></figure>
+<p>上面的意思就是挂载一个/myvol，然后在执行的时候用<code>docker run -v test:/myvol</code></p>
+<p>使用docker inspect可以看到“Mounts”,”Volumes”.如果dockerfile指定Volume而没有<code>docker run -v</code> 那么就可以看到Mounts中会出现一个宿主机随机挂载了一个目录到VOLUME里面的指定位置。</p>
+<h4 id="USER"><a href="#USER" class="headerlink" title="USER"></a>USER</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER &lt;user&gt;[:&lt;group&gt;] or</span><br><span class="line">USER &lt;UID&gt;[:&lt;GID&gt;]</span><br></pre></td></tr></table></figure>
+<h4 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR /path/to/workdir</span><br></pre></td></tr></table></figure>
+<p>WORKDIR 指令会建立一个RUN，CMD，ENTRYPOINT，COPY，ADD这些指令的工作目录。如果没有WORKDIR，它会被接下来的任何一个Dockerfile中的指令创建，就算创建之后不会使用，它还是会存在。</p>
+<p>WORKDIR可以在一个Dockerf中出现多次，如果提供的是相对路径，那么接下来的所有路径都会跟前一个WORKDIR相对关联。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR /a</span><br><span class="line">WORKDIR b</span><br><span class="line">WORKDIR c</span><br><span class="line">RUN pwd</span><br></pre></td></tr></table></figure>
+<p>最后执行的pwd路径为/a/b/c。WORKDIR指令也可以有环境变量使用ENV来设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENV DIRPATH /path</span><br><span class="line">WORKDIR $DIRPATH/$DIRNAME</span><br><span class="line">RUN pwd</span><br></pre></td></tr></table></figure>
+<p>最后的路径会是/path/$DIRNAME</p>
+<h4 id="ARG"><a href="#ARG" class="headerlink" title="ARG"></a>ARG</h4><h4 id="STOPSIGNAL"><a href="#STOPSIGNAL" class="headerlink" title="STOPSIGNAL"></a>STOPSIGNAL</h4><h4 id="HEALTHCHECK"><a href="#HEALTHCHECK" class="headerlink" title="HEALTHCHECK"></a>HEALTHCHECK</h4><h4 id="SHELL"><a href="#SHELL" class="headerlink" title="SHELL"></a>SHELL</h4><p>Dockerfile实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜ tree</span><br><span class="line">.</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── jar</span><br><span class="line">│   └── jar_test_file</span><br><span class="line">└── jar_outer_file</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM busybox</span><br><span class="line">ENV foo /bar</span><br><span class="line">LABEL author=chenzhijun</span><br><span class="line">RUN mkdir /myvol</span><br><span class="line">RUN echo &quot;hello world$foo&quot;$foo &gt; /myvol/greeting</span><br><span class="line">VOLUME /myvol</span><br><span class="line">ADD jar* /mydir/</span><br><span class="line">EXPOSE 8080</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">➜ docker build -t test:1.1 .</span><br><span class="line">Sending build context to Docker daemon  3.584kB</span><br><span class="line">Step 1/8 : FROM busybox</span><br><span class="line"> ---&gt; efe10ee6727f</span><br><span class="line">Step 2/8 : ENV foo /bar</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; d3b8b9eeff78</span><br><span class="line">Step 3/8 : LABEL author chenzhijun</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 050fc3d4d93d</span><br><span class="line">Step 4/8 : RUN mkdir /myvol</span><br><span class="line"> ---&gt; Running in 52850795da36</span><br><span class="line"> ---&gt; afd7fb49f8bf</span><br><span class="line">Removing intermediate container 52850795da36</span><br><span class="line">Step 5/8 : RUN echo &quot;hello world$foo&quot;$foo &gt; /myvol/greeting</span><br><span class="line"> ---&gt; Running in 70b44e104f41</span><br><span class="line"> ---&gt; cbd977a40b6d</span><br><span class="line">Removing intermediate container 70b44e104f41</span><br><span class="line">Step 6/8 : VOLUME /myvol</span><br><span class="line"> ---&gt; Running in da2e28e0effa</span><br><span class="line"> ---&gt; 4edd7f3c690c</span><br><span class="line">Removing intermediate container da2e28e0effa</span><br><span class="line">Step 7/8 : ADD jar* /mydir/</span><br><span class="line"> ---&gt; 13feb93f43f0</span><br><span class="line">Removing intermediate container 4bd1b0a08ef2</span><br><span class="line">Step 8/8 : EXPOSE 8080</span><br><span class="line"> ---&gt; Running in 2185ad28d925</span><br><span class="line"> ---&gt; 62bfe542f989</span><br><span class="line">Removing intermediate container 2185ad28d925</span><br><span class="line">Successfully built 62bfe542f989</span><br><span class="line">Successfully tagged test:1.1</span><br></pre></td></tr></table></figure>
+<p>docker inspect:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"> docker inspect test:1.1</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Id&quot;: &quot;sha256:62bfe542f98957d45fada954dcbb8ced1a1d8a65e42657b98c40f88b559f690e&quot;,</span><br><span class="line">        &quot;RepoTags&quot;: [</span><br><span class="line">            &quot;test:1.1&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;RepoDigests&quot;: [],</span><br><span class="line">        &quot;Parent&quot;: &quot;sha256:13feb93f43f085b44a37f6272b55f4f9bcf1b899d441f0dec83561904c8cea40&quot;,</span><br><span class="line">        &quot;Comment&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Created&quot;: &quot;2017-09-19T15:23:52.690407548Z&quot;,</span><br><span class="line">        &quot;Container&quot;: &quot;2185ad28d9256023fdc96fad564c8c0eb699d4f6f9b09d4acabe73beeee6790c&quot;,</span><br><span class="line">        &quot;ContainerConfig&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;44c72a15738e&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080/tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,</span><br><span class="line">                &quot;foo=/bar&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;/bin/sh&quot;,</span><br><span class="line">                &quot;-c&quot;,</span><br><span class="line">                &quot;#(nop) &quot;,</span><br><span class="line">                &quot;EXPOSE 8080/tcp&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ArgsEscaped&quot;: true,</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:13feb93f43f085b44a37f6272b55f4f9bcf1b899d441f0dec83561904c8cea40&quot;,</span><br><span class="line">            &quot;Volumes&quot;: &#123;</span><br><span class="line">                &quot;/myvol&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: [],</span><br><span class="line">            &quot;Labels&quot;: &#123;</span><br><span class="line">                &quot;author&quot;: &quot;chenzhijun&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;DockerVersion&quot;: &quot;17.06.2-ce&quot;,</span><br><span class="line">        &quot;Author&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Config&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;44c72a15738e&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080/tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,</span><br><span class="line">                &quot;foo=/bar&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;sh&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ArgsEscaped&quot;: true,</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:13feb93f43f085b44a37f6272b55f4f9bcf1b899d441f0dec83561904c8cea40&quot;,</span><br><span class="line">            &quot;Volumes&quot;: &#123;</span><br><span class="line">                &quot;/myvol&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: [],</span><br><span class="line">            &quot;Labels&quot;: &#123;</span><br><span class="line">                &quot;author&quot;: &quot;chenzhijun&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Architecture&quot;: &quot;amd64&quot;,</span><br><span class="line">        &quot;Os&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;Size&quot;: 1129213,</span><br><span class="line">        &quot;VirtualSize&quot;: 1129213,</span><br><span class="line">        &quot;GraphDriver&quot;: &#123;</span><br><span class="line">            &quot;Data&quot;: null,</span><br><span class="line">            &quot;Name&quot;: &quot;aufs&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;RootFS&quot;: &#123;</span><br><span class="line">            &quot;Type&quot;: &quot;layers&quot;,</span><br><span class="line">            &quot;Layers&quot;: [</span><br><span class="line">                &quot;sha256:08c2295a7fa5c220b0f60c994362d290429ad92f6e0235509db91582809442f3&quot;,</span><br><span class="line">                &quot;sha256:76229699c752a26051d4861c0e481d45e9353f66f181fd496a5ef39a8833fbff&quot;,</span><br><span class="line">                &quot;sha256:02a0230b59819ae96f49a8603d5b1630cd357e140f48bf1e03811c5f002d8b5f&quot;,</span><br><span class="line">                &quot;sha256:c916120dc28545b2869e046d28ababe83cfa76c2cb31c52e497450bfebb1aafa&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+        <div>
+          
+        <div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>鼓励一下</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt="陈志军 WeChat Pay">
+        <p>微信赞助</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/reward/alipay.jpg" alt="陈志军 Alipay">
+        <p>支付宝赞助</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/java-design-pattern-decorate/" rel="next" title="Java设计模式-装饰者模式">
+                <i class="fa fa-chevron-left"></i> Java设计模式-装饰者模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/20/java-io/" rel="prev" title="Java IO流">
+                Java IO流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </div></div></article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微薄</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="陈志军">
+          <p class="site-author-name" itemprop="name">陈志军</p>
+           
+              <p class="site-description motion-element" itemprop="description">自律自己的生活，力求不留下遗憾；悔恨自己的错误，力求不再重蹈覆辙</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">165</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/rss.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzhijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://git.oschina.net/chenzhijun" target="_blank" title="GitEE">
+                  
+                    <i class="fa fa-fw fa-git"></i>
+                  
+                    
+                      GitEE
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3075356421" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:chenzhijun319@163.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐阅读
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://chenzhijun.github.com/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xkupc.github.io/" title="许凯的个人站" target="_blank">许凯的个人站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile-文件导读"><span class="nav-number">1.</span> <span class="nav-text">Dockerfile 文件导读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式"><span class="nav-number">1.1.</span> <span class="nav-text">格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令解析"><span class="nav-number">1.2.</span> <span class="nav-text">指令解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量替换"><span class="nav-number">1.3.</span> <span class="nav-text">环境变量替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dockerignore-文件"><span class="nav-number">1.4.</span> <span class="nav-text">.dockerignore 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">1.5.</span> <span class="nav-text">指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FROM"><span class="nav-number">1.5.1.</span> <span class="nav-text">FROM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RUN"><span class="nav-number">1.5.2.</span> <span class="nav-text">RUN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMD"><span class="nav-number">1.5.3.</span> <span class="nav-text">CMD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LABEL"><span class="nav-number">1.5.4.</span> <span class="nav-text">LABEL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MAINTAINER-deprecated"><span class="nav-number">1.5.5.</span> <span class="nav-text">MAINTAINER [deprecated]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EXPOSE"><span class="nav-number">1.5.6.</span> <span class="nav-text">EXPOSE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ENV"><span class="nav-number">1.5.7.</span> <span class="nav-text">ENV</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ADD"><span class="nav-number">1.5.8.</span> <span class="nav-text">ADD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#COPY"><span class="nav-number">1.5.9.</span> <span class="nav-text">COPY</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ENTRYPOINT"><span class="nav-number">1.5.10.</span> <span class="nav-text">ENTRYPOINT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VOLUME"><span class="nav-number">1.5.11.</span> <span class="nav-text">VOLUME</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#USER"><span class="nav-number">1.5.12.</span> <span class="nav-text">USER</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WORKDIR"><span class="nav-number">1.5.13.</span> <span class="nav-text">WORKDIR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ARG"><span class="nav-number">1.5.14.</span> <span class="nav-text">ARG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#STOPSIGNAL"><span class="nav-number">1.5.15.</span> <span class="nav-text">STOPSIGNAL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HEALTHCHECK"><span class="nav-number">1.5.16.</span> <span class="nav-text">HEALTHCHECK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SHELL"><span class="nav-number">1.5.17.</span> <span class="nav-text">SHELL</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈志军</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://chenzhijun-me.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://chenzhijun.me/2017/09/19/docker-dockerfile/';
+          this.page.identifier = '2017/09/19/docker-dockerfile/';
+          this.page.title = 'Dockerfile 编写';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://chenzhijun-me.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3Ipv4LCq5xwYkaKUFvu27F0x-gzGzoHsz", "fAbLTc2xazR7sRtkfvQ7uIiO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
