@@ -232,10 +232,42 @@
 <p>所以可以看到 HashMap 的 <code>LOAD_FACTOR</code> 加载因子和容量是多么的重要了。我们一般的化可以优化为：<br><code>负载因子 * 容量 &gt; 元素数量</code> 即初始化容量时候，值要大于“预估元素数量 / 负载因子” </p>
 <p>hashmap在高并发场景下会发生什么了？<br>要记住，hashmap本身就被声明为了非同步安全的类，如果在多线程环境下是会有可能导致无限循环占用cpu，size不准确，具体的原因可以看下这篇博客 <a href="https://mailinator.blogspot.com/2009/06/beautiful-race-condition.html" target="_blank" rel="noopener">a beatiful race condition</a></p>
 <p>那么问一下，为什么要进行树化了？<br>本质上是个安全问题，如果一个对象hash冲突，都被放到一个桶里面，就会形成一个链表，链表的查询是线性的，就会严重影响存储的性能；<br>另外有种安全攻击叫做“哈希碰撞拒绝服务攻击”，就是构建哈希冲突的数据，恶意代码用这些数据与服务器进行交互，导致服务端cpu大量占用。来达到攻击的目录。</p>
-<p>那么，并发下，我们应该怎么使用HashMap了？<br>明天讲～<br>&lt;!–<br>但是假如你在面试，面试官会怎么问你了？</p>
-<p>咳咳，模拟下：</p>
-<p>Q：你好，请问你们平常用的jdk版本是多少？<br>A：线上主要用的是jdk8<br>Q：那你能介绍下常见的这个HashMap吗？<br>A：balabla 上面一大段<br>Q：1.8中对hashmap有什么优化了？<br>A：在数据存储中引入了树化，在数据超过8的时候就会变成红黑树。<br>Q：为什么要引入树来做存储了？有什么好处了？<br>Q: 能不能介绍下hashmap put的整个过程？<br>Q: 能不能介绍下hashmap的使用场景？<br>Q：高并发的场景下应该怎么办了？ </p>
-<h2 id="这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？"><a href="#这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？" class="headerlink" title="这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？"></a>这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？</h2><h2 id="这个技术的优势和劣势分别是什么，或者说，这个技术的-trade-off-（要什么不要什么）是什么"><a href="#这个技术的优势和劣势分别是什么，或者说，这个技术的-trade-off-（要什么不要什么）是什么" class="headerlink" title="这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么"></a>这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么</h2><h2 id="这个技术适用的场景（技术场景或业务场景）"><a href="#这个技术适用的场景（技术场景或业务场景）" class="headerlink" title="这个技术适用的场景（技术场景或业务场景）"></a>这个技术适用的场景（技术场景或业务场景）</h2><h2 id="这个技术的组成部分和关键点（核心思想，核心组件）"><a href="#这个技术的组成部分和关键点（核心思想，核心组件）" class="headerlink" title="这个技术的组成部分和关键点（核心思想，核心组件）"></a>这个技术的组成部分和关键点（核心思想，核心组件）</h2><h2 id="这个技术的底层原理和关键实现"><a href="#这个技术的底层原理和关键实现" class="headerlink" title="这个技术的底层原理和关键实现"></a>这个技术的底层原理和关键实现</h2><h2 id="已有的实现和它之间的对比"><a href="#已有的实现和它之间的对比" class="headerlink" title="已有的实现和它之间的对比"></a>已有的实现和它之间的对比</h2><p><a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457" target="_blank" rel="noopener">https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457</a><br>–&gt;</p>
+<p>那么，并发下，我们应该怎么使用HashMap了？<br>明天讲～</p>
+<!--
+
+但是假如你在面试，面试官会怎么问你了？
+
+咳咳，模拟下：
+
+Q：你好，请问你们平常用的jdk版本是多少？
+A：线上主要用的是jdk8
+Q：那你能介绍下常见的这个HashMap吗？
+A：balabla 上面一大段
+Q：1.8中对hashmap有什么优化了？
+A：在数据存储中引入了树化，在数据超过8的时候就会变成红黑树。
+Q：为什么要引入树来做存储了？有什么好处了？
+Q: 能不能介绍下hashmap put的整个过程？
+Q: 能不能介绍下hashmap的使用场景？
+Q：高并发的场景下应该怎么办了？ 
+
+
+
+
+
+## 这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？
+
+## 这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么
+
+## 这个技术适用的场景（技术场景或业务场景）
+
+## 这个技术的组成部分和关键点（核心思想，核心组件）
+
+## 这个技术的底层原理和关键实现
+
+## 已有的实现和它之间的对比
+https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
+
+-->
 <p>参考：<a href="https://www.cnblogs.com/Michaelwjw/p/6411176.html" target="_blank" rel="noopener">https://www.cnblogs.com/Michaelwjw/p/6411176.html</a></p>
 ]]></content>
   </entry>
@@ -1477,6 +1509,27 @@ apt install net-tools</code></p>
       </tags>
   </entry>
   <entry>
+    <title>prometheus 常用的查询语句</title>
+    <url>/2018/07/16/prometheus-query/</url>
+    <content><![CDATA[<h2 id="prometheus-常用的查询语句"><a href="#prometheus-常用的查询语句" class="headerlink" title="prometheus 常用的查询语句"></a>prometheus 常用的查询语句</h2><p>通常我们会使用grafana作为图表展示，然后选择prometheus作为数据源的方式来进行我们想要的图表展示。当然我们也可以在grafana的官网上找到相应的dashboard来直接导入，这样省去了自己手工配置的麻烦。不过知道一些必要的prometheus查询语句能帮我们更好的选择grafana的dashboard，然后我们可以自定义做些配置。</p>
+<h3 id="prometheus一些术语"><a href="#prometheus一些术语" class="headerlink" title="prometheus一些术语"></a>prometheus一些术语</h3><p>prometheus的metrics分为四类（counter,gauge,histogram,summary）详情(<a href="https://prometheus.io/docs/concepts/metric_types/" target="_blank" rel="noopener">metrics-type</a>)，metrics_name的命令也应该符合一定的规范：<a href="https://prometheus.io/docs/concepts/data_model/" target="_blank" rel="noopener">metrics-name</a>，<a href="https://prometheus.io/docs/practices/naming/" target="_blank" rel="noopener">METRIC AND LABEL NAMING</a></p>
+<p><code>metrics_name</code> ： 也就是指标名，通常我们都会用如http_request_total等进行查询;<br><code>metrics_label</code> ：指标的标签，也就是metrics_name{label-1=”a”,label-2=”b”}这种;<br><code>metrics_value</code> : 通常用指标名+标签查出来一个值，该值根据metrics的类型可能为浮点数，也可能为整数。</p>
+<a id="more"></a>
+<h3 id="0-基础查询"><a href="#0-基础查询" class="headerlink" title="0,基础查询"></a>0,基础查询</h3><p>也就是使用metrics_name+metrics_label的组合进行查询，这种查询的效率的基础是你要知道明确知道相应的name和label，如果有错误拼写，则可能数据无法展示，prometheus的查询工具能帮我们模糊匹配出所有的metrics_name。可以使用label进行筛选。<br>如果只记得部分metrics_name,那么可以使用内置的label：<code>{__name__=~&quot;metrics_name_you_remember:.*&quot;}</code>这样去匹配出来你想要的标签。</p>
+<h3 id="1-正则匹配查询"><a href="#1-正则匹配查询" class="headerlink" title="1,正则匹配查询"></a>1,正则匹配查询</h3><p>prometheus里面用的最多的查询可能就是正则匹配了。经常配合grafana的变量(variable)一起使用。比如：<br><code>sum(irate(node_disk_reads_completed{device!~&quot;dm-.*&quot;}[5m]))</code>,这里面的<code>device!~&quot;dm-.*&quot;</code>，后面<br>引号内的<code>dm-.*</code>就是不匹配<code>dm-</code>前缀的所有metrics_name。如果要匹配的话使用<code>=~</code>。这样要注意，如果是或<br>的话要用<code>(regrex_A|regrex_B)</code>,用小括号加<code>|</code>。</p>
+<h3 id="2-常用的操作符和函数"><a href="#2-常用的操作符和函数" class="headerlink" title="2,常用的操作符和函数"></a>2,常用的操作符和函数</h3><p>prometheus支持常用的操作符：<code>+,-,*,/,&gt;=,&lt;,&gt;,....</code>等</p>
+<p>count是对查询的结果数量进行总和+; 而sum是对查询出来的value进行总和+;</p>
+<p>它也支持比如topk,bottomk,min,max等等。</p>
+<h3 id="更多的查询"><a href="#更多的查询" class="headerlink" title="更多的查询"></a>更多的查询</h3><p>在官网还有更多的查询，通常我们是结合grafana来做。官网的查询:<a href="https://prometheus.io/docs/prometheus/latest/querying/functions/" target="_blank" rel="noopener">proetheus-query</a>。</p>
+]]></content>
+      <categories>
+        <category>监控</category>
+      </categories>
+      <tags>
+        <tag>prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2018-06月至07月的一些总结</title>
     <url>/2018/07/16/2018-06and07-conclusion/</url>
     <content><![CDATA[<h1 id="2018-06月至07月的一些总结"><a href="#2018-06月至07月的一些总结" class="headerlink" title="2018-06月至07月的一些总结"></a>2018-06月至07月的一些总结</h1><p>最近好久都没有写博客了。其实最近做的事情都比较单调，就是迁移环境，不过再迁移环境中，我还是收获了很多我缺少的。单从非技术方面，我缺少勉才的那股韧劲（问题不会过夜），缺少华哥那种细致（仔细的做过一遍，还会仔细的检查一遍，不是那种大致检查，是那种一条一条的比对），当然我也看到有些同事的缺点也是我的缺点，有则改之。</p>
@@ -1509,27 +1562,6 @@ apt install net-tools</code></p>
       </categories>
       <tags>
         <tag>总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>prometheus 常用的查询语句</title>
-    <url>/2018/07/16/prometheus-query/</url>
-    <content><![CDATA[<h2 id="prometheus-常用的查询语句"><a href="#prometheus-常用的查询语句" class="headerlink" title="prometheus 常用的查询语句"></a>prometheus 常用的查询语句</h2><p>通常我们会使用grafana作为图表展示，然后选择prometheus作为数据源的方式来进行我们想要的图表展示。当然我们也可以在grafana的官网上找到相应的dashboard来直接导入，这样省去了自己手工配置的麻烦。不过知道一些必要的prometheus查询语句能帮我们更好的选择grafana的dashboard，然后我们可以自定义做些配置。</p>
-<h3 id="prometheus一些术语"><a href="#prometheus一些术语" class="headerlink" title="prometheus一些术语"></a>prometheus一些术语</h3><p>prometheus的metrics分为四类（counter,gauge,histogram,summary）详情(<a href="https://prometheus.io/docs/concepts/metric_types/" target="_blank" rel="noopener">metrics-type</a>)，metrics_name的命令也应该符合一定的规范：<a href="https://prometheus.io/docs/concepts/data_model/" target="_blank" rel="noopener">metrics-name</a>，<a href="https://prometheus.io/docs/practices/naming/" target="_blank" rel="noopener">METRIC AND LABEL NAMING</a></p>
-<p><code>metrics_name</code> ： 也就是指标名，通常我们都会用如http_request_total等进行查询;<br><code>metrics_label</code> ：指标的标签，也就是metrics_name{label-1=”a”,label-2=”b”}这种;<br><code>metrics_value</code> : 通常用指标名+标签查出来一个值，该值根据metrics的类型可能为浮点数，也可能为整数。</p>
-<a id="more"></a>
-<h3 id="0-基础查询"><a href="#0-基础查询" class="headerlink" title="0,基础查询"></a>0,基础查询</h3><p>也就是使用metrics_name+metrics_label的组合进行查询，这种查询的效率的基础是你要知道明确知道相应的name和label，如果有错误拼写，则可能数据无法展示，prometheus的查询工具能帮我们模糊匹配出所有的metrics_name。可以使用label进行筛选。<br>如果只记得部分metrics_name,那么可以使用内置的label：<code>{__name__=~&quot;metrics_name_you_remember:.*&quot;}</code>这样去匹配出来你想要的标签。</p>
-<h3 id="1-正则匹配查询"><a href="#1-正则匹配查询" class="headerlink" title="1,正则匹配查询"></a>1,正则匹配查询</h3><p>prometheus里面用的最多的查询可能就是正则匹配了。经常配合grafana的变量(variable)一起使用。比如：<br><code>sum(irate(node_disk_reads_completed{device!~&quot;dm-.*&quot;}[5m]))</code>,这里面的<code>device!~&quot;dm-.*&quot;</code>，后面<br>引号内的<code>dm-.*</code>就是不匹配<code>dm-</code>前缀的所有metrics_name。如果要匹配的话使用<code>=~</code>。这样要注意，如果是或<br>的话要用<code>(regrex_A|regrex_B)</code>,用小括号加<code>|</code>。</p>
-<h3 id="2-常用的操作符和函数"><a href="#2-常用的操作符和函数" class="headerlink" title="2,常用的操作符和函数"></a>2,常用的操作符和函数</h3><p>prometheus支持常用的操作符：<code>+,-,*,/,&gt;=,&lt;,&gt;,....</code>等</p>
-<p>count是对查询的结果数量进行总和+; 而sum是对查询出来的value进行总和+;</p>
-<p>它也支持比如topk,bottomk,min,max等等。</p>
-<h3 id="更多的查询"><a href="#更多的查询" class="headerlink" title="更多的查询"></a>更多的查询</h3><p>在官网还有更多的查询，通常我们是结合grafana来做。官网的查询:<a href="https://prometheus.io/docs/prometheus/latest/querying/functions/" target="_blank" rel="noopener">proetheus-query</a>。</p>
-]]></content>
-      <categories>
-        <category>监控</category>
-      </categories>
-      <tags>
-        <tag>prometheus</tag>
       </tags>
   </entry>
   <entry>

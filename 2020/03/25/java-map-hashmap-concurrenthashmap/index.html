@@ -105,7 +105,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-03-26-22-27-21.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-03-27-23-13-43.png">
-<meta property="og:updated_time" content="2020-05-06T03:40:20.454Z">
+<meta property="og:updated_time" content="2020-05-11T13:26:43.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java HashMap">
 <meta name="twitter:description" content="HashMap 介绍这个该怎么写了？其实网上好多博客说了这个，其实我看了之后，甚至看了源码之后我也不知道怎么写，源码中Hashmap的介绍大致如下： 12345678Hashmap 大致是等于hashtable的，除了非同步和允许null值之外；不保证数据的顺序；常数级别的get和put；最重要性能的两个属性： capacity  ， loadfactor0.75的加载因子数是一种空间和时间上的">
@@ -435,10 +435,42 @@
 <p>所以可以看到 HashMap 的 <code>LOAD_FACTOR</code> 加载因子和容量是多么的重要了。我们一般的化可以优化为：<br><code>负载因子 * 容量 &gt; 元素数量</code> 即初始化容量时候，值要大于“预估元素数量 / 负载因子” </p>
 <p>hashmap在高并发场景下会发生什么了？<br>要记住，hashmap本身就被声明为了非同步安全的类，如果在多线程环境下是会有可能导致无限循环占用cpu，size不准确，具体的原因可以看下这篇博客 <a href="https://mailinator.blogspot.com/2009/06/beautiful-race-condition.html" target="_blank" rel="noopener">a beatiful race condition</a></p>
 <p>那么问一下，为什么要进行树化了？<br>本质上是个安全问题，如果一个对象hash冲突，都被放到一个桶里面，就会形成一个链表，链表的查询是线性的，就会严重影响存储的性能；<br>另外有种安全攻击叫做“哈希碰撞拒绝服务攻击”，就是构建哈希冲突的数据，恶意代码用这些数据与服务器进行交互，导致服务端cpu大量占用。来达到攻击的目录。</p>
-<p>那么，并发下，我们应该怎么使用HashMap了？<br>明天讲～<br>&lt;!–<br>但是假如你在面试，面试官会怎么问你了？</p>
-<p>咳咳，模拟下：</p>
-<p>Q：你好，请问你们平常用的jdk版本是多少？<br>A：线上主要用的是jdk8<br>Q：那你能介绍下常见的这个HashMap吗？<br>A：balabla 上面一大段<br>Q：1.8中对hashmap有什么优化了？<br>A：在数据存储中引入了树化，在数据超过8的时候就会变成红黑树。<br>Q：为什么要引入树来做存储了？有什么好处了？<br>Q: 能不能介绍下hashmap put的整个过程？<br>Q: 能不能介绍下hashmap的使用场景？<br>Q：高并发的场景下应该怎么办了？ </p>
-<h2 id="这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？"><a href="#这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？" class="headerlink" title="这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？"></a>这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？</h2><h2 id="这个技术的优势和劣势分别是什么，或者说，这个技术的-trade-off-（要什么不要什么）是什么"><a href="#这个技术的优势和劣势分别是什么，或者说，这个技术的-trade-off-（要什么不要什么）是什么" class="headerlink" title="这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么"></a>这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么</h2><h2 id="这个技术适用的场景（技术场景或业务场景）"><a href="#这个技术适用的场景（技术场景或业务场景）" class="headerlink" title="这个技术适用的场景（技术场景或业务场景）"></a>这个技术适用的场景（技术场景或业务场景）</h2><h2 id="这个技术的组成部分和关键点（核心思想，核心组件）"><a href="#这个技术的组成部分和关键点（核心思想，核心组件）" class="headerlink" title="这个技术的组成部分和关键点（核心思想，核心组件）"></a>这个技术的组成部分和关键点（核心思想，核心组件）</h2><h2 id="这个技术的底层原理和关键实现"><a href="#这个技术的底层原理和关键实现" class="headerlink" title="这个技术的底层原理和关键实现"></a>这个技术的底层原理和关键实现</h2><h2 id="已有的实现和它之间的对比"><a href="#已有的实现和它之间的对比" class="headerlink" title="已有的实现和它之间的对比"></a>已有的实现和它之间的对比</h2><p><a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457" target="_blank" rel="noopener">https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457</a><br>–&gt;</p>
+<p>那么，并发下，我们应该怎么使用HashMap了？<br>明天讲～</p>
+<!--
+
+但是假如你在面试，面试官会怎么问你了？
+
+咳咳，模拟下：
+
+Q：你好，请问你们平常用的jdk版本是多少？
+A：线上主要用的是jdk8
+Q：那你能介绍下常见的这个HashMap吗？
+A：balabla 上面一大段
+Q：1.8中对hashmap有什么优化了？
+A：在数据存储中引入了树化，在数据超过8的时候就会变成红黑树。
+Q：为什么要引入树来做存储了？有什么好处了？
+Q: 能不能介绍下hashmap put的整个过程？
+Q: 能不能介绍下hashmap的使用场景？
+Q：高并发的场景下应该怎么办了？ 
+
+
+
+
+
+## 这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？
+
+## 这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么
+
+## 这个技术适用的场景（技术场景或业务场景）
+
+## 这个技术的组成部分和关键点（核心思想，核心组件）
+
+## 这个技术的底层原理和关键实现
+
+## 已有的实现和它之间的对比
+https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
+
+-->
 <p>参考：<a href="https://www.cnblogs.com/Michaelwjw/p/6411176.html" target="_blank" rel="noopener">https://www.cnblogs.com/Michaelwjw/p/6411176.html</a></p>
 
       
@@ -460,7 +492,7 @@
   <p><span>本文标题:</span><a href="/2020/03/25/java-map-hashmap-concurrenthashmap/">Java HashMap</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2020-03-25 22:57:59</p>
- <!-- <p><span>最后更新:</span>2020-05-06 11:40:20</p> -->
+ <!-- <p><span>最后更新:</span>2020-05-11 21:26:43</p> -->
   <p><span>原始链接:</span><a href="/2020/03/25/java-map-hashmap-concurrenthashmap/" title="Java HashMap">http://chenzhijun.me/2020/03/25/java-map-hashmap-concurrenthashmap/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2020/03/25/java-map-hashmap-concurrenthashmap/" aria-label="复制成功！"></i></span>
   </p>
@@ -778,7 +810,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap-介绍"><span class="nav-number">1.</span> <span class="nav-text">HashMap 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap的内部结构"><span class="nav-number">1.1.</span> <span class="nav-text">HashMap的内部结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？"><span class="nav-number">1.2.</span> <span class="nav-text">这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个技术的优势和劣势分别是什么，或者说，这个技术的-trade-off-（要什么不要什么）是什么"><span class="nav-number">1.3.</span> <span class="nav-text">这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个技术适用的场景（技术场景或业务场景）"><span class="nav-number">1.4.</span> <span class="nav-text">这个技术适用的场景（技术场景或业务场景）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个技术的组成部分和关键点（核心思想，核心组件）"><span class="nav-number">1.5.</span> <span class="nav-text">这个技术的组成部分和关键点（核心思想，核心组件）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个技术的底层原理和关键实现"><span class="nav-number">1.6.</span> <span class="nav-text">这个技术的底层原理和关键实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已有的实现和它之间的对比"><span class="nav-number">1.7.</span> <span class="nav-text">已有的实现和它之间的对比</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap-介绍"><span class="nav-number">1.</span> <span class="nav-text">HashMap 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap的内部结构"><span class="nav-number">1.1.</span> <span class="nav-text">HashMap的内部结构</span></a></li></ol></li></ol></div>
             
 
           </div>
