@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-22-11-52-29.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-22-11-38-02.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2017-09-22-11-40-53.png">
-<meta property="og:updated_time" content="2020-05-12T14:37:12.013Z">
+<meta property="og:updated_time" content="2020-05-12T14:49:16.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RabbitMQ-消息中间件（三）订阅与发布">
 <meta name="twitter:description" content="订阅与发布之前的实例我们都是将任务精确的转发给某一个工作线程（消费者）。这节我们讲讲怎么将一个任务转发给多个消费者。这种模式就是闻名的“订阅/发布”模式。 我们的初步想法便是一个发布者发布了一个消息，多个消费者接收到消息，做不同的事情。 交换机(Exchanges)前面已经说了了我们是通过队列来接受和发送消息的(p-q-c)[p:发布者，q:队列，r:消费者]。消息是由p 发布到q,q 再发给c。">
@@ -390,16 +390,6 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/22/message-rabbitmq-3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/22/message-rabbitmq-3/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -614,12 +604,7 @@ var jiathis_config={
           
   <div class="comments" id="comments">
     
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      <div id="SOHUCS"></div>
     
   </div>
 
@@ -956,26 +941,6 @@ var jiathis_config={
 
   
 
-    
-      <script id="dsq-count-scr" src="https://chenzhijun-me.disqus.com/count.js" async></script>
-    
-
-    
-      <script type="text/javascript">
-        var disqus_config = function () {
-          this.page.url = 'http://chenzhijun.me/2017/09/22/message-rabbitmq-3/';
-          this.page.identifier = '2017/09/22/message-rabbitmq-3/';
-          this.page.title = 'RabbitMQ-消息中间件（三）订阅与发布';
-        };
-        var d = document, s = d.createElement('script');
-        s.src = 'https://chenzhijun-me.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', '' + +new Date());
-        (d.head || d.body).appendChild(s);
-      </script>
-    
-
-  
-
 
 
 
@@ -988,6 +953,10 @@ var jiathis_config={
   
 
 
+
+
+
+  
 
 
 
