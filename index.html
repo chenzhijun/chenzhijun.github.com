@@ -882,6 +882,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -931,7 +953,7 @@
 
       
         
-          <h1 id="HashMap-介绍"><a href="#HashMap-介绍" class="headerlink" title="HashMap 介绍"></a>HashMap 介绍</h1><p>这个该怎么写了？其实网上好多博客说了这个，其实我看了之后，甚至看了源码之后我也不知道怎么写，源码中Hashmap的介绍大致如下：</p>
+          <h1 id="HashMap-介绍"><a href="#HashMap-介绍" class="headerlink" title="HashMap 介绍"></a>HashMap 介绍</h1><p>这个该怎么写了？其实网上好多博客说了这个，其实我看了之后，甚至看了源码之后我也不知道怎么写，源码中Hashmap的介绍大致如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hashmap 大致是等于hashtable的，除了非同步和允许null值之外；</span><br><span class="line">不保证数据的顺序；</span><br><span class="line">常数级别的get和put；</span><br><span class="line">最重要性能的两个属性： capacity  ， loadfactor</span><br><span class="line">0.75的加载因子数是一种空间和时间上的tradeoff（平衡）</span><br><span class="line">相同的hashcode()会降低它的性能</span><br><span class="line">hashmap的实现是非同步的；</span><br><span class="line">iterator fail-fast ConcurrentModificationException.</span><br></pre></td></tr></table></figure>
 <p>首先我们介绍下它的内部数据结构吧。</p>
 <h2 id="HashMap的内部结构"><a href="#HashMap的内部结构" class="headerlink" title="HashMap的内部结构"></a>HashMap的内部结构</h2>
