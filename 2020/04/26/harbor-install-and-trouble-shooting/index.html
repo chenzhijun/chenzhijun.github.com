@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-22-15-03.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-22-16-24.png">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-04-26-22-25-53.png">
-<meta property="og:updated_time" content="2020-05-13T13:25:43.140Z">
+<meta property="og:updated_time" content="2020-05-13T13:33:03.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Harbor  镜像仓库安装与 Helm Chart 管理">
 <meta name="twitter:description" content="Harbor  镜像仓库安装与 Helm Chart 管理Harbor 是一款非常优秀的企业级开源镜像仓库管理器。Harbor 是基于 Docker Registry之上带有用户权限控制，镜像扫描，镜像签名的款工具。用起来很方便，我们公司目前在测试和生产都在使用。从去年 10 月到今天，除去一次 ceph 集群扩容，没有发生一次事故，一直运行很稳定；本文将记录一下我们的使用方式和遇到的一些问题解决">
@@ -475,6 +475,7 @@
 <p>另外就是要注意 pg 的权限问题。</p>
 <h3 id="https-问题3-docker-push-出现-unauthorized-authentication-required"><a href="#https-问题3-docker-push-出现-unauthorized-authentication-required" class="headerlink" title="https 问题3: docker push 出现 unauthorized: authentication required"></a>https 问题3: docker push 出现 unauthorized: authentication required</h3><p>这是一个很诡异的问题，找了我两个小时；现象是harbor 的页面能登陆，并且页面一切功能正常；直接使用 docker login 也是没有问题，但是在 push 镜像的时候出现，unauthorized: authentication required;明明已经登陆了，也没有问题，但是不知道为啥还是会报错。这个问题在我这里是由于 haproxy 的配置出现的问题。harbor push 镜像的过程是从 harbor 服务获取一个 token，然后再去访问 registry 的存储来存储数据，如果是是本地存储，那么会访问 80 端口。我的配置中将 haproxy 的 80 端口转了 redirect，所以导致认证失败。附上一段在 haproxy 段做证书解析而后端 harbor 为 http 的 haproxy 的服务配置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">frontend harbor</span><br><span class="line">  bind *:80</span><br><span class="line">  bind *:443 ssl crt /data/harbor/harbor/chenzhijun.me.pem</span><br><span class="line">  reqadd X-Forwarded-Proto:\ https</span><br><span class="line">  default_backend  harbor-backend</span><br><span class="line"></span><br><span class="line">backend harbor-backend</span><br><span class="line">  balance  source</span><br><span class="line">  mode  http</span><br><span class="line">  timeout  client 3h</span><br><span class="line">  timeout  server 3h</span><br><span class="line">  server server1 10.1.1.2:80  check inter 2000 fall 3</span><br></pre></td></tr></table></figure>
+<p>如果还是有问题，可以在<code>/var/log/harbor</code>目录下查看相关的 log 日志。也可以查看系统日志：<code>/var/log/message</code>来定位问题。</p>
 <p>我们也安装了 <code>/install.sh --with-clair --with-chartmuseum</code> clair 和 chartmuseum，这两个工具，clair 的主要目的是扫描 CVE 漏洞，所以是不是需要链接一下外网更新一下；chartmuseum 是一个 helm chart 管理器;</p>
 <p><img src="/images/qiniu/2020-04-26-22-15-03.png" alt="2020-04-26-22-15-03"></p>
 <p><img src="/images/qiniu/2020-04-26-22-16-24.png" alt="2020-04-26-22-16-24"></p>
@@ -511,7 +512,7 @@
   <p><span>本文标题:</span><a href="/2020/04/26/harbor-install-and-trouble-shooting/">Harbor  镜像仓库安装与 Helm Chart 管理</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2020-04-26 21:02:35</p>
- <!-- <p><span>最后更新:</span>2020-05-13 21:25:43</p> -->
+ <!-- <p><span>最后更新:</span>2020-05-13 21:33:03</p> -->
   <p><span>原始链接:</span><a href="/2020/04/26/harbor-install-and-trouble-shooting/" title="Harbor  镜像仓库安装与 Helm Chart 管理">http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2020/04/26/harbor-install-and-trouble-shooting/" aria-label="复制成功！"></i></span>
   </p>
