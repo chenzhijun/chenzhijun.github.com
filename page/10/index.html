@@ -320,6 +320,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/02/06/jdk-util-hashmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈志军">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/06/jdk-util-hashmap/" itemprop="url">JDK-HashMap解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-06T09:49:08+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/06/jdk-util-hashmap/" class="leancloud_visitors" data-flag-title="JDK-HashMap解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="JDK-HashMap解析"><a href="#JDK-HashMap解析" class="headerlink" title="JDK-HashMap解析"></a>JDK-HashMap解析</h1><h2 id="jdk-类介绍"><a href="#jdk-类介绍" class="headerlink" title="jdk 类介绍"></a>jdk 类介绍</h2><p>HashMap 是一个继承Map接口并且是使用哈希表的实现。提供了所有的map操作，并且允许null建和null值。除了非同步方式和允许null键值，它大致上可以等同于<code>Hashtable</code>。影响HashMap表现的有两个原因：初始容量和加载因子。</p>
+<p>capacity：容量指的是hash表中的总容量。初始容量在第一次创建hashmap的时候就已经创建好了。<br>load factor: 加载因子，是测量capacity在hash表达到了多满的时候可以自动增长。</p>
+<p>当键值对达到了加载因子的量并且超过了当前的capacity，hash表就会重新进行hash（意思是内部数据结构将重建），目的是为了将hash表能够达到差不多两倍的容量。</p>
+<p>通常的规则是，默认的加载因子为0.75，它可以在时间和空间上做一个非常好的平衡。如果设置自定义capacity，map里面可能存在多少键值队就需要作为一个考虑因素，以达到最小的rehash操作。如果初始capacity在设置capacity之后还能存下更多的键值对，那么就不会出现rehash操作。</p>
+<p>如果事先能大致确认map的容量是多少，那么给map定一个初始化大小是非常可行的，会比让它自己增长更有效率。在hash表中如果出现太多的相同的key拥有相同的hashCode()会降低效率，如果需要改善这种关系，如果键是可以比较的，类可以使用key的比较顺序来进行改善。</p>
+<p>HashMap的实现是非线程安全的。在多线程的环境下，必须在外部上进行同步控制。如果外部没有控制，那么需要将map进行包装，也就是使用Collections.synchronizedMap(map)方法，最好是在一开始创建map的时候就进行包装。<br>map的iterators方法是fail-fast的。在iterator创建之后，如果map的结构被修改了，除了iterator的remove方法，iterator会抛出ConcurrentModificationException异常。所以在多线程环境下进行修改，iterator会快速的返回失败。不过也得注意在非同步环境下，迭代器的fail-fast不能得到保证。迭代器抛出这个异常一个非常好的功能，但是不应该依赖它来写程序，如果出现异常那么就应该说明程序有bug。</p>
+<p>jdk的源码里面，介绍的非常详细。真的很详细。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/06/jdk-util-hashmap/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/01/31/hibernater-validate-properties/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1744,165 +1909,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2017/12/21/elasticsearch-search-base/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈志军">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/21/elasticsearch-search-base/" itemprop="url">Elasticsearch 搜索基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T11:47:02+08:00">
-                2017-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">Elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/21/elasticsearch-search-base/" class="leancloud_visitors" data-flag-title="Elasticsearch 搜索基础">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Elasticsearch-搜索基础"><a href="#Elasticsearch-搜索基础" class="headerlink" title="Elasticsearch 搜索基础"></a>Elasticsearch 搜索基础</h2><h3 id="三大概念"><a href="#三大概念" class="headerlink" title="三大概念"></a>三大概念</h3><ol>
-<li>映射（Mapping）：描叙数据在每个字段中如何存储；</li>
-<li>分析（Analysis）：全文是如何处理使之可以被搜索；</li>
-<li>领域特定查询语言（QueryDSL）：Elasticsearch 查询语言，json格式。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1951,7 +1957,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">165</span>
+                <span class="site-state-item-count">166</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1962,7 +1968,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
