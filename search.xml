@@ -17,7 +17,7 @@
 <p>强制执行方式：</p>
 <p><code>logrotate -fv /etc/logrotate.d/ingress3</code>：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">-f 强制执行</span><br><span class="line">-d debug 模式</span><br><span class="line">-v 显示输出</span><br><span class="line">-s 状态文件路径</span><br></pre></td></tr></table></figure>
-<!-->
+<!--
 #config logrotate
 cat > /etc/logrotate.d/ingress << EOF
 /data/wisecloud/ingress-gateway/*log {
@@ -36,7 +36,7 @@ cat > /etc/logrotate.d/ingress << EOF
     dateformat -%Y%m%d%H
 }
 EOF
-<-->]]></content>
+-->]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -863,8 +863,8 @@ channel分为非缓存chan和有缓存chan，  -->
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>Json</tag>
         <tag>Enum</tag>
+        <tag>Json</tag>
       </tags>
   </entry>
   <entry>

@@ -105,7 +105,7 @@
 <meta property="og:description" content="Linux 日志管理工具 - Logrotate最近在使用 openresty(nginx) 作为容器平台 kubernetes 的入口路由服务；流程大致为前端新建一个路由规则的时候，获取到 svc 的 endpoint 然后将其作为 nginx 的后端服务。实时监听 svc 的状态然后更新 ep 到 nginx；这里遇到一个问题，nginx 本身没有做到日志切割，在上线一段时间之后，nginx">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://chenzhijun.me/images/qiniu/2020-05-20-22-59-26.png">
-<meta property="og:updated_time" content="2020-05-27T08:11:00.452Z">
+<meta property="og:updated_time" content="2020-05-27T08:13:04.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 日志管理工具 - Logrotate">
 <meta name="twitter:description" content="Linux 日志管理工具 - Logrotate最近在使用 openresty(nginx) 作为容器平台 kubernetes 的入口路由服务；流程大致为前端新建一个路由规则的时候，获取到 svc 的 endpoint 然后将其作为 nginx 的后端服务。实时监听 svc 的状态然后更新 ep 到 nginx；这里遇到一个问题，nginx 本身没有做到日志切割，在上线一段时间之后，nginx">
@@ -441,7 +441,7 @@
 <p>强制执行方式：</p>
 <p><code>logrotate -fv /etc/logrotate.d/ingress3</code>：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-f 强制执行</span><br><span class="line">-d debug 模式</span><br><span class="line">-v 显示输出</span><br><span class="line">-s 状态文件路径</span><br></pre></td></tr></table></figure>
-<!-->
+<!--
 #config logrotate
 cat > /etc/logrotate.d/ingress << EOF
 /data/wisecloud/ingress-gateway/*log {
@@ -460,7 +460,7 @@ cat > /etc/logrotate.d/ingress << EOF
     dateformat -%Y%m%d%H
 }
 EOF
-<-->
+-->
       
     </div>
     
@@ -480,7 +480,7 @@ EOF
   <p><span>本文标题:</span><a href="/2020/05/20/linux-log-tool-logrotate/">Linux 日志管理工具 - Logrotate</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2020-05-20 22:35:30</p>
- <!-- <p><span>最后更新:</span>2020-05-27 16:11:00</p> -->
+ <!-- <p><span>最后更新:</span>2020-05-27 16:13:04</p> -->
   <p><span>原始链接:</span><a href="/2020/05/20/linux-log-tool-logrotate/" title="Linux 日志管理工具 - Logrotate">http://chenzhijun.me/2020/05/20/linux-log-tool-logrotate/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2020/05/20/linux-log-tool-logrotate/" aria-label="复制成功！"></i></span>
   </p>
