@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="自己用 Java 写一个阻塞队列(二)上一章 自己用 Java 写一个阻塞队列 我们写了一个初始阻塞队列。过了几天再回头看。嗯，好像看出哪里不对劲了。尝试改了一下。 原先队列实现的问题我们说是队列，但是队列的特点是什么？先进先出！在上一个版本中，我们在出队列的时候用的是size值，也就是最后一个位置值。那么想想，我们这算队列么？这是栈啊。这是问题一。另外我们知道 arraylist 其实其底层实现">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-03T13:48:56.368Z">
+<meta property="og:updated_time" content="2020-06-03T13:49:53.722Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己用 Java 写一个阻塞队列(二)">
 <meta name="twitter:description" content="自己用 Java 写一个阻塞队列(二)上一章 自己用 Java 写一个阻塞队列 我们写了一个初始阻塞队列。过了几天再回头看。嗯，好像看出哪里不对劲了。尝试改了一下。 原先队列实现的问题我们说是队列，但是队列的特点是什么？先进先出！在上一个版本中，我们在出队列的时候用的是size值，也就是最后一个位置值。那么想想，我们这算队列么？这是栈啊。这是问题一。另外我们知道 arraylist 其实其底层实现">
@@ -429,7 +429,7 @@
 <h2 id="原先队列实现的问题"><a href="#原先队列实现的问题" class="headerlink" title="原先队列实现的问题"></a>原先队列实现的问题</h2><p>我们说是队列，但是队列的特点是什么？先进先出！在上一个版本中，我们在出队列的时候用的是<code>size</code>值，也就是最后一个位置值。那么想想，我们这算队列么？这是栈啊。这是问题一。<br>另外我们知道 arraylist 其实其底层实现还是数组，那为啥我不直接用数组了？我基本上也不用 list 的功能啊。那这个地方就是第二个可以优化的地方了。<br>在第一个版本中为了运行正常，我把 size 的初始值定为 -1，我有点受不了，不行，这个地方我也要优化。<br>嗯，就优化这三个地方吧。</p>
 <h2 id="优化问题-ArrayList"><a href="#优化问题-ArrayList" class="headerlink" title="优化问题 ArrayList"></a>优化问题 ArrayList</h2><p>其实际很简单，把 ArrayList 改为数组 Object[]。原先 add 和 get 的地方直接使用 Object[idx] 代替即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object[] objects = <span class="keyword">new</span> Object[<span class="number">10</span>];</span><br><span class="line">objects[size] = t;</span><br><span class="line">t = objects.[size];</span><br></pre></td></tr></table></figure>
-<h2 id="优化出队和入队"><a href="#优化出队和入队" class="headerlink" title="优化出队和入队"></a>优化出队和入队</h2><p>队列的本质应该是先进先出的数据结构。这里用两个 idx 来代替，一个是入队索引，一个是出队索引。</p>
+<h2 id="优化入队和出队"><a href="#优化入队和出队" class="headerlink" title="优化入队和出队"></a>优化入队和出队</h2><p>队列的本质应该是先进先出的数据结构。这里用两个 idx 来代替，一个是入队索引，一个是出队索引。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> enqIdx = <span class="number">0</span>;<span class="comment">//入队的索引号</span></span><br><span class="line"><span class="keyword">int</span> deqIdx = <span class="number">0</span>;<span class="comment">//出队的索引号</span></span><br></pre></td></tr></table></figure>
 <p>这里有个问题，就是当索引到了我们的数组大小的时候，要把索引重新开始计数。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>((enqIdx+<span class="number">1</span>)==objects.length)&#123;</span><br><span class="line">    enqIdx=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>((deqIdx+<span class="number">1</span>)==objects.length)&#123;</span><br><span class="line">    deqIdx=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -456,7 +456,7 @@
   <p><span>本文标题:</span><a href="/2020/06/03/java-thread-lock-condition-blockqueue2/">自己用 Java 写一个阻塞队列(二)</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2020-06-03 21:39:13</p>
- <!-- <p><span>最后更新:</span>2020-06-03 21:48:56</p> -->
+ <!-- <p><span>最后更新:</span>2020-06-03 21:49:53</p> -->
   <p><span>原始链接:</span><a href="/2020/06/03/java-thread-lock-condition-blockqueue2/" title="自己用 Java 写一个阻塞队列(二)">http://chenzhijun.me/2020/06/03/java-thread-lock-condition-blockqueue2/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2020/06/03/java-thread-lock-condition-blockqueue2/" aria-label="复制成功！"></i></span>
   </p>
@@ -771,7 +771,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自己用-Java-写一个阻塞队列-二"><span class="nav-number">1.</span> <span class="nav-text">自己用 Java 写一个阻塞队列(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原先队列实现的问题"><span class="nav-number">1.1.</span> <span class="nav-text">原先队列实现的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化问题-ArrayList"><span class="nav-number">1.2.</span> <span class="nav-text">优化问题 ArrayList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化出队和入队"><span class="nav-number">1.3.</span> <span class="nav-text">优化出队和入队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始代码"><span class="nav-number">1.4.</span> <span class="nav-text">开始代码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自己用-Java-写一个阻塞队列-二"><span class="nav-number">1.</span> <span class="nav-text">自己用 Java 写一个阻塞队列(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原先队列实现的问题"><span class="nav-number">1.1.</span> <span class="nav-text">原先队列实现的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化问题-ArrayList"><span class="nav-number">1.2.</span> <span class="nav-text">优化问题 ArrayList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化入队和出队"><span class="nav-number">1.3.</span> <span class="nav-text">优化入队和出队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始代码"><span class="nav-number">1.4.</span> <span class="nav-text">开始代码</span></a></li></ol></li></ol></div>
             
 
           </div>
