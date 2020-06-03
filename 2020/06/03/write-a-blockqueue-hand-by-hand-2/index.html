@@ -100,11 +100,11 @@
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自己用 Java 写一个阻塞队列(二)">
-<meta property="og:url" content="http://chenzhijun.me/2020/06/03/java-thread-lock-condition-blockqueue2/index.html">
+<meta property="og:url" content="http://chenzhijun.me/2020/06/03/write-a-blockqueue-hand-by-hand-2/index.html">
 <meta property="og:site_name" content="饺子">
 <meta property="og:description" content="自己用 Java 写一个阻塞队列(二)上一章 自己用 Java 写一个阻塞队列 我们写了一个初始阻塞队列。过了几天再回头看。嗯，好像看出哪里不对劲了。尝试改了一下。 原先队列实现的问题我们说是队列，但是队列的特点是什么？先进先出！在上一个版本中，我们在出队列的时候用的是size值，也就是最后一个位置值。那么想想，我们这算队列么？这是栈啊。这是问题一。另外我们知道 arraylist 其实其底层实现">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-03T13:49:53.722Z">
+<meta property="og:updated_time" content="2020-06-03T14:37:18.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自己用 Java 写一个阻塞队列(二)">
 <meta name="twitter:description" content="自己用 Java 写一个阻塞队列(二)上一章 自己用 Java 写一个阻塞队列 我们写了一个初始阻塞队列。过了几天再回头看。嗯，好像看出哪里不对劲了。尝试改了一下。 原先队列实现的问题我们说是队列，但是队列的特点是什么？先进先出！在上一个版本中，我们在出队列的时候用的是size值，也就是最后一个位置值。那么想想，我们这算队列么？这是栈啊。这是问题一。另外我们知道 arraylist 其实其底层实现">
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://chenzhijun.me/2020/06/03/java-thread-lock-condition-blockqueue2/">
+  <link rel="canonical" href="http://chenzhijun.me/2020/06/03/write-a-blockqueue-hand-by-hand-2/">
 
 
 
@@ -320,7 +320,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2020/06/03/java-thread-lock-condition-blockqueue2/">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2020/06/03/write-a-blockqueue-hand-by-hand-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈志军">
@@ -389,7 +389,7 @@
 
           
           
-             <span id="/2020/06/03/java-thread-lock-condition-blockqueue2/" class="leancloud_visitors" data-flag-title="自己用 Java 写一个阻塞队列(二)">
+             <span id="/2020/06/03/write-a-blockqueue-hand-by-hand-2/" class="leancloud_visitors" data-flag-title="自己用 Java 写一个阻塞队列(二)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -453,12 +453,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2020/06/03/java-thread-lock-condition-blockqueue2/">自己用 Java 写一个阻塞队列(二)</a></p>
+  <p><span>本文标题:</span><a href="/2020/06/03/write-a-blockqueue-hand-by-hand-2/">自己用 Java 写一个阻塞队列(二)</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈志军 的个人博客">陈志军</a></p>
   <p><span>发布时间:</span>2020-06-03 21:39:13</p>
- <!-- <p><span>最后更新:</span>2020-06-03 21:49:53</p> -->
-  <p><span>原始链接:</span><a href="/2020/06/03/java-thread-lock-condition-blockqueue2/" title="自己用 Java 写一个阻塞队列(二)">http://chenzhijun.me/2020/06/03/java-thread-lock-condition-blockqueue2/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2020/06/03/java-thread-lock-condition-blockqueue2/" aria-label="复制成功！"></i></span>
+ <!-- <p><span>最后更新:</span>2020-06-03 22:37:18</p> -->
+  <p><span>原始链接:</span><a href="/2020/06/03/write-a-blockqueue-hand-by-hand-2/" title="自己用 Java 写一个阻塞队列(二)">http://chenzhijun.me/2020/06/03/write-a-blockqueue-hand-by-hand-2/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2020/06/03/write-a-blockqueue-hand-by-hand-2/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -532,7 +532,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/27/java-thread-lock-condition-blockqueue/" rel="next" title="自己用 Java 写一个阻塞队列">
+              <a href="/2020/05/27/write-a-blockqueue-hand-by-hand/" rel="next" title="自己用 Java 写一个阻塞队列">
                 <i class="fa fa-chevron-left"></i> 自己用 Java 写一个阻塞队列
               </a>
             
