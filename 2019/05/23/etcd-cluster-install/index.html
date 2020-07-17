@@ -96,18 +96,18 @@
 
 
 
-<meta name="description" content="Etcd 集群安装本文参考：https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/clustering.md 不得不说etcd的安装真的非常容易。在https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。  不过搭建集群版本的">
+<meta name="description" content="Etcd 集群安装本文参考：https://github.com/etcd-io/etcd/blob/oligarch/Documentation/op-guide/clustering.md 不得不说etcd的安装真的非常容易。在https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。  不过搭建集群版本的">
 <meta name="keywords" content="Etcd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Etcd 集群搭建">
 <meta property="og:url" content="http://chenzhijun.me/2019/05/23/etcd-cluster-install/index.html">
 <meta property="og:site_name" content="饺子">
-<meta property="og:description" content="Etcd 集群安装本文参考：https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/clustering.md 不得不说etcd的安装真的非常容易。在https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。  不过搭建集群版本的">
+<meta property="og:description" content="Etcd 集群安装本文参考：https://github.com/etcd-io/etcd/blob/oligarch/Documentation/op-guide/clustering.md 不得不说etcd的安装真的非常容易。在https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。  不过搭建集群版本的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-07-16T03:28:25.553Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Etcd 集群搭建">
-<meta name="twitter:description" content="Etcd 集群安装本文参考：https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/clustering.md 不得不说etcd的安装真的非常容易。在https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。  不过搭建集群版本的">
+<meta name="twitter:description" content="Etcd 集群安装本文参考：https://github.com/etcd-io/etcd/blob/oligarch/Documentation/op-guide/clustering.md 不得不说etcd的安装真的非常容易。在https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。  不过搭建集群版本的">
 
 
 
@@ -425,7 +425,7 @@
       
 
       
-        <h1 id="Etcd-集群安装"><a href="#Etcd-集群安装" class="headerlink" title="Etcd 集群安装"></a>Etcd 集群安装</h1><p>本文参考：<a href="https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/clustering.md" target="_blank" rel="noopener">https://github.com/etcd-io/etcd/blob/master/Documentation/op-guide/clustering.md</a></p>
+        <h1 id="Etcd-集群安装"><a href="#Etcd-集群安装" class="headerlink" title="Etcd 集群安装"></a>Etcd 集群安装</h1><p>本文参考：<a href="https://github.com/etcd-io/etcd/blob/oligarch/Documentation/op-guide/clustering.md" target="_blank" rel="noopener">https://github.com/etcd-io/etcd/blob/oligarch/Documentation/op-guide/clustering.md</a></p>
 <p>不得不说etcd的安装真的非常容易。在<a href="https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。" target="_blank" rel="noopener">https://github.com/etcd-io/etcd的release里面找到相应的版本。然后直接二进制启动，一个单节点就好。真的是太简单啊。</a> </p>
 <p>不过搭建集群版本的话还是需要做一些配置，下面就是我用集群搭建的环境并且真实可用的过程。</p>
 <p>下载好相应版本的etcd，然后做如下配置。我们采用的方式是使用Linux的systemd服务：<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=etcd service</span><br><span class="line">Documentation=https://github.com/coreos/etcd</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/local/bin/etcd --name infra0 --initial-advertise-peer-urls http://100.69.216.107:2380 \</span><br><span class="line">--listen-peer-urls http://100.69.216.107:2380 \</span><br><span class="line">--listen-client-urls http://100.69.216.107:2379,http://127.0.0.1:2379 \</span><br><span class="line">--advertise-client-urls http://100.69.216.107:2379 \</span><br><span class="line">--initial-cluster-token etcd-cluster-1 \</span><br><span class="line">--initial-cluster infra0=http://100.69.216.107:2380,infra1=http://100.69.216.108:2380,infra2=http://100.69.216.109:2380 \</span><br><span class="line">--initial-cluster-state new \</span><br><span class="line">--data-dir /data/etcd \</span><br><span class="line">--heartbeat-interval 1000 \</span><br><span class="line">--election-timeout 5000</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure></p>
