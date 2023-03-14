@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="多走走,多看看,多想想" />
+
+
+
+
+
+  <link rel="alternate" href="/rss.xml" title="饺子" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="搭建公司内部DNS服务器平常有很多时候可能会通过改hosts文件的方式来访问自定义的某个域名，但仅限于单机而已。如果能用dns解析的方式来统一管理那将会很方便。 搭建 DNS 服务器实验基于centos7实践。切换到root用户（以下所有操作都在root下执行）：  安装软件：  我们使用dns软件 bind9 系列安装包。 yum -y install bind* 安装后的部分日志: 12345">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DNS 服务器搭建">
+<meta property="og:url" content="http://chenzhijun.me/2018/06/09/self-dns-server-install/index.html">
+<meta property="og:site_name" content="饺子">
+<meta property="og:description" content="搭建公司内部DNS服务器平常有很多时候可能会通过改hosts文件的方式来访问自定义的某个域名，但仅限于单机而已。如果能用dns解析的方式来统一管理那将会很方便。 搭建 DNS 服务器实验基于centos7实践。切换到root用户（以下所有操作都在root下执行）：  安装软件：  我们使用dns软件 bind9 系列安装包。 yum -y install bind* 安装后的部分日志: 12345">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-06-09T07:24:01.000Z">
+<meta property="article:modified_time" content="2021-02-08T07:19:50.747Z">
+<meta property="article:author" content="陈志军">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '6303406395207190000',
+      author: 'chenzhijun'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzhijun.me/2018/06/09/self-dns-server-install/"/>
+
+
+
+
+
+  <title>DNS 服务器搭建 | 饺子</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-98129235-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?64f9df4705290b3eaeaf10145b170a11";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">饺子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">优于别人，并不高贵，真正的高贵应该是优于过去的自己</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2018/06/09/self-dns-server-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="饺子">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DNS 服务器搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-09T15:24:01+08:00">
+                2018-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/09/self-dns-server-install/" class="leancloud_visitors" data-flag-title="DNS 服务器搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="搭建公司内部DNS服务器"><a href="#搭建公司内部DNS服务器" class="headerlink" title="搭建公司内部DNS服务器"></a>搭建公司内部DNS服务器</h1><p>平常有很多时候可能会通过改hosts文件的方式来访问自定义的某个域名，但仅限于单机而已。如果能用dns解析的方式来统一管理那将会很方便。</p>
+<h2 id="搭建-DNS-服务器"><a href="#搭建-DNS-服务器" class="headerlink" title="搭建 DNS 服务器"></a>搭建 DNS 服务器</h2><p>实验基于centos7实践。切换到root用户（以下所有操作都在root下执行）：</p>
+<ol>
+<li>安装软件：</li>
+</ol>
+<p>我们使用dns软件 bind9 系列安装包。</p>
+<p><code>yum -y install bind*</code></p>
+<p>安装后的部分日志:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Installed:</span><br><span class="line">  bind.x86_64 32:9.9.4-61.el7               bind-chroot.x86_64 32:9.9.4-61.el7        bind-devel.x86_64 32:9.9.4-61.el7       </span><br><span class="line">  bind-dyndb-ldap.x86_64 0:11.1-4.el7       bind-libs.x86_64 32:9.9.4-61.el7          bind-lite-devel.x86_64 32:9.9.4-61.el7  </span><br><span class="line">  bind-pkcs11.x86_64 32:9.9.4-61.el7        bind-pkcs11-devel.x86_64 32:9.9.4-61.el7  bind-pkcs11-libs.x86_64 32:9.9.4-61.el7 </span><br><span class="line">  bind-pkcs11-utils.x86_64 32:9.9.4-61.el7  bind-sdb.x86_64 32:9.9.4-61.el7           bind-sdb-chroot.x86_64 32:9.9.4-61.el7  </span><br><span class="line">  bind-utils.x86_64 32:9.9.4-61.el7        </span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  postgresql-libs.x86_64 0:9.2.23-3.el7_4                                                                                      </span><br><span class="line"></span><br><span class="line">Updated:</span><br><span class="line">  bind-libs-lite.x86_64 32:9.9.4-61.el7                           bind-license.noarch 32:9.9.4-61.el7       </span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<ol start="2">
+<li>备份主配置文件：</li>
+</ol>
+<p>  <code>cp /etc/named.conf /etc/name.conf.bak.$(date &#39;+%Y-%m-%d&#39;)</code></p>
+<ol start="3">
+<li>修改主配置文件：<code>vi /etc/named.conf</code></li>
+</ol>
+<p>  修改两处为<code>any</code>：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">  options &#123;</span><br><span class="line">	listen-on port 53 &#123; any; &#125;; &#x2F;&#x2F; 修改此处为any</span><br><span class="line">	listen-on-v6 port 53 &#123; ::1; &#125;;</span><br><span class="line">	directory 	&quot;&#x2F;var&#x2F;named&quot;;</span><br><span class="line">	dump-file 	&quot;&#x2F;var&#x2F;named&#x2F;data&#x2F;cache_dump.db&quot;;</span><br><span class="line">	statistics-file &quot;&#x2F;var&#x2F;named&#x2F;data&#x2F;named_stats.txt&quot;;</span><br><span class="line">	memstatistics-file &quot;&#x2F;var&#x2F;named&#x2F;data&#x2F;named_mem_stats.txt&quot;;</span><br><span class="line">	allow-query     &#123; any; &#125;; &#x2F;&#x2F;修改此处为any</span><br><span class="line">	&#x2F;&#x2F;forwarders &#123;</span><br><span class="line">		</span><br><span class="line">	&#x2F;&#x2F;&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* </span><br><span class="line">	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.</span><br><span class="line">	 - If you are building a RECURSIVE (caching) DNS server, you need to enable </span><br><span class="line">	   recursion. </span><br><span class="line">	 - If your recursive DNS server has a public IP address, you MUST enable access </span><br><span class="line">	   control to limit queries to your legitimate users. Failing to do so will</span><br><span class="line">	   cause your server to become part of large scale DNS amplification </span><br><span class="line">	   attacks. Implementing BCP38 within your network would greatly</span><br><span class="line">	   reduce such attack surface </span><br><span class="line">	*&#x2F;</span><br><span class="line">	recursion yes;</span><br><span class="line"></span><br><span class="line">	dnssec-enable yes;</span><br><span class="line">	dnssec-validation no; &#x2F;&#x2F;修改这里ping通外网</span><br><span class="line"></span><br><span class="line">	&#x2F;* Path to ISC DLV key *&#x2F;</span><br><span class="line">	bindkeys-file &quot;&#x2F;etc&#x2F;named.iscdlv.key&quot;;</span><br><span class="line"></span><br><span class="line">	managed-keys-directory &quot;&#x2F;var&#x2F;named&#x2F;dynamic&quot;;</span><br><span class="line"></span><br><span class="line">	pid-file &quot;&#x2F;run&#x2F;named&#x2F;named.pid&quot;;</span><br><span class="line">	session-keyfile &quot;&#x2F;run&#x2F;named&#x2F;session.key&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">logging &#123;</span><br><span class="line">        channel default_debug &#123;</span><br><span class="line">                file &quot;data&#x2F;named.run&quot;;</span><br><span class="line">                severity dynamic;</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">zone &quot;.&quot; IN &#123;</span><br><span class="line">	type hint;</span><br><span class="line">	file &quot;named.ca&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">include &quot;&#x2F;etc&#x2F;named.rfc1912.zones&quot;;</span><br><span class="line">include &quot;&#x2F;etc&#x2F;named.root.key&quot;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="自定义域名配置"><a href="#自定义域名配置" class="headerlink" title="自定义域名配置"></a>自定义域名配置</h1><p>现在安装后基本的dns服务器之后，我们就开始自定义个域名来进行解析:</p>
+<p><code>vi named.rfc1912.zones</code></p>
+<p>增加一个需要解析的主域名比如：<code>cococzj.com</code>;(公网肯定没有这个域名)</p>
+<p>增加下面的文件到文件<code>named.rfc1912.zones</code>的最后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;cococzj.com&quot; IN &#123;</span><br><span class="line">        type master;</span><br><span class="line">        file &quot;cococzj.com.zone&quot;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="增加域名配置"><a href="#增加域名配置" class="headerlink" title="增加域名配置"></a>增加域名配置</h1><p>上面定义了<code>cococzj.com.zone</code>的文件，现在增加配置：<code>vi /var/named/cococzj.com.zone</code></p>
+<p>增加下面的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$TTL 86400</span><br><span class="line">@       IN SOA          ns.cococzj.com. root (</span><br><span class="line">                                        1       ; serial</span><br><span class="line">                                        1D      ; refresh</span><br><span class="line">                                        1H      ; retry</span><br><span class="line">                                        1W      ; expire</span><br><span class="line">                                        0 )     ; minimum  </span><br><span class="line"></span><br><span class="line">@       IN      NS      ns.cococzj.com.</span><br><span class="line">ns      IN      A       10.62.12.24</span><br><span class="line">www     IN      A       10.62.14.80</span><br><span class="line">ttt     IN      A       10.62.12.3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ns 对应的ip地址必须为dns服务器搭建的IP地址，也就是dns安装的机器的ip地址。</p>
+<p><code>ns      IN      A       10.62.12.24</code>  ==&gt; <code>ns      IN      A       your_dns_server_ip</code></p>
+<p><code>www     IN      A       10.62.14.80</code> 代表将<code>www.cococzj.com</code>解析到<code>10.62.14.80</code>服务器上。</p>
+<h1 id="修改zone文件权限"><a href="#修改zone文件权限" class="headerlink" title="修改zone文件权限"></a>修改zone文件权限</h1><p><code>chown .named /var/named/cococzj.com.zone</code></p>
+<h1 id="检查配置文件"><a href="#检查配置文件" class="headerlink" title="检查配置文件"></a>检查配置文件</h1><p><code>named-checkconf</code> 检查主配置文件是否配置正确，没有输出表明是正确的:</p>
+<p><code>named-checkzone</code> 检查zone文件配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">named-checkzone &quot;cococzj.com&quot; /var/named/cococzj.com.zone</span><br><span class="line"></span><br><span class="line">result:</span><br><span class="line">zone cococzj.com/IN: loaded serial 1</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<h1 id="重启服务"><a href="#重启服务" class="headerlink" title="重启服务"></a>重启服务</h1><p>可以先ping一下服务域名再重启：<br><code>systemctl restart named.service</code></p>
+<h1 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h1><ol>
+<li>先ping试一下：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-dev-yw-1 etc]# ping www.cococzj.com</span><br><span class="line">ping: www.cococzj.com: Name or service not known</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>增加dns服务地址；<code>vi /etc/resolv.conf</code>，在文件中新建：</li>
+</ol>
+<p><code>nameserver 10.62.12.2</code></p>
+<p>再一次ping：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-dev-yw-1 etc]# vi /etc/resolv.conf</span><br><span class="line">[root@k8s-dev-yw-1 etc]# ping www.cococzj.com</span><br><span class="line">PING www.cococzj.com (10.62.14.80) 56(84) bytes of data.</span><br><span class="line">64 bytes from 10.62.14.80 (10.62.14.80): icmp_seq=1 ttl=63 time=0.501 ms</span><br><span class="line">64 bytes from 10.62.14.80 (10.62.14.80): icmp_seq=2 ttl=63 time=0.466 ms</span><br><span class="line">64 bytes from 10.62.14.80 (10.62.14.80): icmp_seq=3 ttl=63 time=0.509 ms</span><br><span class="line">^C</span><br><span class="line">--- www.cococzj.com ping statistics ---</span><br><span class="line">3 packets transmitted, 3 received, 0% packet loss, time 2001ms</span><br><span class="line">rtt min/avg/max/mdev = 0.466/0.492/0.509/0.018 ms</span><br></pre></td></tr></table></figure>
+
+<h1 id="新增一个域名"><a href="#新增一个域名" class="headerlink" title="新增一个域名"></a>新增一个域名</h1><ol>
+<li><code>vi named.rfc1912.zones</code>在文件中新增：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;your_website.com&quot; IN &#123;</span><br><span class="line">        type master;</span><br><span class="line">        file &quot;your_website.com.zone&quot;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>复制一份之前配置好的配置<code>cp /var/named/cococzj.com.zone /var/named/your_website.com.zone</code></p>
+</li>
+<li><p>编辑配置文件 <code>vi /var/named/your_website.com.zone</code>将<code>cococzj</code>改为<code>your_website</code>，然后修改相应的ip和</p>
+</li>
+<li><p>检查配置文件：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-dev-yw-1 etc]# named-checkzone &quot;cmrrancher.com&quot; &#x2F;var&#x2F;named&#x2F;chenzhijunrancher.com.zone</span><br><span class="line">zone cmrrancher.com&#x2F;IN: loaded serial 1</span><br><span class="line">OK</span><br><span class="line">[root@k8s-dev-yw-1 etc]# named-checkconf</span><br><span class="line">[root@k8s-dev-yw-1 etc]# </span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>重载服务<br><code>systemctl reload named.service</code></p>
+</li>
+<li><p>测试：<code>ping www.chenzhijunrancher.com</code></p>
+</li>
+</ol>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line">[root@qianyi-monitor-3 etc]# yum install -y bind*</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">http:&#x2F;&#x2F;10.0.0.5&#x2F;centos&#x2F;7&#x2F;cloud&#x2F;x86_64&#x2F;openstack-newton&#x2F;repodata&#x2F;repomd.xml: [Errno 14] HTTP Error 404 - Not Found</span><br><span class="line">Trying other mirror.</span><br><span class="line">To address this issue please refer to the below knowledge base article </span><br><span class="line"></span><br><span class="line">https:&#x2F;&#x2F;access.redhat.com&#x2F;articles&#x2F;1320623</span><br><span class="line"></span><br><span class="line">If above article doesn&#39;t help to resolve this issue please create a bug on https:&#x2F;&#x2F;bugs.centos.org&#x2F;</span><br><span class="line"></span><br><span class="line">http:&#x2F;&#x2F;10.0.0.5&#x2F;centos&#x2F;7&#x2F;docker&#x2F;x86_64&#x2F;repodata&#x2F;repomd.xml: [Errno 14] HTTP Error 404 - Not Found</span><br><span class="line">Trying other mirror.</span><br><span class="line">dockerrepo                                                                                                                                          | 2.9 kB  00:00:00     </span><br><span class="line">http:&#x2F;&#x2F;10.0.0.5&#x2F;centos&#x2F;7&#x2F;latest&#x2F;x86_64&#x2F;repodata&#x2F;repomd.xml: [Errno 14] HTTP Error 404 - Not Found</span><br><span class="line">Trying other mirror.</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">Resolving Dependencies</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package bind.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">--&gt; Processing Dependency: libGeoIP.so.1()(64bit) for package: 32:bind-9.9.4-61.el7.x86_64</span><br><span class="line">---&gt; Package bind-chroot.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-devel.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-dyndb-ldap.x86_64 0:11.1-4.el7 will be installed</span><br><span class="line">---&gt; Package bind-libs.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-libs-lite.x86_64 32:9.9.4-29.el7 will be updated</span><br><span class="line">---&gt; Package bind-libs-lite.x86_64 32:9.9.4-61.el7 will be an update</span><br><span class="line">---&gt; Package bind-license.noarch 32:9.9.4-29.el7 will be updated</span><br><span class="line">---&gt; Package bind-license.noarch 32:9.9.4-61.el7 will be an update</span><br><span class="line">---&gt; Package bind-lite-devel.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-pkcs11.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-pkcs11-devel.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-pkcs11-libs.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-pkcs11-utils.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-sdb.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">--&gt; Processing Dependency: libpq.so.5()(64bit) for package: 32:bind-sdb-9.9.4-61.el7.x86_64</span><br><span class="line">---&gt; Package bind-sdb-chroot.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">---&gt; Package bind-utils.x86_64 32:9.9.4-61.el7 will be installed</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package GeoIP.x86_64 0:1.5.0-11.el7 will be installed</span><br><span class="line">---&gt; Package postgresql-libs.x86_64 0:9.2.23-3.el7_4 will be installed</span><br><span class="line">--&gt; Finished Dependency Resolution</span><br><span class="line"></span><br><span class="line">Dependencies Resolved</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"> Package                                        Arch                                Version                                        Repository                         Size</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Installing:</span><br><span class="line"> bind                                           x86_64                              32:9.9.4-61.el7                                base                              1.8 M</span><br><span class="line"> bind-chroot                                    x86_64                              32:9.9.4-61.el7                                base                               87 k</span><br><span class="line"> bind-devel                                     x86_64                              32:9.9.4-61.el7                                base                              399 k</span><br><span class="line"> bind-dyndb-ldap                                x86_64                              11.1-4.el7                                     base                              122 k</span><br><span class="line"> bind-libs                                      x86_64                              32:9.9.4-61.el7                                base                              1.0 M</span><br><span class="line"> bind-lite-devel                                x86_64                              32:9.9.4-61.el7                                base                              308 k</span><br><span class="line"> bind-pkcs11                                    x86_64                              32:9.9.4-61.el7                                base                              298 k</span><br><span class="line"> bind-pkcs11-devel                              x86_64                              32:9.9.4-61.el7                                base                              105 k</span><br><span class="line"> bind-pkcs11-libs                               x86_64                              32:9.9.4-61.el7                                base                              1.1 M</span><br><span class="line"> bind-pkcs11-utils                              x86_64                              32:9.9.4-61.el7                                base                              198 k</span><br><span class="line"> bind-sdb                                       x86_64                              32:9.9.4-61.el7                                base                              353 k</span><br><span class="line"> bind-sdb-chroot                                x86_64                              32:9.9.4-61.el7                                base                               87 k</span><br><span class="line"> bind-utils                                     x86_64                              32:9.9.4-61.el7                                base                              204 k</span><br><span class="line">Updating:</span><br><span class="line"> bind-libs-lite                                 x86_64                              32:9.9.4-61.el7                                base                              734 k</span><br><span class="line"> bind-license                                   noarch                              32:9.9.4-61.el7                                base                               85 k</span><br><span class="line">Installing for dependencies:</span><br><span class="line"> GeoIP                                          x86_64                              1.5.0-11.el7                                   base                              1.1 M</span><br><span class="line"> postgresql-libs                                x86_64                              9.2.23-3.el7_4                                 base                              234 k</span><br><span class="line"></span><br><span class="line">Transaction Summary</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">Install  13 Packages (+2 Dependent packages)</span><br><span class="line">Upgrade   2 Packages</span><br><span class="line"></span><br><span class="line">Total download size: 8.1 M</span><br><span class="line">Downloading packages:</span><br><span class="line">Delta RPMs disabled because &#x2F;usr&#x2F;bin&#x2F;applydeltarpm not installed.</span><br><span class="line">(1&#x2F;17): bind-9.9.4-61.el7.x86_64.rpm                                                                                                                | 1.8 MB  00:00:00     </span><br><span class="line">(2&#x2F;17): GeoIP-1.5.0-11.el7.x86_64.rpm                                                                                                               | 1.1 MB  00:00:00     </span><br><span class="line">(3&#x2F;17): bind-chroot-9.9.4-61.el7.x86_64.rpm                                                                                                         |  87 kB  00:00:00     </span><br><span class="line">(4&#x2F;17): bind-devel-9.9.4-61.el7.x86_64.rpm                                                                                                          | 399 kB  00:00:00     </span><br><span class="line">(5&#x2F;17): bind-dyndb-ldap-11.1-4.el7.x86_64.rpm                                                                                                       | 122 kB  00:00:00     </span><br><span class="line">(6&#x2F;17): bind-libs-lite-9.9.4-61.el7.x86_64.rpm                                                                                                      | 734 kB  00:00:00     </span><br><span class="line">(7&#x2F;17): bind-libs-9.9.4-61.el7.x86_64.rpm                                                                                                           | 1.0 MB  00:00:00     </span><br><span class="line">(8&#x2F;17): bind-license-9.9.4-61.el7.noarch.rpm                                                                                                        |  85 kB  00:00:00     </span><br><span class="line">(9&#x2F;17): bind-lite-devel-9.9.4-61.el7.x86_64.rpm                                                                                                     | 308 kB  00:00:00     </span><br><span class="line">(10&#x2F;17): bind-pkcs11-9.9.4-61.el7.x86_64.rpm                                                                                                        | 298 kB  00:00:00     </span><br><span class="line">(11&#x2F;17): bind-pkcs11-devel-9.9.4-61.el7.x86_64.rpm                                                                                                  | 105 kB  00:00:00     </span><br><span class="line">(12&#x2F;17): bind-pkcs11-utils-9.9.4-61.el7.x86_64.rpm                                                                                                  | 198 kB  00:00:00     </span><br><span class="line">(13&#x2F;17): bind-pkcs11-libs-9.9.4-61.el7.x86_64.rpm                                                                                                   | 1.1 MB  00:00:00     </span><br><span class="line">(14&#x2F;17): bind-sdb-9.9.4-61.el7.x86_64.rpm                                                                                                           | 353 kB  00:00:00     </span><br><span class="line">(15&#x2F;17): bind-sdb-chroot-9.9.4-61.el7.x86_64.rpm                                                                                                    |  87 kB  00:00:00     </span><br><span class="line">(16&#x2F;17): bind-utils-9.9.4-61.el7.x86_64.rpm                                                                                                         | 204 kB  00:00:00     </span><br><span class="line">(17&#x2F;17): postgresql-libs-9.2.23-3.el7_4.x86_64.rpm                                                                                                  | 234 kB  00:00:00     </span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Total                                                                                                                                       12 MB&#x2F;s | 8.1 MB  00:00:00     </span><br><span class="line">Running transaction check</span><br><span class="line">Running transaction test</span><br><span class="line">Transaction test succeeded</span><br><span class="line">Running transaction</span><br><span class="line">  Installing : GeoIP-1.5.0-11.el7.x86_64                                                                                                                              1&#x2F;19 </span><br><span class="line">  Updating   : 32:bind-license-9.9.4-61.el7.noarch                                                                                                                    2&#x2F;19 </span><br><span class="line">  Installing : 32:bind-libs-9.9.4-61.el7.x86_64                                                                                                                       3&#x2F;19 </span><br><span class="line">  Installing : 32:bind-9.9.4-61.el7.x86_64                                                                                                                            4&#x2F;19 </span><br><span class="line">  Installing : 32:bind-pkcs11-libs-9.9.4-61.el7.x86_64                                                                                                                5&#x2F;19 </span><br><span class="line">  Updating   : 32:bind-libs-lite-9.9.4-61.el7.x86_64                                                                                                                  6&#x2F;19 </span><br><span class="line">  Installing : postgresql-libs-9.2.23-3.el7_4.x86_64                                                                                                                  7&#x2F;19 </span><br><span class="line">  Installing : 32:bind-sdb-9.9.4-61.el7.x86_64                                                                                                                        8&#x2F;19 </span><br><span class="line">  Installing : 32:bind-sdb-chroot-9.9.4-61.el7.x86_64                                                                                                                 9&#x2F;19 </span><br><span class="line">  Installing : 32:bind-lite-devel-9.9.4-61.el7.x86_64                                                                                                                10&#x2F;19 </span><br><span class="line">  Installing : 32:bind-pkcs11-devel-9.9.4-61.el7.x86_64                                                                                                              11&#x2F;19 </span><br><span class="line">  Installing : 32:bind-pkcs11-9.9.4-61.el7.x86_64                                                                                                                    12&#x2F;19 </span><br><span class="line">  Installing : 32:bind-pkcs11-utils-9.9.4-61.el7.x86_64                                                                                                              13&#x2F;19 </span><br><span class="line">  Installing : 32:bind-chroot-9.9.4-61.el7.x86_64                                                                                                                    14&#x2F;19 </span><br><span class="line">  Installing : bind-dyndb-ldap-11.1-4.el7.x86_64                                                                                                                     15&#x2F;19 </span><br><span class="line">Enabling SELinux boolean named_write_master_zones</span><br><span class="line">setsebool:  SELinux is disabled.</span><br><span class="line">  Installing : 32:bind-devel-9.9.4-61.el7.x86_64                                                                                                                     16&#x2F;19 </span><br><span class="line">  Installing : 32:bind-utils-9.9.4-61.el7.x86_64                                                                                                                     17&#x2F;19 </span><br><span class="line">  Cleanup    : 32:bind-libs-lite-9.9.4-29.el7.x86_64                                                                                                                 18&#x2F;19 </span><br><span class="line">  Cleanup    : 32:bind-license-9.9.4-29.el7.noarch                                                                                                                   19&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-pkcs11-devel-9.9.4-61.el7.x86_64                                                                                                               1&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-pkcs11-9.9.4-61.el7.x86_64                                                                                                                     2&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-chroot-9.9.4-61.el7.x86_64                                                                                                                     3&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-sdb-9.9.4-61.el7.x86_64                                                                                                                        4&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-9.9.4-61.el7.x86_64                                                                                                                            5&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-devel-9.9.4-61.el7.x86_64                                                                                                                      6&#x2F;19 </span><br><span class="line">  Verifying  : GeoIP-1.5.0-11.el7.x86_64                                                                                                                              7&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-pkcs11-libs-9.9.4-61.el7.x86_64                                                                                                                8&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-lite-devel-9.9.4-61.el7.x86_64                                                                                                                 9&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-libs-9.9.4-61.el7.x86_64                                                                                                                      10&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-pkcs11-utils-9.9.4-61.el7.x86_64                                                                                                              11&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-libs-lite-9.9.4-61.el7.x86_64                                                                                                                 12&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-utils-9.9.4-61.el7.x86_64                                                                                                                     13&#x2F;19 </span><br><span class="line">  Verifying  : bind-dyndb-ldap-11.1-4.el7.x86_64                                                                                                                     14&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-license-9.9.4-61.el7.noarch                                                                                                                   15&#x2F;19 </span><br><span class="line">  Verifying  : postgresql-libs-9.2.23-3.el7_4.x86_64                                                                                                                 16&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-sdb-chroot-9.9.4-61.el7.x86_64                                                                                                                17&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-libs-lite-9.9.4-29.el7.x86_64                                                                                                                 18&#x2F;19 </span><br><span class="line">  Verifying  : 32:bind-license-9.9.4-29.el7.noarch                                                                                                                   19&#x2F;19 </span><br><span class="line"></span><br><span class="line">Installed:</span><br><span class="line">  bind.x86_64 32:9.9.4-61.el7                bind-chroot.x86_64 32:9.9.4-61.el7          bind-devel.x86_64 32:9.9.4-61.el7     bind-dyndb-ldap.x86_64 0:11.1-4.el7        </span><br><span class="line">  bind-libs.x86_64 32:9.9.4-61.el7           bind-lite-devel.x86_64 32:9.9.4-61.el7      bind-pkcs11.x86_64 32:9.9.4-61.el7    bind-pkcs11-devel.x86_64 32:9.9.4-61.el7   </span><br><span class="line">  bind-pkcs11-libs.x86_64 32:9.9.4-61.el7    bind-pkcs11-utils.x86_64 32:9.9.4-61.el7    bind-sdb.x86_64 32:9.9.4-61.el7       bind-sdb-chroot.x86_64 32:9.9.4-61.el7     </span><br><span class="line">  bind-utils.x86_64 32:9.9.4-61.el7         </span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  GeoIP.x86_64 0:1.5.0-11.el7                                                    postgresql-libs.x86_64 0:9.2.23-3.el7_4                                                   </span><br><span class="line"></span><br><span class="line">Updated:</span><br><span class="line">  bind-libs-lite.x86_64 32:9.9.4-61.el7                                                 bind-license.noarch 32:9.9.4-61.el7                                                </span><br><span class="line"></span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
+
+<p>两个重要的配置文件：</p>
+<p>/etc/named.rfc1912.zones ： 定义域</p>
+<p>/var/named ：域的详细配置</p>
+<p>之后记得要将文件的权限复制给named这个用户和组。</p>
+<p>上面的配置可以连接到本地的定义的域名，但是无法ping通百度等。所以一般需要再配置文件中增加<code>forwarders</code>，当本地没有找到定义的域之后会在<code>forwarders</code>中定义的继续查找。打开forwarders之后记得修改<code>dnssec-validation no;</code>这样之后再ping 外网的域名就可以了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+        <div>
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/06/09/self-dns-server-install/">DNS 服务器搭建</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+  <p><span>发布时间:</span>2018-06-09 15:24:01</p>
+ <!-- <p><span>最后更新:</span>2021-02-08 15:19:50</p> -->
+  <p><span>原始链接:</span><a href="/2018/06/09/self-dns-server-install/" title="DNS 服务器搭建">http://chenzhijun.me/2018/06/09/self-dns-server-install/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2018/06/09/self-dns-server-install/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        <div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>鼓励一下</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt=" WeChat Pay"/>
+        <p>微信赞助</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/reward/alipay.jpg" alt=" Alipay"/>
+        <p>支付宝赞助</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/22/problem-cmrh-2018522/" rel="next" title="最近遇到的小问题总结-2018522">
+                <i class="fa fa-chevron-left"></i> 最近遇到的小问题总结-2018522
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/09/prometheus-storage-influxdb/" rel="prev" title="prometheus 使用influxdb 做永久存储">
+                prometheus 使用influxdb 做永久存储 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">175</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/rss.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzhijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://git.oschina.net/chenzhijun" target="_blank" title="GitEE">
+                  
+                    <i class="fa fa-fw fa-git"></i>
+                  
+                    
+                      GitEE
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3075356421" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:chenzhijun319@163.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐阅读
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://chenzhijun.github.com/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xkupc.github.io/" title="许凯的个人站" target="_blank">许凯的个人站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%85%AC%E5%8F%B8%E5%86%85%E9%83%A8DNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">搭建公司内部DNS服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA-DNS-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">搭建 DNS 服务器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">自定义域名配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">增加域名配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9zone%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-number">4.</span> <span class="nav-text">修改zone文件权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">检查配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">6.</span> <span class="nav-text">重启服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">测试：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E4%B8%80%E4%B8%AA%E5%9F%9F%E5%90%8D"><span class="nav-number">8.</span> <span class="nav-text">新增一个域名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">8.0.1.</span> <span class="nav-text">附录</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈志军</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+   
+   
+   
+   
+   <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+   <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+   
+       <script type="text/javascript">
+           var gitment = new Gitment({
+               id: window.location.pathname, 
+               owner: 'chenzhijun',
+               repo: 'chenzhijun.github.com',
+               oauth: {
+                   client_id: '2b0cd3a2d7d53cde1ef7',
+                   client_secret: '2eb10e4f6ca8c0996b7bebf8e754ce5039e217ed',
+               }});
+           gitment.render('gitment-container');
+       </script>
+   
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3Ipv4LCq5xwYkaKUFvu27F0x-gzGzoHsz", "fAbLTc2xazR7sRtkfvQ7uIiO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
