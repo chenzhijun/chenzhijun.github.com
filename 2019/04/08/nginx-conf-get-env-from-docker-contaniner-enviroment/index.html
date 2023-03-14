@@ -84,7 +84,7 @@
 
 
 
-  <link rel="alternate" href="/rss.xml" title="饺子" type="application/atom+xml" />
+  <link rel="alternate" href="/rss.xml" title="陈志军" type="application/atom+xml" />
 
 
 
@@ -99,12 +99,12 @@
 <meta name="description" content="nginx从docker容器的环境变量中获取值这篇接上一篇vuejs 从拷项目到开发上线 Docker 部署另外一个问题就是如何制作成镜像了？可以看到我们在nginx.conf中有api服务的地址，这个地址可能在不同的环境(di,sit,prd)都不一样，那能否通过容器的env来改变nginx.conf中的值呢？ 不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李temp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx从docker容器的环境变量中获取值">
-<meta property="og:url" content="http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/index.html">
-<meta property="og:site_name" content="饺子">
+<meta property="og:url" content="http://chenzhijun.top/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/index.html">
+<meta property="og:site_name" content="陈志军">
 <meta property="og:description" content="nginx从docker容器的环境变量中获取值这篇接上一篇vuejs 从拷项目到开发上线 Docker 部署另外一个问题就是如何制作成镜像了？可以看到我们在nginx.conf中有api服务的地址，这个地址可能在不同的环境(di,sit,prd)都不一样，那能否通过容器的env来改变nginx.conf中的值呢？ 不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李temp">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-04-08T14:56:33.000Z">
-<meta property="article:modified_time" content="2020-05-12T04:56:03.895Z">
+<meta property="article:modified_time" content="2023-03-14T01:57:36.084Z">
 <meta property="article:author" content="陈志军">
 <meta name="twitter:card" content="summary">
 
@@ -135,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/"/>
+  <link rel="canonical" href="http://chenzhijun.top/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/"/>
 
 
 
 
 
-  <title>nginx从docker容器的环境变量中获取值 | 饺子</title>
+  <title>nginx从docker容器的环境变量中获取值 | 陈志军</title>
   
 
 
@@ -190,12 +190,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">饺子</span>
+        <span class="site-title">陈志军</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">优于别人，并不高贵，真正的高贵应该是优于过去的自己</p>
+        <p class="site-subtitle">物来顺应，未来不迎，当时不杂，既过不恋</p>
       
   </div>
 
@@ -321,7 +321,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -330,7 +330,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
+      <meta itemprop="name" content="陈志军">
     </span>
 
     
@@ -404,7 +404,7 @@
       
 
       
-        <h1 id="nginx从docker容器的环境变量中获取值"><a href="#nginx从docker容器的环境变量中获取值" class="headerlink" title="nginx从docker容器的环境变量中获取值"></a>nginx从docker容器的环境变量中获取值</h1><p>这篇接上一篇<a href="http://chenzhijun.me/2019/04/08/vuejs-starter/">vuejs 从拷项目到开发上线</a></p>
+        <h1 id="nginx从docker容器的环境变量中获取值"><a href="#nginx从docker容器的环境变量中获取值" class="headerlink" title="nginx从docker容器的环境变量中获取值"></a>nginx从docker容器的环境变量中获取值</h1><p>这篇接上一篇<a href="http://chenzhijun.top/2019/04/08/vuejs-starter/">vuejs 从拷项目到开发上线</a></p>
 <h2 id="Docker-部署"><a href="#Docker-部署" class="headerlink" title="Docker 部署"></a>Docker 部署</h2><p>另外一个问题就是如何制作成镜像了？可以看到我们在nginx.conf中有api服务的地址，这个地址可能在不同的环境(di,sit,prd)都不一样，那能否通过容器的env来改变nginx.conf中的值呢？</p>
 <p>不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李template的方式，来生成conf文件话不多说，直接上代码，先创建一个<code>nginx.conf.template</code>的文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80 default_server;</span><br><span class="line">    listen       [::]:80 default_server;</span><br><span class="line">    server_name  _;</span><br><span class="line">    root         &#x2F;app&#x2F;html;</span><br><span class="line"></span><br><span class="line">    # Load configuration files for the default server block.</span><br><span class="line">    include &#x2F;etc&#x2F;nginx&#x2F;default.d&#x2F;*.conf;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location &#x2F;m-web&#x2F; &#123;</span><br><span class="line">        root &#x2F;app&#x2F;html&#x2F;dist;</span><br><span class="line">    &#125;</span><br><span class="line">    location &#x2F;m-web&#x2F;m-api&#x2F; &#123;</span><br><span class="line">        proxy_pass http:&#x2F;&#x2F;$&#123;M_API_SITE&#125;&#x2F;m-api&#x2F;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 404 &#x2F;404.html;</span><br><span class="line">        location &#x3D; &#x2F;40x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 500 502 503 504 &#x2F;50x.html;</span><br><span class="line">        location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -433,9 +433,9 @@
   <p><span>本文标题:</span><a href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/">nginx从docker容器的环境变量中获取值</a></p>
   <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
   <p><span>发布时间:</span>2019-04-08 22:56:33</p>
- <!-- <p><span>最后更新:</span>2020-05-12 12:56:03</p> -->
-  <p><span>原始链接:</span><a href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" title="nginx从docker容器的环境变量中获取值">http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/"  aria-label="复制成功！"></i></span>
+ <!-- <p><span>最后更新:</span>2023-03-14 09:57:36</p> -->
+  <p><span>原始链接:</span><a href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" title="nginx从docker容器的环境变量中获取值">http://chenzhijun.top/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.top/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -658,28 +658,6 @@
                 </a>
               </span>
             
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/3075356421" target="_blank" title="Weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                    
-                      Weibo
-                    
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="mailto:chenzhijun319@163.com" target="_blank" title="E-Mail">
-                  
-                    <i class="fa fa-fw fa-envelope"></i>
-                  
-                    
-                      E-Mail
-                    
-                </a>
-              </span>
-            
           
         </div>
 
@@ -696,11 +674,7 @@
             <ul class="links-of-blogroll-list">
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://chenzhijun.github.com/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://xkupc.github.io/" title="许凯的个人站" target="_blank">许凯的个人站</a>
+                  <a href="http://chenzhijun.top/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
                 </li>
               
             </ul>

@@ -84,7 +84,7 @@
 
 
 
-  <link rel="alternate" href="/rss.xml" title="饺子" type="application/atom+xml" />
+  <link rel="alternate" href="/rss.xml" title="陈志军" type="application/atom+xml" />
 
 
 
@@ -99,12 +99,12 @@
 <meta name="description" content="vuejs 从拷项目到开发上线最近组里缺人手，我们都是一堆后端，却没有一个前端。所以你看到了一堆的后台接口，但就是没有一个页面。囧~本着求人不如求己，活人不能被尿憋死不是~所以准备自己开始干。 前端选型首先想了一下，我们应该怎么开发前端了？使用thymeleaf这种貌似是最合适的，毕竟类似于以前用jsp，对不对~当然有点不一样。但后来想想，都前后端分离了，以后我们要真的做牛逼了。要是给我们分配个前">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vuejs 从拷项目到开发上线">
-<meta property="og:url" content="http://chenzhijun.me/2019/04/08/vuejs-starter/index.html">
-<meta property="og:site_name" content="饺子">
+<meta property="og:url" content="http://chenzhijun.top/2019/04/08/vuejs-starter/index.html">
+<meta property="og:site_name" content="陈志军">
 <meta property="og:description" content="vuejs 从拷项目到开发上线最近组里缺人手，我们都是一堆后端，却没有一个前端。所以你看到了一堆的后台接口，但就是没有一个页面。囧~本着求人不如求己，活人不能被尿憋死不是~所以准备自己开始干。 前端选型首先想了一下，我们应该怎么开发前端了？使用thymeleaf这种貌似是最合适的，毕竟类似于以前用jsp，对不对~当然有点不一样。但后来想想，都前后端分离了，以后我们要真的做牛逼了。要是给我们分配个前">
 <meta property="og:locale">
 <meta property="article:published_time" content="2019-04-08T13:56:22.000Z">
-<meta property="article:modified_time" content="2020-05-12T04:56:03.913Z">
+<meta property="article:modified_time" content="2023-03-14T01:57:36.085Z">
 <meta property="article:author" content="陈志军">
 <meta property="article:tag" content="vuejs">
 <meta name="twitter:card" content="summary">
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://chenzhijun.me/2019/04/08/vuejs-starter/"/>
+  <link rel="canonical" href="http://chenzhijun.top/2019/04/08/vuejs-starter/"/>
 
 
 
 
 
-  <title>vuejs 从拷项目到开发上线 | 饺子</title>
+  <title>vuejs 从拷项目到开发上线 | 陈志军</title>
   
 
 
@@ -191,12 +191,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">饺子</span>
+        <span class="site-title">陈志军</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">优于别人，并不高贵，真正的高贵应该是优于过去的自己</p>
+        <p class="site-subtitle">物来顺应，未来不迎，当时不杂，既过不恋</p>
       
   </div>
 
@@ -322,7 +322,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.me/2019/04/08/vuejs-starter/">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/04/08/vuejs-starter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -331,7 +331,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="饺子">
+      <meta itemprop="name" content="陈志军">
     </span>
 
     
@@ -451,7 +451,7 @@
 <li>step3，修改nginx配置</li>
 </ol>
 <p>目录确定后，我们就需要修改nginx的配置了。如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">       listen       127.0.0.1:6000;</span><br><span class="line">       #server_name  localhost;</span><br><span class="line"></span><br><span class="line">       #charset koi8-r;</span><br><span class="line"></span><br><span class="line">       #access_log  logs&#x2F;host.access.log  main;</span><br><span class="line"></span><br><span class="line">       location &#x2F;m-web&#x2F; &#123;</span><br><span class="line">          root   &#x2F;app&#x2F;html&#x2F;dist;</span><br><span class="line">          index  index.html index.htm;</span><br><span class="line">       &#125;</span><br><span class="line">       location &#x2F;m-api &#123;</span><br><span class="line">           proxy_pass http:&#x2F;&#x2F;localhost:8080&#x2F;m-api;</span><br><span class="line">           #proxy_pass http:&#x2F;&#x2F;api-m.chenzhijun.me&#x2F;m-api;</span><br><span class="line">       &#125;</span><br><span class="line">       #error_page  404              &#x2F;404.html;</span><br><span class="line"></span><br><span class="line">       # redirect server error pages to the static page &#x2F;50x.html</span><br><span class="line">       #</span><br><span class="line">       error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">       location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">           root   html;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">       listen       127.0.0.1:6000;</span><br><span class="line">       #server_name  localhost;</span><br><span class="line"></span><br><span class="line">       #charset koi8-r;</span><br><span class="line"></span><br><span class="line">       #access_log  logs&#x2F;host.access.log  main;</span><br><span class="line"></span><br><span class="line">       location &#x2F;m-web&#x2F; &#123;</span><br><span class="line">          root   &#x2F;app&#x2F;html&#x2F;dist;</span><br><span class="line">          index  index.html index.htm;</span><br><span class="line">       &#125;</span><br><span class="line">       location &#x2F;m-api &#123;</span><br><span class="line">           proxy_pass http:&#x2F;&#x2F;localhost:8080&#x2F;m-api;</span><br><span class="line">           #proxy_pass http:&#x2F;&#x2F;api-m.chenzhijun.top&#x2F;m-api;</span><br><span class="line">       &#125;</span><br><span class="line">       #error_page  404              &#x2F;404.html;</span><br><span class="line"></span><br><span class="line">       # redirect server error pages to the static page &#x2F;50x.html</span><br><span class="line">       #</span><br><span class="line">       error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">       location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">           root   html;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后启动 nginx 就好了。</p>
 
@@ -474,9 +474,9 @@
   <p><span>本文标题:</span><a href="/2019/04/08/vuejs-starter/">vuejs 从拷项目到开发上线</a></p>
   <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
   <p><span>发布时间:</span>2019-04-08 21:56:22</p>
- <!-- <p><span>最后更新:</span>2020-05-12 12:56:03</p> -->
-  <p><span>原始链接:</span><a href="/2019/04/08/vuejs-starter/" title="vuejs 从拷项目到开发上线">http://chenzhijun.me/2019/04/08/vuejs-starter/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.me/2019/04/08/vuejs-starter/"  aria-label="复制成功！"></i></span>
+ <!-- <p><span>最后更新:</span>2023-03-14 09:57:36</p> -->
+  <p><span>原始链接:</span><a href="/2019/04/08/vuejs-starter/" title="vuejs 从拷项目到开发上线">http://chenzhijun.top/2019/04/08/vuejs-starter/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.top/2019/04/08/vuejs-starter/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -705,28 +705,6 @@
                 </a>
               </span>
             
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/3075356421" target="_blank" title="Weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                    
-                      Weibo
-                    
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="mailto:chenzhijun319@163.com" target="_blank" title="E-Mail">
-                  
-                    <i class="fa fa-fw fa-envelope"></i>
-                  
-                    
-                      E-Mail
-                    
-                </a>
-              </span>
-            
           
         </div>
 
@@ -743,11 +721,7 @@
             <ul class="links-of-blogroll-list">
               
                 <li class="links-of-blogroll-item">
-                  <a href="http://chenzhijun.github.com/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://xkupc.github.io/" title="许凯的个人站" target="_blank">许凯的个人站</a>
+                  <a href="http://chenzhijun.top/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
                 </li>
               
             </ul>
