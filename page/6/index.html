@@ -321,6 +321,1274 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/05/08/core-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/08/core-file/" itemprop="url">修改 Linux Core 文件目录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T20:00:11+08:00">
+                2019-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/08/core-file/" class="leancloud_visitors" data-flag-title="修改 Linux Core 文件目录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Linux-Core-文件"><a href="#Linux-Core-文件" class="headerlink" title="Linux Core 文件"></a>Linux Core 文件</h1><p>一次线上的经历，一台现在主机突然磁盘根目录占到98%。我们其实是挂了数据盘的，不知道为啥突然会<br>在根目录下磁盘空空间不足报警。上到主机一看，原来是某个应用打了dump了个core文件。文件如：core.xxxx</p>
+<p>用gdb调试了一下：</p>
+<p><code>gdb core.14321</code></p>
+<p>显示出是哪个进程dump的core文件。</p>
+<p>之后我们就开始分析core文件怎么避免让根目录占满。</p>
+<p>首先用<code>ulimit -a</code>查看到core文件的大小。然后用<code>ulimit -c</code>设置大小，单位是block，<br>1block=512bytes</p>
+<p>然后修改core文件到数据盘的目录：</p>
+<p><code>echo /data/coredump/core.%e.%p&gt; /proc/sys/kernel/core_pattern</code></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/05/05/restful-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/05/restful-api/" itemprop="url">Restful 接口返回响应码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-05T21:10:41+08:00">
+                2019-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/05/restful-api/" class="leancloud_visitors" data-flag-title="Restful 接口返回响应码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Restful-接口返回响应码"><a href="#Restful-接口返回响应码" class="headerlink" title="Restful 接口返回响应码"></a>Restful 接口返回响应码</h1><p>最近用restful做接口，突然想想返回状态码该怎么返回给客户端或者调用者。毕竟那么多的状态码。</p>
+<p>后来找到一个状态码解释:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1xx：信息响应类，表示接收到请求并且继续处理</span><br><span class="line">2xx：处理成功响应类，表示动作被成功接收、理解和接受</span><br><span class="line">3xx：重定向响应类，为了完成指定的动作，必须接受进一步处理</span><br><span class="line">4xx：客户端错误，客户请求包含语法错误或者是不能正确执行</span><br><span class="line">5xx：服务端错误，服务器不能正确执行一个正确的请求</span><br><span class="line"></span><br><span class="line">100——客户必须继续发出请求</span><br><span class="line">101——客户要求服务器根据请求转换HTTP协议版本</span><br><span class="line"></span><br><span class="line">200——交易成功</span><br><span class="line">201——提示知道新文件的URL</span><br><span class="line">202——接受和处理、但处理未完成</span><br><span class="line">203——返回信息不确定或不完整</span><br><span class="line">204——请求收到，但返回信息为空</span><br><span class="line">205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件</span><br><span class="line">206——服务器已经完成了部分用户的GET请求</span><br><span class="line"></span><br><span class="line">300——请求的资源可在多处得到</span><br><span class="line">301——删除请求数据</span><br><span class="line">302——在其他地址发现了请求数据</span><br><span class="line">303——建议客户访问其他URL或访问方式</span><br><span class="line">304——客户端已经执行了GET，但文件未变化</span><br><span class="line">305——请求的资源必须从服务器指定的地址得到</span><br><span class="line">306——前一版本HTTP中使用的代码，现行版本中不再使用</span><br><span class="line">307——申明请求的资源临时性删除</span><br><span class="line"></span><br><span class="line">400——错误请求，如语法错误</span><br><span class="line">401——请求授权失败</span><br><span class="line">402——保留有效ChargeTo头响应</span><br><span class="line">403——请求不允许</span><br><span class="line">404——没有发现文件、查询或URl</span><br><span class="line">405——用户在Request-Line字段定义的方法不允许</span><br><span class="line">406——根据用户发送的Accept拖，请求资源不可访问</span><br><span class="line">407——类似401，用户必须首先在代理服务器上得到授权</span><br><span class="line">408——客户端没有在用户指定的饿时间内完成请求</span><br><span class="line">409——对当前资源状态，请求不能完成</span><br><span class="line">410——服务器上不再有此资源且无进一步的参考地址</span><br><span class="line">411——服务器拒绝用户定义的Content-Length属性请求</span><br><span class="line">412——一个或多个请求头字段在当前请求中错误</span><br><span class="line">413——请求的资源大于服务器允许的大小</span><br><span class="line">414——请求的资源URL长于服务器允许的长度</span><br><span class="line">415——请求资源不支持请求项目格式</span><br><span class="line">416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段</span><br><span class="line">417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求</span><br><span class="line"></span><br><span class="line">500——服务器产生内部错误</span><br><span class="line">501——服务器不支持请求的函数</span><br><span class="line">502——服务器暂时不可用，有时是为了防止发生系统过载</span><br><span class="line">503——服务器过载或暂停维修</span><br><span class="line">504——关口过载，服务器使用另一个关口或服务来响应用户，等待时间设定值较长</span><br><span class="line">505——服务器不支持或拒绝支请求头中指定的HTTP版本</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" itemprop="url">nginx从docker容器的环境变量中获取值</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T22:56:33+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/08/nginx-conf-get-env-from-docker-contaniner-enviroment/" class="leancloud_visitors" data-flag-title="nginx从docker容器的环境变量中获取值">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="nginx从docker容器的环境变量中获取值"><a href="#nginx从docker容器的环境变量中获取值" class="headerlink" title="nginx从docker容器的环境变量中获取值"></a>nginx从docker容器的环境变量中获取值</h1><p>这篇接上一篇<a href="http://chenzhijun.top/2019/04/08/vuejs-starter/">vuejs 从拷项目到开发上线</a></p>
+<h2 id="Docker-部署"><a href="#Docker-部署" class="headerlink" title="Docker 部署"></a>Docker 部署</h2><p>另外一个问题就是如何制作成镜像了？可以看到我们在nginx.conf中有api服务的地址，这个地址可能在不同的环境(di,sit,prd)都不一样，那能否通过容器的env来改变nginx.conf中的值呢？</p>
+<p>不查不知道，一查发现，我擦，还真有，nginx镜像本身就已经具备了。不过是李template的方式，来生成conf文件话不多说，直接上代码，先创建一个<code>nginx.conf.template</code>的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80 default_server;</span><br><span class="line">    listen       [::]:80 default_server;</span><br><span class="line">    server_name  _;</span><br><span class="line">    root         &#x2F;app&#x2F;html;</span><br><span class="line"></span><br><span class="line">    # Load configuration files for the default server block.</span><br><span class="line">    include &#x2F;etc&#x2F;nginx&#x2F;default.d&#x2F;*.conf;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location &#x2F;m-web&#x2F; &#123;</span><br><span class="line">        root &#x2F;app&#x2F;html&#x2F;dist;</span><br><span class="line">    &#125;</span><br><span class="line">    location &#x2F;m-web&#x2F;m-api&#x2F; &#123;</span><br><span class="line">        proxy_pass http:&#x2F;&#x2F;$&#123;M_API_SITE&#125;&#x2F;m-api&#x2F;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 404 &#x2F;404.html;</span><br><span class="line">        location &#x3D; &#x2F;40x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page 500 502 503 504 &#x2F;50x.html;</span><br><span class="line">        location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>之后准备Dockerfile：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> nginx:latest</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -rf /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/nginx.conf</span></span><br><span class="line"><span class="keyword">ENV</span> M_API_SITE <span class="number">192.168</span>.<span class="number">1.19</span>:<span class="number">8089</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> nginx.conf.template /etc/nginx/conf.d/nginx.conf.template</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> dist /app/html/dist</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;/bin/bash&quot;</span>, <span class="string">&quot;-c&quot;</span>, <span class="string">&quot;envsubst &lt; /etc/nginx/conf.d/nginx.conf.template &gt; /etc/nginx/conf.d/nginx.conf &amp;&amp; exec nginx -g &#x27;daemon off;&#x27;&quot;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>之后<code>docker build -t xxx:latest .</code>，之后我们就可以通过<code>-e M_API_SITE=192.168.123.1:8080</code>设置容器的环境变量来设置不同的api地址了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/04/08/vuejs-starter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/08/vuejs-starter/" itemprop="url">vuejs 从拷项目到开发上线</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T21:56:22+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vuejs/" itemprop="url" rel="index">
+                    <span itemprop="name">vuejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/08/vuejs-starter/" class="leancloud_visitors" data-flag-title="vuejs 从拷项目到开发上线">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="vuejs-从拷项目到开发上线"><a href="#vuejs-从拷项目到开发上线" class="headerlink" title="vuejs 从拷项目到开发上线"></a>vuejs 从拷项目到开发上线</h1><p>最近组里缺人手，我们都是一堆后端，却没有一个前端。所以你看到了一堆的后台接口，但就是没有一个页面。囧~<br>本着求人不如求己，活人不能被尿憋死不是~所以准备自己开始干。</p>
+<h2 id="前端选型"><a href="#前端选型" class="headerlink" title="前端选型"></a>前端选型</h2><p>首先想了一下，我们应该怎么开发前端了？使用thymeleaf这种貌似是最合适的，毕竟类似于以前用jsp，对不对~当然有点不一样。<br>但后来想想，都前后端分离了，以后我们要真的做牛逼了。要是给我们分配个前端，那我们不又要改死啊。<br>然后觉得前后端不分离，逼格不够，也不好维护。那好咯，那就定好方向前端分离。</p>
+<p>前后端分离的方向定好，那就先想想是自己完全自己弄一个，还是直接用模板套一个？一致觉得，自己从头写，费时费力，一群后端去弄不太现实，毕竟还是有很多要调的，适配啊，排版啊。所以投票决定，选模板。选了模板，那就好弄了，github上找了前十个优秀的模板。有一些是基于bootstrap，然后每个页面都是html，所以这种就相当于用jQuery或者javascript用ajax这种吧。想想就被以前写dom支配的恐惧。后来了解到有个vue，人家都说好用，其实公司还有很多都是vue，我们想了想，要是用bootstrap那种估计就是靠我们自己了。要是vue，要是我们实际搞不定，在公司也好请外援。想了想，那就找vue的模板吧。找来找去，找了个最简单实用的。毕竟我们需求很简单，列表显示，表格添加，搜索框就好了，后管管理页面是真的好搞啊。找了个最简单的功能又全的，感谢github，感谢可爱的爱分享的工程师们。</p>
+<h2 id="vue-使用"><a href="#vue-使用" class="headerlink" title="vue 使用"></a>vue 使用</h2><p>模板选好了，这下来到重头戏了。大家都不会啊，以前都是听说，我们前端用vue，特么到底怎么用啊。不过既然选好了方案，选好了模板，其实就很明确了，不会那就学啊。vue官网一翻，一遍浏览。大概的使用方式也是了解了。</p>
+<h3 id="vue-数据绑定"><a href="#vue-数据绑定" class="headerlink" title="vue 数据绑定"></a>vue 数据绑定</h3><p>vue的模式感觉跟以前的不一样，看整个项目发现其实就一个html页面，也就是index.html，然后就是在里面有个APP.vue，通过不同的xx.vue来选择相应的页面，其实就是他们口中的单页式应用。就是一个html页面，然后根据不同的path来显示不同的内容。另外需要转换一个观点，vue不像传统的面向页面来编程，因为它的数据绑定感觉太好用了。如果是在html标签中只需要用<code>&#123;&#123; key &#125;&#125;</code>就可以使用在js中定义的key的值。有几个好用的标签：</p>
+<p>感觉吧，说的不太全，还是要实际用起来才有那种感觉。<a target="_blank" rel="noopener" href="https://github.com/chenzhijun/vue-manage-system">模板地址</a></p>
+<h2 id="使用中遇到的问题"><a href="#使用中遇到的问题" class="headerlink" title="使用中遇到的问题"></a>使用中遇到的问题</h2><p>在实际使用中遇到一些问题，一开始有点懵逼，不过到后来都解决了。</p>
+<h3 id="本地开发-跨域问题"><a href="#本地开发-跨域问题" class="headerlink" title="本地开发-跨域问题"></a>本地开发-跨域问题</h3><p>这个一开始的时候有点蒙圈，本地是使用<code>npm run dev</code>启动的，启动后发现，跨域了。这个该怎么搞哦。后来在vue.config.js中发现一个文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    baseUrl: <span class="string">&#x27;./&#x27;</span>,</span><br><span class="line">    productionSourceMap: <span class="literal">false</span>,</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        proxy: &#123;</span><br><span class="line">            <span class="string">&#x27;/m-paas&#x27;</span>:&#123;</span><br><span class="line">                target: <span class="string">&#x27;http://localhost:8080/m-paas&#x27;</span>,</span><br><span class="line">                changeOrigin: <span class="literal">true</span>,</span><br><span class="line">                pathRewrite:&#123;</span><br><span class="line">                    <span class="string">&#x27;/m-paas&#x27;</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实可以看到只要打开changeOrigin 就可以了。其它的都不需要改动。</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>开发完了，代码也写好了。重点来了，怎么部署到服务器？来跟我三步走</p>
+<ol>
+<li>step1，构建应用</li>
+</ol>
+<p>使用<code>npm run build</code>先进行构建，完成后会在根路径下生成一个dist文件夹。</p>
+<ol start="2">
+<li>step2，准备nginx服务器</li>
+</ol>
+<p>下载一个nginx，现在都是使用nginx来做前端的服务器。将刚刚的dist文件夹的内容copy到服务器某个路径。<br>比如<code>/app/html</code>，或者就是nginx目录下的html。随自己开心就好</p>
+<ol start="3">
+<li>step3，修改nginx配置</li>
+</ol>
+<p>目录确定后，我们就需要修改nginx的配置了。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">       listen       127.0.0.1:6000;</span><br><span class="line">       #server_name  localhost;</span><br><span class="line"></span><br><span class="line">       #charset koi8-r;</span><br><span class="line"></span><br><span class="line">       #access_log  logs&#x2F;host.access.log  main;</span><br><span class="line"></span><br><span class="line">       location &#x2F;m-web&#x2F; &#123;</span><br><span class="line">          root   &#x2F;app&#x2F;html&#x2F;dist;</span><br><span class="line">          index  index.html index.htm;</span><br><span class="line">       &#125;</span><br><span class="line">       location &#x2F;m-api &#123;</span><br><span class="line">           proxy_pass http:&#x2F;&#x2F;localhost:8080&#x2F;m-api;</span><br><span class="line">           #proxy_pass http:&#x2F;&#x2F;api-m.chenzhijun.top&#x2F;m-api;</span><br><span class="line">       &#125;</span><br><span class="line">       #error_page  404              &#x2F;404.html;</span><br><span class="line"></span><br><span class="line">       # redirect server error pages to the static page &#x2F;50x.html</span><br><span class="line">       #</span><br><span class="line">       error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">       location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">           root   html;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后启动 nginx 就好了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/04/03/kubernetes-day1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/03/kubernetes-day1/" itemprop="url">Kubernetes 第一天</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T21:10:22+08:00">
+                2019-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/03/kubernetes-day1/" class="leancloud_visitors" data-flag-title="Kubernetes 第一天">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Kubernetes-day1"><a href="#Kubernetes-day1" class="headerlink" title="Kubernetes day1"></a>Kubernetes day1</h1><h2 id="Kubernetes是什么？"><a href="#Kubernetes是什么？" class="headerlink" title="Kubernetes是什么？"></a>Kubernetes是什么？</h2><p>Kubernetes简称k8s。最直观的解释它是用将资源进行整合，将应用与底层隔离。因此，搞业务开发的，专心搞好业务逻辑。搞底层机器，网络资源的安心搞好底层网络资源。而k8s就是这中间的一层，承上启下。也就是传说中的PaaS。现在可以说没有那个Paas或者Caas不是基于k8s搞的。不过我觉得理解的不深，k8s的作用其实还有很多，如果你用过docker或者直接开发业务就会有比较深的感知。</p>
+<h2 id="Kubernetes-关键组件"><a href="#Kubernetes-关键组件" class="headerlink" title="Kubernetes 关键组件"></a>Kubernetes 关键组件</h2><p>安装一个K8S集群需要哪些组件了？一个完整的小集群里面，需要有一个master，一个node，两台机器。master和node上分别有哪些组件了？master上有kube-apiserver,kube-scheduler,kube-controller-manager; node上有kubelet,kube-proxy,docker;另外需要在master上安装一个etcd数据库。如果是非二进制安装，master和node上都需要有kubeadm。安装完这些之后需要在master节点上使用’kubectl apply -f [kubelet-network].yaml’也就是如果你使用flannel网络，就可能需要安装flannel的网络插件。这个插件是已pod的方式创建的。</p>
+<h2 id="组件说明"><a href="#组件说明" class="headerlink" title="组件说明"></a>组件说明</h2><h3 id="Etcd"><a href="#Etcd" class="headerlink" title="Etcd"></a>Etcd</h3><p>键值数据库，这个没有什么特别好说的。要在安装k8s集群前先启动，保存k8s所有资源对象数据</p>
+<h3 id="kube-apiserver"><a href="#kube-apiserver" class="headerlink" title="kube-apiserver"></a>kube-apiserver</h3><p>集群控制的入口进程，提供HTTP Rest接口的关键服务进程，是k8s里面所有资源操作的唯一入口。</p>
+<h3 id="kube-controller-manager"><a href="#kube-controller-manager" class="headerlink" title="kube-controller-manager"></a>kube-controller-manager</h3><p>k8s所有资源对象的自动化控制中心</p>
+<h3 id="kube-scheduler"><a href="#kube-scheduler" class="headerlink" title="kube-scheduler"></a>kube-scheduler</h3><p>k8s的资源调度进程</p>
+<h3 id="kubelet"><a href="#kubelet" class="headerlink" title="kubelet"></a>kubelet</h3><p>负责pod对应的容器的创建，启停等任务，同时与Maser节点密切协作，实现集群管理的基本功能</p>
+<h3 id="kube-proxy"><a href="#kube-proxy" class="headerlink" title="kube-proxy"></a>kube-proxy</h3><p>实现kubernetes Service的通信与负载均衡机制的重要组件</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/03/31/java-big-data-sensitive-word/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/31/java-big-data-sensitive-word/" itemprop="url">Java 大数据中的敏感词汇处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T22:39:06+08:00">
+                2019-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/31/java-big-data-sensitive-word/" class="leancloud_visitors" data-flag-title="Java 大数据中的敏感词汇处理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Java-大数据中的敏感词汇处理"><a href="#Java-大数据中的敏感词汇处理" class="headerlink" title="Java 大数据中的敏感词汇处理"></a>Java 大数据中的敏感词汇处理</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/03/31/golang-package-struct/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/31/golang-package-struct/" itemprop="url">golang 包项目结构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T22:02:15+08:00">
+                2019-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Golang/" itemprop="url" rel="index">
+                    <span itemprop="name">Golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/31/golang-package-struct/" class="leancloud_visitors" data-flag-title="golang 包项目结构">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="golang-包项目结构"><a href="#golang-包项目结构" class="headerlink" title="golang 包项目结构"></a>golang 包项目结构</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/03/31/java-develop-normal-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/31/java-develop-normal-error/" itemprop="url">Java 开发遇到的两个问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T21:56:43+08:00">
+                2019-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/31/java-develop-normal-error/" class="leancloud_visitors" data-flag-title="Java 开发遇到的两个问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Java开发遇到的两个问题"><a href="#Java开发遇到的两个问题" class="headerlink" title="Java开发遇到的两个问题"></a>Java开发遇到的两个问题</h1><h2 id="Object-反序列化失败"><a href="#Object-反序列化失败" class="headerlink" title="Object 反序列化失败"></a>Object 反序列化失败</h2><p>使用<code>@ReponseBody</code>返回一个json串，返回的类型是<code>Object</code>，我们知道如果是<code>@RestController</code>，都会已restful返回，也就是返回json格式的数据，但是如果你是使用Object返回值，然后Object只是一个null或者仅仅只是<code>new Object()</code>，那么就会返回下面的异常：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class java.lang.Object and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: java.util.ArrayList[1])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="RestTemplate使用中path有-问题"><a href="#RestTemplate使用中path有-问题" class="headerlink" title="RestTemplate使用中path有{}问题"></a>RestTemplate使用中path有{}问题</h2><p>RestTemplate 默认就是将path中的<code>&#123;&#125;</code>作为一个赋值表达式的，它会认为你需要替换<code>&#123;&#125;</code>中的内容。所以在path中最好特别注意下。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/03/31/how-to-transfer-linux-command-result-to-variable-in-shell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -620,1239 +1888,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/03/31/windows-compile-golang-to-linux-running-script/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/31/windows-compile-golang-to-linux-running-script/" itemprop="url">golang编译成Linux环境下的二进制文件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T21:38:08+08:00">
-                2019-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/03/31/windows-compile-golang-to-linux-running-script/" class="leancloud_visitors" data-flag-title="golang编译成Linux环境下的二进制文件">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="golang编译成Linux环境下的二进制文件"><a href="#golang编译成Linux环境下的二进制文件" class="headerlink" title="golang编译成Linux环境下的二进制文件"></a>golang编译成Linux环境下的二进制文件</h1><p>最近需要将golang项目编译成Linux下可执行的脚本，手中只有windows笔记本，服务器上又各种网络限制。<br>于是干脆就再本地打成Linux二进制文件，然后传到服务器直接启动。</p>
-<p>在本地上（win10）打开控制台，然后进入到项目根路径。之后设置当前几个值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET CGO_ENABLED&#x3D;0</span><br><span class="line">SET GOOS&#x3D;linux </span><br><span class="line">SET GOARCH&#x3D;amd64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>最后使用<code>go build .</code>就可以了。 也算是异常简单。</p>
-<p>如果在<code>*nix</code>平台:</p>
-<p><code>export CGO_ENABLED=0 &amp;&amp; export GOOS=linux &amp;&amp; export GOARCH=amd64 &amp;&amp; go build .</code></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/03/31/dev-ops/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/31/dev-ops/" itemprop="url">dev-ops</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T21:27:31+08:00">
-                2019-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/03/31/dev-ops/" class="leancloud_visitors" data-flag-title="dev-ops">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/01/08/alertmanager-email/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/08/alertmanager-email/" itemprop="url">Alertmanager 配置邮件模板</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-08T23:46:39+08:00">
-                2019-01-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Alertmanager/" itemprop="url" rel="index">
-                    <span itemprop="name">Alertmanager</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/01/08/alertmanager-email/" class="leancloud_visitors" data-flag-title="Alertmanager 配置邮件模板">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Alertmanager-配置邮件模板"><a href="#Alertmanager-配置邮件模板" class="headerlink" title="Alertmanager 配置邮件模板"></a>Alertmanager 配置邮件模板</h1><h2 id="Alertmanager-配置"><a href="#Alertmanager-配置" class="headerlink" title="Alertmanager 配置"></a>Alertmanager 配置</h2><p>alertmanager 的配置主要是要配置邮箱（通知方式）和模板地址；文档地址：<a target="_blank" rel="noopener" href="https://prometheusaio/docs/alerting/configuration/#email_config">Alertmanager 地址</a>，配置完之后就只需要在模板中定义就好了。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/01/08/alertmanager-email/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/12/17/mysql-grant/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/17/mysql-grant/" itemprop="url">MySQL 用户与权限设置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-17T17:00:27+08:00">
-                2018-12-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/12/17/mysql-grant/" class="leancloud_visitors" data-flag-title="MySQL 用户与权限设置">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="MySQL-用户与权限设置"><a href="#MySQL-用户与权限设置" class="headerlink" title="MySQL 用户与权限设置"></a>MySQL 用户与权限设置</h1><p>这几天开发完发现dba对于权限控制的比较严，通常是没有root权限的，在正式上线前，还是希望能再通过一个普通用户的权限来做一次预发布。这样可以看看到底会有哪些坑，提前踩一下可能比较好。后来发现，其实你只要准备需求提给dba就ok了，人家会帮你处理的非常好~~~。总之在这过程中遇到的问题，先记录一下吧。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/17/mysql-grant/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/12/16/docker-mysql-and-redis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/16/docker-mysql-and-redis/" itemprop="url">Docker 快速搭建 MySQL 和 Redis</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-16T20:04:12+08:00">
-                2018-12-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/12/16/docker-mysql-and-redis/" class="leancloud_visitors" data-flag-title="Docker 快速搭建 MySQL 和 Redis">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Docker-快速搭建-MySQL-和-Redis"><a href="#Docker-快速搭建-MySQL-和-Redis" class="headerlink" title="Docker 快速搭建 MySQL 和 Redis"></a>Docker 快速搭建 MySQL 和 Redis</h1><h2 id="MySQL-环境搭建"><a href="#MySQL-环境搭建" class="headerlink" title="MySQL 环境搭建"></a>MySQL 环境搭建</h2><p>最近做开发的时候遇到一个比较有意思的事情，如何搭建一个数据库，还有相关的redis等。因为没有外网，不可能说直接yum安装，又不想到每个官网去找相应的安装包。自然的，就想到了用Docker。一开始用到docker安装一个mysql的时候确实也是非常方便，比如一个<code>docker run</code>命令就启动了一个mysql，但是开发到一部分的时候，发现。我去！怎么又乱码？？ 咦，怎么市区也不对了？GG，发现还有很多小问题。今天有空一并总结下，下次如果有这种事就可以直接用了。</p>
-<h3 id="使用Docker启动启动Mysql容器"><a href="#使用Docker启动启动Mysql容器" class="headerlink" title="使用Docker启动启动Mysql容器"></a>使用Docker启动启动Mysql容器</h3><p>如果需要一个mysql数据库，直接使用docker来运行一个容器：<code>docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root123456 mysql:5.7</code></p>
-<p>这样你就可以在本地ip+3306端口来访问一个mysql数据库了，root密码是：<code>root123456</code>。第一次使用docker的时候就是因为这个原因被吸引了。想想如果本地安装需要做多少配置，而是用docker一条命令就帮你把那些复杂的操作都隐藏了。这种便利性，我想谁都不会说不想要。</p>
-<p>不过虽然便利是便利了，但是还是需要注意一些问题：</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/16/docker-mysql-and-redis/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/10/30/linux-auto-excute-shell-script-after-rebooting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/30/linux-auto-excute-shell-script-after-rebooting/" itemprop="url">重启Linux主机后自动运行任务或者脚本</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-30T21:13:40+08:00">
-                2018-10-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/10/30/linux-auto-excute-shell-script-after-rebooting/" class="leancloud_visitors" data-flag-title="重启Linux主机后自动运行任务或者脚本">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="重启Linux主机后自动运行任务或者脚本"><a href="#重启Linux主机后自动运行任务或者脚本" class="headerlink" title="重启Linux主机后自动运行任务或者脚本"></a>重启Linux主机后自动运行任务或者脚本</h1><p>有时候我们在主机上做了一些agent应用，这些应用平常都是主机启动，agent就需要启动。相当于“伴生”。尽管第一次或者第二次我们能依靠记忆或者自我约束来启动这些agent，但是有时候还是会免不了忘记。那么有没有办法让这种agent做成开机启动呢？下面提供两种Linux设置开机启动应用的方法。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/30/linux-auto-excute-shell-script-after-rebooting/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/10/29/linux-crontab-clean-ndays-log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/29/linux-crontab-clean-ndays-log/" itemprop="url">Linux cron clean log files older than N days</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T22:14:21+08:00">
-                2018-10-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/10/29/linux-crontab-clean-ndays-log/" class="leancloud_visitors" data-flag-title="Linux cron clean log files older than N days">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="使用linux-crontab定时清理n天前的日志文件"><a href="#使用linux-crontab定时清理n天前的日志文件" class="headerlink" title="使用linux crontab定时清理n天前的日志文件"></a>使用linux crontab定时清理n天前的日志文件</h1><p>最近有个需求，需要在linux机器上定时执行清理n天前的日志文件。其实我开始做了个更有意思的清理工具，根据alertmanager做webhook，然后在每个Linux机器上开启一个agent，收到请求再执行清理。不过使用crontab也是一个非常有用的工具。</p>
-<p>crontab是Linux的一个守护进程，定时执行的工具。详细的内容可以使用<code>man crontab</code>查看。废话不多说，直接来看怎么使用它。只有用起来，才是属于自己的。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/29/linux-crontab-clean-ndays-log/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/09/08/conclusion-201809/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/08/conclusion-201809/" itemprop="url">conclusion-201809</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-08T14:53:15+08:00">
-                2018-09-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/09/08/conclusion-201809/" class="leancloud_visitors" data-flag-title="conclusion-201809">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>1: linux命令行替换文本中的字符串。<code>sed -i &quot;s/100.69.224.18:10099/100.69.224.27:9999/g&quot; /file.xml</code></p>
-<p>2: rancher平台的相关监控。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql:</span><br><span class="line"></span><br><span class="line">获取mysql用户是否可以远程登陆</span><br><span class="line">CREATE USER &#39;exporter&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;exporter&#39;;</span><br><span class="line">GRANT PROCESS, REPLICATION CLIENT ON *.* TO &#39;exporter&#39;@&#39;localhost&#39;;</span><br><span class="line">GRANT SELECT ON cattle.* TO &#39;exporter&#39;@&#39;%&#39; with MAX_USER_CONNECTIONS 3;</span><br><span class="line">help flush;</span><br><span class="line">show grants for &#39;exporter&#39;@&#39;localhost&#39;;</span><br><span class="line">flush PRIVILEGES;</span><br><span class="line"></span><br><span class="line">docker run -d -p 9104:9104 -e DATA_SOURCE_NAME&#x3D;&quot;exporter:exporter@(127.0.0.1:3306)&#x2F;&quot; prom&#x2F;mysqld-exporter:latest</span><br><span class="line"></span><br><span class="line">haproxy:</span><br><span class="line"></span><br><span class="line">docker run -d -p 9101:9101 prom&#x2F;haproxy-exporter:latest --haproxy.scrape-uri&#x3D;&quot;http:&#x2F;&#x2F;www.haproxy.com&#x2F;haproxy?stats;csv&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>3: sort 根据低三列排序</p>
-<p>docker stats -a –no-stream |awk ‘{print $1,$8,$3,$4}’|sort -k 2,4n</p>
-<p>sort -k a,bn<br>a为第几列，b为几个字符，n为数字比较，1234，1222，从第一个字符开始，到第四个字符都会比较</p>
-<p>4: 给基础镜像安装常用工具：ping,curl,wget,netstat。一般源里面就已经包含了，ping的源为：<code>apt install inetutils-ping或者 apt install net-tools</code></p>
-<p>5：某次给rancher平台扩容，直接将主机加上之后，将原来的应用直接*2启动，平台爆掉了。server不到。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1903,7 +1938,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">175</span>
+                <span class="site-state-item-count">176</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

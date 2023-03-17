@@ -321,7 +321,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2020/04/26/harbor-install-and-trouble-shooting/">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2022/05/09/prometheus-monitor-tomcat/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -340,7 +340,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/26/harbor-install-and-trouble-shooting/" itemprop="url">Harbor  镜像仓库安装与 Helm Chart 管理</a></h1>
+                <a class="post-title-link" href="/2022/05/09/prometheus-monitor-tomcat/" itemprop="url">Prometheus 监控 Java 应用</a></h1>
         
 
         <div class="post-meta">
@@ -352,8 +352,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T21:02:35+08:00">
-                2020-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-09T21:03:19+08:00">
+                2022-05-09
               </time>
             
 
@@ -375,8 +375,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Harbor/" itemprop="url" rel="index">
-                    <span itemprop="name">Harbor</span>
+                  <a href="/categories/%E7%9B%91%E6%8E%A7/" itemprop="url" rel="index">
+                    <span itemprop="name">监控</span>
                   </a>
                 </span>
 
@@ -392,7 +392,7 @@
 
           
           
-             <span id="/2020/04/26/harbor-install-and-trouble-shooting/" class="leancloud_visitors" data-flag-title="Harbor  镜像仓库安装与 Helm Chart 管理">
+             <span id="/2022/05/09/prometheus-monitor-tomcat/" class="leancloud_visitors" data-flag-title="Prometheus 监控 Java 应用">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -424,16 +424,11 @@
 
       
         
-          <h1 id="Harbor-镜像仓库安装与-Helm-Chart-管理"><a href="#Harbor-镜像仓库安装与-Helm-Chart-管理" class="headerlink" title="Harbor  镜像仓库安装与 Helm Chart 管理"></a>Harbor  镜像仓库安装与 Helm Chart 管理</h1><p><a target="_blank" rel="noopener" href="https://goharbor.io/">Harbor</a> 是一款非常优秀的企业级开源镜像仓库管理器。Harbor 是基于 Docker Registry之上带有用户权限控制，镜像扫描，镜像签名的款工具。用起来很方便，我们公司目前在测试和生产都在使用。从去年 10 月到今天，除去一次 ceph 集群扩容，没有发生一次事故，一直运行很稳定；本文将记录一下我们的使用方式和遇到的一些问题解决方式。</p>
-<h2 id="Harbor-资源准备"><a href="#Harbor-资源准备" class="headerlink" title="Harbor 资源准备"></a>Harbor 资源准备</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Harbor 1.7.6 版本</span><br><span class="line">Redis 4.0</span><br><span class="line">Postgres 10.6</span><br><span class="line">Docker 1.13.1</span><br><span class="line">docker-compose 1.18.0</span><br><span class="line">Ceph 12</span><br><span class="line"></span><br><span class="line">haproxy 机器 2 台</span><br><span class="line">VIP 1 个</span><br><span class="line">Harbor 主机 2 台</span><br></pre></td></tr></table></figure>
-
-<p>公司目前的 harbor 是基于 1.76 搭建的高可用方案，证书的问题，我们是公网使用第三方证书。内网使用自签名的证书；在我这里，我在 harbor 的搭建中采用的是内部 http，外部挂 F5。架构图如下：</p>
-<p><img src="/images/qiniu/2020-04-26-21-15-43.png" alt="2020-04-26-21-15-43"></p>
-<p>生产上我们用 F5 替代 Haproxy。</p>
-<p>我们在 Haproxy/F5 层将 https 转成 http 再转发给内部 harbor。</p>
+          <h1 id="Prometheus-监控-Java-应用"><a href="#Prometheus-监控-Java-应用" class="headerlink" title="Prometheus 监控 Java 应用"></a>Prometheus 监控 Java 应用</h1><p>Prometheus 监控 Java 应用有两种方式：一种是使用官方提供的jar包，然后嵌入到应用中就可以了。这种方式一般都是新项目。我认为也是最合适的一种。不过这种情况一般是理想而已。而除了这种方式，第二种是prometheus的<a target="_blank" rel="noopener" href="https://github.com/prometheus/jmx_exporter">jmx_exporter</a>。</p>
+<p>今天我们讨论的就是第二种。使用jmx_exporter的方式来监控我们的java应用程序。我们的java应用基本上是使用tomcat作为服务器的。这种情况下有两种方式，一种是基于springboot的jar包启动方式，一种是直接下载tomcat软件之后，将应用打成war包部署的方式。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/04/26/harbor-install-and-trouble-shooting/#more" rel="contents">
+            <a class="btn" href="/2022/05/09/prometheus-monitor-tomcat/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -486,7 +481,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2020/04/05/what-is-garbage-to-need-collecter/">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2022/04/26/prometheus-grafana-monitor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -505,7 +500,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/05/what-is-garbage-to-need-collecter/" itemprop="url">查漏补缺 Java 系列 - JVM 垃圾回收</a></h1>
+                <a class="post-title-link" href="/2022/04/26/prometheus-grafana-monitor/" itemprop="url">Prometheus+Grafana 搭建监控系统</a></h1>
         
 
         <div class="post-meta">
@@ -517,8 +512,979 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-05T12:50:01+08:00">
-                2020-04-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-26T22:03:19+08:00">
+                2022-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%91%E6%8E%A7/" itemprop="url" rel="index">
+                    <span itemprop="name">监控</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/04/26/prometheus-grafana-monitor/" class="leancloud_visitors" data-flag-title="Prometheus+Grafana 搭建监控系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Prometheus-Grafana-搭建监控系统"><a href="#Prometheus-Grafana-搭建监控系统" class="headerlink" title="Prometheus+Grafana 搭建监控系统"></a>Prometheus+Grafana 搭建监控系统</h1><p>今天将第一版监控系统上线，过程整个就是一路坎坷。不过踩坑，填坑，确实也是为自己积攒了一些小经验。</p>
+<h2 id="Prometheus的服务发现"><a href="#Prometheus的服务发现" class="headerlink" title="Prometheus的服务发现"></a>Prometheus的服务发现</h2><p>Prometheus的监控使用的是pull的模式，也就是每隔几秒钟去各个target采集一次metric。那么如果是多个target，如果是静态配置的话，那么就得在配置文件里面一个一个添加，尽管可以使用接口去更新配置文件，但如果服务太多，那工作量也很大。而且如果遇到微服务的情况并且容器化部署，那么可能ip地址都是随机改变的，那么就将更麻烦了。所以就有服务发现的模式出来了，有很多种实现的方式，consul，dns等等，针对我们现有的平台，我们选择了file_sd_config:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">  <span class="comment"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&#x27;prometheus&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># metrics_path defaults to &#x27;/metrics&#x27;</span></span><br><span class="line">    <span class="comment"># scheme defaults to &#x27;http&#x27;.</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span> [<span class="string">&#x27;localhost:9090&#x27;</span>]</span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span>       <span class="string">&#x27;rancher_network_monitor&#x27;</span></span><br><span class="line">    <span class="comment"># Override the global default and scrape targets from this job every 5 seconds.</span></span><br><span class="line">    <span class="attr">scrape_interval:</span> <span class="string">1m</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span> [<span class="string">&#x27;192.168.7.3:8080&#x27;</span>,<span class="string">&#x27;192.168.8.90:8080&#x27;</span>]</span><br><span class="line">        <span class="attr">labels:</span></span><br><span class="line">          <span class="attr">group:</span> <span class="string">&#x27;rancher_network_monitor&#x27;</span></span><br><span class="line">    <span class="attr">metrics_path:</span> <span class="string">/metrics</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&#x27;filediscovery&#x27;</span></span><br><span class="line">    <span class="attr">scrape_interval:</span> <span class="string">5s</span></span><br><span class="line">    <span class="attr">file_sd_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">files:</span> [<span class="string">&#x27;/home/config/*.json&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>基于文件的方式，只需要在<code>/home/config</code>目录下增加json文件就可以了，这也是在网上找的一个方案，所以我也记录下来，万一也能帮助到别人了</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/04/26/prometheus-grafana-monitor/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2022/04/16/prometheus-pre-use/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/04/16/prometheus-pre-use/" itemprop="url">Prometheus 体验</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-16T13:03:19+08:00">
+                2022-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%91%E6%8E%A7/" itemprop="url" rel="index">
+                    <span itemprop="name">监控</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/04/16/prometheus-pre-use/" class="leancloud_visitors" data-flag-title="Prometheus 体验">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Prometheus-监控"><a href="#Prometheus-监控" class="headerlink" title="Prometheus 监控"></a>Prometheus 监控</h1><p> Prometheus [普罗米修斯]主要的是从被监控项目中获取metrics。架构全景图：</p>
+<p><img src="/images/qiniu/2018-04-16-14-32-33.png" alt="2018-04-16-14-32-33"></p>
+<h2 id="安装与使用"><a href="#安装与使用" class="headerlink" title="安装与使用"></a>安装与使用</h2><p>Prometheus 的安装方式很多，我在本地是使用windows的包，Prometheus自打出生就支持docker所以，如果是*inx机器，建议安装docker然后体验。在本地我仅仅只需要执行目录下的<code>prometheus</code>就可以就可以进行体验了。Prometheus服务自身也会暴露出metrics，用来对自身进行指标收集和监控。在根目录最重要的一个配置文件是<code>prometheus.yml</code>，里面有三类大属性：global，rule_files，scrape_configs。具体的配置信息可以看这个：<br><a target="_blank" rel="noopener" href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/">https://prometheus.io/docs/prometheus/latest/configuration/configuration/</a>，也可以看看中文文档：<a target="_blank" rel="noopener" href="https://songjiayang.gitbooks.io/prometheus/configuration/">https://songjiayang.gitbooks.io/prometheus/configuration/</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/04/16/prometheus-pre-use/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2022/02/27/openshift-router/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/27/openshift-router/" itemprop="url">OpenShift 专用 Router 实操</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-27T22:53:35+08:00">
+                2022-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/02/27/openshift-router/" class="leancloud_visitors" data-flag-title="OpenShift 专用 Router 实操">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Openshift-专用-Router-实操"><a href="#Openshift-专用-Router-实操" class="headerlink" title="Openshift 专用 Router 实操"></a>Openshift 专用 Router 实操</h1><p>由于某些服务在实际业务场景中非常重要，或者为了与其它业务进行入口区分，因此会产生专属 router（Ingress）的需求，在 openshift 的实际操作可以这样：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/02/27/openshift-router/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2022/02/17/openshift-server-exclusive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/17/openshift-server-exclusive/" itemprop="url">Openshift 专属机方案</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-17T20:59:00+08:00">
+                2022-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/02/17/openshift-server-exclusive/" class="leancloud_visitors" data-flag-title="Openshift 专属机方案">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Openshift-专属机方案"><a href="#Openshift-专属机方案" class="headerlink" title="Openshift 专属机方案"></a>Openshift 专属机方案</h1>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/02/17/openshift-server-exclusive/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2021/10/06/nginx-and-haproxy-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/06/nginx-and-haproxy-config/" itemprop="url">nginx-and-haproxy-config</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-06T22:24:08+08:00">
+                2021-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/10/06/nginx-and-haproxy-config/" class="leancloud_visitors" data-flag-title="nginx-and-haproxy-config">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Nginx-和-Haproxy-配置文件"><a href="#Nginx-和-Haproxy-配置文件" class="headerlink" title="Nginx 和 Haproxy 配置文件"></a>Nginx 和 Haproxy 配置文件</h1><p>目标：通过 Nginx 和 Haproxy 的常用配置实现服务的反向代理。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/06/nginx-and-haproxy-config/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2021/06/16/what-is-the-truely-about-https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/06/16/what-is-the-truely-about-https/" itemprop="url">HTTPS 到底是什么？CA 证书又是指什么？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-16T22:27:31+08:00">
+                2021-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTPS/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTPS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/06/16/what-is-the-truely-about-https/" class="leancloud_visitors" data-flag-title="HTTPS 到底是什么？CA 证书又是指什么？">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="HTTPS-到底是什么？CA-证书又是指什么？"><a href="#HTTPS-到底是什么？CA-证书又是指什么？" class="headerlink" title="HTTPS 到底是什么？CA 证书又是指什么？"></a>HTTPS 到底是什么？CA 证书又是指什么？</h1><p>https 相信很多人已经不陌生了，那么 https 到底是怎么一回事？我们通常说用 https 就要证书，那么证书和 CA 又是什么关系了？</p>
+<!-- 这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？-->
+<h2 id="HTTPS-出现的背景"><a href="#HTTPS-出现的背景" class="headerlink" title="HTTPS 出现的背景"></a>HTTPS 出现的背景</h2><p>我们通常习惯于使用 http 进行数据通信，可以说如果这个世界是个和谐的世界，那么应该就没 http 的事了。不过林子大了，什么鸟都会有。我们在使用 http 的时候镜像面对的一个问题就是安全性。http 的报文传送都是已明文的方式传送，那么问题来了?我怎么知道这个到底是不是原始数据？如果有个中间人截获了然后篡改消息怎么办？基于这个问题，Netscape（开发 Firefox 的公司）搞了一个 SSL 协议。后来 SSL 发展到 v3 版本时，被标准化，这个时候就改名了，叫 TLS。于是乎，在 http 上 加了 SSL/TLS 就变成了我们都知道的 HTTPS。</p>
+<!-- 这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么 -->
+<h2 id="HTTPS-优势和劣势是什么？"><a href="#HTTPS-优势和劣势是什么？" class="headerlink" title="HTTPS 优势和劣势是什么？"></a>HTTPS 优势和劣势是什么？</h2><p>HTTPS 出现了之后，安全协议在 OSI 的分层中属于在 HTTP 之下，传输层之上。</p>
+<p>HTTPS 带来的的优势有下面几点：</p>
+<ol>
+<li>数据加密与安全保护；</li>
+<li>认证用户和服务器，可以确保数据正确发送到 客户机和服务器;</li>
+<li>SEO 倾斜；</li>
+</ol>
+<p>HTTPS 的劣势也比较明显：</p>
+<ol>
+<li>HTTPS协议握手阶段比较费时，会使页面的加载时间延长 </li>
+<li>加解密会在服务端增加 CPU 的消耗 </li>
+<li>证书费用 </li>
+<li>相对意义上的安全（拥有 CA 根证书，也是可以攻击的）</li>
+</ol>
+<h2 id="这个技术适用的场景"><a href="#这个技术适用的场景" class="headerlink" title="这个技术适用的场景"></a>这个技术适用的场景</h2><p>https 适用于所有的网站。但是如果在一些不需要特别注意安全性，又需要快速访问的话，比如博客网站，静态资源这些，我们可以直接使用 http 而不用 https。在下面的一些场景中，最好还是使用 https:</p>
+<ol>
+<li>企业应用 </li>
+<li>政务信息 </li>
+<li>支付应用 </li>
+<li>API接口</li>
+</ol>
+<h2 id="这个技术的组成部分和关键点（核心思想，核心组件）"><a href="#这个技术的组成部分和关键点（核心思想，核心组件）" class="headerlink" title="这个技术的组成部分和关键点（核心思想，核心组件）"></a>这个技术的组成部分和关键点（核心思想，核心组件）</h2><p>https 的关键在于对信息的加密。在传统的 http 的过程我们 AB 两点间的通信是这样的。</p>
+<p><img src="/images/qiniu/2020-06-16-23-11-08.png" alt="2020-06-16-23-11-08"></p>
+<p>A 直接发送数据给 B。好了。这个时候有个 C 出来了搞事情了：</p>
+<p><img src="/images/qiniu/2020-06-16-23-16-06.png" alt="2020-06-16-23-16-06"></p>
+<p>看原来好好的一个打招呼，变成了一个莫名其妙~~</p>
+<p>那 AB 之间假设要防止 C 的截获并且篡改消息，怎么办？生活中也有这种场景，比如谍战片里面，卧底和接头人约定一个密码串，然后 A 用密码串加密，B 用密码串解密。</p>
+<p><img src="/images/qiniu/2020-06-16-23-24-38.png" alt="2020-06-16-23-24-38"></p>
+<p>这样只要 AB 都有一个密码本，那就可以加解密了。这也就是我们常说的“对称加密”。但是假如你们之间的这个密码本被 C 获取了呢?  C 获取了你们的密码本，它也不告诉 AB，那就跟我们上图一样了。它先解密 A 的数据，然后再篡改数据加密后再发给 B。你看这就危险了吧。</p>
+<p>那这个时候我们又要想办法了。B 说这样不安全，这样吧，我用两个密码本，一个公开给你（公钥），一个我自己单独留着（私钥）。你发过来的消息用我的公钥加下密码，我用我的私钥解下密。A 说好，拿着 B 的公钥加密数据后发给了 B。这样一看，嗯，很不错，A 发给 B 的消息再也不会泄漏了。因为就算 C 获取了消息，它没有私钥也没法解密消息啊。A 也这样想，也是，但是你回给我的消息还是可能被截取到，那我这个 A 也搞个公钥和私钥，你发给我的消息，用我的公钥加密下。这样一看，很不错啊。A B 之间发送的消息再也不用担心被第三方知道了，因为 C 无法界面消息啊！</p>
+<p><img src="/images/qiniu/2020-06-16-23-45-49.png" alt="2020-06-16-23-45-49"></p>
+<p>如果 C 是个好人，那就到此了。可是如果 C 不甘心了？C 想，既然 A 的实际数据我不知道，那我就假装 B 来跟 A 套取数据。比如下面，毕竟 A 是无法判断到底谁是 B 的。如果想不明白，想想谍战片，你说你是好人，你就是好人吗？怎么证明？：</p>
+<p><img src="/images/qiniu/2020-06-16-23-50-39.png" alt="2020-06-16-23-50-39"></p>
+<p>那好吧。大家一看，不行啊。这的搞个中间人来确认 A 是 A，B 是 B，就像确认你是你妈的儿子一样！！那怎么搞了？你想想，你想要知道你们市的公安局合不合法，那肯定是省公安局说了算。你想要知道省公安局合不合法，那肯定是是国家公安局说了算。所以你只要信任国家公安局，那就可以信任国家公安局认可的下一级公安局，那就可以认可它下面的工具认可的下面的公安局… 中间人也一样，不过我们在通信中引入了一个专用术语 CA(Certificate Authority)证书认证机构。</p>
+<h2 id="这个技术的底层原理和关键实现"><a href="#这个技术的底层原理和关键实现" class="headerlink" title="这个技术的底层原理和关键实现"></a>这个技术的底层原理和关键实现</h2><h2 id="已有的实现和它之间的对比"><a href="#已有的实现和它之间的对比" class="headerlink" title="已有的实现和它之间的对比"></a>已有的实现和它之间的对比</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2021/06/03/write-a-blockqueue-hand-by-hand-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/06/03/write-a-blockqueue-hand-by-hand-2/" itemprop="url">自己用 Java 写一个阻塞队列(二)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-03T21:39:13+08:00">
+                2021-06-03
               </time>
             
 
@@ -557,7 +1523,7 @@
 
           
           
-             <span id="/2020/04/05/what-is-garbage-to-need-collecter/" class="leancloud_visitors" data-flag-title="查漏补缺 Java 系列 - JVM 垃圾回收">
+             <span id="/2021/06/03/write-a-blockqueue-hand-by-hand-2/" class="leancloud_visitors" data-flag-title="自己用 Java 写一个阻塞队列(二)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -589,14 +1555,20 @@
 
       
         
-          <h1 id="查漏补缺-Java-系列-JVM-垃圾回收"><a href="#查漏补缺-Java-系列-JVM-垃圾回收" class="headerlink" title="查漏补缺 Java 系列 - JVM 垃圾回收"></a>查漏补缺 Java 系列 - JVM 垃圾回收</h1><p>正如一间房子，房子的主人肯定需要在客人来的时候进行一些收拾，让家里显得更加的大，而让客人有更好的体验。JVM 也是一样，你想想，JVM 是不是也要不定时的清理下内存区域空间以便能让更多的线程有更好的执行体验？那主人在进行清理的时候，至少要知道要对哪个区域进行清理吧？要知道在哪个区域清理哪些垃圾吧？清理的过程是用拖把还是用扫把，要有个选择吧？你想想 JVM 是不是也应该是类似的？</p>
-<h2 id="JVM-应该回收哪个区域的垃圾？"><a href="#JVM-应该回收哪个区域的垃圾？" class="headerlink" title="JVM 应该回收哪个区域的垃圾？"></a>JVM 应该回收哪个区域的垃圾？</h2><p>上一篇，我们介绍了 jvm 中一些基础概念，包括运行时内存区域。其中我们知道 jvm 规范中规定了5个运行时区域，一器两栈一堆一区。程序计数器，Java 虚拟机栈，本地方法栈，堆，方法区【运行时常量池（方法区内部）】；</p>
-<p>JVM 这些区域里面我们可以分两类，一类需要重点关注 GC，一点可以不需要 GC。根据它们的生命周期可以看到虚拟机栈、本地方法栈、程序计数器这三个线程私有的区域，他们的生命周期跟线程的生命周期保持一样，他们的内存分配和回收时间是可以确定的，所以基本上用不上 GC；而方法区，堆他们需要在程序实际运行时才能知道需要创建哪些对象分配多大的空间，所以这部分是重点要关注的 GC 区域；</p>
-<p>我们根据分配的时机来确定了需要进行垃圾回收的两个区域：堆，方法区。但是在 jvm 规范中对方法区进行了一个定义，也就是这块区域逻辑上属于堆，但是它可以不用 GC（上篇文章我有说到）。因此我们将重点放到堆（Heap）的回收中。</p>
-<p>好了，我们现在知道哪个区域需要进行 GC 了，那么 JVM 又如何知道哪些是垃圾需要清理，哪些不是垃圾不需要清理了？因为堆主要是用来存放对象的，我们也可以当做，jvm 应该怎么判读一个对象是不是应该被回收？</p>
+          <h1 id="自己用-Java-写一个阻塞队列-二"><a href="#自己用-Java-写一个阻塞队列-二" class="headerlink" title="自己用 Java 写一个阻塞队列(二)"></a>自己用 Java 写一个阻塞队列(二)</h1><p>上一章 <a href="http://chenzhijun.top/2020/05/27/java-thread-lock-condition-blockqueue/">自己用 Java 写一个阻塞队列</a> 我们写了一个初始阻塞队列。过了几天再回头看。嗯，好像看出哪里不对劲了。尝试改了一下。</p>
+<h2 id="原先队列实现的问题"><a href="#原先队列实现的问题" class="headerlink" title="原先队列实现的问题"></a>原先队列实现的问题</h2><p>我们说是队列，但是队列的特点是什么？先进先出！在上一个版本中，我们在出队列的时候用的是<code>size</code>值，也就是最后一个位置值。那么想想，我们这算队列么？这是栈啊。这是问题一。<br>另外我们知道 arraylist 其实其底层实现还是数组，那为啥我不直接用数组了？我基本上也不用 list 的功能啊。那这个地方就是第二个可以优化的地方了。<br>在第一个版本中为了运行正常，我把 size 的初始值定为 -1，我有点受不了，不行，这个地方我也要优化。<br>嗯，就优化这三个地方吧。</p>
+<h2 id="优化问题-ArrayList"><a href="#优化问题-ArrayList" class="headerlink" title="优化问题 ArrayList"></a>优化问题 ArrayList</h2><p>其实际很简单，把 ArrayList 改为数组 Object[]。原先 add 和 get 的地方直接使用 Object[idx] 代替即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object[] objects = <span class="keyword">new</span> Object[<span class="number">10</span>];</span><br><span class="line">objects[size] = t;</span><br><span class="line">t = objects.[size];</span><br></pre></td></tr></table></figure>
+
+<h2 id="优化入队和出队"><a href="#优化入队和出队" class="headerlink" title="优化入队和出队"></a>优化入队和出队</h2><p>队列的本质应该是先进先出的数据结构。这里用两个 idx 来代替，一个是入队索引，一个是出队索引。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> enqIdx = <span class="number">0</span>;<span class="comment">//入队的索引号</span></span><br><span class="line"><span class="keyword">int</span> deqIdx = <span class="number">0</span>;<span class="comment">//出队的索引号</span></span><br></pre></td></tr></table></figure>
+<p>这里有个问题，就是当索引到了我们的数组大小的时候，要把索引重新开始计数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>((enqIdx+<span class="number">1</span>)==objects.length)&#123;</span><br><span class="line">    enqIdx=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>((deqIdx+<span class="number">1</span>)==objects.length)&#123;</span><br><span class="line">    deqIdx=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="开始代码"><a href="#开始代码" class="headerlink" title="开始代码"></a>开始代码</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/04/05/what-is-garbage-to-need-collecter/#more" rel="contents">
+            <a class="btn" href="/2021/06/03/write-a-blockqueue-hand-by-hand-2/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -649,7 +1621,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2020/04/04/what-is-jvm-when-we-talk-about-it/">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2021/05/27/write-a-blockqueue-hand-by-hand/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -668,7 +1640,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/04/what-is-jvm-when-we-talk-about-it/" itemprop="url">查漏补缺 Java 系列 - JVM 基础概念</a></h1>
+                <a class="post-title-link" href="/2021/05/27/write-a-blockqueue-hand-by-hand/" itemprop="url">自己用 Java 写一个阻塞队列</a></h1>
         
 
         <div class="post-meta">
@@ -680,8 +1652,151 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-04T15:15:49+08:00">
-                2020-04-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-27T23:39:13+08:00">
+                2021-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/05/27/write-a-blockqueue-hand-by-hand/" class="leancloud_visitors" data-flag-title="自己用 Java 写一个阻塞队列">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="自己用-Java-写一个阻塞队列"><a href="#自己用-Java-写一个阻塞队列" class="headerlink" title="自己用 Java 写一个阻塞队列"></a>自己用 Java 写一个阻塞队列</h1><p>Java 内置了很多数据结构，阻塞队列也有。最近在看 Java 中的并发包：<code>Lock</code>&amp;<code>Condition</code>。然后看到了有人说可以用他们实现阻塞队列，然后我想着，那我是不是也可以写一个阻塞队列？</p>
+<h2 id="阻塞队列的特点"><a href="#阻塞队列的特点" class="headerlink" title="阻塞队列的特点"></a>阻塞队列的特点</h2><p>想着就想着先写一个，阻塞队列的特点：</p>
+<ol>
+<li>一个有限的存数据的队列；</li>
+<li>入队的时候要判断队列是否已满；已满的时候，入队的线程要阻塞等待，直到队列有空位，被唤醒继续入队；</li>
+<li>出队的时候要判断队列是否为空；为空的时候，获取队列数据的线程阻塞等待，直到队列有新数据的时候被唤醒继续执行；</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/05/27/write-a-blockqueue-hand-by-hand/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2021/05/20/linux-log-tool-logrotate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/20/linux-log-tool-logrotate/" itemprop="url">Linux 日志管理工具 - Logrotate</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-20T22:35:30+08:00">
+                2021-05-20
               </time>
             
 
@@ -703,8 +1818,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -720,7 +1835,7 @@
 
           
           
-             <span id="/2020/04/04/what-is-jvm-when-we-talk-about-it/" class="leancloud_visitors" data-flag-title="查漏补缺 Java 系列 - JVM 基础概念">
+             <span id="/2021/05/20/linux-log-tool-logrotate/" class="leancloud_visitors" data-flag-title="Linux 日志管理工具 - Logrotate">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -752,1058 +1867,10 @@
 
       
         
-          <h1 id="查漏补缺-Java-系列-JVM"><a href="#查漏补缺-Java-系列-JVM" class="headerlink" title="查漏补缺 Java 系列 - JVM"></a>查漏补缺 Java 系列 - JVM</h1><p>你知道 JVM 吗?作为Java开发人员，我想你肯定听过吧?那么你了解为什么需要 JVM 吗?它的作用是什么?给我带来了什么好处，又给我们带来了什么缺点了?接下来我们一起看看吧。</p>
-<h2 id="JVM-的基础概念"><a href="#JVM-的基础概念" class="headerlink" title="JVM 的基础概念"></a>JVM 的基础概念</h2><p>什么是 JVM ? </p>
-<p>JVM(Java Virtual Machine) 中文名称为 Java 虚拟机。它的作用是为 Java 提供跨平台运行的基础，也就是那句”一次编译，到处运行”的底层保证。 </p>
-<p>我想你肯定在 windows，Linux，MacOS 上都有运行过 Java 程序，那么你想一想，在一台裸机上面(指新买的机器装上一个纯的干净的系统 OS)，你直接编写一个 Main。java 能运行起来么?运行一个 Main。java，我想你肯定经过这几个步骤:安装 jdk(jre) -&gt; 编写 Main。java -&gt; <code>javac Main。java</code>生成<code>main。claas</code>文件 -&gt; <code>java Main</code>;那你想过吗?为什么你要安装一个 jkd(jre)，为什么你要先用<code>javac</code>命令，生成一个<code>claas</code>文件，然后才能执行了?</p>
-<p>你肯定有疑问。是的。我想跟你说的是其实 jvm 根本不知道你写的 java 文件里面的内容，一点都不知道。但是它认识你按照它的规范生成的 class 文件。然后它再将 class 文件翻译成机器识别的机器码。这样才能真正的运行你的程序了。也许这就是为什么很多人会说它是解释器吧。</p>
+          <h1 id="Linux-日志管理工具-Logrotate"><a href="#Linux-日志管理工具-Logrotate" class="headerlink" title="Linux 日志管理工具 - Logrotate"></a>Linux 日志管理工具 - Logrotate</h1><p>最近在使用 openresty(nginx) 作为容器平台 kubernetes 的入口路由服务；流程大致为前端新建一个路由规则的时候，获取到 svc 的 endpoint 然后将其作为 nginx 的后端服务。实时监听 svc 的状态然后更新 ep 到 nginx；这里遇到一个问题，nginx 本身没有做到日志切割，在上线一段时间之后，nginx 的 vhost_access.log 日志文件竟然达到了 50G ，导致出现系统磁盘告警。google 一下没发现 nginx 有自带的日志轮转的功能（其实也有，只是要装插件和重新编译）；在线上最好的方式是什么了？最后采用了 Logrotate 来做日志切割。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/04/04/what-is-jvm-when-we-talk-about-it/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2020/03/25/java-map-hashmap-concurrenthashmap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/25/java-map-hashmap-concurrenthashmap/" itemprop="url">Java HashMap</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-25T22:57:59+08:00">
-                2020-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2020/03/25/java-map-hashmap-concurrenthashmap/" class="leancloud_visitors" data-flag-title="Java HashMap">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="HashMap-介绍"><a href="#HashMap-介绍" class="headerlink" title="HashMap 介绍"></a>HashMap 介绍</h1><p>这个该怎么写了？其实网上好多博客说了这个，其实我看了之后，甚至看了源码之后我也不知道怎么写，源码中Hashmap的介绍大致如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hashmap 大致是等于hashtable的，除了非同步和允许null值之外；</span><br><span class="line">不保证数据的顺序；</span><br><span class="line">常数级别的get和put；</span><br><span class="line">最重要性能的两个属性： capacity  ， loadfactor</span><br><span class="line">0.75的加载因子数是一种空间和时间上的tradeoff（平衡）</span><br><span class="line">相同的hashcode()会降低它的性能</span><br><span class="line">hashmap的实现是非同步的；</span><br><span class="line">iterator fail-fast ConcurrentModificationException.</span><br></pre></td></tr></table></figure>
-<p>首先我们介绍下它的内部数据结构吧。</p>
-<h2 id="HashMap的内部结构"><a href="#HashMap的内部结构" class="headerlink" title="HashMap的内部结构"></a>HashMap的内部结构</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/25/java-map-hashmap-concurrenthashmap/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2020/03/18/java-string-stringbuffer-stringbuilder/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/18/java-string-stringbuffer-stringbuilder/" itemprop="url">查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-18T23:30:30+08:00">
-                2020-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2020/03/18/java-string-stringbuffer-stringbuilder/" class="leancloud_visitors" data-flag-title="查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="查漏补缺-Java-系列-String，StringBuffer，StringBuilder有什么区别"><a href="#查漏补缺-Java-系列-String，StringBuffer，StringBuilder有什么区别" class="headerlink" title="查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别"></a>查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别</h1><h2 id="String，StringBuffer，StringBuilder-他们三者的优势和劣势？"><a href="#String，StringBuffer，StringBuilder-他们三者的优势和劣势？" class="headerlink" title="String，StringBuffer，StringBuilder 他们三者的优势和劣势？"></a>String，StringBuffer，StringBuilder 他们三者的优势和劣势？</h2><p>一般来说，Java中String是用来对字符串进行操作的类，是一个 Immutable 类，它是被声明为final class，所有的属性也是final的；String中的所有跟字符串修改的方法都是新建了一个String，就会产生很多额外的String对象；</p>
-<p>StringBuffer是一个线程安全的类，它的所有方法都加上了synchronized; StringBuffer还有个优点就是它在执行append的操作的时候将新的字符串插入到原来的串中，可能是末尾，也可能是中间位置；</p>
-<p>StringBuilder 是 Java 1.5 中新增的，它可以看成是StringBuffer的非线程安全实现版本。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/18/java-string-stringbuffer-stringbuilder/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/12/18/shell-operation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/18/shell-operation/" itemprop="url">shell-operation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-18T22:03:57+08:00">
-                2019-12-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/12/18/shell-operation/" class="leancloud_visitors" data-flag-title="shell-operation">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/12/18/nginx-http-1-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/18/nginx-http-1-1/" itemprop="url">nginx-http-1.1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-18T21:57:00+08:00">
-                2019-12-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/12/18/nginx-http-1-1/" class="leancloud_visitors" data-flag-title="nginx-http-1.1">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Nginx-Http-1-1-Host规范"><a href="#Nginx-Http-1-1-Host规范" class="headerlink" title="Nginx Http 1.1 Host规范"></a>Nginx Http 1.1 Host规范</h1><p>最近发现一个异常问题。一个web服务挂载在nginx后端，然后client通过socket连接后，构建成http-post请求，发现最后nginx会直接返回499，发现其实是客户端断链接，其实应该不对。<a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_ignore_client_abort">http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_ignore_client_abort</a></p>
-<p>之后的是http1.1的规范。<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc2616#section-14.23">https://tools.ietf.org/html/rfc2616#section-14.23</a> http1.1中，如果Host为空会直接返回400的状态码</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/12/01/kubernetes-tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/01/kubernetes-tips/" itemprop="url">ops 操作手册</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-01T18:09:17+08:00">
-                2019-12-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/12/01/kubernetes-tips/" class="leancloud_visitors" data-flag-title="ops 操作手册">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="给命令行增加快捷操作提示符"><a href="#给命令行增加快捷操作提示符" class="headerlink" title="给命令行增加快捷操作提示符"></a>给命令行增加快捷操作提示符</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source &lt;(kubectl completion bash) # setup autocomplete in bash into the current shell, bash-completion package should be installed first.echo &quot;source &lt;(kubectl completion bash)&quot; &gt;&gt; ~/.bashrc # add autocomplete permanently to your bash shell.</span><br><span class="line">alias k=kubectl</span><br><span class="line">complete -F __start_kubectl k</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/12/01/kubernetes-tips/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/09/13/datastruct-normal-sort-algorithm2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/13/datastruct-normal-sort-algorithm2/" itemprop="url">基础排序算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-13T19:14:07+08:00">
-                2019-09-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/09/13/datastruct-normal-sort-algorithm2/" class="leancloud_visitors" data-flag-title="基础排序算法">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="基础排序算法2"><a href="#基础排序算法2" class="headerlink" title="基础排序算法2"></a>基础排序算法2</h1><h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>归并排序的意义是将利用递归的思想，将一个大问题解决为可重复求解的小问题，最后合并这些小问题得出结果。<br>归并是直接数组对半分，分成两个子数组。然后对两个子数组再进行排序求解。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/13/datastruct-normal-sort-algorithm2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2019/09/10/datastruct-normal-sort-algorithm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/10/datastruct-normal-sort-algorithm/" itemprop="url">基础排序算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-10T21:35:29+08:00">
-                2019-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/09/10/datastruct-normal-sort-algorithm/" class="leancloud_visitors" data-flag-title="基础排序算法">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="基础排序算法"><a href="#基础排序算法" class="headerlink" title="基础排序算法"></a>基础排序算法</h1><p>每次一看算法就是，嗯，看懂了，每次自己写代码就是，嗯？这怎么写？？ 本文将自己理解的冒泡排序，插入排序，选择排序三种做一个总结。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/10/datastruct-normal-sort-algorithm/#more" rel="contents">
+            <a class="btn" href="/2021/05/20/linux-log-tool-logrotate/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1893,7 +1960,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">175</span>
+                <span class="site-state-item-count">176</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
