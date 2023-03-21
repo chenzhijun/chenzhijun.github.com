@@ -85,6 +85,25 @@
       </tags>
   </entry>
   <entry>
+    <title>排序算法-冒泡排序</title>
+    <url>/2017/03/16/algorithm-bubble/</url>
+    <content><![CDATA[<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><h3 id="排序原理"><a href="#排序原理" class="headerlink" title="排序原理"></a>排序原理</h3><p>冒泡排序是将最大或者最小的值先挑出来，然后依次类推，最终使得整个数组有序。比如我们在学校操场排队的时候，老师先叫你站好，站好之后，根据你们的身高找到一个最矮的，排到第一个，然后是第二个，然后这样依次类推…到最后就是一个身高顺序的队伍了。</p>
+<p><img src="/images/bubblesort.png"></p>
+<span id="more"></span>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">12</span>, <span class="number">35</span>, <span class="number">99</span>, <span class="number">18</span>, <span class="number">76</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a.length - i - <span class="number">1</span>; j++) &#123; <span class="comment">// 如果已经冒泡出来了i个数，则已经有i个数排好序，就无需再比较了 </span></span><br><span class="line">                <span class="keyword">if</span> (a[j] &lt; a[j + <span class="number">1</span>]) &#123;<span class="comment">//相邻两个位置交换</span></span><br><span class="line">                    <span class="keyword">int</span> t = a[j];</span><br><span class="line">                    a[j] = a[j + <span class="number">1</span>];</span><br><span class="line">                    a[j + <span class="number">1</span>] = t;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : a) &#123;</span><br><span class="line">            System.out.print(i + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这个是冒泡排序的代码，第一个for循环，指的是有多少个数需要进行排序；第二个for循环开始交换位置，将小(大)的数一个一个交换到结尾的位置。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">32</span>, <span class="number">2</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123; <span class="comment">// 先确定位置</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a.length; j++) &#123; <span class="comment">//确定位置的大小</span></span><br><span class="line">                <span class="keyword">if</span> (a[i] &lt; a[j]) &#123; <span class="comment">// 找到第i个位置，然后再第i个位置找到最优值</span></span><br><span class="line">                    <span class="keyword">int</span> t = a[i];</span><br><span class="line">                    a[i] = a[j];</span><br><span class="line">                    a[j] = t;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : a) &#123;</span><br><span class="line">            System.out.print(i + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这个代码是我自己写的，也是可以排序，只是这里将a[i]也用作交换基数（上面代码，a[i]没有参与运算），我这个算法貌似也算冒泡吧？</p>
+<h3 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h3><p>冒泡代码实现里面可以看到有两个for循环，时间复杂度为$O(N^2)$，空间复杂度为N。这个意思是什么？假设计算机每秒运行1亿次，对1亿个数排序，冒泡排序需要1亿秒(现代计算机肯定比这个快)。一天是多少秒了？86400秒。排序时间约等于1150天~，因此冒泡排序虽然易懂，很形象，但是一般公司都不会用到它。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据结构-队列</title>
     <url>/2017/03/23/algorithm-queue/</url>
     <content><![CDATA[<h2 id="数据结构-队列"><a href="#数据结构-队列" class="headerlink" title="数据结构-队列"></a>数据结构-队列</h2><blockquote>
@@ -105,25 +124,6 @@
       </categories>
       <tags>
         <tag>Algorithm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>排序算法-冒泡排序</title>
-    <url>/2017/03/16/algorithm-bubble/</url>
-    <content><![CDATA[<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><h3 id="排序原理"><a href="#排序原理" class="headerlink" title="排序原理"></a>排序原理</h3><p>冒泡排序是将最大或者最小的值先挑出来，然后依次类推，最终使得整个数组有序。比如我们在学校操场排队的时候，老师先叫你站好，站好之后，根据你们的身高找到一个最矮的，排到第一个，然后是第二个，然后这样依次类推…到最后就是一个身高顺序的队伍了。</p>
-<p><img src="/images/bubblesort.png"></p>
-<span id="more"></span>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">12</span>, <span class="number">35</span>, <span class="number">99</span>, <span class="number">18</span>, <span class="number">76</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a.length - i - <span class="number">1</span>; j++) &#123; <span class="comment">// 如果已经冒泡出来了i个数，则已经有i个数排好序，就无需再比较了 </span></span><br><span class="line">                <span class="keyword">if</span> (a[j] &lt; a[j + <span class="number">1</span>]) &#123;<span class="comment">//相邻两个位置交换</span></span><br><span class="line">                    <span class="keyword">int</span> t = a[j];</span><br><span class="line">                    a[j] = a[j + <span class="number">1</span>];</span><br><span class="line">                    a[j + <span class="number">1</span>] = t;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : a) &#123;</span><br><span class="line">            System.out.print(i + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这个是冒泡排序的代码，第一个for循环，指的是有多少个数需要进行排序；第二个for循环开始交换位置，将小(大)的数一个一个交换到结尾的位置。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">32</span>, <span class="number">2</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123; <span class="comment">// 先确定位置</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a.length; j++) &#123; <span class="comment">//确定位置的大小</span></span><br><span class="line">                <span class="keyword">if</span> (a[i] &lt; a[j]) &#123; <span class="comment">// 找到第i个位置，然后再第i个位置找到最优值</span></span><br><span class="line">                    <span class="keyword">int</span> t = a[i];</span><br><span class="line">                    a[i] = a[j];</span><br><span class="line">                    a[j] = t;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : a) &#123;</span><br><span class="line">            System.out.print(i + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这个代码是我自己写的，也是可以排序，只是这里将a[i]也用作交换基数（上面代码，a[i]没有参与运算），我这个算法貌似也算冒泡吧？</p>
-<h3 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h3><p>冒泡代码实现里面可以看到有两个for循环，时间复杂度为$O(N^2)$，空间复杂度为N。这个意思是什么？假设计算机每秒运行1亿次，对1亿个数排序，冒泡排序需要1亿秒(现代计算机肯定比这个快)。一天是多少秒了？86400秒。排序时间约等于1150天~，因此冒泡排序虽然易懂，很形象，但是一般公司都不会用到它。</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -198,6 +198,29 @@
       </tags>
   </entry>
   <entry>
+    <title>apec-804-problem</title>
+    <url>/2017/08/04/apec-804-problem/</url>
+    <content><![CDATA[<h2 id="7月25日问题"><a href="#7月25日问题" class="headerlink" title="7月25日问题"></a>7月25日问题</h2><h3 id="Persistable-QModel生成。"><a href="#Persistable-QModel生成。" class="headerlink" title="Persistable QModel生成。?"></a>Persistable QModel生成。?</h3><p>A: 其实这是一个QSL框架生成的，所有Entity都会生成一个QEntity类。</p>
+<h2 id="8月1日问题"><a href="#8月1日问题" class="headerlink" title="8月1日问题"></a>8月1日问题</h2><h3 id="maven-complier-install-package-的区别？"><a href="#maven-complier-install-package-的区别？" class="headerlink" title="maven complier install package 的区别？"></a>maven complier install package 的区别？</h3><p>A:complier只是编译，不会生成jar包，package生成jar包，但是不会将包发布到仓库，只在项目下，install会将jar包发布到仓库让别人也可以用</p>
+<h3 id="maven-install-跳过测试"><a href="#maven-install-跳过测试" class="headerlink" title="maven install 跳过测试?"></a>maven install 跳过测试?</h3><p>A: 执行的时候加上 -Dmaven.test.skip=true</p>
+<h3 id="jpa-插入枚举值得时候默认为1？"><a href="#jpa-插入枚举值得时候默认为1？" class="headerlink" title="jpa 插入枚举值得时候默认为1？"></a>jpa 插入枚举值得时候默认为1？</h3><p>A:默认使用 ordinal 值，其实应该为string</p>
+<h3 id="maven-设置java版本？"><a href="#maven-设置java版本？" class="headerlink" title="maven 设置java版本？"></a>maven 设置java版本？</h3><p>A: pom文件中加入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.maven.plugins&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;source&gt;1.8&lt;&#x2F;source&gt;</span><br><span class="line">                &lt;target&gt;1.8&lt;&#x2F;target&gt;</span><br><span class="line">            &lt;&#x2F;configuration&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">    &lt;&#x2F;plugins&gt;</span><br><span class="line">&lt;&#x2F;build&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="springboot-使用jrebel热加载？"><a href="#springboot-使用jrebel热加载？" class="headerlink" title="springboot 使用jrebel热加载？"></a>springboot 使用jrebel热加载？</h3><p>A: 现在pom文件里面加入<code>devtools</code>: 之后使用<code>ctrl+alt+shift+/</code>  选中<code>Registry</code>   勾上<code>app.running</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-devtools&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;&#x2F;optional&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="8月3日问题"><a href="#8月3日问题" class="headerlink" title="8月3日问题"></a>8月3日问题</h2><h3 id="SimpleDateFormate-日期格式类使用注意？"><a href="#SimpleDateFormate-日期格式类使用注意？" class="headerlink" title="SimpleDateFormate 日期格式类使用注意？"></a>SimpleDateFormate 日期格式类使用注意？</h3><p>A:日期工具类里面使用了SimpleDataFormate=&gt; format方法里面有个<code>calendar.setTime(date);</code>.<br>如果是多线程中，这个方法没有做同步Thread-A，有一个date，然后Thread-B有一个date，那么造成出现预料之外的结果，当然这种情况出现在共享一个SimpleDateFormate当中，既设置一个全局的simpleDateformat。如果在方法中设置局部变量的simpledateformate，那么局部变量是线程安全的。<br>当然追求效率可以使用ThreadLocal,设置局部缓存</p>
+<h3 id="Java-反射获取属性？"><a href="#Java-反射获取属性？" class="headerlink" title="Java 反射获取属性？"></a>Java 反射获取属性？</h3><p>A:注解是分为执行状态（运行，编译），执行位置（类，方法，属性），如果用<code>declared</code>， 包括所有非父类属性。如果不用<code>declared</code>，获取所有为public的属性<br><code>getFields()</code>===&gt; 获取所有属性为public的<br><code>getDeclaredFields()</code>===&gt; 获取所有非继承的数据(public,protect,default….)</p>
+]]></content>
+      <categories>
+        <category>Question</category>
+      </categories>
+      <tags>
+        <tag>Question</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>gitlab 安装与配置（一）</title>
     <url>/2018/03/30/code-in-gitlab/</url>
     <content><![CDATA[<p>很多公司都是使用的 svn 来管理代码，其实我感觉 git 肯定是未来的潮流。最近闲暇时间，在公司搭建了一个 GitLab ，正好可以记录一下。</p>
@@ -231,29 +254,6 @@
       </categories>
       <tags>
         <tag>gitlab</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>apec-804-problem</title>
-    <url>/2017/08/04/apec-804-problem/</url>
-    <content><![CDATA[<h2 id="7月25日问题"><a href="#7月25日问题" class="headerlink" title="7月25日问题"></a>7月25日问题</h2><h3 id="Persistable-QModel生成。"><a href="#Persistable-QModel生成。" class="headerlink" title="Persistable QModel生成。?"></a>Persistable QModel生成。?</h3><p>A: 其实这是一个QSL框架生成的，所有Entity都会生成一个QEntity类。</p>
-<h2 id="8月1日问题"><a href="#8月1日问题" class="headerlink" title="8月1日问题"></a>8月1日问题</h2><h3 id="maven-complier-install-package-的区别？"><a href="#maven-complier-install-package-的区别？" class="headerlink" title="maven complier install package 的区别？"></a>maven complier install package 的区别？</h3><p>A:complier只是编译，不会生成jar包，package生成jar包，但是不会将包发布到仓库，只在项目下，install会将jar包发布到仓库让别人也可以用</p>
-<h3 id="maven-install-跳过测试"><a href="#maven-install-跳过测试" class="headerlink" title="maven install 跳过测试?"></a>maven install 跳过测试?</h3><p>A: 执行的时候加上 -Dmaven.test.skip=true</p>
-<h3 id="jpa-插入枚举值得时候默认为1？"><a href="#jpa-插入枚举值得时候默认为1？" class="headerlink" title="jpa 插入枚举值得时候默认为1？"></a>jpa 插入枚举值得时候默认为1？</h3><p>A:默认使用 ordinal 值，其实应该为string</p>
-<h3 id="maven-设置java版本？"><a href="#maven-设置java版本？" class="headerlink" title="maven 设置java版本？"></a>maven 设置java版本？</h3><p>A: pom文件中加入：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.apache.maven.plugins&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;source&gt;1.8&lt;&#x2F;source&gt;</span><br><span class="line">                &lt;target&gt;1.8&lt;&#x2F;target&gt;</span><br><span class="line">            &lt;&#x2F;configuration&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">    &lt;&#x2F;plugins&gt;</span><br><span class="line">&lt;&#x2F;build&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="springboot-使用jrebel热加载？"><a href="#springboot-使用jrebel热加载？" class="headerlink" title="springboot 使用jrebel热加载？"></a>springboot 使用jrebel热加载？</h3><p>A: 现在pom文件里面加入<code>devtools</code>: 之后使用<code>ctrl+alt+shift+/</code>  选中<code>Registry</code>   勾上<code>app.running</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-devtools&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;&#x2F;optional&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="8月3日问题"><a href="#8月3日问题" class="headerlink" title="8月3日问题"></a>8月3日问题</h2><h3 id="SimpleDateFormate-日期格式类使用注意？"><a href="#SimpleDateFormate-日期格式类使用注意？" class="headerlink" title="SimpleDateFormate 日期格式类使用注意？"></a>SimpleDateFormate 日期格式类使用注意？</h3><p>A:日期工具类里面使用了SimpleDataFormate=&gt; format方法里面有个<code>calendar.setTime(date);</code>.<br>如果是多线程中，这个方法没有做同步Thread-A，有一个date，然后Thread-B有一个date，那么造成出现预料之外的结果，当然这种情况出现在共享一个SimpleDateFormate当中，既设置一个全局的simpleDateformat。如果在方法中设置局部变量的simpledateformate，那么局部变量是线程安全的。<br>当然追求效率可以使用ThreadLocal,设置局部缓存</p>
-<h3 id="Java-反射获取属性？"><a href="#Java-反射获取属性？" class="headerlink" title="Java 反射获取属性？"></a>Java 反射获取属性？</h3><p>A:注解是分为执行状态（运行，编译），执行位置（类，方法，属性），如果用<code>declared</code>， 包括所有非父类属性。如果不用<code>declared</code>，获取所有为public的属性<br><code>getFields()</code>===&gt; 获取所有属性为public的<br><code>getDeclaredFields()</code>===&gt; 获取所有非继承的数据(public,protect,default….)</p>
-]]></content>
-      <categories>
-        <category>Question</category>
-      </categories>
-      <tags>
-        <tag>Question</tag>
       </tags>
   </entry>
   <entry>
@@ -300,6 +300,41 @@
 <p>sort -k a,bn<br>a为第几列，b为几个字符，n为数字比较，1234，1222，从第一个字符开始，到第四个字符都会比较</p>
 <p>4: 给基础镜像安装常用工具：ping,curl,wget,netstat。一般源里面就已经包含了，ping的源为：<code>apt install inetutils-ping或者 apt install net-tools</code></p>
 <p>5：某次给rancher平台扩容，直接将主机加上之后，将原来的应用直接*2启动，平台爆掉了。server不到。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>修改 Linux Core 文件目录</title>
+    <url>/2019/05/08/core-file/</url>
+    <content><![CDATA[<h1 id="Linux-Core-文件"><a href="#Linux-Core-文件" class="headerlink" title="Linux Core 文件"></a>Linux Core 文件</h1><p>一次线上的经历，一台现在主机突然磁盘根目录占到98%。我们其实是挂了数据盘的，不知道为啥突然会<br>在根目录下磁盘空空间不足报警。上到主机一看，原来是某个应用打了dump了个core文件。文件如：core.xxxx</p>
+<p>用gdb调试了一下：</p>
+<p><code>gdb core.14321</code></p>
+<p>显示出是哪个进程dump的core文件。</p>
+<p>之后我们就开始分析core文件怎么避免让根目录占满。</p>
+<p>首先用<code>ulimit -a</code>查看到core文件的大小。然后用<code>ulimit -c</code>设置大小，单位是block，<br>1block=512bytes</p>
+<p>然后修改core文件到数据盘的目录：</p>
+<p><code>echo /data/coredump/core.%e.%p&gt; /proc/sys/kernel/core_pattern</code></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringBoot 文件处理接口</title>
+    <url>/2019/05/24/create-springboot-file-download-api/</url>
+    <content><![CDATA[<h1 id="Spingboot-下载文件"><a href="#Spingboot-下载文件" class="headerlink" title="Spingboot 下载文件"></a>Spingboot 下载文件</h1><h2 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h2><p>有时候会遇到一些需求，需要给前端提供下载文件的接口。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="meta">@GetMapping(&quot;/export&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;Resource&gt; <span class="title">export</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        HSSFWorkbook workbook = <span class="keyword">new</span> HSSFWorkbook();</span><br><span class="line">        ByteArrayOutputStream outputStream = <span class="keyword">new</span> ByteArrayOutputStream()</span><br><span class="line">        workbook.write(outputStream);</span><br><span class="line">        Resource file = <span class="keyword">new</span> ByteArrayResource(outputStream.toByteArray());</span><br><span class="line">        String filename=<span class="string">&quot;app.txt&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,</span><br><span class="line">                <span class="string">&quot;attachment; filename=&quot;</span>+filename).body(file);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>可以看到我创建了一个 Resource 然后返回了这个 resource。感觉是不是超级简单。确实比较简单，不过如果这个接口在外层还有一个应用参数拦截层（输入参数和返回参数都json打印）的话，需要注意将参数序列化成json数据的时候，这里是会出异常。</p>
+<p>上面的代码中就是流的转换了，让我想起了java中的io流装饰器模式。</p>
+<p>在上面的代码中主要注意在返回的head里面需要加入<code>header(HttpHeaders.CONTENT_DISPOSITION,&quot;attachment; filename=&quot;+filename)</code>;这里的filename就是下载后的文件名。</p>
+<h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@PostMapping(&quot;/file&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">handleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    String originalFilename = file.getOriginalFilename();</span><br><span class="line">    System.out.println(originalFilename);</span><br><span class="line">    System.out.println(file.getName());</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String string = Base64.getEncoder().encodeToString(file.getBytes());</span><br><span class="line">        <span class="keyword">return</span> string;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;emmmmmmm. error&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有下载当然有上传了， 上面就是将文件上传的操作。</p>
 ]]></content>
   </entry>
   <entry>
@@ -351,25 +386,6 @@
       </tags>
   </entry>
   <entry>
-    <title>修改 Linux Core 文件目录</title>
-    <url>/2019/05/08/core-file/</url>
-    <content><![CDATA[<h1 id="Linux-Core-文件"><a href="#Linux-Core-文件" class="headerlink" title="Linux Core 文件"></a>Linux Core 文件</h1><p>一次线上的经历，一台现在主机突然磁盘根目录占到98%。我们其实是挂了数据盘的，不知道为啥突然会<br>在根目录下磁盘空空间不足报警。上到主机一看，原来是某个应用打了dump了个core文件。文件如：core.xxxx</p>
-<p>用gdb调试了一下：</p>
-<p><code>gdb core.14321</code></p>
-<p>显示出是哪个进程dump的core文件。</p>
-<p>之后我们就开始分析core文件怎么避免让根目录占满。</p>
-<p>首先用<code>ulimit -a</code>查看到core文件的大小。然后用<code>ulimit -c</code>设置大小，单位是block，<br>1block=512bytes</p>
-<p>然后修改core文件到数据盘的目录：</p>
-<p><code>echo /data/coredump/core.%e.%p&gt; /proc/sys/kernel/core_pattern</code></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>基础排序算法</title>
     <url>/2019/09/10/datastruct-normal-sort-algorithm/</url>
     <content><![CDATA[<h1 id="基础排序算法"><a href="#基础排序算法" class="headerlink" title="基础排序算法"></a>基础排序算法</h1><p>每次一看算法就是，嗯，看懂了，每次自己写代码就是，嗯？这怎么写？？ 本文将自己理解的冒泡排序，插入排序，选择排序三种做一个总结。</p>
@@ -405,22 +421,6 @@
       <tags>
         <tag>排序算法</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>SpringBoot 文件处理接口</title>
-    <url>/2019/05/24/create-springboot-file-download-api/</url>
-    <content><![CDATA[<h1 id="Spingboot-下载文件"><a href="#Spingboot-下载文件" class="headerlink" title="Spingboot 下载文件"></a>Spingboot 下载文件</h1><h2 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h2><p>有时候会遇到一些需求，需要给前端提供下载文件的接口。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="meta">@GetMapping(&quot;/export&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity&lt;Resource&gt; <span class="title">export</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        HSSFWorkbook workbook = <span class="keyword">new</span> HSSFWorkbook();</span><br><span class="line">        ByteArrayOutputStream outputStream = <span class="keyword">new</span> ByteArrayOutputStream()</span><br><span class="line">        workbook.write(outputStream);</span><br><span class="line">        Resource file = <span class="keyword">new</span> ByteArrayResource(outputStream.toByteArray());</span><br><span class="line">        String filename=<span class="string">&quot;app.txt&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,</span><br><span class="line">                <span class="string">&quot;attachment; filename=&quot;</span>+filename).body(file);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<p>可以看到我创建了一个 Resource 然后返回了这个 resource。感觉是不是超级简单。确实比较简单，不过如果这个接口在外层还有一个应用参数拦截层（输入参数和返回参数都json打印）的话，需要注意将参数序列化成json数据的时候，这里是会出异常。</p>
-<p>上面的代码中就是流的转换了，让我想起了java中的io流装饰器模式。</p>
-<p>在上面的代码中主要注意在返回的head里面需要加入<code>header(HttpHeaders.CONTENT_DISPOSITION,&quot;attachment; filename=&quot;+filename)</code>;这里的filename就是下载后的文件名。</p>
-<h2 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@PostMapping(&quot;/file&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">handleFileUpload</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    String originalFilename = file.getOriginalFilename();</span><br><span class="line">    System.out.println(originalFilename);</span><br><span class="line">    System.out.println(file.getName());</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String string = Base64.getEncoder().encodeToString(file.getBytes());</span><br><span class="line">        <span class="keyword">return</span> string;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;emmmmmmm. error&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>有下载当然有上传了， 上面就是将文件上传的操作。</p>
-]]></content>
   </entry>
   <entry>
     <title>基础排序算法</title>
@@ -514,6 +514,33 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker修改默认存储空间</title>
+    <url>/2019/05/24/docker-default-storage/</url>
+    <content><![CDATA[<h1 id="Docker-修改默认存储空间"><a href="#Docker-修改默认存储空间" class="headerlink" title="Docker 修改默认存储空间"></a>Docker 修改默认存储空间</h1><p>最近碰到一个问题，由于需要下载很多的镜像文件，如果使用docker安装时候的默认存储空间，那肯定是不行的。默认的存储空间可以使用：<code>docker info</code>看到：在输出的信息里面会发现:<code>Docker Root Dir: /var/lib/docker</code>；这个目录其实就是在根目录下吗，如果下载的镜像数量过大并且又大，那么肯定是的完蛋的~~~</p>
+<p>所以就需要修改docker的存储空间。</p>
+<span id="more"></span>
+<p>我们的版本是：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker -v</span><br><span class="line">Docker version 1.13.1, build 07f3374/1.13.1</span><br></pre></td></tr></table></figure>
+
+<p>所以对于1.13+以上的版本应该都是没问题的，1.13以下的你可以自己尝试下，不一定能行，也不一定说不能行。</p>
+<p>在前面：<font color="red">修改有风险，操作需谨慎</font>，在我修改了目录之后，容器和镜像文件都不能使用<code>docker ps/image</code>看到了，所以操作前一点要备份好。当然你把存储路径改回去当然也是可以看到的。</p>
+<h2 id="方式一：修改-etc-docker-daemon-json"><a href="#方式一：修改-etc-docker-daemon-json" class="headerlink" title="方式一：修改/etc/docker/daemon.json"></a>方式一：修改/etc/docker/daemon.json</h2><p>修改这个json文件是最简单也是最方便的，没有之一。修改如下：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;insecure-registries&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;registry.xxx.com&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;graph&quot;</span>: <span class="string">&quot;/docker-data/docker&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最重要的就是<code>&quot;graph&quot;: &quot;/docker-data/docker&quot;</code>，这个就是指定存储位置。</p>
+<h2 id="方式二：修改-usr-lib-systemd-system-docker-service"><a href="#方式二：修改-usr-lib-systemd-system-docker-service" class="headerlink" title="方式二：修改/usr/lib/systemd/system/docker.service"></a>方式二：修改/usr/lib/systemd/system/docker.service</h2><p>修改docker的启动命令也能做到将存储默认位置修改。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Docker Application Container Engine</span><br><span class="line">Documentation&#x3D;http:&#x2F;&#x2F;docs.docker.com</span><br><span class="line">After&#x3D;network.target</span><br><span class="line">Wants&#x3D;docker-storage-setup.service</span><br><span class="line">Requires&#x3D;docker-cleanup.timer</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;notify</span><br><span class="line">NotifyAccess&#x3D;main</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;run&#x2F;containers&#x2F;registries.conf</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker-storage</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker-network</span><br><span class="line">Environment&#x3D;GOTRACEBACK&#x3D;crash</span><br><span class="line">Environment&#x3D;DOCKER_HTTP_HOST_COMPAT&#x3D;1</span><br><span class="line">Environment&#x3D;PATH&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker:&#x2F;usr&#x2F;bin:&#x2F;usr&#x2F;sbin</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;dockerd-current \</span><br><span class="line">          --add-runtime docker-runc&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-runc-current \</span><br><span class="line">          --default-runtime&#x3D;docker-runc \</span><br><span class="line">          --exec-opt native.cgroupdriver&#x3D;systemd \</span><br><span class="line">          --userland-proxy-path&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-proxy-current \</span><br><span class="line">          --init-path&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-init-current \</span><br><span class="line">          --seccomp-profile&#x3D;&#x2F;etc&#x2F;docker&#x2F;seccomp.json \</span><br><span class="line">          $OPTIONS \</span><br><span class="line">          $DOCKER_STORAGE_OPTIONS \</span><br><span class="line">          $DOCKER_NETWORK_OPTIONS \</span><br><span class="line">          $ADD_REGISTRY \</span><br><span class="line">          $BLOCK_REGISTRY \</span><br><span class="line">          $INSECURE_REGISTRY \</span><br><span class="line">          $REGISTRIES</span><br><span class="line">ExecReload&#x3D;&#x2F;bin&#x2F;kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE&#x3D;1048576</span><br><span class="line">LimitNPROC&#x3D;1048576</span><br><span class="line">LimitCORE&#x3D;infinity</span><br><span class="line">TimeoutStartSec&#x3D;0</span><br><span class="line">Restart&#x3D;on-abnormal</span><br><span class="line">KillMode&#x3D;process</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>你可以看到<code>DOCKER_STORAGE_OPTIONS</code>,然后查看文件:<code>/etc/sysconfig/docker-storage</code>。在<code>DOCKER_STORAGE_OPTIONS=&quot;--storage-driver overlay2 &quot;</code>上加上<code>DOCKER_STORAGE_OPTIONS=&quot;--storage-driver overlay2 --graph /docker-data/docker</code> 然后使用<code>systemctl daemon-reload</code>,<code>systemctl restart docker</code>就可以了。</p>
+<p>当然如果你直接在<code>docker.service</code>文件里面改也是可以的，放到配置文件里面也行，都ok。想怎样就怎样~~</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Dockerfile 编写</title>
     <url>/2017/09/19/docker-dockerfile/</url>
     <content><![CDATA[<h2 id="Dockerfile-文件导读"><a href="#Dockerfile-文件导读" class="headerlink" title="Dockerfile 文件导读"></a>Dockerfile 文件导读</h2><p>Dockerfile 是一个包含了很多指令的文本文件，基于这些指令我们可以使用build创建一个image。</p>
@@ -586,7 +613,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;Labels&quot;: &#123;</span><br><span class="line">    &quot;com.example.vendor&quot;: &quot;ACME Incorporated&quot;</span><br><span class="line">    &quot;com.example.label-with-value&quot;: &quot;foo&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0&quot;,</span><br><span class="line">    &quot;description&quot;: &quot;This text illustrates that label-values can span multiple lines.&quot;,</span><br><span class="line">    &quot;multi.label1&quot;: &quot;value1&quot;,</span><br><span class="line">    &quot;multi.label2&quot;: &quot;value2&quot;,</span><br><span class="line">    &quot;other&quot;: &quot;value3&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
 <h4 id="MAINTAINER-deprecated"><a href="#MAINTAINER-deprecated" class="headerlink" title="MAINTAINER [deprecated]"></a>MAINTAINER [deprecated]</h4><p><code>MAINTAINER &lt;name&gt;</code> 作者信息</p>
-<p>使用LABEL更加灵活：LABEL maintainer=”<a href="mailto:&#83;&#x76;&#x65;&#x6e;&#68;&#111;&#119;&#x69;&#x64;&#101;&#x69;&#x74;&#64;&#104;&#111;&#109;&#101;&#x2e;&#x6f;&#114;&#x67;&#46;&#x61;&#117;">&#83;&#x76;&#x65;&#x6e;&#68;&#111;&#119;&#x69;&#x64;&#101;&#x69;&#x74;&#64;&#104;&#111;&#109;&#101;&#x2e;&#x6f;&#114;&#x67;&#46;&#x61;&#117;</a>“</p>
+<p>使用LABEL更加灵活：LABEL maintainer=”<a href="mailto:&#83;&#118;&#101;&#x6e;&#x44;&#x6f;&#119;&#x69;&#x64;&#x65;&#x69;&#x74;&#64;&#x68;&#x6f;&#x6d;&#x65;&#x2e;&#111;&#114;&#x67;&#46;&#x61;&#117;">&#83;&#118;&#101;&#x6e;&#x44;&#x6f;&#119;&#x69;&#x64;&#x65;&#x69;&#x74;&#64;&#x68;&#x6f;&#x6d;&#x65;&#x2e;&#111;&#114;&#x67;&#46;&#x61;&#117;</a>“</p>
 <h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p><code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code></p>
 <p>在容器运行的时候暴露端口，不会自己和宿主机绑定。如果要和宿主机绑定需要-p，制定端口。或者-P随机系统端口。</p>
 <h4 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key&gt;&#x3D;&lt;value&gt; ...</span><br></pre></td></tr></table></figure>
@@ -645,33 +672,6 @@
 
 <p>docker inspect:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> docker inspect test:1.1</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Id&quot;: &quot;sha256:62bfe542f98957d45fada954dcbb8ced1a1d8a65e42657b98c40f88b559f690e&quot;,</span><br><span class="line">        &quot;RepoTags&quot;: [</span><br><span class="line">            &quot;test:1.1&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;RepoDigests&quot;: [],</span><br><span class="line">        &quot;Parent&quot;: &quot;sha256:13feb93f43f085b44a37f6272b55f4f9bcf1b899d441f0dec83561904c8cea40&quot;,</span><br><span class="line">        &quot;Comment&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Created&quot;: &quot;2017-09-19T15:23:52.690407548Z&quot;,</span><br><span class="line">        &quot;Container&quot;: &quot;2185ad28d9256023fdc96fad564c8c0eb699d4f6f9b09d4acabe73beeee6790c&quot;,</span><br><span class="line">        &quot;ContainerConfig&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;44c72a15738e&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080&#x2F;tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;bin&quot;,</span><br><span class="line">                &quot;foo&#x3D;&#x2F;bar&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;&#x2F;bin&#x2F;sh&quot;,</span><br><span class="line">                &quot;-c&quot;,</span><br><span class="line">                &quot;#(nop) &quot;,</span><br><span class="line">                &quot;EXPOSE 8080&#x2F;tcp&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ArgsEscaped&quot;: true,</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:13feb93f43f085b44a37f6272b55f4f9bcf1b899d441f0dec83561904c8cea40&quot;,</span><br><span class="line">            &quot;Volumes&quot;: &#123;</span><br><span class="line">                &quot;&#x2F;myvol&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: [],</span><br><span class="line">            &quot;Labels&quot;: &#123;</span><br><span class="line">                &quot;author&quot;: &quot;chenzhijun&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;DockerVersion&quot;: &quot;17.06.2-ce&quot;,</span><br><span class="line">        &quot;Author&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Config&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;44c72a15738e&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080&#x2F;tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;bin&quot;,</span><br><span class="line">                &quot;foo&#x3D;&#x2F;bar&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;sh&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ArgsEscaped&quot;: true,</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:13feb93f43f085b44a37f6272b55f4f9bcf1b899d441f0dec83561904c8cea40&quot;,</span><br><span class="line">            &quot;Volumes&quot;: &#123;</span><br><span class="line">                &quot;&#x2F;myvol&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: [],</span><br><span class="line">            &quot;Labels&quot;: &#123;</span><br><span class="line">                &quot;author&quot;: &quot;chenzhijun&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Architecture&quot;: &quot;amd64&quot;,</span><br><span class="line">        &quot;Os&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;Size&quot;: 1129213,</span><br><span class="line">        &quot;VirtualSize&quot;: 1129213,</span><br><span class="line">        &quot;GraphDriver&quot;: &#123;</span><br><span class="line">            &quot;Data&quot;: null,</span><br><span class="line">            &quot;Name&quot;: &quot;aufs&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;RootFS&quot;: &#123;</span><br><span class="line">            &quot;Type&quot;: &quot;layers&quot;,</span><br><span class="line">            &quot;Layers&quot;: [</span><br><span class="line">                &quot;sha256:08c2295a7fa5c220b0f60c994362d290429ad92f6e0235509db91582809442f3&quot;,</span><br><span class="line">                &quot;sha256:76229699c752a26051d4861c0e481d45e9353f66f181fd496a5ef39a8833fbff&quot;,</span><br><span class="line">                &quot;sha256:02a0230b59819ae96f49a8603d5b1630cd357e140f48bf1e03811c5f002d8b5f&quot;,</span><br><span class="line">                &quot;sha256:c916120dc28545b2869e046d28ababe83cfa76c2cb31c52e497450bfebb1aafa&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker修改默认存储空间</title>
-    <url>/2019/05/24/docker-default-storage/</url>
-    <content><![CDATA[<h1 id="Docker-修改默认存储空间"><a href="#Docker-修改默认存储空间" class="headerlink" title="Docker 修改默认存储空间"></a>Docker 修改默认存储空间</h1><p>最近碰到一个问题，由于需要下载很多的镜像文件，如果使用docker安装时候的默认存储空间，那肯定是不行的。默认的存储空间可以使用：<code>docker info</code>看到：在输出的信息里面会发现:<code>Docker Root Dir: /var/lib/docker</code>；这个目录其实就是在根目录下吗，如果下载的镜像数量过大并且又大，那么肯定是的完蛋的~~~</p>
-<p>所以就需要修改docker的存储空间。</p>
-<span id="more"></span>
-<p>我们的版本是：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker -v</span><br><span class="line">Docker version 1.13.1, build 07f3374/1.13.1</span><br></pre></td></tr></table></figure>
-
-<p>所以对于1.13+以上的版本应该都是没问题的，1.13以下的你可以自己尝试下，不一定能行，也不一定说不能行。</p>
-<p>在前面：<font color="red">修改有风险，操作需谨慎</font>，在我修改了目录之后，容器和镜像文件都不能使用<code>docker ps/image</code>看到了，所以操作前一点要备份好。当然你把存储路径改回去当然也是可以看到的。</p>
-<h2 id="方式一：修改-etc-docker-daemon-json"><a href="#方式一：修改-etc-docker-daemon-json" class="headerlink" title="方式一：修改/etc/docker/daemon.json"></a>方式一：修改/etc/docker/daemon.json</h2><p>修改这个json文件是最简单也是最方便的，没有之一。修改如下：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;insecure-registries&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;registry.xxx.com&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">&quot;graph&quot;</span>: <span class="string">&quot;/docker-data/docker&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>最重要的就是<code>&quot;graph&quot;: &quot;/docker-data/docker&quot;</code>，这个就是指定存储位置。</p>
-<h2 id="方式二：修改-usr-lib-systemd-system-docker-service"><a href="#方式二：修改-usr-lib-systemd-system-docker-service" class="headerlink" title="方式二：修改/usr/lib/systemd/system/docker.service"></a>方式二：修改/usr/lib/systemd/system/docker.service</h2><p>修改docker的启动命令也能做到将存储默认位置修改。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Docker Application Container Engine</span><br><span class="line">Documentation&#x3D;http:&#x2F;&#x2F;docs.docker.com</span><br><span class="line">After&#x3D;network.target</span><br><span class="line">Wants&#x3D;docker-storage-setup.service</span><br><span class="line">Requires&#x3D;docker-cleanup.timer</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;notify</span><br><span class="line">NotifyAccess&#x3D;main</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;run&#x2F;containers&#x2F;registries.conf</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker-storage</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker-network</span><br><span class="line">Environment&#x3D;GOTRACEBACK&#x3D;crash</span><br><span class="line">Environment&#x3D;DOCKER_HTTP_HOST_COMPAT&#x3D;1</span><br><span class="line">Environment&#x3D;PATH&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker:&#x2F;usr&#x2F;bin:&#x2F;usr&#x2F;sbin</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;dockerd-current \</span><br><span class="line">          --add-runtime docker-runc&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-runc-current \</span><br><span class="line">          --default-runtime&#x3D;docker-runc \</span><br><span class="line">          --exec-opt native.cgroupdriver&#x3D;systemd \</span><br><span class="line">          --userland-proxy-path&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-proxy-current \</span><br><span class="line">          --init-path&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-init-current \</span><br><span class="line">          --seccomp-profile&#x3D;&#x2F;etc&#x2F;docker&#x2F;seccomp.json \</span><br><span class="line">          $OPTIONS \</span><br><span class="line">          $DOCKER_STORAGE_OPTIONS \</span><br><span class="line">          $DOCKER_NETWORK_OPTIONS \</span><br><span class="line">          $ADD_REGISTRY \</span><br><span class="line">          $BLOCK_REGISTRY \</span><br><span class="line">          $INSECURE_REGISTRY \</span><br><span class="line">          $REGISTRIES</span><br><span class="line">ExecReload&#x3D;&#x2F;bin&#x2F;kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE&#x3D;1048576</span><br><span class="line">LimitNPROC&#x3D;1048576</span><br><span class="line">LimitCORE&#x3D;infinity</span><br><span class="line">TimeoutStartSec&#x3D;0</span><br><span class="line">Restart&#x3D;on-abnormal</span><br><span class="line">KillMode&#x3D;process</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>你可以看到<code>DOCKER_STORAGE_OPTIONS</code>,然后查看文件:<code>/etc/sysconfig/docker-storage</code>。在<code>DOCKER_STORAGE_OPTIONS=&quot;--storage-driver overlay2 &quot;</code>上加上<code>DOCKER_STORAGE_OPTIONS=&quot;--storage-driver overlay2 --graph /docker-data/docker</code> 然后使用<code>systemctl daemon-reload</code>,<code>systemctl restart docker</code>就可以了。</p>
-<p>当然如果你直接在<code>docker.service</code>文件里面改也是可以的，放到配置文件里面也行，都ok。想怎样就怎样~~</p>
-]]></content>
       <categories>
         <category>Docker</category>
       </categories>
@@ -917,7 +917,7 @@ docker run -d --name test -p 13306:3306 -e MYSQL_ROOT_PASSWORD=root123456 -e MYS
 
 <p>8:上传镜像到hub.docker.com,首先保证在hub上有一个相同名字的镜像地址，跟git类似。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker login</span><br><span class="line">username:</span><br><span class="line">password:</span><br><span class="line"></span><br><span class="line">docker push chenzhijun&#x2F;javaweb</span><br></pre></td></tr></table></figure>
-<p>好了，暂时照着这个操作就基本上可以了。 如果遇到问题可以给我留言，也可以联系我的邮箱：<a href="mailto:&#118;&#98;&#x6f;&#x6f;&#x6b;&#99;&#x68;&#101;&#110;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#109;">&#118;&#98;&#x6f;&#x6f;&#x6b;&#99;&#x68;&#101;&#110;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#109;</a></p>
+<p>好了，暂时照着这个操作就基本上可以了。 如果遇到问题可以给我留言，也可以联系我的邮箱：<a href="mailto:&#x76;&#98;&#x6f;&#111;&#107;&#99;&#x68;&#x65;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;">&#x76;&#98;&#x6f;&#111;&#107;&#99;&#x68;&#x65;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#109;</a></p>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -1881,59 +1881,6 @@ channel分为非缓存chan和有缓存chan，  -->
       </tags>
   </entry>
   <entry>
-    <title>Hibernate 校验参数</title>
-    <url>/2018/01/31/hibernater-validate-properties/</url>
-    <content><![CDATA[<h1 id="Hibernater-Validator-校验参数"><a href="#Hibernater-Validator-校验参数" class="headerlink" title="Hibernater Validator 校验参数"></a>Hibernater Validator 校验参数</h1><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>如果我们使用spring mvc 那么肯定知道在方法中我们可以使用注解对参数进行校验：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/user)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">(<span class="meta">@Valid</span> User user)</span></span>&#123;</span><br><span class="line">    User userP = user;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个时候通常是在User对象里面使用一些注解来判断如：@NotNull,@NotEmpty。这些bean验证方法是遵循JSR303和JSR380规范的，目前的情况可以去这里查看详情：<a href="http://beanvalidation.org/2.0/">http://beanvalidation.org/2.0/</a>。</p>
-<p>实现规范的这些中有一个包是<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints-simple">Hibernate Validator</a>，这个包不是我们的ORM框架，可能是orm太出名了，以致于提到Hibernate大家都会想到SSH的Hibernate ORM，其实Hibernate Validator是一个非常完善的bean Validator。如果我们不想自己去实现一套，其实是可以引入这个包的。开源社区遇到的情况肯定会比我们自己要多。而且它也支持我们自定义注解来进行校验。</p>
-<p>在我们的系统中，是无法采用@Valid这种方式的，因为我们有一些特别的操作处理所以不能使用它。如果你想自己使用的话，可能可以像我这样，写一个Validtor工具类，然后在需要的地方调用：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator.class).configure().failFast(<span class="keyword">true</span>).buildValidatorFactory().getValidator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;message:&quot;</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">&quot;messageKey:&quot;</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;参数校验失败:%s&quot;</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>之后你可以在属性上面这样定义：</p>
-<p><img src="/images/qiniu/2018-01-31-20-00-07.png" alt="2018-01-31-20-00-07"></p>
-<p>如果需要使用校验的，只需要使用<span id="more"></span></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ValidatorUtil.validate(obj);</span><br></pre></td></tr></table></figure>
-
-<p>如果有异常它会直接抛出来。</p>
-<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>如果在某些场景下，提供给我们的注解不够用，那我们是否可以自己进行扩展了？ 好的架构，是允许做扩展的。validator也可以支持自定义注解。自定义注解详解在这里<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints">自定义验证规则注解</a>。总的来说就是三步：</p>
-<ol>
-<li>创建一个注解，并且定义一些校验规则；</li>
-<li>继承Validator；</li>
-<li>定义默认的error message</li>
-</ol>
-<p>现在我们尝试定义一个自定义注解：</p>
-<ol start="0">
-<li>准备，定义一个枚举，接下来用到：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">CaseMode</span> </span>&#123;</span><br><span class="line">    UPPER,</span><br><span class="line">    LOWER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>创建一个注解:<code>CheckCase</code>：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Constraint;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Payload;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123; FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE &#125;)</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@Constraint(validatedBy = CheckCaseValidator.class)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CheckCase &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> &quot;</span>&#123;org.hibernate.validator.referenceguide.chapter06.CheckCase.<span class="string">&quot; +</span></span><br><span class="line"><span class="string">            &quot;</span>message&#125;<span class="string">&quot;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;?&gt;[] groups() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;? extends Payload&gt;[] payload() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    CaseMode value();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>继承Validator,并且将实现自己的规则逻辑</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidatorContext;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheckCaseValidator</span> <span class="keyword">implements</span> <span class="title">ConstraintValidator</span>&lt;<span class="title">CheckCase</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CaseMode caseMode;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CheckCase constraintAnnotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.caseMode = constraintAnnotation.value();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String object, ConstraintValidatorContext constraintContext)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ( object == <span class="keyword">null</span> ) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ( caseMode == CaseMode.UPPER ) &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toUpperCase() );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toLowerCase() );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，我们这里的主要逻辑就在isValid中处理的。</p>
-<ol start="3">
-<li>定义error message ，这个错误提示在哪里定义了？我们可以看到在<code>org.hibernate.validator.resource</code>下有很多的properties文件，<br>这是因为Hibernate做了国际化处理。<br><img src="/images/qiniu/2018-01-31-20-14-03.png" alt="2018-01-31-20-14-03"></li>
-</ol>
-<p>如果我们需要重写，只需要将其中的中文的属性文件进行重写放到resource目录就可以了。在定义的注解中我们可以将message指定为我们复制的properties文中<br>的key，这样就能完成error message的自定义了。</p>
-<p>源码：<a href="https://gitee.com/chenzhijun/validator">https://gitee.com/chenzhijun/validator</a></p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Validator</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Travis-CI持续构建Hexo博客</title>
     <url>/2017/12/19/hexo-travis-ci/</url>
     <content><![CDATA[<h2 id="使用Travis-CI持续构建Hexo博客"><a href="#使用Travis-CI持续构建Hexo博客" class="headerlink" title="使用Travis-CI持续构建Hexo博客"></a>使用Travis-CI持续构建Hexo博客</h2><p>我是用的 Hexo+Github Page 来构建自己的博客。在 Github 创建<code>your_github_name.github.io</code>仓库的时候，可以直接使用<code>your_github_name.github.io</code>作为你的博客域名站点。详细的话，可以自己去 google 下使用 Hexo搭建个人博客。</p>
@@ -1998,6 +1945,59 @@ channel分为非缓存chan和有缓存chan，  -->
       </categories>
       <tags>
         <tag>Hexo - Blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hibernate 校验参数</title>
+    <url>/2018/01/31/hibernater-validate-properties/</url>
+    <content><![CDATA[<h1 id="Hibernater-Validator-校验参数"><a href="#Hibernater-Validator-校验参数" class="headerlink" title="Hibernater Validator 校验参数"></a>Hibernater Validator 校验参数</h1><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>如果我们使用spring mvc 那么肯定知道在方法中我们可以使用注解对参数进行校验：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/user)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">(<span class="meta">@Valid</span> User user)</span></span>&#123;</span><br><span class="line">    User userP = user;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候通常是在User对象里面使用一些注解来判断如：@NotNull,@NotEmpty。这些bean验证方法是遵循JSR303和JSR380规范的，目前的情况可以去这里查看详情：<a href="http://beanvalidation.org/2.0/">http://beanvalidation.org/2.0/</a>。</p>
+<p>实现规范的这些中有一个包是<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints-simple">Hibernate Validator</a>，这个包不是我们的ORM框架，可能是orm太出名了，以致于提到Hibernate大家都会想到SSH的Hibernate ORM，其实Hibernate Validator是一个非常完善的bean Validator。如果我们不想自己去实现一套，其实是可以引入这个包的。开源社区遇到的情况肯定会比我们自己要多。而且它也支持我们自定义注解来进行校验。</p>
+<p>在我们的系统中，是无法采用@Valid这种方式的，因为我们有一些特别的操作处理所以不能使用它。如果你想自己使用的话，可能可以像我这样，写一个Validtor工具类，然后在需要的地方调用：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator.class).configure().failFast(<span class="keyword">true</span>).buildValidatorFactory().getValidator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;message:&quot;</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">&quot;messageKey:&quot;</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;参数校验失败:%s&quot;</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后你可以在属性上面这样定义：</p>
+<p><img src="/images/qiniu/2018-01-31-20-00-07.png" alt="2018-01-31-20-00-07"></p>
+<p>如果需要使用校验的，只需要使用<span id="more"></span></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ValidatorUtil.validate(obj);</span><br></pre></td></tr></table></figure>
+
+<p>如果有异常它会直接抛出来。</p>
+<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>如果在某些场景下，提供给我们的注解不够用，那我们是否可以自己进行扩展了？ 好的架构，是允许做扩展的。validator也可以支持自定义注解。自定义注解详解在这里<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints">自定义验证规则注解</a>。总的来说就是三步：</p>
+<ol>
+<li>创建一个注解，并且定义一些校验规则；</li>
+<li>继承Validator；</li>
+<li>定义默认的error message</li>
+</ol>
+<p>现在我们尝试定义一个自定义注解：</p>
+<ol start="0">
+<li>准备，定义一个枚举，接下来用到：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">CaseMode</span> </span>&#123;</span><br><span class="line">    UPPER,</span><br><span class="line">    LOWER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建一个注解:<code>CheckCase</code>：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Constraint;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Payload;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123; FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE &#125;)</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@Constraint(validatedBy = CheckCaseValidator.class)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CheckCase &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> &quot;</span>&#123;org.hibernate.validator.referenceguide.chapter06.CheckCase.<span class="string">&quot; +</span></span><br><span class="line"><span class="string">            &quot;</span>message&#125;<span class="string">&quot;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;?&gt;[] groups() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;? extends Payload&gt;[] payload() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    CaseMode value();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>继承Validator,并且将实现自己的规则逻辑</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidatorContext;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheckCaseValidator</span> <span class="keyword">implements</span> <span class="title">ConstraintValidator</span>&lt;<span class="title">CheckCase</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CaseMode caseMode;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CheckCase constraintAnnotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.caseMode = constraintAnnotation.value();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String object, ConstraintValidatorContext constraintContext)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ( object == <span class="keyword">null</span> ) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ( caseMode == CaseMode.UPPER ) &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toUpperCase() );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toLowerCase() );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我们这里的主要逻辑就在isValid中处理的。</p>
+<ol start="3">
+<li>定义error message ，这个错误提示在哪里定义了？我们可以看到在<code>org.hibernate.validator.resource</code>下有很多的properties文件，<br>这是因为Hibernate做了国际化处理。<br><img src="/images/qiniu/2018-01-31-20-14-03.png" alt="2018-01-31-20-14-03"></li>
+</ol>
+<p>如果我们需要重写，只需要将其中的中文的属性文件进行重写放到resource目录就可以了。在定义的注解中我们可以将message指定为我们复制的properties文中<br>的key，这样就能完成error message的自定义了。</p>
+<p>源码：<a href="https://gitee.com/chenzhijun/validator">https://gitee.com/chenzhijun/validator</a></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Validator</tag>
       </tags>
   </entry>
   <entry>
@@ -2078,6 +2078,54 @@ channel分为非缓存chan和有缓存chan，  -->
       </categories>
       <tags>
         <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Ansible批量操作服务器</title>
+    <url>/2018/07/16/how-to-use-ansible-to-do-something/</url>
+    <content><![CDATA[<h1 id="使用Ansible批量操作服务器"><a href="#使用Ansible批量操作服务器" class="headerlink" title="使用Ansible批量操作服务器"></a>使用Ansible批量操作服务器</h1><p>Anbible 是干嘛的？对于一个非专业运维人士（我）来说，它就是我批量操作服务器的一个神器。试想一个场景：公司内部DNS还未搭建好，业务系统使用了域名做请求，这个时候需要你将域名制定到某台机器上，你这个时候就只能修改hosts文件了。嗯，如果是一两台服务器就算了，大不了手动ssh上去改一改，但是如果是10台了？10台不够，100台了？这个时候怎么办？你可能说我召集了一帮兄弟，大家一人改几个。OK，好不容易你改完了，这个时候业务跟你说，嗯，那台服务器挂了，不稳定，暂时换到另一台服务器上另一个IP地址。兄弟，听说醉经淘宝刀打折，买一把吧。哈哈</p>
+<p>但是如果这个时候我们使用ansible，这个时候你就可以早点干完，早点回家陪老婆孩子了。接下来我们看看怎么使用ansible，请注意，我只是说怎么使用，是的，怎么使用，没有任何理论，不会讲解任何深的东西，只是用而已。</p>
+<span id="more"></span>
+<p>1：批量操作服务器。</p>
+<p>ansible的一个简单目录结构：<br><img src="/images/qiniu/2018-07-16-22-34-50.png" alt="2018-07-16-22-34-50"></p>
+<p><code>install.yml</code>文件内容：</p>
+<p><img src="/images/qiniu/2018-07-16-22-36-22.png" alt="2018-07-16-22-36-22"></p>
+<p>&lt;!–&gt;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all </span><br><span class="line">  remote_user: rhlog</span><br><span class="line">  gather_facts: no</span><br><span class="line">  roles:</span><br><span class="line">    - role: oam</span><br><span class="line">      become: yes</span><br><span class="line">      become_method: su</span><br><span class="line">      become_user: root</span><br></pre></td></tr></table></figure>
+<p>&lt;–&gt;</p>
+<p><code>hosts</code> 文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">10.0.80.34 ansible_become&#x3D;true ansible_become_method&#x3D;su ansible_user&#x3D;ssh_user ansible_ssh_pass&#x3D;&quot;password&quot; ansible_become_pass&#x3D;&quot;ax&#x3D;n@#*!EM&quot; ansible_become_user&#x3D;root</span><br><span class="line">10.07.80.37 ansible_become&#x3D;true ansible_become_method&#x3D;su ansible_user&#x3D;ssh_user ansible_ssh_pass&#x3D;&quot;W)PIukAa&quot; ansible_become_pass&#x3D;&quot;r.*o)Hg!z&quot; ansible_become_user&#x3D;root</span><br></pre></td></tr></table></figure>
+
+<p>这两个是ansible的根目录里面比较重要的文件。install.yml里面remote_user是指登录到服务器的用户，通常大家不会让root用户远程登录的。roles是指在roles文件里面有哪些角色，你要用使用哪个角色。hosts文件一般保存的账号密码。按照这个模式登录就好了。之后我会提供这个安装包，大家可以自己照着改。哈哈。</p>
+<p>oam角色里文件内容为：<br><img src="/images/qiniu/2018-07-16-22-41-50.png" alt="2018-07-16-22-41-50"><br>主要看tasks目录里面：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"># tasks file for oam</span><br><span class="line">- name: upload file</span><br><span class="line">  copy: src&#x3D;&#x2F;app&#x2F;installation&#x2F;resource&#x2F;moving&#x2F;test&#x2F;roles&#x2F;oam&#x2F;files&#x2F;data.sh dest&#x3D;&#x2F;home&#x2F;data.sh mode&#x3D;755</span><br><span class="line">- name: excute </span><br><span class="line">  shell:  bash &#x2F;home&#x2F;data.sh</span><br><span class="line">- name: find file </span><br><span class="line">  find:</span><br><span class="line">    paths: &#x2F;home&#x2F;</span><br><span class="line">    patterns: &quot;*.log&quot;</span><br><span class="line">    recurse: no</span><br><span class="line">  register: file_2_fetch</span><br><span class="line">- name: fetch</span><br><span class="line">  fetch:</span><br><span class="line">    src: &quot;&#123;&#123; item.path &#125;&#125;&quot;</span><br><span class="line">    dest: &#x2F;home&#x2F;diskdata&#x2F;</span><br><span class="line">    flat: yes</span><br><span class="line">  with_items: &quot;&#123;&#123; file_2_fetch.files &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>&lt;!–&gt;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># !&#x2F;bin&#x2F;bash</span><br><span class="line">name&#x3D;$(hostname -i)</span><br><span class="line">file&#x3D;$&#123;name%% *&#125;</span><br><span class="line">df -h &gt;&#x2F;home&#x2F;rhlog&#x2F;$file.log</span><br></pre></td></tr></table></figure>
+<p>&lt;–&gt;<br>在ansible根目录我怎么使用了？<code>ansible-playbook -i hosts install.yml</code> 我的这个程序就是将files目录下的data.sh上传到hosts里面的所有主机中，然后执行data.sh，将<code>df -h</code>的内容输出到<code>ip.log</code>文件中，然后将文件下载到本地<code>/home/diskdata</code>中。这样就相当于批量操作了所有的机器。</p>
+<p>另外一个使用方式，不使用上面那种方式，而是直接使用命令行的方式：</p>
+<p>1： 判断所有机器是否可以访问某个地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m get_url -a &quot;url&#x3D;http:&#x2F;&#x2F;192.168.11.32:8088&#x2F;srv&#x2F;releaseService?wsdl dest&#x3D;.&#x2F;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>2: 判断所有机器是否可以ping通某个地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m shell -a &quot;ping -c 3 10.7.18.3&quot;</span><br></pre></td></tr></table></figure>
+
+<p>3: 查找所有机器上某个应用是否启动</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m shell -a &quot;ps -ef | grep haproxy | grep -v grep&quot;</span><br></pre></td></tr></table></figure>
+
+<p>4: 判断所有机器能否连通某个端口</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m shell -a &quot;telnet 192.167.180.3 25&quot;</span><br></pre></td></tr></table></figure>
+
+<p>5: 批量修改某个文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i .&#x2F;hosts -s -m shell -a &quot;echo \&quot;127.0.0.1 test.local.com\&quot; &gt;&gt; &#x2F;etc&#x2F;hosts&quot;</span><br></pre></td></tr></table></figure>
+
+<p>ps:</p>
+<p><code>-s</code>,是指使用root账户</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Ansible</tag>
       </tags>
   </entry>
   <entry>
@@ -2185,54 +2233,6 @@ channel分为非缓存chan和有缓存chan，  -->
       </categories>
       <tags>
         <tag>All</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Ansible批量操作服务器</title>
-    <url>/2018/07/16/how-to-use-ansible-to-do-something/</url>
-    <content><![CDATA[<h1 id="使用Ansible批量操作服务器"><a href="#使用Ansible批量操作服务器" class="headerlink" title="使用Ansible批量操作服务器"></a>使用Ansible批量操作服务器</h1><p>Anbible 是干嘛的？对于一个非专业运维人士（我）来说，它就是我批量操作服务器的一个神器。试想一个场景：公司内部DNS还未搭建好，业务系统使用了域名做请求，这个时候需要你将域名制定到某台机器上，你这个时候就只能修改hosts文件了。嗯，如果是一两台服务器就算了，大不了手动ssh上去改一改，但是如果是10台了？10台不够，100台了？这个时候怎么办？你可能说我召集了一帮兄弟，大家一人改几个。OK，好不容易你改完了，这个时候业务跟你说，嗯，那台服务器挂了，不稳定，暂时换到另一台服务器上另一个IP地址。兄弟，听说醉经淘宝刀打折，买一把吧。哈哈</p>
-<p>但是如果这个时候我们使用ansible，这个时候你就可以早点干完，早点回家陪老婆孩子了。接下来我们看看怎么使用ansible，请注意，我只是说怎么使用，是的，怎么使用，没有任何理论，不会讲解任何深的东西，只是用而已。</p>
-<span id="more"></span>
-<p>1：批量操作服务器。</p>
-<p>ansible的一个简单目录结构：<br><img src="/images/qiniu/2018-07-16-22-34-50.png" alt="2018-07-16-22-34-50"></p>
-<p><code>install.yml</code>文件内容：</p>
-<p><img src="/images/qiniu/2018-07-16-22-36-22.png" alt="2018-07-16-22-36-22"></p>
-<p>&lt;!–&gt;</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all </span><br><span class="line">  remote_user: rhlog</span><br><span class="line">  gather_facts: no</span><br><span class="line">  roles:</span><br><span class="line">    - role: oam</span><br><span class="line">      become: yes</span><br><span class="line">      become_method: su</span><br><span class="line">      become_user: root</span><br></pre></td></tr></table></figure>
-<p>&lt;–&gt;</p>
-<p><code>hosts</code> 文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">10.0.80.34 ansible_become&#x3D;true ansible_become_method&#x3D;su ansible_user&#x3D;ssh_user ansible_ssh_pass&#x3D;&quot;password&quot; ansible_become_pass&#x3D;&quot;ax&#x3D;n@#*!EM&quot; ansible_become_user&#x3D;root</span><br><span class="line">10.07.80.37 ansible_become&#x3D;true ansible_become_method&#x3D;su ansible_user&#x3D;ssh_user ansible_ssh_pass&#x3D;&quot;W)PIukAa&quot; ansible_become_pass&#x3D;&quot;r.*o)Hg!z&quot; ansible_become_user&#x3D;root</span><br></pre></td></tr></table></figure>
-
-<p>这两个是ansible的根目录里面比较重要的文件。install.yml里面remote_user是指登录到服务器的用户，通常大家不会让root用户远程登录的。roles是指在roles文件里面有哪些角色，你要用使用哪个角色。hosts文件一般保存的账号密码。按照这个模式登录就好了。之后我会提供这个安装包，大家可以自己照着改。哈哈。</p>
-<p>oam角色里文件内容为：<br><img src="/images/qiniu/2018-07-16-22-41-50.png" alt="2018-07-16-22-41-50"><br>主要看tasks目录里面：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"># tasks file for oam</span><br><span class="line">- name: upload file</span><br><span class="line">  copy: src&#x3D;&#x2F;app&#x2F;installation&#x2F;resource&#x2F;moving&#x2F;test&#x2F;roles&#x2F;oam&#x2F;files&#x2F;data.sh dest&#x3D;&#x2F;home&#x2F;data.sh mode&#x3D;755</span><br><span class="line">- name: excute </span><br><span class="line">  shell:  bash &#x2F;home&#x2F;data.sh</span><br><span class="line">- name: find file </span><br><span class="line">  find:</span><br><span class="line">    paths: &#x2F;home&#x2F;</span><br><span class="line">    patterns: &quot;*.log&quot;</span><br><span class="line">    recurse: no</span><br><span class="line">  register: file_2_fetch</span><br><span class="line">- name: fetch</span><br><span class="line">  fetch:</span><br><span class="line">    src: &quot;&#123;&#123; item.path &#125;&#125;&quot;</span><br><span class="line">    dest: &#x2F;home&#x2F;diskdata&#x2F;</span><br><span class="line">    flat: yes</span><br><span class="line">  with_items: &quot;&#123;&#123; file_2_fetch.files &#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
-<p>&lt;!–&gt;</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># !&#x2F;bin&#x2F;bash</span><br><span class="line">name&#x3D;$(hostname -i)</span><br><span class="line">file&#x3D;$&#123;name%% *&#125;</span><br><span class="line">df -h &gt;&#x2F;home&#x2F;rhlog&#x2F;$file.log</span><br></pre></td></tr></table></figure>
-<p>&lt;–&gt;<br>在ansible根目录我怎么使用了？<code>ansible-playbook -i hosts install.yml</code> 我的这个程序就是将files目录下的data.sh上传到hosts里面的所有主机中，然后执行data.sh，将<code>df -h</code>的内容输出到<code>ip.log</code>文件中，然后将文件下载到本地<code>/home/diskdata</code>中。这样就相当于批量操作了所有的机器。</p>
-<p>另外一个使用方式，不使用上面那种方式，而是直接使用命令行的方式：</p>
-<p>1： 判断所有机器是否可以访问某个地址</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m get_url -a &quot;url&#x3D;http:&#x2F;&#x2F;192.168.11.32:8088&#x2F;srv&#x2F;releaseService?wsdl dest&#x3D;.&#x2F;&quot;</span><br></pre></td></tr></table></figure>
-
-<p>2: 判断所有机器是否可以ping通某个地址</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m shell -a &quot;ping -c 3 10.7.18.3&quot;</span><br></pre></td></tr></table></figure>
-
-<p>3: 查找所有机器上某个应用是否启动</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m shell -a &quot;ps -ef | grep haproxy | grep -v grep&quot;</span><br></pre></td></tr></table></figure>
-
-<p>4: 判断所有机器能否连通某个端口</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i hosts -m shell -a &quot;telnet 192.167.180.3 25&quot;</span><br></pre></td></tr></table></figure>
-
-<p>5: 批量修改某个文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ansible all -i .&#x2F;hosts -s -m shell -a &quot;echo \&quot;127.0.0.1 test.local.com\&quot; &gt;&gt; &#x2F;etc&#x2F;hosts&quot;</span><br></pre></td></tr></table></figure>
-
-<p>ps:</p>
-<p><code>-s</code>,是指使用root账户</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Ansible</tag>
       </tags>
   </entry>
   <entry>
@@ -2382,6 +2382,17 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </tags>
   </entry>
   <entry>
+    <title>Java 大数据中的敏感词汇处理</title>
+    <url>/2019/03/31/java-big-data-sensitive-word/</url>
+    <content><![CDATA[<h1 id="Java-大数据中的敏感词汇处理"><a href="#Java-大数据中的敏感词汇处理" class="headerlink" title="Java 大数据中的敏感词汇处理"></a>Java 大数据中的敏感词汇处理</h1>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>byte 在golang和Java中的区别</title>
     <url>/2019/03/31/java-byte-golang-byte/</url>
     <content><![CDATA[<h1 id="byte-在golang和Java中的区别"><a href="#byte-在golang和Java中的区别" class="headerlink" title="byte 在golang和Java中的区别"></a>byte 在golang和Java中的区别</h1><p>最近做一个项目，想用到md5，做一次数据的校验。因为是两个系统，一个golang开发，一个java开发。首先用Java生成md5值，然后传给golang，发现原始数据一致，但是生成的md5值却不一致。</p>
@@ -2392,17 +2403,6 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </categories>
       <tags>
         <tag>byte</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 大数据中的敏感词汇处理</title>
-    <url>/2019/03/31/java-big-data-sensitive-word/</url>
-    <content><![CDATA[<h1 id="Java-大数据中的敏感词汇处理"><a href="#Java-大数据中的敏感词汇处理" class="headerlink" title="Java 大数据中的敏感词汇处理"></a>Java 大数据中的敏感词汇处理</h1>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -2508,35 +2508,6 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </tags>
   </entry>
   <entry>
-    <title>Java设计模式-观察者模式</title>
-    <url>/2017/09/14/java-design-pattern-observer/</url>
-    <content><![CDATA[<h2 id="设计模式-观察者模式"><a href="#设计模式-观察者模式" class="headerlink" title="设计模式-观察者模式"></a>设计模式-观察者模式</h2><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>观察者模式的有点类似现在的手机消息推送，比如你注册了一个APP，然后app有了更新一定会通知你，不然你看看手机里面的推送栏是不是每天淘宝都会推送给你一条消息。哈哈。当然为什么它知道要给你推送，不给哪些非智能机推送了？简单的更类似与现在报纸-订阅。只要你订了报纸，那么每天报纸更新都会把报纸给你送过来。所以我认为观察者模式应该也叫”订阅模式”，因为必须客户端先去注册（订阅）然后才能收到注册中心的更新或者通知。</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>我们先来想想观察者模式中有哪些主体： </p>
-<ol>
-<li>注册中心（主题（或者叫被观察对象））</li>
-<li>客户端 (观察者)</li>
-</ol>
-<p>现在我们分析下里面的行为：</p>
-<p>报社（注册中心-主题）怎么知道有哪些人订了报纸（客户注册）了？那么就是报社必须要有一个记录有哪些人（客户端-观察者）在报社注册的’花名册’；那么现在是法治社会，当然不能强迫去订报纸吧，所以人们订报纸都是自愿的，那么自愿就必须自己去报社订阅(主动注册)。订了报纸之后，不能收不到报纸吧？那报社现在都是比较强势的，一般把报纸送到门口，所以你必须有一个接受的地址，这种算是约定；既然可以订阅，那么当然也有取消订阅（取消注册）；那么报社也就在’花名册’把你的名字去掉就可以了。</p>
-<p>整个实现过程就是这样，观察者模式并不复杂，主要是报社(注册中心-主题)，花名册(订阅者名单)，订阅者（接受通知者），订阅(行为)，门(注册中心通知接受者的地址)。</p>
-<span id="more"></span>
-<p>开始写我们的代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsPaperSubject</span></span>&#123;</span><br><span class="line">     <span class="keyword">private</span> List observers;<span class="comment">//花名册</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> String newsPaper; <span class="comment">//新闻内容</span></span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">register</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">             observers.add(observer);<span class="comment">//注册一个观察者、增加一个订阅客户</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unRegister</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">         observers.remove(observer);<span class="comment">//取消订阅</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendNewsPage</span><span class="params">()</span></span>&#123;</span><br><span class="line">         <span class="keyword">for</span>(Observer obj:observers)&#123;</span><br><span class="line">             obj.updateNewsPageOnDoor(newsPaper); <span class="comment">// 告知订阅者，新闻有更新</span></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNews</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaper = news;  <span class="comment">// 设置新闻</span></span><br><span class="line">         sendNewsPage();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> NewsPaperSubject newsPaperSubject;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateNewsPageOnDoor</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;更新news....&quot;</span>+news);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Observer</span><span class="params">(NewsPaperSubject newsPaperSubject)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaperSubject = newsPaperSubject;</span><br><span class="line">         <span class="keyword">this</span>.newsPaperSubject.register(<span class="keyword">this</span>);   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>根据上面两个类我想你能基本了解订阅者模式是怎样一回事了。不过我们写的代码还是有点问题，耦合太严重，我们不应该针对具体实现编程，所以我们进行一次改版：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="comment">//主题超类</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">registerObserver</span><span class="params">(Observer observer)</span></span>;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(Observer observer)</span></span>;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span></span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsPaperSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line">     <span class="keyword">private</span> List observers;<span class="comment">//花名册</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> String newsPaper; <span class="comment">//新闻内容</span></span><br><span class="line"></span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerObserver</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">             observers.add(observer);<span class="comment">//注册一个观察者、增加一个订阅客户</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">         observers.remove(observer);<span class="comment">//取消订阅</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span></span>&#123;</span><br><span class="line">         <span class="keyword">for</span>(Observer obj:observers)&#123;</span><br><span class="line">             obj.update(newsPaper); <span class="comment">// 告知订阅者，新闻有更新</span></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNews</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaper = news;  <span class="comment">// 设置新闻</span></span><br><span class="line">         notifyObservers();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 观察者接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(String newsPaper)</span></span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 具体观察者</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StudentObserver</span></span>&#123;</span><br><span class="line">     <span class="keyword">private</span> Subject newsPaperSubject;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">StudentObserver</span><span class="params">(Subject newsPaperSubject)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaperSubject = newsPaperSubject;</span><br><span class="line">         newsPaperSubject.registerObserver(<span class="keyword">this</span>);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">         System.out.println(<span class="string">&quot;updateNews..&quot;</span>+news);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>新版本的情况如果我们有了个政府观察者，我们只需要实现一个Observer新的实现对象就可以了。这种就是针对接口编程，具体的实现细节都是隐藏的。这样其实我们就做到了松耦合。对于注册中心来说只要订阅者实现了Observer的update接口，并且注册到花名单就行了。这样当注册中心发现改变需要通知的时候就可以通知到所有花名单中的订阅者。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java设计模式-工厂模式</title>
     <url>/2017/10/04/java-design-pattern-factory/</url>
     <content><![CDATA[<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><p>最近看了很久的工产模式，一直没敢下笔。因为我发现我就算弄了很久也就明白了简单工厂和工厂模式，抽象工厂一直没有弄的太明白。今天想着不如试试看，至少先把自己会的记录下来吧，不然越久越容易忘记了。</p>
@@ -2582,6 +2553,35 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
 <p>抽象工厂: 如果需要创建产品家族和想让制造的想关产品集合起来的时候可以用抽象工厂.</p>
 <p>工厂模式: 把客户端代码从需要实例化的具体类中解耦.</p>
 <p>总之工厂就是将对象的创建封装了起来,更加的松耦合,做到弹性的设计.</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java设计模式-观察者模式</title>
+    <url>/2017/09/14/java-design-pattern-observer/</url>
+    <content><![CDATA[<h2 id="设计模式-观察者模式"><a href="#设计模式-观察者模式" class="headerlink" title="设计模式-观察者模式"></a>设计模式-观察者模式</h2><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>观察者模式的有点类似现在的手机消息推送，比如你注册了一个APP，然后app有了更新一定会通知你，不然你看看手机里面的推送栏是不是每天淘宝都会推送给你一条消息。哈哈。当然为什么它知道要给你推送，不给哪些非智能机推送了？简单的更类似与现在报纸-订阅。只要你订了报纸，那么每天报纸更新都会把报纸给你送过来。所以我认为观察者模式应该也叫”订阅模式”，因为必须客户端先去注册（订阅）然后才能收到注册中心的更新或者通知。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>我们先来想想观察者模式中有哪些主体： </p>
+<ol>
+<li>注册中心（主题（或者叫被观察对象））</li>
+<li>客户端 (观察者)</li>
+</ol>
+<p>现在我们分析下里面的行为：</p>
+<p>报社（注册中心-主题）怎么知道有哪些人订了报纸（客户注册）了？那么就是报社必须要有一个记录有哪些人（客户端-观察者）在报社注册的’花名册’；那么现在是法治社会，当然不能强迫去订报纸吧，所以人们订报纸都是自愿的，那么自愿就必须自己去报社订阅(主动注册)。订了报纸之后，不能收不到报纸吧？那报社现在都是比较强势的，一般把报纸送到门口，所以你必须有一个接受的地址，这种算是约定；既然可以订阅，那么当然也有取消订阅（取消注册）；那么报社也就在’花名册’把你的名字去掉就可以了。</p>
+<p>整个实现过程就是这样，观察者模式并不复杂，主要是报社(注册中心-主题)，花名册(订阅者名单)，订阅者（接受通知者），订阅(行为)，门(注册中心通知接受者的地址)。</p>
+<span id="more"></span>
+<p>开始写我们的代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsPaperSubject</span></span>&#123;</span><br><span class="line">     <span class="keyword">private</span> List observers;<span class="comment">//花名册</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> String newsPaper; <span class="comment">//新闻内容</span></span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">register</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">             observers.add(observer);<span class="comment">//注册一个观察者、增加一个订阅客户</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unRegister</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">         observers.remove(observer);<span class="comment">//取消订阅</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendNewsPage</span><span class="params">()</span></span>&#123;</span><br><span class="line">         <span class="keyword">for</span>(Observer obj:observers)&#123;</span><br><span class="line">             obj.updateNewsPageOnDoor(newsPaper); <span class="comment">// 告知订阅者，新闻有更新</span></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNews</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaper = news;  <span class="comment">// 设置新闻</span></span><br><span class="line">         sendNewsPage();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> NewsPaperSubject newsPaperSubject;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateNewsPageOnDoor</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;更新news....&quot;</span>+news);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Observer</span><span class="params">(NewsPaperSubject newsPaperSubject)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaperSubject = newsPaperSubject;</span><br><span class="line">         <span class="keyword">this</span>.newsPaperSubject.register(<span class="keyword">this</span>);   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据上面两个类我想你能基本了解订阅者模式是怎样一回事了。不过我们写的代码还是有点问题，耦合太严重，我们不应该针对具体实现编程，所以我们进行一次改版：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="comment">//主题超类</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">registerObserver</span><span class="params">(Observer observer)</span></span>;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(Observer observer)</span></span>;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span></span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsPaperSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line">     <span class="keyword">private</span> List observers;<span class="comment">//花名册</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> String newsPaper; <span class="comment">//新闻内容</span></span><br><span class="line"></span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerObserver</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">             observers.add(observer);<span class="comment">//注册一个观察者、增加一个订阅客户</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">         observers.remove(observer);<span class="comment">//取消订阅</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span></span>&#123;</span><br><span class="line">         <span class="keyword">for</span>(Observer obj:observers)&#123;</span><br><span class="line">             obj.update(newsPaper); <span class="comment">// 告知订阅者，新闻有更新</span></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNews</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaper = news;  <span class="comment">// 设置新闻</span></span><br><span class="line">         notifyObservers();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 观察者接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(String newsPaper)</span></span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 具体观察者</span></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StudentObserver</span></span>&#123;</span><br><span class="line">     <span class="keyword">private</span> Subject newsPaperSubject;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">StudentObserver</span><span class="params">(Subject newsPaperSubject)</span></span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.newsPaperSubject = newsPaperSubject;</span><br><span class="line">         newsPaperSubject.registerObserver(<span class="keyword">this</span>);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(String news)</span></span>&#123;</span><br><span class="line">         System.out.println(<span class="string">&quot;updateNews..&quot;</span>+news);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>新版本的情况如果我们有了个政府观察者，我们只需要实现一个Observer新的实现对象就可以了。这种就是针对接口编程，具体的实现细节都是隐藏的。这样其实我们就做到了松耦合。对于注册中心来说只要订阅者实现了Observer的update接口，并且注册到花名单就行了。这样当注册中心发现改变需要通知的时候就可以通知到所有花名单中的订阅者。</p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -2771,6 +2771,29 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </tags>
   </entry>
   <entry>
+    <title>Java-encode 编码注意事项</title>
+    <url>/2017/05/10/java-encode/</url>
+    <content><![CDATA[<p>Tomcat URL 编码配置<br><a href="http://localhost:8080/examples/servlets/servlet/%E9%A5%BA%E5%AD%90?author=%E9%A5%BA%E5%AD%90">http://localhost:8080/examples/servlets/servlet/饺子?author=饺子</a></p>
+<p>其中<br>http: 对应scheme，协议</p>
+<p>localhost: 对应Domain，主域</p>
+<p>8080: port，端口，配置在tomcat<Connector port="8080"/></p>
+<p>examples: ContextPath，配置在tomcat<Context path="/examples"/> </p>
+<p>servlet/servlet: ServletPath，在web.xml中<url-pattern>中配置</p>
+<p>饺子: pathInfo，指到具体的servlet</p>
+<p>author=饺子: QueryString，传递的参数，如果是post就是表单方式提交</p>
+<p>浏览器编码将非ASCII字符编码成16进制数然后再之前加上”%”</p>
+<span id="more"></span>
+<p>对URL的URI不分进行解码的字符实在<Connect URIEncoding="UTF-8">中定义的.默认为ISO-8859-1，QueryString的解码字符要么是Header中的ContentType定义的charset，默认是ISO-8859-1，要使用ContentType中定义的编码，需要将connector的<Connector URIEncoding="UTF-8" useBodyEncodingForURI="true"/>，其中的useBodyEncodingForURI 仅仅是对QueryString进行BodyEncoding解码，不针对整个URI。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Encode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java 枚举和注解总结</title>
     <url>/2018/03/22/java-enum-anotation/</url>
     <content><![CDATA[<h1 id="Java-枚举和注解总结"><a href="#Java-枚举和注解总结" class="headerlink" title="Java 枚举和注解总结"></a>Java 枚举和注解总结</h1><h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><h3 id="没有枚举前我们基本上常量来定义值："><a href="#没有枚举前我们基本上常量来定义值：" class="headerlink" title="没有枚举前我们基本上常量来定义值："></a>没有枚举前我们基本上常量来定义值：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Color</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> GREEN = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RED   = <span class="number">1</span>;</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
@@ -2823,29 +2846,6 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java-encode 编码注意事项</title>
-    <url>/2017/05/10/java-encode/</url>
-    <content><![CDATA[<p>Tomcat URL 编码配置<br><a href="http://localhost:8080/examples/servlets/servlet/%E9%A5%BA%E5%AD%90?author=%E9%A5%BA%E5%AD%90">http://localhost:8080/examples/servlets/servlet/饺子?author=饺子</a></p>
-<p>其中<br>http: 对应scheme，协议</p>
-<p>localhost: 对应Domain，主域</p>
-<p>8080: port，端口，配置在tomcat<Connector port="8080"/></p>
-<p>examples: ContextPath，配置在tomcat<Context path="/examples"/> </p>
-<p>servlet/servlet: ServletPath，在web.xml中<url-pattern>中配置</p>
-<p>饺子: pathInfo，指到具体的servlet</p>
-<p>author=饺子: QueryString，传递的参数，如果是post就是表单方式提交</p>
-<p>浏览器编码将非ASCII字符编码成16进制数然后再之前加上”%”</p>
-<span id="more"></span>
-<p>对URL的URI不分进行解码的字符实在<Connect URIEncoding="UTF-8">中定义的.默认为ISO-8859-1，QueryString的解码字符要么是Header中的ContentType定义的charset，默认是ISO-8859-1，要使用ContentType中定义的编码，需要将connector的<Connector URIEncoding="UTF-8" useBodyEncodingForURI="true"/>，其中的useBodyEncodingForURI 仅仅是对QueryString进行BodyEncoding解码，不针对整个URI。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Encode</tag>
       </tags>
   </entry>
   <entry>
@@ -3013,6 +3013,41 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </tags>
   </entry>
   <entry>
+    <title>使用Apache POI操作生成Execl</title>
+    <url>/2017/12/11/java-poi-operation/</url>
+    <content><![CDATA[<h2 id="使用Apache-POI操作生成Execl"><a href="#使用Apache-POI操作生成Execl" class="headerlink" title="使用Apache POI操作生成Execl"></a>使用Apache POI操作生成Execl</h2><p>使用Java操作数据生成Excel表格，在网上能搜到的方式有很多，比如jxl，还有今天用到POI。POI是Apache开源的一个项目，该工具使用简单，方便。</p>
+<h3 id="准备与一些概念约定"><a href="#准备与一些概念约定" class="headerlink" title="准备与一些概念约定"></a>准备与一些概念约定</h3><p>需要在<a href="http://poi.apache.org/">poi官网</a>下载相应的jar包，或者使用maven来引入包。在开始之前我们需要知道一些关于excel文档的概念。一个excel文件通常称为[workbook]，excel里面的一个工作页面通常叫做[sheet]，sheet里面的格子称为[单元格cell]，单元格由坐标确定唯一位置，相应为[行row]，[列col]。</p>
+<p><img src="/images/qiniu/2017-12-11-15-41-40.png" alt="2017-12-11-15-41-40"></p>
+<p>了解这些我们可以开始看看poi的一些类和接口。</p>
+<span id="more"></span>
+<h3 id="POI"><a href="#POI" class="headerlink" title="POI"></a>POI</h3><p>POI 中主要的几个类为：<code>HSSFWorkbook</code>，<code>HSSFSheet</code>，<code>Row</code>，<code>Cell</code>。就像我们创建一个最简单的报表文件一样，先创建excel文件(HSSFWorkbook)，然后创建一个工作页(HSSFSheet)，然后找到哪一行(Row)，在哪一列上创建一个单元格(Cell)。你在excel中操作的最小单位都是Cell，所以我们进行读取和操作的最小单位也是Cell。</p>
+<p>嗯，如果你还喜欢猜测，为什么猜测了？因为这几个类都是HSSF开头，那么是不是后面的就是他们的父类，而这些HSSF开头的都是他们的实现了。答案是的。<!--你没猜错，就是具体的实现类，我们为啥用实现来操作，而不是面向接口编程，建议在正式实现的时候用面向接口编程。而我这里就不那么严格了。--></p>
+<p>开始编程前，请记住，你再操作excel的一个步骤，写代码的时候流程也是这样的。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建 excel workbook</span></span><br><span class="line">HSSFWorkbook hssfWorkbook = <span class="keyword">new</span> HSSFWorkbook();</span><br><span class="line"><span class="comment">//创建工作簿 sheet</span></span><br><span class="line">HSSFSheet hssfSheet = hssfWorkbook.createSheet();</span><br><span class="line"><span class="comment">//找到需要操作的行row,从第0行开始。我们在excel中看到的行是从1开始数，但是在poi中是从0开始。</span></span><br><span class="line"><span class="keyword">int</span> rowNum = <span class="number">0</span>;</span><br><span class="line">Row row1 = hssfSheet.createRow(rowNum);</span><br><span class="line"><span class="comment">//创建单元格cell</span></span><br><span class="line"><span class="keyword">int</span> colNum = <span class="number">0</span>;</span><br><span class="line">Cell row1Col1 = row1.createCell(colNum);</span><br><span class="line"><span class="comment">//操作单元格内容</span></span><br><span class="line">row1Col1.setCellValue(<span class="string">&quot;test&quot;</span>);</span><br><span class="line"><span class="comment">// 导出excel文件</span></span><br><span class="line">FileOutputStream fout = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">    fout = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;test.xsl&quot;</span>);</span><br><span class="line">    hssfWorkbook.write(fout);</span><br><span class="line">    fout.close();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (Exception e)</span><br><span class="line">&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样一个简单的单元格内容操作就完成了。</p>
+<h3 id="多变的需求"><a href="#多变的需求" class="headerlink" title="多变的需求"></a>多变的需求</h3><p>很多时候我们会有一些特殊的要求，比如文字居中，多行合并，多列合并，加底色，文字颜色等等。。</p>
+<p>用的最多的就是文字居中了，这类需求往往都是对于一个单元格有相应要求，POI针对这种需求有一个类：<code>Style</code>。用style来设置单元格的相关样式，下面来看一个文本居中的样式代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HSSFCellStyle style = excel.createCellStyle();</span><br><span class="line">style.setAlignment(CellStyle.ALIGN_CENTER);</span><br><span class="line">row1Col1.setCellStyle(style);<span class="comment">//内容居中显示</span></span><br></pre></td></tr></table></figure>
+
+<p>我们在进行合并的时候，其实实际上合并的还是单元格。所以我们在创建单元格的时候进行一些单元格范围参数设置：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//单元格范围 参数（int firstRow, int lastRow, int firstCol, int lastCol)</span></span><br><span class="line">CellRangeAddress cellRangeAddress = <span class="keyword">new</span> CellRangeAddress(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="comment">//在sheet里增加合并单元格</span></span><br><span class="line">hssfSheet.addMergedRegion(cellRangeAddress);</span><br><span class="line"><span class="comment">//生成第一行</span></span><br><span class="line">Row row = hssfSheet.createRow(<span class="number">0</span>);</span><br><span class="line">Cell first = row.createCell(<span class="number">0</span>);</span><br><span class="line">first.setCellValue(<span class="string">&quot;表头&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>此时被合并的行的其中的单元格都将无效，也就是说再操作这些被合并的单元格都已经不再称为单元格。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//单元格范围 参数（int firstRow, int lastRow, int firstCol, int lastCol)</span></span><br><span class="line">CellRangeAddress cellRangeAddress = <span class="keyword">new</span> CellRangeAddress(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="comment">//在sheet里增加合并单元格</span></span><br><span class="line">hssfSheet.addMergedRegion(cellRangeAddress);</span><br><span class="line"><span class="comment">//生成第一行</span></span><br><span class="line">Row row = hssfSheet.createRow(<span class="number">0</span>);</span><br><span class="line">Cell first = row.createCell(<span class="number">0</span>);</span><br><span class="line">first.setCellValue(<span class="string">&quot;first&quot;</span>);</span><br><span class="line"><span class="comment">//操作被合并的单元格</span></span><br><span class="line">Row row2 = hssfSheet.createRow(<span class="number">1</span>);</span><br><span class="line">Cell second = row2.createCell(<span class="number">0</span>);</span><br><span class="line">second.setCellValue(<span class="string">&quot;second&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>像上述代码，second不会输出到excel，因为它的所在单元格(1,0)已经被合并了。</p>
+<p>通常我们都会自己写一些工具类，然后进行操作excel操作，你也可以试着自己写一个。我这里就不贴我的代码了。</p>
+<p>纸上得来终觉浅，绝知此事要躬行</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java HashMap</title>
     <url>/2021/03/25/java-map-hashmap-concurrenthashmap/</url>
     <content><![CDATA[<h1 id="HashMap-介绍"><a href="#HashMap-介绍" class="headerlink" title="HashMap 介绍"></a>HashMap 介绍</h1><p>这个该怎么写了？其实网上好多博客说了这个，其实我看了之后，甚至看了源码之后我也不知道怎么写，源码中Hashmap的介绍大致如下：</p>
@@ -3077,41 +3112,6 @@ https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
 
 
 <p>参考：<a href="https://www.cnblogs.com/Michaelwjw/p/6411176.html">https://www.cnblogs.com/Michaelwjw/p/6411176.html</a></p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Apache POI操作生成Execl</title>
-    <url>/2017/12/11/java-poi-operation/</url>
-    <content><![CDATA[<h2 id="使用Apache-POI操作生成Execl"><a href="#使用Apache-POI操作生成Execl" class="headerlink" title="使用Apache POI操作生成Execl"></a>使用Apache POI操作生成Execl</h2><p>使用Java操作数据生成Excel表格，在网上能搜到的方式有很多，比如jxl，还有今天用到POI。POI是Apache开源的一个项目，该工具使用简单，方便。</p>
-<h3 id="准备与一些概念约定"><a href="#准备与一些概念约定" class="headerlink" title="准备与一些概念约定"></a>准备与一些概念约定</h3><p>需要在<a href="http://poi.apache.org/">poi官网</a>下载相应的jar包，或者使用maven来引入包。在开始之前我们需要知道一些关于excel文档的概念。一个excel文件通常称为[workbook]，excel里面的一个工作页面通常叫做[sheet]，sheet里面的格子称为[单元格cell]，单元格由坐标确定唯一位置，相应为[行row]，[列col]。</p>
-<p><img src="/images/qiniu/2017-12-11-15-41-40.png" alt="2017-12-11-15-41-40"></p>
-<p>了解这些我们可以开始看看poi的一些类和接口。</p>
-<span id="more"></span>
-<h3 id="POI"><a href="#POI" class="headerlink" title="POI"></a>POI</h3><p>POI 中主要的几个类为：<code>HSSFWorkbook</code>，<code>HSSFSheet</code>，<code>Row</code>，<code>Cell</code>。就像我们创建一个最简单的报表文件一样，先创建excel文件(HSSFWorkbook)，然后创建一个工作页(HSSFSheet)，然后找到哪一行(Row)，在哪一列上创建一个单元格(Cell)。你在excel中操作的最小单位都是Cell，所以我们进行读取和操作的最小单位也是Cell。</p>
-<p>嗯，如果你还喜欢猜测，为什么猜测了？因为这几个类都是HSSF开头，那么是不是后面的就是他们的父类，而这些HSSF开头的都是他们的实现了。答案是的。<!--你没猜错，就是具体的实现类，我们为啥用实现来操作，而不是面向接口编程，建议在正式实现的时候用面向接口编程。而我这里就不那么严格了。--></p>
-<p>开始编程前，请记住，你再操作excel的一个步骤，写代码的时候流程也是这样的。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建 excel workbook</span></span><br><span class="line">HSSFWorkbook hssfWorkbook = <span class="keyword">new</span> HSSFWorkbook();</span><br><span class="line"><span class="comment">//创建工作簿 sheet</span></span><br><span class="line">HSSFSheet hssfSheet = hssfWorkbook.createSheet();</span><br><span class="line"><span class="comment">//找到需要操作的行row,从第0行开始。我们在excel中看到的行是从1开始数，但是在poi中是从0开始。</span></span><br><span class="line"><span class="keyword">int</span> rowNum = <span class="number">0</span>;</span><br><span class="line">Row row1 = hssfSheet.createRow(rowNum);</span><br><span class="line"><span class="comment">//创建单元格cell</span></span><br><span class="line"><span class="keyword">int</span> colNum = <span class="number">0</span>;</span><br><span class="line">Cell row1Col1 = row1.createCell(colNum);</span><br><span class="line"><span class="comment">//操作单元格内容</span></span><br><span class="line">row1Col1.setCellValue(<span class="string">&quot;test&quot;</span>);</span><br><span class="line"><span class="comment">// 导出excel文件</span></span><br><span class="line">FileOutputStream fout = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">    fout = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;test.xsl&quot;</span>);</span><br><span class="line">    hssfWorkbook.write(fout);</span><br><span class="line">    fout.close();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (Exception e)</span><br><span class="line">&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样一个简单的单元格内容操作就完成了。</p>
-<h3 id="多变的需求"><a href="#多变的需求" class="headerlink" title="多变的需求"></a>多变的需求</h3><p>很多时候我们会有一些特殊的要求，比如文字居中，多行合并，多列合并，加底色，文字颜色等等。。</p>
-<p>用的最多的就是文字居中了，这类需求往往都是对于一个单元格有相应要求，POI针对这种需求有一个类：<code>Style</code>。用style来设置单元格的相关样式，下面来看一个文本居中的样式代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HSSFCellStyle style = excel.createCellStyle();</span><br><span class="line">style.setAlignment(CellStyle.ALIGN_CENTER);</span><br><span class="line">row1Col1.setCellStyle(style);<span class="comment">//内容居中显示</span></span><br></pre></td></tr></table></figure>
-
-<p>我们在进行合并的时候，其实实际上合并的还是单元格。所以我们在创建单元格的时候进行一些单元格范围参数设置：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//单元格范围 参数（int firstRow, int lastRow, int firstCol, int lastCol)</span></span><br><span class="line">CellRangeAddress cellRangeAddress = <span class="keyword">new</span> CellRangeAddress(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="comment">//在sheet里增加合并单元格</span></span><br><span class="line">hssfSheet.addMergedRegion(cellRangeAddress);</span><br><span class="line"><span class="comment">//生成第一行</span></span><br><span class="line">Row row = hssfSheet.createRow(<span class="number">0</span>);</span><br><span class="line">Cell first = row.createCell(<span class="number">0</span>);</span><br><span class="line">first.setCellValue(<span class="string">&quot;表头&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>此时被合并的行的其中的单元格都将无效，也就是说再操作这些被合并的单元格都已经不再称为单元格。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//单元格范围 参数（int firstRow, int lastRow, int firstCol, int lastCol)</span></span><br><span class="line">CellRangeAddress cellRangeAddress = <span class="keyword">new</span> CellRangeAddress(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="comment">//在sheet里增加合并单元格</span></span><br><span class="line">hssfSheet.addMergedRegion(cellRangeAddress);</span><br><span class="line"><span class="comment">//生成第一行</span></span><br><span class="line">Row row = hssfSheet.createRow(<span class="number">0</span>);</span><br><span class="line">Cell first = row.createCell(<span class="number">0</span>);</span><br><span class="line">first.setCellValue(<span class="string">&quot;first&quot;</span>);</span><br><span class="line"><span class="comment">//操作被合并的单元格</span></span><br><span class="line">Row row2 = hssfSheet.createRow(<span class="number">1</span>);</span><br><span class="line">Cell second = row2.createCell(<span class="number">0</span>);</span><br><span class="line">second.setCellValue(<span class="string">&quot;second&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>像上述代码，second不会输出到excel，因为它的所在单元格(1,0)已经被合并了。</p>
-<p>通常我们都会自己写一些工具类，然后进行操作excel操作，你也可以试着自己写一个。我这里就不贴我的代码了。</p>
-<p>纸上得来终觉浅，绝知此事要躬行</p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -3816,6 +3816,7 @@ https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
 </blockquote>
 <p>换一下，现在你有两台电脑，你想让两台电脑能够互相传递文件或者文本信息，那该怎么做呢？我想刚刚的例子中，你会想到，只要建一个桥就行了。那两台电脑直接的桥怎么建？首先你是需要将两台电脑用线”连”起来。正常来说，有了这条传输的线，两台机器之间互相通信的基础条件就具备了。然后再进一步，你家里又买了几台电脑，这几台电脑互相之间也需要通信，那电脑只有一个插口，总不能与谁通信的时候，就插谁的网线吧，这要是都在同一时间通信，那不就的乱了？所以家里一般会有个路由设备，大家都在路由设备插入，然后要发的消息就先发个路由器，路由器再转发。那路由器怎么分清是哪台电脑？所以是不是大家要有个唯一标识符号（mac地址）。你看OSI七层模型就出来了。具体的化大家可以参考一下这个(<a href="https://www.lifewire.com/layers-of-the-osi-model-illustrated-818017)%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B8%BB%E8%A6%81%E6%98%AF%E8%B0%88%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E3%80%82">https://www.lifewire.com/layers-of-the-osi-model-illustrated-818017)，我们主要是谈容器网络。</a></p>
 <p>前面这些铺垫，其实主要还是为了主题容器网络。</p>
+<span id="more"></span>
 <p>容器的本质是一种特殊的进程。容器里面最大的三个相关技术：限制、隔离、根文件，分别对应Cgroups、Namespace、RootFS。 而我们今天主题中，就需要先从 Network Namespace 讲起。</p>
 <p>容器运行的时候的，它能看到的”网络栈” ，实际就是被隔离到它自己的 Network Namespace  中。网络栈应该包含有网卡（network interface)、回环设备（loopback device）、路由表（routing table）和 iptables规则。对于一个进程来说，这些要素就构成了它发起和响应网络请求的基本环境。</p>
 <p>容器其实也可以直接使用宿主机的网络栈，只需要使用<code>-net=host</code> 就行。像这样容器直接使用宿主机网络栈的方式，可以为容器带来良好的网络性能，但是也不可避免的带来了共享网络资源的问题，比如端口冲突。所以我们希望的是，每个容器进程都使用自己的Network Namespace里面的网络栈，有自己独立的IP地址和端口。那这个时候就有一个情况出现，如果启动了两个容器，两个容器之间怎么互相通信呢？</p>
@@ -4139,50 +4140,6 @@ nodeport,hostport
       </tags>
   </entry>
   <entry>
-    <title>常用 Linux 命令</title>
-    <url>/2017/04/18/linux-java-command/</url>
-    <content><![CDATA[<h2 id="常用-Linux-命令"><a href="#常用-Linux-命令" class="headerlink" title="常用 Linux 命令"></a>常用 Linux 命令</h2><h3 id="1-查找文件"><a href="#1-查找文件" class="headerlink" title="1.查找文件"></a>1.查找文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">find &#x2F; -name filename.txt 	根据名称查找&#x2F;目录下的filename.txt文件。</span><br><span class="line"></span><br><span class="line">find . -name &quot;*.xml&quot; 		递归查找所有的xml文件</span><br><span class="line"></span><br><span class="line">find . -name &quot;*.xml&quot; |xargs grep &quot;hello world&quot; 递归查找所有文件内容中包含hello world的xml文件</span><br><span class="line"></span><br><span class="line">grep -H &#39;spring&#39; *.xml 		查找所以有的包含spring的xml文件</span><br><span class="line"></span><br><span class="line">find .&#x2F; -size 0 | xargs rm -f &amp; 删除文件大小为零的文件</span><br><span class="line"></span><br><span class="line">ls -l | grep &#39;.jar&#39; 查找当前目录中的所有jar文件</span><br><span class="line"></span><br><span class="line">grep &#39;test&#39; d* 显示所有以d开头的文件中包含test的行。</span><br><span class="line"></span><br><span class="line">grep &#39;test&#39; aa bb cc 显示在aa，bb，cc文件中匹配test的行。</span><br><span class="line"></span><br><span class="line">grep &#39;[a-z]\&#123;5\&#125;&#39; aa 显示所有包含每个字符串至少有5个连续小写字符的字符串的行。</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-查看一个程序是否运行"><a href="#2-查看一个程序是否运行" class="headerlink" title="2.查看一个程序是否运行"></a>2.查看一个程序是否运行</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps –ef|grep tomcat 				查看所有有关tomcat的进程</span><br><span class="line"></span><br><span class="line">ps -ef|grep --color java 		高亮要查询的关键字</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h3 id="3-终止线程"><a href="#3-终止线程" class="headerlink" title="3.终止线程"></a>3.终止线程</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kill -9 pid</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-查看端口被占用的程序pid"><a href="#4-查看端口被占用的程序pid" class="headerlink" title="4.查看端口被占用的程序pid"></a>4.查看端口被占用的程序pid</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lsof -i:8080    8080 为端口号</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-复制文件"><a href="#5-复制文件" class="headerlink" title="5.复制文件"></a>5.复制文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp src taget</span><br><span class="line">cp -r src target</span><br><span class="line">scp srcFile remoteUserName@remoteIp:remoteFileAddress 将本地目录拷贝到远程目录 ； 加上-r参数 为文件夹拷贝</span><br><span class="line">scp remoteUserName@remoteIp:&#x2F;path&#x2F;filename &#x2F;local&#x2F;local_destination  将远程目录拷贝到本地目录 ；加上-r 为文件夹拷贝</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-创建和删除目录"><a href="#6-创建和删除目录" class="headerlink" title="6.创建和删除目录"></a>6.创建和删除目录</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rmdir&#x2F;mkdir</span><br></pre></td></tr></table></figure>
-
-<h3 id="7-查看结尾1000行"><a href="#7-查看结尾1000行" class="headerlink" title="7.查看结尾1000行"></a>7.查看结尾1000行</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tail -1000f filename  查询动态日志文件的时候</span><br></pre></td></tr></table></figure>
-
-<h3 id="8-查看端口占用情况"><a href="#8-查看端口占用情况" class="headerlink" title="8.查看端口占用情况"></a>8.查看端口占用情况</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netstat -tln | grep 8080 查看8080的使用情况</span><br></pre></td></tr></table></figure>
-
-<h3 id="9-端口属于哪个程序"><a href="#9-端口属于哪个程序" class="headerlink" title="9.端口属于哪个程序"></a>9.端口属于哪个程序</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lsof -i:8080</span><br></pre></td></tr></table></figure>
-
-<h3 id="10-查看进程"><a href="#10-查看进程" class="headerlink" title="10.查看进程"></a>10.查看进程</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps aux|grep java 查看java进程</span><br><span class="line">ps aux 查看所有进程</span><br></pre></td></tr></table></figure>
-
-<h3 id="11-文件下载"><a href="#11-文件下载" class="headerlink" title="11.文件下载"></a>11.文件下载</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;file.tgz</span><br><span class="line">curl http:&#x2F;&#x2F;file.tgz</span><br></pre></td></tr></table></figure>
-
-<h3 id="12-远程登录"><a href="#12-远程登录" class="headerlink" title="12.远程登录"></a>12.远程登录</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh userName@ip</span><br></pre></td></tr></table></figure>
-<h3 id="13-打印信息"><a href="#13-打印信息" class="headerlink" title="13.打印信息"></a>13.打印信息</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo $JAVA_HOME</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux 日志管理工具 - Logrotate</title>
     <url>/2021/05/20/linux-log-tool-logrotate/</url>
     <content><![CDATA[<h1 id="Linux-日志管理工具-Logrotate"><a href="#Linux-日志管理工具-Logrotate" class="headerlink" title="Linux 日志管理工具 - Logrotate"></a>Linux 日志管理工具 - Logrotate</h1><p>最近在使用 openresty(nginx) 作为容器平台 kubernetes 的入口路由服务；流程大致为前端新建一个路由规则的时候，获取到 svc 的 endpoint 然后将其作为 nginx 的后端服务。实时监听 svc 的状态然后更新 ep 到 nginx；这里遇到一个问题，nginx 本身没有做到日志切割，在上线一段时间之后，nginx 的 vhost_access.log 日志文件竟然达到了 50G ，导致出现系统磁盘告警。google 一下没发现 nginx 有自带的日志轮转的功能（其实也有，只是要装插件和重新编译）；在线上最好的方式是什么了？最后采用了 Logrotate 来做日志切割。</p>
@@ -4234,6 +4191,50 @@ EOF
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用 Linux 命令</title>
+    <url>/2017/04/18/linux-java-command/</url>
+    <content><![CDATA[<h2 id="常用-Linux-命令"><a href="#常用-Linux-命令" class="headerlink" title="常用 Linux 命令"></a>常用 Linux 命令</h2><h3 id="1-查找文件"><a href="#1-查找文件" class="headerlink" title="1.查找文件"></a>1.查找文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">find &#x2F; -name filename.txt 	根据名称查找&#x2F;目录下的filename.txt文件。</span><br><span class="line"></span><br><span class="line">find . -name &quot;*.xml&quot; 		递归查找所有的xml文件</span><br><span class="line"></span><br><span class="line">find . -name &quot;*.xml&quot; |xargs grep &quot;hello world&quot; 递归查找所有文件内容中包含hello world的xml文件</span><br><span class="line"></span><br><span class="line">grep -H &#39;spring&#39; *.xml 		查找所以有的包含spring的xml文件</span><br><span class="line"></span><br><span class="line">find .&#x2F; -size 0 | xargs rm -f &amp; 删除文件大小为零的文件</span><br><span class="line"></span><br><span class="line">ls -l | grep &#39;.jar&#39; 查找当前目录中的所有jar文件</span><br><span class="line"></span><br><span class="line">grep &#39;test&#39; d* 显示所有以d开头的文件中包含test的行。</span><br><span class="line"></span><br><span class="line">grep &#39;test&#39; aa bb cc 显示在aa，bb，cc文件中匹配test的行。</span><br><span class="line"></span><br><span class="line">grep &#39;[a-z]\&#123;5\&#125;&#39; aa 显示所有包含每个字符串至少有5个连续小写字符的字符串的行。</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-查看一个程序是否运行"><a href="#2-查看一个程序是否运行" class="headerlink" title="2.查看一个程序是否运行"></a>2.查看一个程序是否运行</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps –ef|grep tomcat 				查看所有有关tomcat的进程</span><br><span class="line"></span><br><span class="line">ps -ef|grep --color java 		高亮要查询的关键字</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="3-终止线程"><a href="#3-终止线程" class="headerlink" title="3.终止线程"></a>3.终止线程</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kill -9 pid</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-查看端口被占用的程序pid"><a href="#4-查看端口被占用的程序pid" class="headerlink" title="4.查看端口被占用的程序pid"></a>4.查看端口被占用的程序pid</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lsof -i:8080    8080 为端口号</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-复制文件"><a href="#5-复制文件" class="headerlink" title="5.复制文件"></a>5.复制文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp src taget</span><br><span class="line">cp -r src target</span><br><span class="line">scp srcFile remoteUserName@remoteIp:remoteFileAddress 将本地目录拷贝到远程目录 ； 加上-r参数 为文件夹拷贝</span><br><span class="line">scp remoteUserName@remoteIp:&#x2F;path&#x2F;filename &#x2F;local&#x2F;local_destination  将远程目录拷贝到本地目录 ；加上-r 为文件夹拷贝</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-创建和删除目录"><a href="#6-创建和删除目录" class="headerlink" title="6.创建和删除目录"></a>6.创建和删除目录</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rmdir&#x2F;mkdir</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-查看结尾1000行"><a href="#7-查看结尾1000行" class="headerlink" title="7.查看结尾1000行"></a>7.查看结尾1000行</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tail -1000f filename  查询动态日志文件的时候</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-查看端口占用情况"><a href="#8-查看端口占用情况" class="headerlink" title="8.查看端口占用情况"></a>8.查看端口占用情况</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netstat -tln | grep 8080 查看8080的使用情况</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-端口属于哪个程序"><a href="#9-端口属于哪个程序" class="headerlink" title="9.端口属于哪个程序"></a>9.端口属于哪个程序</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lsof -i:8080</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-查看进程"><a href="#10-查看进程" class="headerlink" title="10.查看进程"></a>10.查看进程</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps aux|grep java 查看java进程</span><br><span class="line">ps aux 查看所有进程</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-文件下载"><a href="#11-文件下载" class="headerlink" title="11.文件下载"></a>11.文件下载</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;file.tgz</span><br><span class="line">curl http:&#x2F;&#x2F;file.tgz</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-远程登录"><a href="#12-远程登录" class="headerlink" title="12.远程登录"></a>12.远程登录</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh userName@ip</span><br></pre></td></tr></table></figure>
+<h3 id="13-打印信息"><a href="#13-打印信息" class="headerlink" title="13.打印信息"></a>13.打印信息</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo $JAVA_HOME</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -4907,19 +4908,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>简</title>
-    <url>/2017/03/13/new-step/</url>
-    <content><![CDATA[<pre><code> Hello, A new starting point, 2017.
-</code></pre>
-]]></content>
-      <categories>
-        <category>Life</category>
-      </categories>
-      <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数据库常用函数汇总</title>
     <url>/2017/04/21/mysql_draft/</url>
     <content><![CDATA[<h2 id="MySQL-常用函数和语句"><a href="#MySQL-常用函数和语句" class="headerlink" title="MySQL 常用函数和语句"></a>MySQL 常用函数和语句</h2><h3 id="DDL语句"><a href="#DDL语句" class="headerlink" title="DDL语句"></a>DDL语句</h3><p>修改表的某个字段定义:<code>alter table tableName modify clounmnName column_definition [first|After col_name]</code></p>
@@ -4986,6 +4974,19 @@ EOF
       </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简</title>
+    <url>/2017/03/13/new-step/</url>
+    <content><![CDATA[<pre><code> Hello, A new starting point, 2017.
+</code></pre>
+]]></content>
+      <categories>
+        <category>Life</category>
+      </categories>
+      <tags>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
@@ -5094,21 +5095,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>OpenShift 专用 Router 实操</title>
-    <url>/2022/02/27/openshift-router/</url>
-    <content><![CDATA[<h1 id="Openshift-专用-Router-实操"><a href="#Openshift-专用-Router-实操" class="headerlink" title="Openshift 专用 Router 实操"></a>Openshift 专用 Router 实操</h1><p>由于某些服务在实际业务场景中非常重要，或者为了与其它业务进行入口区分，因此会产生专属 router（Ingress）的需求，在 openshift 的实际操作可以这样：</p>
-<span id="more"></span> 
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">确保 sa 为 router 名字的有scc hostnetwork 权限</span></span><br><span class="line">oc adm policy add-scc-to-user hostnetwork -z router</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">创建一个 router ，指定 router-iot 为名字</span></span><br><span class="line">oc adm router router-iot --images=&#x27;harbor.uat.chenzhijun.top/openshift3/ose-haproxy-router:v3.11.170&#x27; --selector=&#x27;node-role.kubernetes.io/iot-router=true&#x27; --labels=&#x27;router=iot&#x27;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置 router 的 ns 标签</span></span><br><span class="line">oc set env dc/router-iot NAMESPACE_LABELS=&quot;router=iot”</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置 ns 标签</span></span><br><span class="line">oc label namespace demo “router=iot”</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置某个 ns 下的 router 必须有 cluster-reader 权限</span></span><br><span class="line">oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:demo:router</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">https://docs.openshift.com/container-platform/3.11/admin_guide/manage_rbac.html</span></span><br><span class="line">oc adm policy add-role-to-user cluster-reader system:serviceaccount:demo:router</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改 router 监听端口</span></span><br><span class="line">oc adm router --replicas=0 --ports=&#x27;10080:10080,10443:10443&#x27; </span><br><span class="line">oc set env dc/router ROUTER_SERVICE_HTTP_PORT=10080 ROUTER_SERVICE_HTTPS_PORT=10443</span><br><span class="line">oc scale dc/router --replicas=1</span><br><span class="line"></span><br><span class="line">iptables -A OS_FIREWALL_ALLOW -p tcp --dport 10080 -j ACCEPT</span><br><span class="line">iptables -A OS_FIREWALL_ALLOW -p tcp --dport 10443 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">暴露一个 route</span></span><br><span class="line">oc expose service myservice --hostname=owner.example.test</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">允许泛域名</span></span><br><span class="line">oc set env dc/router ROUTER_ALLOW_WILDCARD_ROUTES=true</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改泛域名子域</span></span><br><span class="line">oc adm router --force-subdomain=&#x27;$&#123;name&#125;-$&#123;namespace&#125;.apps.example.com&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Kubernetes</category>
-      </categories>
-      <tags>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Openshift 专属机方案</title>
     <url>/2022/02/17/openshift-server-exclusive/</url>
     <content><![CDATA[<h1 id="Openshift-专属机方案"><a href="#Openshift-专属机方案" class="headerlink" title="Openshift 专属机方案"></a>Openshift 专属机方案</h1><span id="more"></span> 
@@ -5125,6 +5111,21 @@ EOF
 <li>如果是已存在的项目：<code>oc patch namespace demo -p &#39;&#123;&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&quot;openshift.io/node-selector&quot;:&quot;node-role.kubernetes.io/xxx=true&quot;&#125;&#125;&#125;&#39;</code> 可以进行 patch 操作；如果有多个 label 可以进行：<code>oc patch namespace demo -p &#39;&#123;&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&quot;openshift.io/node-selector&quot;:&quot;node-role.kubernetes.io/xxx1=true,node-role.kubernetes.io/xxx2=true&quot;&#125;&#125;&#125;&#39;</code></li>
 <li>如果需要设置全局默认调度可以修改 master 配置文件：<code>/etc/origin/master/master-config.yaml</code>  <code>projectConfig.defaultNodeSelector</code> 然后重启 api 和 controller：<code>master-restart api</code>&amp;&amp;<code>master-restart api</code></li>
 </ol>
+]]></content>
+      <categories>
+        <category>Kubernetes</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenShift 专用 Router 实操</title>
+    <url>/2022/02/27/openshift-router/</url>
+    <content><![CDATA[<h1 id="Openshift-专用-Router-实操"><a href="#Openshift-专用-Router-实操" class="headerlink" title="Openshift 专用 Router 实操"></a>Openshift 专用 Router 实操</h1><p>由于某些服务在实际业务场景中非常重要，或者为了与其它业务进行入口区分，因此会产生专属 router（Ingress）的需求，在 openshift 的实际操作可以这样：</p>
+<span id="more"></span> 
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">确保 sa 为 router 名字的有scc hostnetwork 权限</span></span><br><span class="line">oc adm policy add-scc-to-user hostnetwork -z router</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">创建一个 router ，指定 router-iot 为名字</span></span><br><span class="line">oc adm router router-iot --images=&#x27;harbor.uat.chenzhijun.top/openshift3/ose-haproxy-router:v3.11.170&#x27; --selector=&#x27;node-role.kubernetes.io/iot-router=true&#x27; --labels=&#x27;router=iot&#x27;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置 router 的 ns 标签</span></span><br><span class="line">oc set env dc/router-iot NAMESPACE_LABELS=&quot;router=iot”</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置 ns 标签</span></span><br><span class="line">oc label namespace demo “router=iot”</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置某个 ns 下的 router 必须有 cluster-reader 权限</span></span><br><span class="line">oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:demo:router</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">https://docs.openshift.com/container-platform/3.11/admin_guide/manage_rbac.html</span></span><br><span class="line">oc adm policy add-role-to-user cluster-reader system:serviceaccount:demo:router</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改 router 监听端口</span></span><br><span class="line">oc adm router --replicas=0 --ports=&#x27;10080:10080,10443:10443&#x27; </span><br><span class="line">oc set env dc/router ROUTER_SERVICE_HTTP_PORT=10080 ROUTER_SERVICE_HTTPS_PORT=10443</span><br><span class="line">oc scale dc/router --replicas=1</span><br><span class="line"></span><br><span class="line">iptables -A OS_FIREWALL_ALLOW -p tcp --dport 10080 -j ACCEPT</span><br><span class="line">iptables -A OS_FIREWALL_ALLOW -p tcp --dport 10443 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">暴露一个 route</span></span><br><span class="line">oc expose service myservice --hostname=owner.example.test</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">允许泛域名</span></span><br><span class="line">oc set env dc/router ROUTER_ALLOW_WILDCARD_ROUTES=true</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改泛域名子域</span></span><br><span class="line">oc adm router --force-subdomain=&#x27;$&#123;name&#125;-$&#123;namespace&#125;.apps.example.com&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Kubernetes</category>
@@ -5719,26 +5720,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>极光推送线下交流分享会</title>
-    <url>/2018/03/17/shenzhen-xianxia-fenxianghui/</url>
-    <content><![CDATA[<h1 id="极光推送线下交流分享会"><a href="#极光推送线下交流分享会" class="headerlink" title="极光推送线下交流分享会"></a>极光推送线下交流分享会</h1><p>周六参加了异常极光推送组织的线下架构师分享会。当然我只是去学习的。</p>
-<span id="more"></span>
-
-<p>首先是极光推送的架构师分享极光面对的问题以及架构进化历史。他们呢的架构我就听懂了一个从vm迁移到k8s,docker。另外他们是用c++开发的，采用的是并行处理。实话C++忘记的差不多了。然后他们对于特殊vip客户做了特殊处理。我特别感兴趣一个问题，他说他们有上亿的激活用户，那么怎么给每个用户分标签了？我们在使用机关推送的时候其实是有按男女，按地区，按年龄等来分别推送的。那他们怎么做到在亿级别的用户数上做到很快的处理？他说的方案是<strong>请求并行处理</strong>；一个请求可以拆分成多个请求，然后结果统一汇总。这个怎么感觉是多线程并发么？</p>
-<p>另外还听到了一个服务化层的概念。比如mq，他说他们所有的请求都是走mq异步的。但是现在并发量大的情况下，mq已经抗不住了。这个时候他们提出mq服务化。就是说mq可能有kafka，rabbitmq，rocketmq。他们可能是在这些mq的上层包装一层，然后底下用这些mq的集群，而对外就是一个mq服务接口层，使用者完全感觉不出来，还是跟以前一样，而这个服务层有路由策略和处理。另外他们的mq是单实例，也就是非集群方式8c16G。</p>
-<p>第二位分享的是平安云的架构师，主要讲的是k8s。已经他们的云平台服务搭建，已经在内部的使用。项目先要考虑活下来，才会考虑去优化。这是他分享的一句话。另外会下我还问了一下他关于日志的问题。日志丢包怎么解决，他的回答是切分，然后采用一些策略来做。防止掉大部分。小部分丢包可以自己再采用策略补偿。</p>
-<p>第三位分享的是阿里豌豆荚的架构师，很明显，这是一个阿里互联网的气息的人。我第一次听到下级给上级打绩效。这个不得不佩服，他也说了136淘宝的策略，如果两年1，必须淘汰，每年必须有人1。厉害了。然后他分享给我们的是抓好数据结构。熟悉一门新的语言先去看它的api文档，但是如果你熟悉数据结构，你会发现api文档里面其实通用的，因为每个语言用的数据结构还是那些只是实现方式有点不一样罢了。他还分享了一个架构模式进程：mvc-&gt;mvp-&gt;mvvm。性能优化方法面他说先要有个量化下来，他主要是安卓开发推荐我们内存优化的工具是memory，monitor，heap view,aliocation Tracker，MAT。<br>内存泄漏：应用不停的申请新内存；<br>内存溢出：需要一个大内存，实际只有一个小内存;<br>在安卓中使用轻量级的数据结构，不用hashmap的原因是自动装箱，自动拆箱。<br>技术的进化历史：<br>服务业务—&gt; 解决需求<br>反哺业务—&gt; 留存<br>提升业务</p>
-<p>作为技术人需要的不但专，而且要博。专而博。</p>
-<p>最后的提问环节，不得不说，阿里的影响力那是真的大啊，一堆人提问，一堆人加微信。厉害了。</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>希尔排序算法</title>
     <url>/2018/03/17/shell-sort/</url>
     <content><![CDATA[<h1 id="希尔排序算法"><a href="#希尔排序算法" class="headerlink" title="希尔排序算法"></a>希尔排序算法</h1><p>这个算法是插入排序的基础上做的优化，它描叙与实现可以看这个<a href="http://chenzhijun.top/2018/03/09/%E5%88%9D%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">插入排序</a>。</p>
@@ -5756,6 +5737,26 @@ EOF
       </categories>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>极光推送线下交流分享会</title>
+    <url>/2018/03/17/shenzhen-xianxia-fenxianghui/</url>
+    <content><![CDATA[<h1 id="极光推送线下交流分享会"><a href="#极光推送线下交流分享会" class="headerlink" title="极光推送线下交流分享会"></a>极光推送线下交流分享会</h1><p>周六参加了异常极光推送组织的线下架构师分享会。当然我只是去学习的。</p>
+<span id="more"></span>
+
+<p>首先是极光推送的架构师分享极光面对的问题以及架构进化历史。他们呢的架构我就听懂了一个从vm迁移到k8s,docker。另外他们是用c++开发的，采用的是并行处理。实话C++忘记的差不多了。然后他们对于特殊vip客户做了特殊处理。我特别感兴趣一个问题，他说他们有上亿的激活用户，那么怎么给每个用户分标签了？我们在使用机关推送的时候其实是有按男女，按地区，按年龄等来分别推送的。那他们怎么做到在亿级别的用户数上做到很快的处理？他说的方案是<strong>请求并行处理</strong>；一个请求可以拆分成多个请求，然后结果统一汇总。这个怎么感觉是多线程并发么？</p>
+<p>另外还听到了一个服务化层的概念。比如mq，他说他们所有的请求都是走mq异步的。但是现在并发量大的情况下，mq已经抗不住了。这个时候他们提出mq服务化。就是说mq可能有kafka，rabbitmq，rocketmq。他们可能是在这些mq的上层包装一层，然后底下用这些mq的集群，而对外就是一个mq服务接口层，使用者完全感觉不出来，还是跟以前一样，而这个服务层有路由策略和处理。另外他们的mq是单实例，也就是非集群方式8c16G。</p>
+<p>第二位分享的是平安云的架构师，主要讲的是k8s。已经他们的云平台服务搭建，已经在内部的使用。项目先要考虑活下来，才会考虑去优化。这是他分享的一句话。另外会下我还问了一下他关于日志的问题。日志丢包怎么解决，他的回答是切分，然后采用一些策略来做。防止掉大部分。小部分丢包可以自己再采用策略补偿。</p>
+<p>第三位分享的是阿里豌豆荚的架构师，很明显，这是一个阿里互联网的气息的人。我第一次听到下级给上级打绩效。这个不得不佩服，他也说了136淘宝的策略，如果两年1，必须淘汰，每年必须有人1。厉害了。然后他分享给我们的是抓好数据结构。熟悉一门新的语言先去看它的api文档，但是如果你熟悉数据结构，你会发现api文档里面其实通用的，因为每个语言用的数据结构还是那些只是实现方式有点不一样罢了。他还分享了一个架构模式进程：mvc-&gt;mvp-&gt;mvvm。性能优化方法面他说先要有个量化下来，他主要是安卓开发推荐我们内存优化的工具是memory，monitor，heap view,aliocation Tracker，MAT。<br>内存泄漏：应用不停的申请新内存；<br>内存溢出：需要一个大内存，实际只有一个小内存;<br>在安卓中使用轻量级的数据结构，不用hashmap的原因是自动装箱，自动拆箱。<br>技术的进化历史：<br>服务业务—&gt; 解决需求<br>反哺业务—&gt; 留存<br>提升业务</p>
+<p>作为技术人需要的不但专，而且要博。专而博。</p>
+<p>最后的提问环节，不得不说，阿里的影响力那是真的大啊，一堆人提问，一堆人加微信。厉害了。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
       </tags>
   </entry>
   <entry>
