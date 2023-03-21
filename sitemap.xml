@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://chenzhijun.top/2023/02/11/kubernetes-container-network/</loc>
+    <loc>http://chenzhijun.top/2023/01/16/the-ability-of-a-paas-platform/</loc>
     
     <lastmod>2023-03-21</lastmod>
     
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/2023/01/16/the-ability-of-a-paas-platform/</loc>
+    <loc>http://chenzhijun.top/2023/02/11/kubernetes-container-network/</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -1467,14 +1467,14 @@
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/tags/Ansible/</loc>
+    <loc>http://chenzhijun.top/tags/All/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/tags/All/</loc>
+    <loc>http://chenzhijun.top/tags/Ansible/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -2001,7 +2001,7 @@
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/categories/Paas/</loc>
+    <loc>http://chenzhijun.top/categories/PaaS/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
