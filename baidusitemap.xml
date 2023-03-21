@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://chenzhijun.top/2023/02/10/what-is-cloud-native/</loc>
+    <lastmod>2023-03-21</lastmod>
+  </url>  <url>
     <loc>http://chenzhijun.top/2023/01/16/the-ability-of-a-paas-platform/</loc>
     <lastmod>2023-03-21</lastmod>
   </url>  <url>
@@ -20,9 +23,6 @@
     <lastmod>2023-03-21</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.top/2022/05/01/prometheus-pre-use/</loc>
-    <lastmod>2023-03-21</lastmod>
-  </url>  <url>
-    <loc>http://chenzhijun.top/2023/02/10/what-is-cloud-native/</loc>
     <lastmod>2023-03-21</lastmod>
   </url>  <url>
     <loc>http://chenzhijun.top/2022/06/09/prometheus-storage-influxdb/</loc>

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chenzhijun.top/2023/02/10/what-is-cloud-native/</loc>
+    
+    <lastmod>2023-03-21</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chenzhijun.top/2023/01/16/the-ability-of-a-paas-platform/</loc>
     
     <lastmod>2023-03-21</lastmod>
@@ -45,13 +52,6 @@
   
   <url>
     <loc>http://chenzhijun.top/2022/05/01/prometheus-pre-use/</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://chenzhijun.top/2023/02/10/what-is-cloud-native/</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -1299,14 +1299,14 @@
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/tags/Alertmanager/</loc>
+    <loc>http://chenzhijun.top/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/tags/%E7%AE%97%E6%B3%95/</loc>
+    <loc>http://chenzhijun.top/tags/Alertmanager/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1467,14 +1467,14 @@
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/tags/All/</loc>
+    <loc>http://chenzhijun.top/tags/Ansible/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/tags/Ansible/</loc>
+    <loc>http://chenzhijun.top/tags/All/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1784,14 +1784,14 @@
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/categories/Alertmanager/</loc>
+    <loc>http://chenzhijun.top/categories/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://chenzhijun.top/categories/%E7%AE%97%E6%B3%95/</loc>
+    <loc>http://chenzhijun.top/categories/Alertmanager/</loc>
     <lastmod>2023-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
