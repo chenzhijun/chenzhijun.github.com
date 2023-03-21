@@ -104,11 +104,11 @@
 <meta property="og:description" content="容器的网络基础容器的网络基础是主机的网络，在理解容器的网络前我们先来看一下主机的网络。  想象一个场景，你在湖南，你的爱人在湖北，有一天，你们两觉得恋爱的时间差不多了，该结婚了。结婚之前是不是要先见一下家长。但是湖南和湖北之间隔着长江。那你现在要去湖北的话，怎么办呢？你会想，我有车，只需要开车过“长江大桥”去对方父母家就行。  换一下，现在你有两台电脑，你想让两台电脑能够互相传递文件或者文本信息，">
 <meta property="og:locale">
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/0ab069ed6faece0688e7129f9dc879434094c8fe13122838c14bb6885a87ebfc.png">
-<meta property="og:image" content="http://chenzhijun.top/Users/chenzhijun916/Documents/doc/flannel-%E8%B7%A8%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1-udp.png">
-<meta property="og:image" content="http://chenzhijun.top/Users/chenzhijun916/Documents/doc/flanned-udp-%E5%BA%9F%E5%BC%83%E7%9A%84%E5%8E%9F%E5%9B%A0.png">
-<meta property="og:image" content="http://chenzhijun.top/Users/chenzhijun916/Documents/doc/flannel-vxlan%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://chenzhijun.top/images/qiniu/1679408009109-flannel-%E8%B7%A8%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1-udp.png">
+<meta property="og:image" content="http://chenzhijun.top/images/qiniu/1679408053501-flanned-udp-%E5%BA%9F%E5%BC%83%E7%9A%84%E5%8E%9F%E5%9B%A0.png">
+<meta property="og:image" content="http://chenzhijun.top/images/qiniu/1679408065526-flannel-vxlan%E6%A8%A1%E5%BC%8F.png">
 <meta property="article:published_time" content="2023-02-11T13:48:52.000Z">
-<meta property="article:modified_time" content="2023-03-21T14:10:55.403Z">
+<meta property="article:modified_time" content="2023-03-21T14:14:35.609Z">
 <meta property="article:author" content="陈志军">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -451,14 +451,14 @@
 <p>Flannel 安装完之后，会在主机上创建一个Flannel0的设备，它是一个TUN设备(Tunnel 设备)。TUN设备是一个工作在三层的虚拟网络设备。它的功能非常简单，在操作系统内核和用户程序中传递IP包。 </p>
 <p>当操作系统将一个IP包发送给flannel0设备后，flannel0就会把这个包转给创建它的flannel进程，这是一个从内核态到用户态的的流动方向；相反的如果flannel进程向flannel0发送一个ip包，那这个包就出现在了宿主机网络栈中，然后根据宿主机的路由表进行下一步处理，这是一个从用户态到内核态的流动方向。</p>
 <p>那当flanneld收到flannel0转过来的IP包，然后怎么转发到这个IP了？这就是我们在flannel中的主要配置：子网的功劳了。主网与宿主机的关系保存在etcd中：<code>etcdctl ls /coreos.com/network/subnets</code> 所以我们可以看到，当a主机的flanneld收到ip包之后，只要将ip进行匹配就能知道要转发到那个主机上。这个流程能完成的原因就是每个主机上都启动了一个flanneld，都监听这8285的一个端口，，所以flanneld只要把udp包发往b主机的8285端口就行。而接下来，flanneld再把这个IP包发送给它管理的TUN设备，也就是flannel0设备，就可以找到对应的容器了。以下为示意图：</p>
-<p><img src="/Users/chenzhijun916/Documents/doc/flannel-%E8%B7%A8%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1-udp.png" alt="img"></p>
+<p><img src="/images/qiniu/1679408009109-flannel-%E8%B7%A8%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1-udp.png" alt="图 2">  </p>
 <p>但是为什么udp模式最后被放弃了？其实tun设备还是一个在三层的Overlay网络，比起两台宿主机的直接通信，flannel还做了一个通过flanneld进程进行封装的过程，这也导致flannel性能不好的直接原因，它需要在用户态和内核态直接进行3次转换。</p>
-<p><img src="/Users/chenzhijun916/Documents/doc/flanned-udp-%E5%BA%9F%E5%BC%83%E7%9A%84%E5%8E%9F%E5%9B%A0.png" alt="img"></p>
+<p><img src="/images/qiniu/1679408053501-flanned-udp-%E5%BA%9F%E5%BC%83%E7%9A%84%E5%8E%9F%E5%9B%A0.png" alt="图 3">  </p>
 <p>所以flannel后续支持VXLAN，即：Virtual Extensible LAN（虚拟可扩展局域网），是Linux内核本身就支持的一种网络虚拟化技术。VXLAN的设计思想是在现有的三层网络之上，覆盖一层虚拟的、由内核VXLAN模块负责维护的二层网络，使得这个二层网络上的虚拟机或者容器，可以像局域网一样自由通信。而为了能够在二层网络上打通隧道，VXLAN 会在宿主机上设置一个特殊的网络设备作为”隧道”的两端，这个设备就叫做VTEP，即：VXLAN Tunnel End Point（虚拟隧道端点）。</p>
 <p>VTEP设备其实有点类似之前说的TUN设备，不过它是作用在二层上，对二层的数据帧进行封装和解封，而且这个工作全部是在内核里完成的。</p>
-<p><img src="/Users/chenzhijun916/Documents/doc/flannel-vxlan%E6%A8%A1%E5%BC%8F.png" alt="img"></p>
+<p><img src="/images/qiniu/1679408065526-flannel-vxlan%E6%A8%A1%E5%BC%8F.png" alt="图 4">  </p>
 <p>可以看到每个主机都有一个flannel.1的设备，就是vxlan所需的vtep设备，它既有IP地址，也有mac地址。</p>
-<p>现在容器 A 要访问容器 B，流程是怎样的呢？</p>
+<p>现在容器 A 要访问容器 B ，流程是怎样的呢？</p>
 <p>首先 A 发出的IP 包，会先出现在docker0网桥，然后被路由到本机设备 flannel.1 进行处理，这个我们可以叫它原始包。</p>
 <p>在到达 flannel.1之后，flannel.1 的作用就是要将这个原始包发送到正确的 目的宿主机的 vtep 设备上。</p>
 <p>那怎么找到 vtep 设备呢？ 根据<code>route -n</code> 路由记录，我们可以知道目的主机的 vtep 设备的 IP 地址，而根据三层的 IP 地址查询对应的二层 MAC 地址信息，则恰好是ARP 表的功能。这里的 arp 记录，每个主机的 flannel.1 进程维护的，一台主机新加入到集群，就会把相应的 vtep 设备对应的 arp 记录下发到所有宿主机上。现在有了 MAC 地址，Linux 内核就可以开始二层封包操作，它会把容器的 IP和目的 VTEP 设备的 mac 地址组装成一个新的二层数据帧。封包过程只是增加二层头，不会改变原始包。</p>
@@ -485,7 +485,7 @@
   <p><span>本文标题:</span><a href="/2023/02/11/kubernetes-container-network/">容器的网络基础</a></p>
   <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
   <p><span>发布时间:</span>2023-02-11 21:48:52</p>
- <!-- <p><span>最后更新:</span>2023-03-21 22:10:55</p> -->
+ <!-- <p><span>最后更新:</span>2023-03-21 22:14:35</p> -->
   <p><span>原始链接:</span><a href="/2023/02/11/kubernetes-container-network/" title="容器的网络基础">http://chenzhijun.top/2023/02/11/kubernetes-container-network/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.top/2023/02/11/kubernetes-container-network/"  aria-label="复制成功！"></i></span>
   </p>
