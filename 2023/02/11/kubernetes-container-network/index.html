@@ -103,16 +103,16 @@
 <meta property="og:site_name" content="陈志军">
 <meta property="og:description" content="容器的网络基础容器的网络基础是主机的网络，在理解容器的网络前我们先来看一下主机的网络。  想象一个场景，你在湖南，你的爱人在湖北，有一天，你们两觉得恋爱的时间差不多了，该结婚了。结婚之前是不是要先见一下家长。但是湖南和湖北之间隔着长江。那你现在要去湖北的话，怎么办呢？你会想，我有车，只需要开车过“长江大桥”去对方父母家就行。  换一下，现在你有两台电脑，你想让两台电脑能够互相传递文件或者文本信息，">
 <meta property="og:locale">
-<meta property="og:image" content="http://chenzhijun.top/images/qiniu/0ab069ed6faece0688e7129f9dc879434094c8fe13122838c14bb6885a87ebfc.png">
+<meta property="og:image" content="http://chenzhijun.top/images/qiniu/1679408322281-%E5%8D%95%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%AE%BF%E9%97%AE.png">
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/1679408009109-flannel-%E8%B7%A8%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1-udp.png">
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/1679408053501-flanned-udp-%E5%BA%9F%E5%BC%83%E7%9A%84%E5%8E%9F%E5%9B%A0.png">
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/1679408065526-flannel-vxlan%E6%A8%A1%E5%BC%8F.png">
 <meta property="article:published_time" content="2023-02-11T13:48:52.000Z">
-<meta property="article:modified_time" content="2023-03-21T14:14:35.609Z">
+<meta property="article:modified_time" content="2023-03-21T14:18:44.609Z">
 <meta property="article:author" content="陈志军">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://chenzhijun.top/images/qiniu/0ab069ed6faece0688e7129f9dc879434094c8fe13122838c14bb6885a87ebfc.png">
+<meta name="twitter:image" content="http://chenzhijun.top/images/qiniu/1679408322281-%E5%8D%95%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%AE%BF%E9%97%AE.png">
 
 
 
@@ -443,7 +443,7 @@
 <p>容器运行的时候的，它能看到的”网络栈” ，实际就是被隔离到它自己的 Network Namespace  中。网络栈应该包含有网卡（network interface)、回环设备（loopback device）、路由表（routing table）和 iptables规则。对于一个进程来说，这些要素就构成了它发起和响应网络请求的基本环境。</p>
 <p>容器其实也可以直接使用宿主机的网络栈，只需要使用<code>-net=host</code> 就行。像这样容器直接使用宿主机网络栈的方式，可以为容器带来良好的网络性能，但是也不可避免的带来了共享网络资源的问题，比如端口冲突。所以我们希望的是，每个容器进程都使用自己的Network Namespace里面的网络栈，有自己独立的IP地址和端口。那这个时候就有一个情况出现，如果启动了两个容器，两个容器之间怎么互相通信呢？</p>
 <p>如果你把容器看成一个主机，那就会想到，能否给两个容器插一根网线呢？让我们把视角切换到一台服务器上，你在服务器上安装了docker， 然后使用docker创建很多容器。你现在想让容器直接能够互相通信，那我们就需要有一个”交换机”，而容器是在服务器里面的，那我们能否也在服务器里面创建一个交换机了？在Linux设备中，起到虚拟交换机作用的网络设备，就是网桥（Bridge），Docker 项目会在宿主机上创建一个默认的 docker0 的网桥。那OK，交换机的问题解决了，那把容器和网桥进行连接的”线”呢？嗯，这个时候我们就要用到一个叫做Veth Pair 的虚拟设备了。Veth Pair 设备的特点是，它被创建出来后，总是以两张虚拟网卡(veth peer)的形式成对出现的。并且，从其中一个”网卡”的发出的数据包，可以直接出现在对应的另一张”网卡”上，哪怕这两个”网卡”在不同的Network Namespace 里面。</p>
-<p><img src="/images/qiniu/0ab069ed6faece0688e7129f9dc879434094c8fe13122838c14bb6885a87ebfc.png" alt="图 2">  </p>
+<p><img src="/images/qiniu/1679408322281-%E5%8D%95%E4%B8%BB%E6%9C%BA%E5%AE%B9%E5%99%A8%E4%BA%92%E7%9B%B8%E8%AE%BF%E9%97%AE.png" alt="图 5">  </p>
 <p>OK，那我们现在就能让同一台主机上的不同容器直接互相通信了。那如果是不同主机上的不同容器直接怎么访问呢？比如K8S集群中，多台机器上，有多个容器，容器间的网络互相访问应该怎么弄？这就是我们常说的容器跨主机网络访问了。说到容器的跨主机通信，就有一个用的非常广的容器网络项目：Flannel。</p>
 <p>Flannel提供了三种后端实现：1、VXLAN；2、Host-GW；3、UDP。</p>
 <p>3种实现中，我们先看最早的一种方式：UDP。 </p>
@@ -485,7 +485,7 @@
   <p><span>本文标题:</span><a href="/2023/02/11/kubernetes-container-network/">容器的网络基础</a></p>
   <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
   <p><span>发布时间:</span>2023-02-11 21:48:52</p>
- <!-- <p><span>最后更新:</span>2023-03-21 22:14:35</p> -->
+ <!-- <p><span>最后更新:</span>2023-03-21 22:18:44</p> -->
   <p><span>原始链接:</span><a href="/2023/02/11/kubernetes-container-network/" title="容器的网络基础">http://chenzhijun.top/2023/02/11/kubernetes-container-network/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.top/2023/02/11/kubernetes-container-network/"  aria-label="复制成功！"></i></span>
   </p>
