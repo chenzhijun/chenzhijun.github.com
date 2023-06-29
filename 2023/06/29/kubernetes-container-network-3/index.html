@@ -96,12 +96,12 @@
 
 
 
-<meta name="description" content="容器网络 - 三层网络解决前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。 先看一下flannel的host-gw 示意图：  你在主机上用ip route可以看到一个规则： 110.244.1.0&#x2F;24 via 10.168.0.3 dev eth0  这个规则的含义就是">
+<meta name="description" content="容器网络 - 三层网络解决方案前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。 先看一下flannel的host-gw 示意图：  你在主机上用ip route可以看到一个规则： 110.244.1.0&#x2F;24 via 10.168.0.3 dev eth0  这个规则的含义">
 <meta property="og:type" content="article">
-<meta property="og:title" content="容器网络 - 三层网络解决">
+<meta property="og:title" content="容器网络 - 三层网络解决方案">
 <meta property="og:url" content="http://chenzhijun.top/2023/06/29/kubernetes-container-network-3/index.html">
 <meta property="og:site_name" content="陈志军">
-<meta property="og:description" content="容器网络 - 三层网络解决前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。 先看一下flannel的host-gw 示意图：  你在主机上用ip route可以看到一个规则： 110.244.1.0&#x2F;24 via 10.168.0.3 dev eth0  这个规则的含义就是">
+<meta property="og:description" content="容器网络 - 三层网络解决方案前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。 先看一下flannel的host-gw 示意图：  你在主机上用ip route可以看到一个规则： 110.244.1.0&#x2F;24 via 10.168.0.3 dev eth0  这个规则的含义">
 <meta property="og:locale">
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/image-20230629173437200.png">
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/image-20230629174835972.png">
@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/1688047940772-pic_168.png">
 <meta property="og:image" content="http://chenzhijun.top/images/qiniu/1688047990433-pic_169.png">
 <meta property="article:published_time" content="2023-06-29T14:05:44.000Z">
-<meta property="article:modified_time" content="2023-06-29T14:19:03.316Z">
+<meta property="article:modified_time" content="2023-06-29T14:26:54.734Z">
 <meta property="article:author" content="陈志军">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -148,7 +148,7 @@
 
 
 
-  <title>容器网络 - 三层网络解决 | 陈志军</title>
+  <title>容器网络 - 三层网络解决方案 | 陈志军</title>
   
 
 
@@ -345,7 +345,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">容器网络 - 三层网络解决</h1>
+          <h1 class="post-title" itemprop="name headline">容器网络 - 三层网络解决方案</h1>
         
 
         <div class="post-meta">
@@ -397,7 +397,7 @@
 
           
           
-             <span id="/2023/06/29/kubernetes-container-network-3/" class="leancloud_visitors" data-flag-title="容器网络 - 三层网络解决">
+             <span id="/2023/06/29/kubernetes-container-network-3/" class="leancloud_visitors" data-flag-title="容器网络 - 三层网络解决方案">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -433,7 +433,7 @@
       
 
       
-        <h1 id="容器网络-三层网络解决"><a href="#容器网络-三层网络解决" class="headerlink" title="容器网络 - 三层网络解决"></a>容器网络 - 三层网络解决</h1><p>前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。</p>
+        <h1 id="容器网络-三层网络解决方案"><a href="#容器网络-三层网络解决方案" class="headerlink" title="容器网络 - 三层网络解决方案"></a>容器网络 - 三层网络解决方案</h1><p>前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。</p>
 <p>先看一下flannel的host-gw 示意图：</p>
 <p><img src="/images/qiniu/image-20230629173437200.png" alt="image-20230629173437200"></p>
 <p>你在主机上用<code>ip route</code>可以看到一个规则：</p>
@@ -494,11 +494,11 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2023/06/29/kubernetes-container-network-3/">容器网络 - 三层网络解决</a></p>
+  <p><span>本文标题:</span><a href="/2023/06/29/kubernetes-container-network-3/">容器网络 - 三层网络解决方案</a></p>
   <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
   <p><span>发布时间:</span>2023-06-29 22:05:44</p>
- <!-- <p><span>最后更新:</span>2023-06-29 22:19:03</p> -->
-  <p><span>原始链接:</span><a href="/2023/06/29/kubernetes-container-network-3/" title="容器网络 - 三层网络解决">http://chenzhijun.top/2023/06/29/kubernetes-container-network-3/</a>
+ <!-- <p><span>最后更新:</span>2023-06-29 22:26:54</p> -->
+  <p><span>原始链接:</span><a href="/2023/06/29/kubernetes-container-network-3/" title="容器网络 - 三层网络解决方案">http://chenzhijun.top/2023/06/29/kubernetes-container-network-3/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.top/2023/06/29/kubernetes-container-network-3/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
@@ -762,7 +762,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C-%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E8%A7%A3%E5%86%B3"><span class="nav-number">1.</span> <span class="nav-text">容器网络 - 三层网络解决</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C-%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">容器网络 - 三层网络解决方案</span></a></li></ol></div>
             
 
           </div>

@@ -56,35 +56,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Alertmanager 配置邮件模板</title>
-    <url>/2019/01/08/alertmanager-email/</url>
-    <content><![CDATA[<h1 id="Alertmanager-配置邮件模板"><a href="#Alertmanager-配置邮件模板" class="headerlink" title="Alertmanager 配置邮件模板"></a>Alertmanager 配置邮件模板</h1><h2 id="Alertmanager-配置"><a href="#Alertmanager-配置" class="headerlink" title="Alertmanager 配置"></a>Alertmanager 配置</h2><p>alertmanager 的配置主要是要配置邮箱（通知方式）和模板地址；文档地址：<a href="https://prometheusaio/docs/alerting/configuration/#email_config">Alertmanager 地址</a>，配置完之后就只需要在模板中定义就好了。</p>
-<span id="more"></span>
-
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">....</span></span><br><span class="line"><span class="comment"># Whether or not to notify about resolved alerts.</span></span><br><span class="line">[ <span class="attr">send_resolved:</span> <span class="string">&lt;boolean&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="literal">false</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># The email address to send notifications to.</span></span><br><span class="line"><span class="attr">to:</span> <span class="string">&lt;tmpl_string&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The sender address.</span></span><br><span class="line">[ <span class="attr">from:</span> <span class="string">&lt;tmpl_string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_from</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># The SMTP host through which emails are sent.</span></span><br><span class="line">[ <span class="attr">smarthost:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_smarthost</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># The hostname to identify to the SMTP server.</span></span><br><span class="line">[ <span class="attr">hello:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_hello</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># SMTP authentication information.</span></span><br><span class="line">[ <span class="attr">auth_username:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_username</span> ]</span><br><span class="line">[ <span class="attr">auth_password:</span> <span class="string">&lt;secret&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_password</span> ]</span><br><span class="line">[ <span class="attr">auth_secret:</span> <span class="string">&lt;secret&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_secret</span> ]</span><br><span class="line">[ <span class="attr">auth_identity:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_identity</span> ]</span><br><span class="line"></span><br><span class="line"><span class="attr">templates:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&#x27;/etc/alertmanager/templates/xxx.tmpl&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="模板配置"><a href="#模板配置" class="headerlink" title="模板配置"></a>模板配置</h2><p>下面给出一份模板配置的文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&#123;&#123; define &quot;email.common.html&quot; &#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;this is test....&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">            &#123;&#123; .Alerts | len &#125;&#125; alert&#123;&#123; if gt (len .Alerts) 1 &#125;&#125;s&#123;&#123; end &#125;&#125; for &#123;&#123; range .GroupLabels.SortedPairs &#125;&#125;</span><br><span class="line">                &#123;&#123; .Name &#125;&#125;&#x3D;&#123;&#123; .Value &#125;&#125;</span><br><span class="line">              &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在Alertmanager中查看 ：&lt;a href&#x3D;&quot;&#123;&#123; template &quot;__alertmanagerURL&quot; . &#125;&#125;&quot;&gt;View in &#123;&#123; template &quot;__alertmanager&quot; . &#125;&#125;&lt;&#x2F;a&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                &#123;&#123; if gt (len .Alerts.Firing) 0 &#125;&#125;</span><br><span class="line">                &lt;tr&gt;</span><br><span class="line">                    &lt;strong&gt;[&#123;&#123; .Alerts.Firing | len &#125;&#125;] Firing&lt;&#x2F;strong&gt;</span><br><span class="line">                &lt;&#x2F;tr&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                 &#123;&#123; range .Alerts.Firing &#125;&#125;</span><br><span class="line">                &lt;tr style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot;&gt;</span><br><span class="line">                  &lt;td style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;&quot; valign&#x3D;&quot;top&quot;&gt;</span><br><span class="line">                    &lt;strong&gt;Labels&lt;&#x2F;strong&gt;</span><br><span class="line"></span><br><span class="line">                    &#123;&#123; range .Labels.SortedPairs &#125;&#125;&#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;&#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &#123;&#123; if gt (len .Annotations) 0 &#125;&#125;</span><br><span class="line">                        &lt;strong&gt;Annotations&lt;&#x2F;strong&gt;</span><br><span class="line">                        &lt;br&gt;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line">                    </span><br><span class="line">                    &#123;&#123; range .Annotations.SortedPairs &#125;&#125;</span><br><span class="line">                        &#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &lt;a href&#x3D;&quot;&#123;&#123; .GeneratorURL &#125;&#125;&quot; style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; color: #348eda; text-decoration: underline; margin: 0;&quot;&gt;</span><br><span class="line">                        Source</span><br><span class="line">                    &lt;&#x2F;a&gt;</span><br><span class="line">                        </span><br><span class="line">                    &lt;br style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot; &#x2F;&gt;</span><br><span class="line">                  &lt;&#x2F;td&gt;</span><br><span class="line">                &lt;&#x2F;tr&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;p&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                &#123;&#123; if gt (len .Alerts.Resolved) 0 &#125;&#125;</span><br><span class="line">                  &#123;&#123; if gt (len .Alerts.Firing) 0 &#125;&#125;</span><br><span class="line">                  &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                  &lt;td&gt;</span><br><span class="line">                    &lt;strong&gt;[&#123;&#123; .Alerts.Resolved | len &#125;&#125;] Resolved&lt;&#x2F;strong&gt;</span><br><span class="line">                  &lt;&#x2F;td&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                &#123;&#123; range .Alerts.Resolved &#125;&#125;</span><br><span class="line">                &lt;tr&gt;</span><br><span class="line">                  &lt;td&gt;</span><br><span class="line">                    &lt;strong&gt;Labels&lt;&#x2F;strong&gt;</span><br><span class="line">                    &lt;br&#x2F;&gt;</span><br><span class="line">                    &#123;&#123; range .Labels.SortedPairs &#125;&#125;</span><br><span class="line">                        &#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line">                    </span><br><span class="line">                    &#123;&#123; if gt (len .Annotations) 0 &#125;&#125;</span><br><span class="line">                        &lt;strong&gt;Annotations&lt;&#x2F;strong&gt;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &#123;&#123; range .Annotations.SortedPairs &#125;&#125;</span><br><span class="line">                        &#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &lt;a href&#x3D;&quot;&#123;&#123; .GeneratorURL &#125;&#125;&quot; style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; color: #348eda; text-decoration: underline; margin: 0;&quot;&gt;</span><br><span class="line">                        Source</span><br><span class="line">                    &lt;&#x2F;a&gt;</span><br><span class="line">                    &lt;br style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot; &#x2F;&gt;</span><br><span class="line">                  &lt;&#x2F;td&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;&#123;end&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这里要注意的是第一行:<code>define &quot;email.common.html&quot;</code>记住结尾一定要有 <code>end</code> 与之对应，因为 golang 的 template 模板限制。<br>其实这个 tmpl 文件就是 golang 的 template 模板。以前看到还有点懵，用过一次 golang 中 template 功能之后，会有很多明白的地方。</p>
-<p>在一个文件中也是可以定义多个模板的只需要有多个<code>define &quot;xxx&quot;</code>即可。记住在 alertmanager 的配置文件<code>alertmanager.yml</code>中一定要有</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">html:</span>  &#123;&#123;<span class="string">template</span> <span class="string">&quot;email.common.html&quot;</span> &#125;&#125; <span class="string">.</span></span><br></pre></td></tr></table></figure>
-
-<p>这里的<code>email.common.html</code>要与tmpl文件中定义的相同。</p>
-<p>源码中有示例: <a href="https://github.com/prometheus/alertmanager/blob/master/template/default.tmpl">alertmanager template</a></p>
-<p>而tmpl文件里面的内容都在这个go文件中 <a href="https://github.com/prometheus/alertmanager/blob/master/template/template.go">template.go</a> 可以看到里面有个<code>Data</code>struct。这里就是它的详细信息了。</p>
-<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><p><a href="https://godoc.org/text/template">package text/template</a></p>
-<p><a href="https://golang.org/pkg/html/template/">package html/template</a></p>
-<p><a href="https://astaxie.gitbooks.io/build-web-application-with-golang/zh/07.4.html">模板处理</a></p>
-<p><a href="https://www.kancloud.cn/cserli/golang/531904">golang 模板(template)的常用基本语法</a></p>
-]]></content>
-      <categories>
-        <category>Alertmanager</category>
-      </categories>
-      <tags>
-        <tag>Alertmanager</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>排序算法-冒泡排序</title>
     <url>/2017/03/16/algorithm-bubble/</url>
     <content><![CDATA[<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><h3 id="排序原理"><a href="#排序原理" class="headerlink" title="排序原理"></a>排序原理</h3><p>冒泡排序是将最大或者最小的值先挑出来，然后依次类推，最终使得整个数组有序。比如我们在学校操场排队的时候，老师先叫你站好，站好之后，根据你们的身高找到一个最矮的，排到第一个，然后是第二个，然后这样依次类推…到最后就是一个身高顺序的队伍了。</p>
@@ -124,6 +95,35 @@
       </categories>
       <tags>
         <tag>Algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Alertmanager 配置邮件模板</title>
+    <url>/2019/01/08/alertmanager-email/</url>
+    <content><![CDATA[<h1 id="Alertmanager-配置邮件模板"><a href="#Alertmanager-配置邮件模板" class="headerlink" title="Alertmanager 配置邮件模板"></a>Alertmanager 配置邮件模板</h1><h2 id="Alertmanager-配置"><a href="#Alertmanager-配置" class="headerlink" title="Alertmanager 配置"></a>Alertmanager 配置</h2><p>alertmanager 的配置主要是要配置邮箱（通知方式）和模板地址；文档地址：<a href="https://prometheusaio/docs/alerting/configuration/#email_config">Alertmanager 地址</a>，配置完之后就只需要在模板中定义就好了。</p>
+<span id="more"></span>
+
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">....</span></span><br><span class="line"><span class="comment"># Whether or not to notify about resolved alerts.</span></span><br><span class="line">[ <span class="attr">send_resolved:</span> <span class="string">&lt;boolean&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="literal">false</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># The email address to send notifications to.</span></span><br><span class="line"><span class="attr">to:</span> <span class="string">&lt;tmpl_string&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The sender address.</span></span><br><span class="line">[ <span class="attr">from:</span> <span class="string">&lt;tmpl_string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_from</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># The SMTP host through which emails are sent.</span></span><br><span class="line">[ <span class="attr">smarthost:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_smarthost</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># The hostname to identify to the SMTP server.</span></span><br><span class="line">[ <span class="attr">hello:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_hello</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># SMTP authentication information.</span></span><br><span class="line">[ <span class="attr">auth_username:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_username</span> ]</span><br><span class="line">[ <span class="attr">auth_password:</span> <span class="string">&lt;secret&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_password</span> ]</span><br><span class="line">[ <span class="attr">auth_secret:</span> <span class="string">&lt;secret&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_secret</span> ]</span><br><span class="line">[ <span class="attr">auth_identity:</span> <span class="string">&lt;string&gt;</span> <span class="string">|</span> <span class="string">default</span> <span class="string">=</span> <span class="string">global.smtp_auth_identity</span> ]</span><br><span class="line"></span><br><span class="line"><span class="attr">templates:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">&#x27;/etc/alertmanager/templates/xxx.tmpl&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="模板配置"><a href="#模板配置" class="headerlink" title="模板配置"></a>模板配置</h2><p>下面给出一份模板配置的文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&#123;&#123; define &quot;email.common.html&quot; &#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;this is test....&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">            &#123;&#123; .Alerts | len &#125;&#125; alert&#123;&#123; if gt (len .Alerts) 1 &#125;&#125;s&#123;&#123; end &#125;&#125; for &#123;&#123; range .GroupLabels.SortedPairs &#125;&#125;</span><br><span class="line">                &#123;&#123; .Name &#125;&#125;&#x3D;&#123;&#123; .Value &#125;&#125;</span><br><span class="line">              &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在Alertmanager中查看 ：&lt;a href&#x3D;&quot;&#123;&#123; template &quot;__alertmanagerURL&quot; . &#125;&#125;&quot;&gt;View in &#123;&#123; template &quot;__alertmanager&quot; . &#125;&#125;&lt;&#x2F;a&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                &#123;&#123; if gt (len .Alerts.Firing) 0 &#125;&#125;</span><br><span class="line">                &lt;tr&gt;</span><br><span class="line">                    &lt;strong&gt;[&#123;&#123; .Alerts.Firing | len &#125;&#125;] Firing&lt;&#x2F;strong&gt;</span><br><span class="line">                &lt;&#x2F;tr&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                 &#123;&#123; range .Alerts.Firing &#125;&#125;</span><br><span class="line">                &lt;tr style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot;&gt;</span><br><span class="line">                  &lt;td style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;&quot; valign&#x3D;&quot;top&quot;&gt;</span><br><span class="line">                    &lt;strong&gt;Labels&lt;&#x2F;strong&gt;</span><br><span class="line"></span><br><span class="line">                    &#123;&#123; range .Labels.SortedPairs &#125;&#125;&#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;&#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &#123;&#123; if gt (len .Annotations) 0 &#125;&#125;</span><br><span class="line">                        &lt;strong&gt;Annotations&lt;&#x2F;strong&gt;</span><br><span class="line">                        &lt;br&gt;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line">                    </span><br><span class="line">                    &#123;&#123; range .Annotations.SortedPairs &#125;&#125;</span><br><span class="line">                        &#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &lt;a href&#x3D;&quot;&#123;&#123; .GeneratorURL &#125;&#125;&quot; style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; color: #348eda; text-decoration: underline; margin: 0;&quot;&gt;</span><br><span class="line">                        Source</span><br><span class="line">                    &lt;&#x2F;a&gt;</span><br><span class="line">                        </span><br><span class="line">                    &lt;br style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot; &#x2F;&gt;</span><br><span class="line">                  &lt;&#x2F;td&gt;</span><br><span class="line">                &lt;&#x2F;tr&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;p&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                &#123;&#123; if gt (len .Alerts.Resolved) 0 &#125;&#125;</span><br><span class="line">                  &#123;&#123; if gt (len .Alerts.Firing) 0 &#125;&#125;</span><br><span class="line">                  &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                  &lt;td&gt;</span><br><span class="line">                    &lt;strong&gt;[&#123;&#123; .Alerts.Resolved | len &#125;&#125;] Resolved&lt;&#x2F;strong&gt;</span><br><span class="line">                  &lt;&#x2F;td&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                &#123;&#123; range .Alerts.Resolved &#125;&#125;</span><br><span class="line">                &lt;tr&gt;</span><br><span class="line">                  &lt;td&gt;</span><br><span class="line">                    &lt;strong&gt;Labels&lt;&#x2F;strong&gt;</span><br><span class="line">                    &lt;br&#x2F;&gt;</span><br><span class="line">                    &#123;&#123; range .Labels.SortedPairs &#125;&#125;</span><br><span class="line">                        &#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line">                    </span><br><span class="line">                    &#123;&#123; if gt (len .Annotations) 0 &#125;&#125;</span><br><span class="line">                        &lt;strong&gt;Annotations&lt;&#x2F;strong&gt;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &#123;&#123; range .Annotations.SortedPairs &#125;&#125;</span><br><span class="line">                        &#123;&#123; .Name &#125;&#125; &#x3D; &#123;&#123; .Value &#125;&#125;</span><br><span class="line">                    &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line">                    &lt;a href&#x3D;&quot;&#123;&#123; .GeneratorURL &#125;&#125;&quot; style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; color: #348eda; text-decoration: underline; margin: 0;&quot;&gt;</span><br><span class="line">                        Source</span><br><span class="line">                    &lt;&#x2F;a&gt;</span><br><span class="line">                    &lt;br style&#x3D;&quot;font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;&quot; &#x2F;&gt;</span><br><span class="line">                  &lt;&#x2F;td&gt;</span><br><span class="line">                &#123;&#123; end &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;&#123;end&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里要注意的是第一行:<code>define &quot;email.common.html&quot;</code>记住结尾一定要有 <code>end</code> 与之对应，因为 golang 的 template 模板限制。<br>其实这个 tmpl 文件就是 golang 的 template 模板。以前看到还有点懵，用过一次 golang 中 template 功能之后，会有很多明白的地方。</p>
+<p>在一个文件中也是可以定义多个模板的只需要有多个<code>define &quot;xxx&quot;</code>即可。记住在 alertmanager 的配置文件<code>alertmanager.yml</code>中一定要有</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">html:</span>  &#123;&#123;<span class="string">template</span> <span class="string">&quot;email.common.html&quot;</span> &#125;&#125; <span class="string">.</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的<code>email.common.html</code>要与tmpl文件中定义的相同。</p>
+<p>源码中有示例: <a href="https://github.com/prometheus/alertmanager/blob/master/template/default.tmpl">alertmanager template</a></p>
+<p>而tmpl文件里面的内容都在这个go文件中 <a href="https://github.com/prometheus/alertmanager/blob/master/template/template.go">template.go</a> 可以看到里面有个<code>Data</code>struct。这里就是它的详细信息了。</p>
+<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><p><a href="https://godoc.org/text/template">package text/template</a></p>
+<p><a href="https://golang.org/pkg/html/template/">package html/template</a></p>
+<p><a href="https://astaxie.gitbooks.io/build-web-application-with-golang/zh/07.4.html">模板处理</a></p>
+<p><a href="https://www.kancloud.cn/cserli/golang/531904">golang 模板(template)的常用基本语法</a></p>
+]]></content>
+      <categories>
+        <category>Alertmanager</category>
+      </categories>
+      <tags>
+        <tag>Alertmanager</tag>
       </tags>
   </entry>
   <entry>
@@ -488,32 +488,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker 数据管理</title>
-    <url>/2017/05/13/docker-data/</url>
-    <content><![CDATA[<blockquote>
-<p>Docker 的数据管理应该核心中的核心。因为不管哪个公司，数据应该永远是第一位。</p>
-</blockquote>
-<h3 id="1-Docker-数据卷简介"><a href="#1-Docker-数据卷简介" class="headerlink" title="1,Docker 数据卷简介"></a>1,Docker 数据卷简介</h3><p>Docker 的数据卷是一个可供容器使用的特殊目录，它绕过文件系统，提供很多的特性:</p>
-<ul>
-<li>数据卷可以在容器之间共享和重用</li>
-<li>对数据卷的修改会立马生效</li>
-<li>对数据卷的更新，不会影响镜像</li>
-<li>卷会一直存在，直到没有容器使用<br>数据卷的使用，类似于Linux下对目录或文件进行mount操作。<span id="more"></span>
-<h3 id="2-容器内建数据卷"><a href="#2-容器内建数据卷" class="headerlink" title="2,容器内建数据卷"></a>2,容器内建数据卷</h3>使用<code>docker run</code>命令的时候，使用<code>-v</code>标记可以在容器内创建一个数据卷，多次使用-v标记可以创建多个数据卷。<br><code>docker run -d -P --name web -v /webdata centos /bin/bash</code>，这条命令成功的创建了一个名为web的容器(-P 是指允许外部访问容器需要暴露的端口)，但是我们用<code>docker exec -ti web bash</code> 或者<code>docker attach web</code>想进入到容器内部时，都会提示我们，容器未启动。之后运行<code>docker start web</code>,这在我们的理解中应该是启动了一个容器，但是但我们再想进入到容器时，发现还是提示我们容器未启动。用<code>docker ps</code>查看后台运行的docker容器，返现确实web没有运行。后来想了一下容器创建的步骤，容器确实创建了。但是我们想进入到容器里面却缺少交互界面。所以用了另一个命令<code>docker run -ti -d -P --name web -v /webdata centos /bin/bash</code>,加上<code>-ti</code>之后再用命令进入到容器就可以了。进入之后会发现在容器中根目录多了一个webdata目录。</li>
-</ul>
-<h4 id="2-1-挂载宿主机的一个目录到容器"><a href="#2-1-挂载宿主机的一个目录到容器" class="headerlink" title="2.1,挂载宿主机的一个目录到容器"></a>2.1,挂载宿主机的一个目录到容器</h4><p><code>-v</code> 标记也可以挂在一个本地的目录到容器里面作为数据卷。<br><code>docker run -ti -d -P --name webdata -v /Users/alvin/test/docker/webdata:/share/webdata centos /bin/bash</code>，这条命令是指将本地<code>/Users/alvin/test/docker/webdata</code>目录挂载到webdata容器里面的<code>/share/webdata</code>目录。<br>如果要挂载多个目录，多次用<code>-v</code>标记就可以了。<code>docker run -ti -d -P --name webdata1 -v /Users/alvin/test/docker/webdata:/share/webdata -v /Users/alvin/test/docker/webdata:/share/webdata1 -v /Users/alvin/test/docker/webdata:/share/webdata2 centos /bin/bash</code> 将webdata,webdata1,webdata2都挂载到docker容器里面相应的位置。<br>如果想要对容器的数据卷目录进行权限控制的话，docker也是允许的，默认是rw权限。如果只想要可读权限。<br><code>docker run -d -P -ti --name webdata -v /Users/alvin/test/docker/webdata:/share/webdata:ro centos bash</code>,目录到容器里面就只有读的权限了。<br><strong>这种方式特别适合挂载单个文件到容器里面</strong>。<br><em><code>--volumes-from</code>参数所挂载的数据卷的容器自身并不需要保持在运行状态。</em><br>如果要删除挂载了数据卷的容器，数据卷并不会被自动删除。如果要删除一个数据卷，必须在删除最后一个还挂载着它的容器时，显示的是使用<code>docker rm -v</code>命令来指定同时删除关联关联的容器。</p>
-<h4 id="2-2-利用数据卷容器迁移数据"><a href="#2-2-利用数据卷容器迁移数据" class="headerlink" title="2.2,利用数据卷容器迁移数据"></a>2.2,利用数据卷容器迁移数据</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -ti --volumes-from dbdata --name db4 -v &#x2F;Users&#x2F;alvin&#x2F;test&#x2F;docker:&#x2F;backup centos &#x2F;bin&#x2F;bash</span><br><span class="line">tar cvf &#x2F;backup&#x2F;backup.tar &#x2F;dbdata</span><br></pre></td></tr></table></figure>
-<p>首先将dbdata容器内的数据卷和db4容器想关联，之后在宿主机和db4容器做数据卷共享，之后将数据卷容器的数据打包到和宿主机共享的位置。这样就做到了数据的备份了。</p>
-<h4 id="2-3-恢复数据"><a href="#2-3-恢复数据" class="headerlink" title="2.3,恢复数据"></a>2.3,恢复数据</h4><p> 可以使用本地宿主机和docker文件夹共享。</p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker修改默认存储空间</title>
     <url>/2019/05/24/docker-default-storage/</url>
     <content><![CDATA[<h1 id="Docker-修改默认存储空间"><a href="#Docker-修改默认存储空间" class="headerlink" title="Docker 修改默认存储空间"></a>Docker 修改默认存储空间</h1><p>最近碰到一个问题，由于需要下载很多的镜像文件，如果使用docker安装时候的默认存储空间，那肯定是不行的。默认的存储空间可以使用：<code>docker info</code>看到：在输出的信息里面会发现:<code>Docker Root Dir: /var/lib/docker</code>；这个目录其实就是在根目录下吗，如果下载的镜像数量过大并且又大，那么肯定是的完蛋的~~~</p>
@@ -532,6 +506,32 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Docker Application Container Engine</span><br><span class="line">Documentation&#x3D;http:&#x2F;&#x2F;docs.docker.com</span><br><span class="line">After&#x3D;network.target</span><br><span class="line">Wants&#x3D;docker-storage-setup.service</span><br><span class="line">Requires&#x3D;docker-cleanup.timer</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;notify</span><br><span class="line">NotifyAccess&#x3D;main</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;run&#x2F;containers&#x2F;registries.conf</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker-storage</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;docker-network</span><br><span class="line">Environment&#x3D;GOTRACEBACK&#x3D;crash</span><br><span class="line">Environment&#x3D;DOCKER_HTTP_HOST_COMPAT&#x3D;1</span><br><span class="line">Environment&#x3D;PATH&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker:&#x2F;usr&#x2F;bin:&#x2F;usr&#x2F;sbin</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;dockerd-current \</span><br><span class="line">          --add-runtime docker-runc&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-runc-current \</span><br><span class="line">          --default-runtime&#x3D;docker-runc \</span><br><span class="line">          --exec-opt native.cgroupdriver&#x3D;systemd \</span><br><span class="line">          --userland-proxy-path&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-proxy-current \</span><br><span class="line">          --init-path&#x3D;&#x2F;usr&#x2F;libexec&#x2F;docker&#x2F;docker-init-current \</span><br><span class="line">          --seccomp-profile&#x3D;&#x2F;etc&#x2F;docker&#x2F;seccomp.json \</span><br><span class="line">          $OPTIONS \</span><br><span class="line">          $DOCKER_STORAGE_OPTIONS \</span><br><span class="line">          $DOCKER_NETWORK_OPTIONS \</span><br><span class="line">          $ADD_REGISTRY \</span><br><span class="line">          $BLOCK_REGISTRY \</span><br><span class="line">          $INSECURE_REGISTRY \</span><br><span class="line">          $REGISTRIES</span><br><span class="line">ExecReload&#x3D;&#x2F;bin&#x2F;kill -s HUP $MAINPID</span><br><span class="line">LimitNOFILE&#x3D;1048576</span><br><span class="line">LimitNPROC&#x3D;1048576</span><br><span class="line">LimitCORE&#x3D;infinity</span><br><span class="line">TimeoutStartSec&#x3D;0</span><br><span class="line">Restart&#x3D;on-abnormal</span><br><span class="line">KillMode&#x3D;process</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>你可以看到<code>DOCKER_STORAGE_OPTIONS</code>,然后查看文件:<code>/etc/sysconfig/docker-storage</code>。在<code>DOCKER_STORAGE_OPTIONS=&quot;--storage-driver overlay2 &quot;</code>上加上<code>DOCKER_STORAGE_OPTIONS=&quot;--storage-driver overlay2 --graph /docker-data/docker</code> 然后使用<code>systemctl daemon-reload</code>,<code>systemctl restart docker</code>就可以了。</p>
 <p>当然如果你直接在<code>docker.service</code>文件里面改也是可以的，放到配置文件里面也行，都ok。想怎样就怎样~~</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 数据管理</title>
+    <url>/2017/05/13/docker-data/</url>
+    <content><![CDATA[<blockquote>
+<p>Docker 的数据管理应该核心中的核心。因为不管哪个公司，数据应该永远是第一位。</p>
+</blockquote>
+<h3 id="1-Docker-数据卷简介"><a href="#1-Docker-数据卷简介" class="headerlink" title="1,Docker 数据卷简介"></a>1,Docker 数据卷简介</h3><p>Docker 的数据卷是一个可供容器使用的特殊目录，它绕过文件系统，提供很多的特性:</p>
+<ul>
+<li>数据卷可以在容器之间共享和重用</li>
+<li>对数据卷的修改会立马生效</li>
+<li>对数据卷的更新，不会影响镜像</li>
+<li>卷会一直存在，直到没有容器使用<br>数据卷的使用，类似于Linux下对目录或文件进行mount操作。<span id="more"></span>
+<h3 id="2-容器内建数据卷"><a href="#2-容器内建数据卷" class="headerlink" title="2,容器内建数据卷"></a>2,容器内建数据卷</h3>使用<code>docker run</code>命令的时候，使用<code>-v</code>标记可以在容器内创建一个数据卷，多次使用-v标记可以创建多个数据卷。<br><code>docker run -d -P --name web -v /webdata centos /bin/bash</code>，这条命令成功的创建了一个名为web的容器(-P 是指允许外部访问容器需要暴露的端口)，但是我们用<code>docker exec -ti web bash</code> 或者<code>docker attach web</code>想进入到容器内部时，都会提示我们，容器未启动。之后运行<code>docker start web</code>,这在我们的理解中应该是启动了一个容器，但是但我们再想进入到容器时，发现还是提示我们容器未启动。用<code>docker ps</code>查看后台运行的docker容器，返现确实web没有运行。后来想了一下容器创建的步骤，容器确实创建了。但是我们想进入到容器里面却缺少交互界面。所以用了另一个命令<code>docker run -ti -d -P --name web -v /webdata centos /bin/bash</code>,加上<code>-ti</code>之后再用命令进入到容器就可以了。进入之后会发现在容器中根目录多了一个webdata目录。</li>
+</ul>
+<h4 id="2-1-挂载宿主机的一个目录到容器"><a href="#2-1-挂载宿主机的一个目录到容器" class="headerlink" title="2.1,挂载宿主机的一个目录到容器"></a>2.1,挂载宿主机的一个目录到容器</h4><p><code>-v</code> 标记也可以挂在一个本地的目录到容器里面作为数据卷。<br><code>docker run -ti -d -P --name webdata -v /Users/alvin/test/docker/webdata:/share/webdata centos /bin/bash</code>，这条命令是指将本地<code>/Users/alvin/test/docker/webdata</code>目录挂载到webdata容器里面的<code>/share/webdata</code>目录。<br>如果要挂载多个目录，多次用<code>-v</code>标记就可以了。<code>docker run -ti -d -P --name webdata1 -v /Users/alvin/test/docker/webdata:/share/webdata -v /Users/alvin/test/docker/webdata:/share/webdata1 -v /Users/alvin/test/docker/webdata:/share/webdata2 centos /bin/bash</code> 将webdata,webdata1,webdata2都挂载到docker容器里面相应的位置。<br>如果想要对容器的数据卷目录进行权限控制的话，docker也是允许的，默认是rw权限。如果只想要可读权限。<br><code>docker run -d -P -ti --name webdata -v /Users/alvin/test/docker/webdata:/share/webdata:ro centos bash</code>,目录到容器里面就只有读的权限了。<br><strong>这种方式特别适合挂载单个文件到容器里面</strong>。<br><em><code>--volumes-from</code>参数所挂载的数据卷的容器自身并不需要保持在运行状态。</em><br>如果要删除挂载了数据卷的容器，数据卷并不会被自动删除。如果要删除一个数据卷，必须在删除最后一个还挂载着它的容器时，显示的是使用<code>docker rm -v</code>命令来指定同时删除关联关联的容器。</p>
+<h4 id="2-2-利用数据卷容器迁移数据"><a href="#2-2-利用数据卷容器迁移数据" class="headerlink" title="2.2,利用数据卷容器迁移数据"></a>2.2,利用数据卷容器迁移数据</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -ti --volumes-from dbdata --name db4 -v &#x2F;Users&#x2F;alvin&#x2F;test&#x2F;docker:&#x2F;backup centos &#x2F;bin&#x2F;bash</span><br><span class="line">tar cvf &#x2F;backup&#x2F;backup.tar &#x2F;dbdata</span><br></pre></td></tr></table></figure>
+<p>首先将dbdata容器内的数据卷和db4容器想关联，之后在宿主机和db4容器做数据卷共享，之后将数据卷容器的数据打包到和宿主机共享的位置。这样就做到了数据的备份了。</p>
+<h4 id="2-3-恢复数据"><a href="#2-3-恢复数据" class="headerlink" title="2.3,恢复数据"></a>2.3,恢复数据</h4><p> 可以使用本地宿主机和docker文件夹共享。</p>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -613,7 +613,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;Labels&quot;: &#123;</span><br><span class="line">    &quot;com.example.vendor&quot;: &quot;ACME Incorporated&quot;</span><br><span class="line">    &quot;com.example.label-with-value&quot;: &quot;foo&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0&quot;,</span><br><span class="line">    &quot;description&quot;: &quot;This text illustrates that label-values can span multiple lines.&quot;,</span><br><span class="line">    &quot;multi.label1&quot;: &quot;value1&quot;,</span><br><span class="line">    &quot;multi.label2&quot;: &quot;value2&quot;,</span><br><span class="line">    &quot;other&quot;: &quot;value3&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
 <h4 id="MAINTAINER-deprecated"><a href="#MAINTAINER-deprecated" class="headerlink" title="MAINTAINER [deprecated]"></a>MAINTAINER [deprecated]</h4><p><code>MAINTAINER &lt;name&gt;</code> 作者信息</p>
-<p>使用LABEL更加灵活：LABEL maintainer=”<a href="mailto:&#x53;&#118;&#x65;&#110;&#x44;&#x6f;&#x77;&#x69;&#x64;&#x65;&#x69;&#116;&#x40;&#104;&#111;&#x6d;&#x65;&#x2e;&#x6f;&#x72;&#x67;&#x2e;&#97;&#117;">&#x53;&#118;&#x65;&#110;&#x44;&#x6f;&#x77;&#x69;&#x64;&#x65;&#x69;&#116;&#x40;&#104;&#111;&#x6d;&#x65;&#x2e;&#x6f;&#x72;&#x67;&#x2e;&#97;&#117;</a>“</p>
+<p>使用LABEL更加灵活：LABEL maintainer=”<a href="mailto:&#x53;&#x76;&#101;&#110;&#x44;&#x6f;&#x77;&#x69;&#100;&#101;&#105;&#116;&#x40;&#104;&#x6f;&#109;&#x65;&#x2e;&#x6f;&#x72;&#x67;&#46;&#97;&#x75;">&#x53;&#x76;&#101;&#110;&#x44;&#x6f;&#x77;&#x69;&#100;&#101;&#105;&#116;&#x40;&#104;&#x6f;&#109;&#x65;&#x2e;&#x6f;&#x72;&#x67;&#46;&#97;&#x75;</a>“</p>
 <h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p><code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code></p>
 <p>在容器运行的时候暴露端口，不会自己和宿主机绑定。如果要和宿主机绑定需要-p，制定端口。或者-P随机系统端口。</p>
 <h4 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key&gt;&#x3D;&lt;value&gt; ...</span><br></pre></td></tr></table></figure>
@@ -761,32 +761,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker 网络</title>
-    <url>/2017/05/14/docker-network/</url>
-    <content><![CDATA[<blockquote>
-<p>有了底层，有了数据，还差一个网络基础配置，那样就完美了</p>
-</blockquote>
-<h3 id="1-宿主机和Docker容器端口对应"><a href="#1-宿主机和Docker容器端口对应" class="headerlink" title="1,宿主机和Docker容器端口对应"></a>1,宿主机和Docker容器端口对应</h3><p><code>docker run -ti --name test-network -d -p 50001:8080 chenzhijun/javaweb:1.0</code> 或者用 <code>docker run -ti --name test-network -d -p 50001:8080 chenzhijun/javaweb:1.0 /root/run.sh</code></p>
-<p>创建一个在chenzhijun/javaweb:1.0镜像上的test-network容器，并且将本地的50001端口映射到docker的8080端口。chenzhijun/javaweb:1.0 镜像可以在hub.docker.com上下载，进入到容器后，进入root文件夹下，启动run.sh。然后再本地就可以用localhost:50001端口访问了。</p>
-<span id="more"></span>
-<h3 id="2-映射所有接口地址"><a href="#2-映射所有接口地址" class="headerlink" title="2,映射所有接口地址"></a>2,映射所有接口地址</h3><p><code>docker run -ti --name network -d -p 127.0.0.1::8080 chenzhijun/javaweb:1.0</code><br>这样就是在本地随机分配了一个端口映射到docker的8080。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; docker port network</span><br><span class="line">&gt; 8080&#x2F;tcp -&gt; 127.0.0.1:32768</span><br><span class="line">&gt; docker inspect network</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-容器互联实现容器间通信"><a href="#3-容器互联实现容器间通信" class="headerlink" title="3,容器互联实现容器间通信"></a>3,容器互联实现容器间通信</h3><p>容器的连接系统是除了端口映射外另一种可以与容器中应用进行交互的方式。它会在源和接受容器之间创建一个隧道，接收容器可以看到源容器制定的信息。<br><code>docker run -d -P --name web --link name:alias images-name</code>,其中name是要链接的容器的名称，alias是这个链接的别名。<br><code>docker run -it -d --name web2 --link db:mydb centos bash</code>创建一个和db容器有关联,在web2容器/etc/hosts中文件内容为:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@a1307bd12135 &#x2F;]# cat &#x2F;etc&#x2F;hosts</span><br><span class="line">127.0.0.1	localhost</span><br><span class="line">::1	localhost ip6-localhost ip6-loopback</span><br><span class="line">fe00::0	ip6-localnet</span><br><span class="line">ff00::0	ip6-mcastprefix</span><br><span class="line">ff02::1	ip6-allnodes</span><br><span class="line">ff02::2	ip6-allrouters</span><br><span class="line">172.17.0.6	mydb d121bb075116 db</span><br><span class="line">172.17.0.5	a1307bd12135</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>使用Docker快速掌握新技术要点并完成适当的技术储备</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 快速搭建 MySQL 和 Redis</title>
     <url>/2018/12/16/docker-mysql-and-redis/</url>
     <content><![CDATA[<h1 id="Docker-快速搭建-MySQL-和-Redis"><a href="#Docker-快速搭建-MySQL-和-Redis" class="headerlink" title="Docker 快速搭建 MySQL 和 Redis"></a>Docker 快速搭建 MySQL 和 Redis</h1><h2 id="MySQL-环境搭建"><a href="#MySQL-环境搭建" class="headerlink" title="MySQL 环境搭建"></a>MySQL 环境搭建</h2><p>最近做开发的时候遇到一个比较有意思的事情，如何搭建一个数据库，还有相关的redis等。因为没有外网，不可能说直接yum安装，又不想到每个官网去找相应的安装包。自然的，就想到了用Docker。一开始用到docker安装一个mysql的时候确实也是非常方便，比如一个<code>docker run</code>命令就启动了一个mysql，但是开发到一部分的时候，发现。我去！怎么又乱码？？ 咦，怎么市区也不对了？GG，发现还有很多小问题。今天有空一并总结下，下次如果有这种事就可以直接用了。</p>
@@ -811,6 +785,32 @@ docker run -d --name test -p 13306:3306 -e MYSQL_ROOT_PASSWORD=root123456 -e MYS
 <p><code>docker run -d --name redis -p 6379:6379 redis:latest --requirepass &quot;123456&quot;</code></p>
 <p>这样redis就启动了，如果需要开机启动，加上<code>--restart=always</code>。</p>
 <p>好了，今天一篇搭建mysql和redis的过程就到这里了。</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 网络</title>
+    <url>/2017/05/14/docker-network/</url>
+    <content><![CDATA[<blockquote>
+<p>有了底层，有了数据，还差一个网络基础配置，那样就完美了</p>
+</blockquote>
+<h3 id="1-宿主机和Docker容器端口对应"><a href="#1-宿主机和Docker容器端口对应" class="headerlink" title="1,宿主机和Docker容器端口对应"></a>1,宿主机和Docker容器端口对应</h3><p><code>docker run -ti --name test-network -d -p 50001:8080 chenzhijun/javaweb:1.0</code> 或者用 <code>docker run -ti --name test-network -d -p 50001:8080 chenzhijun/javaweb:1.0 /root/run.sh</code></p>
+<p>创建一个在chenzhijun/javaweb:1.0镜像上的test-network容器，并且将本地的50001端口映射到docker的8080端口。chenzhijun/javaweb:1.0 镜像可以在hub.docker.com上下载，进入到容器后，进入root文件夹下，启动run.sh。然后再本地就可以用localhost:50001端口访问了。</p>
+<span id="more"></span>
+<h3 id="2-映射所有接口地址"><a href="#2-映射所有接口地址" class="headerlink" title="2,映射所有接口地址"></a>2,映射所有接口地址</h3><p><code>docker run -ti --name network -d -p 127.0.0.1::8080 chenzhijun/javaweb:1.0</code><br>这样就是在本地随机分配了一个端口映射到docker的8080。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; docker port network</span><br><span class="line">&gt; 8080&#x2F;tcp -&gt; 127.0.0.1:32768</span><br><span class="line">&gt; docker inspect network</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-容器互联实现容器间通信"><a href="#3-容器互联实现容器间通信" class="headerlink" title="3,容器互联实现容器间通信"></a>3,容器互联实现容器间通信</h3><p>容器的连接系统是除了端口映射外另一种可以与容器中应用进行交互的方式。它会在源和接受容器之间创建一个隧道，接收容器可以看到源容器制定的信息。<br><code>docker run -d -P --name web --link name:alias images-name</code>,其中name是要链接的容器的名称，alias是这个链接的别名。<br><code>docker run -it -d --name web2 --link db:mydb centos bash</code>创建一个和db容器有关联,在web2容器/etc/hosts中文件内容为:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@a1307bd12135 &#x2F;]# cat &#x2F;etc&#x2F;hosts</span><br><span class="line">127.0.0.1	localhost</span><br><span class="line">::1	localhost ip6-localhost ip6-loopback</span><br><span class="line">fe00::0	ip6-localnet</span><br><span class="line">ff00::0	ip6-mcastprefix</span><br><span class="line">ff02::1	ip6-allnodes</span><br><span class="line">ff02::2	ip6-allrouters</span><br><span class="line">172.17.0.6	mydb d121bb075116 db</span><br><span class="line">172.17.0.5	a1307bd12135</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用Docker快速掌握新技术要点并完成适当的技术储备</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -917,7 +917,7 @@ docker run -d --name test -p 13306:3306 -e MYSQL_ROOT_PASSWORD=root123456 -e MYS
 
 <p>8:上传镜像到hub.docker.com,首先保证在hub上有一个相同名字的镜像地址，跟git类似。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker login</span><br><span class="line">username:</span><br><span class="line">password:</span><br><span class="line"></span><br><span class="line">docker push chenzhijun&#x2F;javaweb</span><br></pre></td></tr></table></figure>
-<p>好了，暂时照着这个操作就基本上可以了。 如果遇到问题可以给我留言，也可以联系我的邮箱：<a href="mailto:&#x76;&#98;&#x6f;&#x6f;&#x6b;&#x63;&#104;&#x65;&#110;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#x76;&#98;&#x6f;&#x6f;&#x6b;&#x63;&#104;&#x65;&#110;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p>好了，暂时照着这个操作就基本上可以了。 如果遇到问题可以给我留言，也可以联系我的邮箱：<a href="mailto:&#x76;&#98;&#111;&#x6f;&#107;&#99;&#104;&#x65;&#x6e;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x76;&#98;&#111;&#x6f;&#107;&#99;&#104;&#x65;&#x6e;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;</a></p>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -1393,22 +1393,6 @@ docker run -d --name test -p 13306:3306 -e MYSQL_ROOT_PASSWORD=root123456 -e MYS
       </tags>
   </entry>
   <entry>
-    <title>Elasticsearch 搜索基础</title>
-    <url>/2017/12/21/elasticsearch-search-base/</url>
-    <content><![CDATA[<h2 id="Elasticsearch-搜索基础"><a href="#Elasticsearch-搜索基础" class="headerlink" title="Elasticsearch 搜索基础"></a>Elasticsearch 搜索基础</h2><h3 id="三大概念"><a href="#三大概念" class="headerlink" title="三大概念"></a>三大概念</h3><ol>
-<li>映射（Mapping）：描叙数据在每个字段中如何存储；</li>
-<li>分析（Analysis）：全文是如何处理使之可以被搜索；</li>
-<li>领域特定查询语言（QueryDSL）：Elasticsearch 查询语言，json格式。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Elasticsearch</category>
-      </categories>
-      <tags>
-        <tag>Elasticsearch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Docker搭建ELK日志系统</title>
     <url>/2017/12/27/elk-docker/</url>
     <content><![CDATA[<h1 id="使用Docker搭建ELK日志系统"><a href="#使用Docker搭建ELK日志系统" class="headerlink" title="使用Docker搭建ELK日志系统"></a>使用Docker搭建ELK日志系统</h1><p>之前用本地版本安装了ELK之后，就没有再去弄它了。年底没那么忙，心里一直惦记，所以最近又开始折腾了。去elastic官网看一下，果然版本帝就是版本帝，一周一版本。现在我用的版本是基于6.1.1版本的。</p>
@@ -1489,6 +1473,22 @@ docker run -d --name test -p 13306:3306 -e MYSQL_ROOT_PASSWORD=root123456 -e MYS
       </categories>
       <tags>
         <tag>ELK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Elasticsearch 搜索基础</title>
+    <url>/2017/12/21/elasticsearch-search-base/</url>
+    <content><![CDATA[<h2 id="Elasticsearch-搜索基础"><a href="#Elasticsearch-搜索基础" class="headerlink" title="Elasticsearch 搜索基础"></a>Elasticsearch 搜索基础</h2><h3 id="三大概念"><a href="#三大概念" class="headerlink" title="三大概念"></a>三大概念</h3><ol>
+<li>映射（Mapping）：描叙数据在每个字段中如何存储；</li>
+<li>分析（Analysis）：全文是如何处理使之可以被搜索；</li>
+<li>领域特定查询语言（QueryDSL）：Elasticsearch 查询语言，json格式。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Elasticsearch</category>
+      </categories>
+      <tags>
+        <tag>Elasticsearch</tag>
       </tags>
   </entry>
   <entry>
@@ -1690,38 +1690,6 @@ git remote -v<br>origin    <a href="https://github.com/chenzhijun/java-core-lear
       </tags>
   </entry>
   <entry>
-    <title>Go 语言简单基础介绍</title>
-    <url>/2017/04/12/go-language-start/</url>
-    <content><![CDATA[<h3 id="Go"><a href="#Go" class="headerlink" title="Go"></a>Go</h3><h3 id="简单介绍Go"><a href="#简单介绍Go" class="headerlink" title="简单介绍Go"></a>简单介绍Go</h3><p>Go的出名，估计真的是靠“爹”。反正人家有个好爹，这是毋庸置疑的。有时候我会想，为啥要用GO，其实Go能做的事情，Java也能做，到现在我也没有想明白。可能Go的存在就是为了那些C/C++想快速转到互联网行业的一个中转语言吧。说实话，对于指导Go里面有指针的第一时间。心中就是千万匹草泥马。但是草归草，生活的继续，还是得硬着头皮学。我有一个心理目标，既然学，就要分清楚学习到什么程度，以致于来花费多少时间。没错，对于Go，我的想法是能用，并且能稍微的用好一点。</p>
-<span id="more"></span>
-
-<h3 id="Hello-Go"><a href="#Hello-Go" class="headerlink" title="Hello Go"></a>Hello Go</h3><p>一切语言的开始都是 <strong>Hello，World</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	fmt.Println(&quot;Hello,World&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面就是 main.go 文件。go 语言的文件后缀都为 .go。这个基本上每个语言都有这个特性啊。哈哈。</p>
-<p>第一行：go 语言包管理机制，所有开始必须有个包名“自报身份”。<br>第二行：import 导入需要用到包<br>第三行：func main(){} 定义一个 main 函数。func 定义一个函数，main函数是可以运行的入口</p>
-<h4 id="Go-语法"><a href="#Go-语法" class="headerlink" title="Go 语法"></a>Go 语法</h4><ul>
-<li><p>定义一个 variable 的string变量</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var variable string</span><br><span class="line">var variable &#x3D; &quot;string&quot;</span><br><span class="line">variable :&#x3D; &quot;string&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>大小写，变量可见性</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var Variable  string    &#x2F;&#x2F;外部可见</span><br><span class="line">var variable  string    &#x2F;&#x2F;外部不可见</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>函数定义</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func Amethod(a int, b string)(int,error)&#123;&#x2F;&#x2F;外部可见，传入a，b两个参数，返回int，error两个类型的参数</span><br><span class="line">   &#x2F;&#x2F;do something</span><br><span class="line">  	return v1,err1</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">func amethod(a int, b string)(int,error)&#123;&#x2F;&#x2F;外部不可见，传入a，b两个参数，返回int，error两个类型的参数</span><br><span class="line">	&#x2F;&#x2F;do something</span><br><span class="line">	return v1,err1</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">intResult,err :&#x3D; Amethod(1,&quot;str&quot;) &#x2F;&#x2F; 调用Amethod方法，并且定义intResult，err来作为接受返回值的两个变量</span><br><span class="line"></span><br><span class="line">		</span><br></pre></td></tr></table></figure></li>
-<li><p>流程控制</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if a&gt;0&#123; </span><br><span class="line">	&#x2F;&#x2F;do thing</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for i :&#x3D; 0;i &lt; 10; i++ &#123; &#x2F;&#x2F; 常见for循环</span><br><span class="line">	&#x2F;&#x2F;do thing</span><br><span class="line">&#125;	</span><br><span class="line">for 1&#x3D;&#x3D;1&#123;  &#x2F;&#x2F; 无限死循环</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var aSlice :&#x3D; []int&#123;1,2,3,4&#125;</span><br><span class="line">for idx,val :&#x3D; range aSlice&#123;&#x2F;&#x2F; 循环slice数组，range关键字</span><br><span class="line">	fmt.Print(idx,val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">switch</span><br><span class="line">continue</span><br><span class="line">break</span><br><span class="line">go 开启协程</span><br></pre></td></tr></table></figure></li>
-</ul>
-<blockquote>
-<p>其实一开始写Go我是拒绝的，有几次都感觉，Java用起来多爽啊，Go这东西简直反人类。最近用着基本上也就没有抱怨了，很多时候都是怕自己做不好，还有自己的舒适区。其实刚毕业的一两年都是一个软件开发者最重要的时间吧。我16年毕业，半年Java开发后跳槽，说实话，如果不是女朋友来深圳的话，我可能真的会在易宝支付做下去吧。来深圳找工作并不是很顺利，很多时候自己心理压力大，也有一点事自己学的<br>不足。一方面还没有做满一年就跳槽，怕留给公司不好的影响，另一方面，半年的时间也就了解了一些基本的支付业务，并没有实际的开发到少东西。而来到新公司，第一件事情就是做一个自己不熟悉的东西。那个时候真的是一边做，也有一遍流泪的。越想越心酸，能力不足，眼前又痛苦。想想别人可以挑公司，而我还被公司挑来挑去。而现在的公司又每天都是做着我不熟悉的Go开发。那个时候心里憋屈啊。 在同事们看来，我从进公司第一天到完成Go开发组长的任务总共用了三天的时间，并且组长也是相当满意任务的完成度。只是他们不知道，我心里是多苦。从熟悉的Java转到Go，我真的是心里一万遍打死了自己，责怪自己。我的同事对我很好，给了我很大的帮助。我真的非常谢谢他们。完成任务后的第一天，我就开始做实际的生产上的项目了。那段时间什么都不知道，什么都不懂。我有时候真的都会默默流泪。但是不管怎样，如果你没能力，那么你只能好好的做好你手中的事情，硬着头皮，最终也是做完了。我很讨厌这种不能自己决定选择的生活，而我不管怎样，也不能放弃。chenzhijun，加油，每天努力一点点。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>Go</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>golang 并发基础（一）</title>
     <url>/2019/08/25/golang-goroutine1/</url>
     <content><![CDATA[<h1 id="golang-并发基础（一）"><a href="#golang-并发基础（一）" class="headerlink" title="golang 并发基础（一）"></a>golang 并发基础（一）</h1><p>golang 在语言的语法和运行时方面内置了对并发的支持。在了解golang的并发之前，我们先看一下操作系统的两个概念：线程和进程。你应该知道，在系统中运行一个程序，其实就是启动了一个进程，而要运行起来，对外来说肯定是需要资源的，比如cpu，内存空间，文件句柄，线程等等..每个进程至少有一个线程，每个进程的初始线程被称为主线程。了解到这些，你大概可以类比一下，比如你创建一个项目，肯定要有main方法（主线程），你的项目中可能还有不同的业务逻辑，这个时候就可以让主进程创建多个线程去运行求结果。线程可以共享进程的空间。另外我们要知道，cpu的执行方式是轮询时间分片的，也就是可能这个线程有10ms的cpu执行时间，所以如果是单核cpu，就是每个线程执行一会，抢占式执行。并发(concurrency)不是并行(parallelism)。并行是在相同的时候让不同的代码都能在不同的处理器上执行，也就是同时做很多事情。并发是指同时管理很多事情，这些事情可能只做了一半就被暂停去做别的事情了。</p>
@@ -1788,6 +1756,38 @@ channel分为非缓存chan和有缓存chan，  -->
       </categories>
       <tags>
         <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go 语言简单基础介绍</title>
+    <url>/2017/04/12/go-language-start/</url>
+    <content><![CDATA[<h3 id="Go"><a href="#Go" class="headerlink" title="Go"></a>Go</h3><h3 id="简单介绍Go"><a href="#简单介绍Go" class="headerlink" title="简单介绍Go"></a>简单介绍Go</h3><p>Go的出名，估计真的是靠“爹”。反正人家有个好爹，这是毋庸置疑的。有时候我会想，为啥要用GO，其实Go能做的事情，Java也能做，到现在我也没有想明白。可能Go的存在就是为了那些C/C++想快速转到互联网行业的一个中转语言吧。说实话，对于指导Go里面有指针的第一时间。心中就是千万匹草泥马。但是草归草，生活的继续，还是得硬着头皮学。我有一个心理目标，既然学，就要分清楚学习到什么程度，以致于来花费多少时间。没错，对于Go，我的想法是能用，并且能稍微的用好一点。</p>
+<span id="more"></span>
+
+<h3 id="Hello-Go"><a href="#Hello-Go" class="headerlink" title="Hello Go"></a>Hello Go</h3><p>一切语言的开始都是 <strong>Hello，World</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">	fmt.Println(&quot;Hello,World&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面就是 main.go 文件。go 语言的文件后缀都为 .go。这个基本上每个语言都有这个特性啊。哈哈。</p>
+<p>第一行：go 语言包管理机制，所有开始必须有个包名“自报身份”。<br>第二行：import 导入需要用到包<br>第三行：func main(){} 定义一个 main 函数。func 定义一个函数，main函数是可以运行的入口</p>
+<h4 id="Go-语法"><a href="#Go-语法" class="headerlink" title="Go 语法"></a>Go 语法</h4><ul>
+<li><p>定义一个 variable 的string变量</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var variable string</span><br><span class="line">var variable &#x3D; &quot;string&quot;</span><br><span class="line">variable :&#x3D; &quot;string&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>大小写，变量可见性</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var Variable  string    &#x2F;&#x2F;外部可见</span><br><span class="line">var variable  string    &#x2F;&#x2F;外部不可见</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数定义</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func Amethod(a int, b string)(int,error)&#123;&#x2F;&#x2F;外部可见，传入a，b两个参数，返回int，error两个类型的参数</span><br><span class="line">   &#x2F;&#x2F;do something</span><br><span class="line">  	return v1,err1</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">func amethod(a int, b string)(int,error)&#123;&#x2F;&#x2F;外部不可见，传入a，b两个参数，返回int，error两个类型的参数</span><br><span class="line">	&#x2F;&#x2F;do something</span><br><span class="line">	return v1,err1</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">intResult,err :&#x3D; Amethod(1,&quot;str&quot;) &#x2F;&#x2F; 调用Amethod方法，并且定义intResult，err来作为接受返回值的两个变量</span><br><span class="line"></span><br><span class="line">		</span><br></pre></td></tr></table></figure></li>
+<li><p>流程控制</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if a&gt;0&#123; </span><br><span class="line">	&#x2F;&#x2F;do thing</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for i :&#x3D; 0;i &lt; 10; i++ &#123; &#x2F;&#x2F; 常见for循环</span><br><span class="line">	&#x2F;&#x2F;do thing</span><br><span class="line">&#125;	</span><br><span class="line">for 1&#x3D;&#x3D;1&#123;  &#x2F;&#x2F; 无限死循环</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var aSlice :&#x3D; []int&#123;1,2,3,4&#125;</span><br><span class="line">for idx,val :&#x3D; range aSlice&#123;&#x2F;&#x2F; 循环slice数组，range关键字</span><br><span class="line">	fmt.Print(idx,val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">switch</span><br><span class="line">continue</span><br><span class="line">break</span><br><span class="line">go 开启协程</span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>其实一开始写Go我是拒绝的，有几次都感觉，Java用起来多爽啊，Go这东西简直反人类。最近用着基本上也就没有抱怨了，很多时候都是怕自己做不好，还有自己的舒适区。其实刚毕业的一两年都是一个软件开发者最重要的时间吧。我16年毕业，半年Java开发后跳槽，说实话，如果不是女朋友来深圳的话，我可能真的会在易宝支付做下去吧。来深圳找工作并不是很顺利，很多时候自己心理压力大，也有一点事自己学的<br>不足。一方面还没有做满一年就跳槽，怕留给公司不好的影响，另一方面，半年的时间也就了解了一些基本的支付业务，并没有实际的开发到少东西。而来到新公司，第一件事情就是做一个自己不熟悉的东西。那个时候真的是一边做，也有一遍流泪的。越想越心酸，能力不足，眼前又痛苦。想想别人可以挑公司，而我还被公司挑来挑去。而现在的公司又每天都是做着我不熟悉的Go开发。那个时候心里憋屈啊。 在同事们看来，我从进公司第一天到完成Go开发组长的任务总共用了三天的时间，并且组长也是相当满意任务的完成度。只是他们不知道，我心里是多苦。从熟悉的Java转到Go，我真的是心里一万遍打死了自己，责怪自己。我的同事对我很好，给了我很大的帮助。我真的非常谢谢他们。完成任务后的第一天，我就开始做实际的生产上的项目了。那段时间什么都不知道，什么都不懂。我有时候真的都会默默流泪。但是不管怎样，如果你没能力，那么你只能好好的做好你手中的事情，硬着头皮，最终也是做完了。我很讨厌这种不能自己决定选择的生活，而我不管怎样，也不能放弃。chenzhijun，加油，每天努力一点点。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
       </tags>
   </entry>
   <entry>
@@ -1881,6 +1881,59 @@ channel分为非缓存chan和有缓存chan，  -->
       </tags>
   </entry>
   <entry>
+    <title>Hibernate 校验参数</title>
+    <url>/2018/01/31/hibernater-validate-properties/</url>
+    <content><![CDATA[<h1 id="Hibernater-Validator-校验参数"><a href="#Hibernater-Validator-校验参数" class="headerlink" title="Hibernater Validator 校验参数"></a>Hibernater Validator 校验参数</h1><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>如果我们使用spring mvc 那么肯定知道在方法中我们可以使用注解对参数进行校验：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/user)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">(<span class="meta">@Valid</span> User user)</span></span>&#123;</span><br><span class="line">    User userP = user;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候通常是在User对象里面使用一些注解来判断如：@NotNull,@NotEmpty。这些bean验证方法是遵循JSR303和JSR380规范的，目前的情况可以去这里查看详情：<a href="http://beanvalidation.org/2.0/">http://beanvalidation.org/2.0/</a>。</p>
+<p>实现规范的这些中有一个包是<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints-simple">Hibernate Validator</a>，这个包不是我们的ORM框架，可能是orm太出名了，以致于提到Hibernate大家都会想到SSH的Hibernate ORM，其实Hibernate Validator是一个非常完善的bean Validator。如果我们不想自己去实现一套，其实是可以引入这个包的。开源社区遇到的情况肯定会比我们自己要多。而且它也支持我们自定义注解来进行校验。</p>
+<p>在我们的系统中，是无法采用@Valid这种方式的，因为我们有一些特别的操作处理所以不能使用它。如果你想自己使用的话，可能可以像我这样，写一个Validtor工具类，然后在需要的地方调用：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator.class).configure().failFast(<span class="keyword">true</span>).buildValidatorFactory().getValidator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;message:&quot;</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">&quot;messageKey:&quot;</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;参数校验失败:%s&quot;</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后你可以在属性上面这样定义：</p>
+<p><img src="/images/qiniu/2018-01-31-20-00-07.png" alt="2018-01-31-20-00-07"></p>
+<p>如果需要使用校验的，只需要使用<span id="more"></span></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ValidatorUtil.validate(obj);</span><br></pre></td></tr></table></figure>
+
+<p>如果有异常它会直接抛出来。</p>
+<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>如果在某些场景下，提供给我们的注解不够用，那我们是否可以自己进行扩展了？ 好的架构，是允许做扩展的。validator也可以支持自定义注解。自定义注解详解在这里<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints">自定义验证规则注解</a>。总的来说就是三步：</p>
+<ol>
+<li>创建一个注解，并且定义一些校验规则；</li>
+<li>继承Validator；</li>
+<li>定义默认的error message</li>
+</ol>
+<p>现在我们尝试定义一个自定义注解：</p>
+<ol start="0">
+<li>准备，定义一个枚举，接下来用到：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">CaseMode</span> </span>&#123;</span><br><span class="line">    UPPER,</span><br><span class="line">    LOWER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建一个注解:<code>CheckCase</code>：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Constraint;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Payload;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123; FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE &#125;)</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@Constraint(validatedBy = CheckCaseValidator.class)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CheckCase &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> &quot;</span>&#123;org.hibernate.validator.referenceguide.chapter06.CheckCase.<span class="string">&quot; +</span></span><br><span class="line"><span class="string">            &quot;</span>message&#125;<span class="string">&quot;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;?&gt;[] groups() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;? extends Payload&gt;[] payload() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    CaseMode value();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>继承Validator,并且将实现自己的规则逻辑</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidatorContext;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheckCaseValidator</span> <span class="keyword">implements</span> <span class="title">ConstraintValidator</span>&lt;<span class="title">CheckCase</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CaseMode caseMode;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CheckCase constraintAnnotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.caseMode = constraintAnnotation.value();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String object, ConstraintValidatorContext constraintContext)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ( object == <span class="keyword">null</span> ) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ( caseMode == CaseMode.UPPER ) &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toUpperCase() );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toLowerCase() );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我们这里的主要逻辑就在isValid中处理的。</p>
+<ol start="3">
+<li>定义error message ，这个错误提示在哪里定义了？我们可以看到在<code>org.hibernate.validator.resource</code>下有很多的properties文件，<br>这是因为Hibernate做了国际化处理。<br><img src="/images/qiniu/2018-01-31-20-14-03.png" alt="2018-01-31-20-14-03"></li>
+</ol>
+<p>如果我们需要重写，只需要将其中的中文的属性文件进行重写放到resource目录就可以了。在定义的注解中我们可以将message指定为我们复制的properties文中<br>的key，这样就能完成error message的自定义了。</p>
+<p>源码：<a href="https://gitee.com/chenzhijun/validator">https://gitee.com/chenzhijun/validator</a></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Validator</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Travis-CI持续构建Hexo博客</title>
     <url>/2017/12/19/hexo-travis-ci/</url>
     <content><![CDATA[<h2 id="使用Travis-CI持续构建Hexo博客"><a href="#使用Travis-CI持续构建Hexo博客" class="headerlink" title="使用Travis-CI持续构建Hexo博客"></a>使用Travis-CI持续构建Hexo博客</h2><p>我是用的 Hexo+Github Page 来构建自己的博客。在 Github 创建<code>your_github_name.github.io</code>仓库的时候，可以直接使用<code>your_github_name.github.io</code>作为你的博客域名站点。详细的话，可以自己去 google 下使用 Hexo搭建个人博客。</p>
@@ -1945,59 +1998,6 @@ channel分为非缓存chan和有缓存chan，  -->
       </categories>
       <tags>
         <tag>Hexo - Blog</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hibernate 校验参数</title>
-    <url>/2018/01/31/hibernater-validate-properties/</url>
-    <content><![CDATA[<h1 id="Hibernater-Validator-校验参数"><a href="#Hibernater-Validator-校验参数" class="headerlink" title="Hibernater Validator 校验参数"></a>Hibernater Validator 校验参数</h1><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>如果我们使用spring mvc 那么肯定知道在方法中我们可以使用注解对参数进行校验：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/user)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">(<span class="meta">@Valid</span> User user)</span></span>&#123;</span><br><span class="line">    User userP = user;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个时候通常是在User对象里面使用一些注解来判断如：@NotNull,@NotEmpty。这些bean验证方法是遵循JSR303和JSR380规范的，目前的情况可以去这里查看详情：<a href="http://beanvalidation.org/2.0/">http://beanvalidation.org/2.0/</a>。</p>
-<p>实现规范的这些中有一个包是<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints-simple">Hibernate Validator</a>，这个包不是我们的ORM框架，可能是orm太出名了，以致于提到Hibernate大家都会想到SSH的Hibernate ORM，其实Hibernate Validator是一个非常完善的bean Validator。如果我们不想自己去实现一套，其实是可以引入这个包的。开源社区遇到的情况肯定会比我们自己要多。而且它也支持我们自定义注解来进行校验。</p>
-<p>在我们的系统中，是无法采用@Valid这种方式的，因为我们有一些特别的操作处理所以不能使用它。如果你想自己使用的话，可能可以像我这样，写一个Validtor工具类，然后在需要的地方调用：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatorUtil</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Validator VALIDATOR = Validation.byProvider(HibernateValidator.class).configure().failFast(<span class="keyword">true</span>).buildValidatorFactory().getValidator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(T obj)</span> </span>&#123;</span><br><span class="line">        Set&lt;ConstraintViolation&lt;T&gt;&gt; validateResult = VALIDATOR.validate(obj);</span><br><span class="line">        <span class="keyword">if</span>(!validateResult.isEmpty())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;message:&quot;</span>+validateResult.iterator().next().getMessage());</span><br><span class="line">            System.err.println(<span class="string">&quot;messageKey:&quot;</span>+validateResult.iterator().next().getMessageTemplate());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;参数校验失败:%s&quot;</span>, validateResult.iterator().next().getPropertyPath().toString()+validateResult.iterator().next().getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>之后你可以在属性上面这样定义：</p>
-<p><img src="/images/qiniu/2018-01-31-20-00-07.png" alt="2018-01-31-20-00-07"></p>
-<p>如果需要使用校验的，只需要使用<span id="more"></span></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ValidatorUtil.validate(obj);</span><br></pre></td></tr></table></figure>
-
-<p>如果有异常它会直接抛出来。</p>
-<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>如果在某些场景下，提供给我们的注解不够用，那我们是否可以自己进行扩展了？ 好的架构，是允许做扩展的。validator也可以支持自定义注解。自定义注解详解在这里<a href="http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#validator-customconstraints">自定义验证规则注解</a>。总的来说就是三步：</p>
-<ol>
-<li>创建一个注解，并且定义一些校验规则；</li>
-<li>继承Validator；</li>
-<li>定义默认的error message</li>
-</ol>
-<p>现在我们尝试定义一个自定义注解：</p>
-<ol start="0">
-<li>准备，定义一个枚举，接下来用到：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">CaseMode</span> </span>&#123;</span><br><span class="line">    UPPER,</span><br><span class="line">    LOWER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>创建一个注解:<code>CheckCase</code>：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.Constraint;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Payload;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123; FIELD, METHOD, PARAMETER, ANNOTATION_TYPE, TYPE_USE &#125;)</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@Constraint(validatedBy = CheckCaseValidator.class)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CheckCase &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">message</span><span class="params">()</span> <span class="keyword">default</span> &quot;</span>&#123;org.hibernate.validator.referenceguide.chapter06.CheckCase.<span class="string">&quot; +</span></span><br><span class="line"><span class="string">            &quot;</span>message&#125;<span class="string">&quot;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;?&gt;[] groups() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Class&lt;? extends Payload&gt;[] payload() default &#123; &#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    CaseMode value();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>继承Validator,并且将实现自己的规则逻辑</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.chenzhijiun.validator.customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintValidatorContext;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> chen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/1/30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheckCaseValidator</span> <span class="keyword">implements</span> <span class="title">ConstraintValidator</span>&lt;<span class="title">CheckCase</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> CaseMode caseMode;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(CheckCase constraintAnnotation)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.caseMode = constraintAnnotation.value();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String object, ConstraintValidatorContext constraintContext)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ( object == <span class="keyword">null</span> ) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ( caseMode == CaseMode.UPPER ) &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toUpperCase() );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> object.equals( object.toLowerCase() );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，我们这里的主要逻辑就在isValid中处理的。</p>
-<ol start="3">
-<li>定义error message ，这个错误提示在哪里定义了？我们可以看到在<code>org.hibernate.validator.resource</code>下有很多的properties文件，<br>这是因为Hibernate做了国际化处理。<br><img src="/images/qiniu/2018-01-31-20-14-03.png" alt="2018-01-31-20-14-03"></li>
-</ol>
-<p>如果我们需要重写，只需要将其中的中文的属性文件进行重写放到resource目录就可以了。在定义的注解中我们可以将message指定为我们复制的properties文中<br>的key，这样就能完成error message的自定义了。</p>
-<p>源码：<a href="https://gitee.com/chenzhijun/validator">https://gitee.com/chenzhijun/validator</a></p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Validator</tag>
       </tags>
   </entry>
   <entry>
@@ -2928,6 +2928,31 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </tags>
   </entry>
   <entry>
+    <title>Java 类转 Json 时属性名使用下划线</title>
+    <url>/2019/07/06/java-json-generate-with-underline/</url>
+    <content><![CDATA[<h1 id="Java-类转-Json-时属性名使用下划线"><a href="#Java-类转-Json-时属性名使用下划线" class="headerlink" title="Java 类转 Json 时属性名使用下划线"></a>Java 类转 Json 时属性名使用下划线</h1><p>很多时候和其它系统对接的时候，不太喜欢用驼峰的方式，毕竟如果是给前端的api，写个驼峰总感觉有点怪异，总喜欢将属性使用下划线。也就是一个<code>bookName</code>,给前端的时候是：<code>book_name</code>，当然如果是后台系统，还是使用驼峰啊。</p>
+<h2 id="Java-统一-json-为下划线"><a href="#Java-统一-json-为下划线" class="headerlink" title="Java 统一 json 为下划线"></a>Java 统一 json 为下划线</h2><p>在 Java 中有两种方式可以实现这种方式，一种是全局的，一种是局部。</p>
+<span id="more"></span>
+<h3 id="全局修改属性的json名为下划线格式"><a href="#全局修改属性的json名为下划线格式" class="headerlink" title="全局修改属性的json名为下划线格式"></a>全局修改属性的json名为下划线格式</h3><p>如果需要全局的修改，那么只需要在类上面使用<code>@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</code>即可。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.PropertyNamingStrategy;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.annotation.JsonNaming;</span><br><span class="line"></span><br><span class="line"><span class="meta">@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    Object state;</span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(Object state)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state=state;</span><br><span class="line">        <span class="keyword">this</span>.bookName=<span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(Object state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>转换后的json为：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;state&quot;</span>: <span class="string">&quot;Success&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;book_name&quot;</span>: <span class="string">&quot;《json转换》&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="局部修改属性的json名为下划线格式"><a href="#局部修改属性的json名为下划线格式" class="headerlink" title="局部修改属性的json名为下划线格式"></a>局部修改属性的json名为下划线格式</h3><p>局部的方式就是使用<code>@JsonProperty(value = &quot;book_name&quot;)</code>这个作用在属性上：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonProperty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    String state;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JsonProperty(value = &quot;book_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">        <span class="keyword">this</span>.bookName = <span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>测试类为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jsonTest</span><span class="params">()</span> <span class="keyword">throws</span> JsonProcessingException </span>&#123;</span><br><span class="line">    Instance instance = <span class="keyword">new</span> Instance(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    System.out.println(objectMapper.writeValueAsString(instance));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Json</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java IO流</title>
     <url>/2017/09/20/java-io/</url>
     <content><![CDATA[<h2 id="Java-IO流"><a href="#Java-IO流" class="headerlink" title="Java IO流"></a>Java IO流</h2><h3 id="Java-IO流简述"><a href="#Java-IO流简述" class="headerlink" title="Java IO流简述"></a>Java IO流简述</h3><p>JavaIO 中流都分别在java.io包中，主要分为几类：</p>
@@ -2985,31 +3010,6 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 类转 Json 时属性名使用下划线</title>
-    <url>/2019/07/06/java-json-generate-with-underline/</url>
-    <content><![CDATA[<h1 id="Java-类转-Json-时属性名使用下划线"><a href="#Java-类转-Json-时属性名使用下划线" class="headerlink" title="Java 类转 Json 时属性名使用下划线"></a>Java 类转 Json 时属性名使用下划线</h1><p>很多时候和其它系统对接的时候，不太喜欢用驼峰的方式，毕竟如果是给前端的api，写个驼峰总感觉有点怪异，总喜欢将属性使用下划线。也就是一个<code>bookName</code>,给前端的时候是：<code>book_name</code>，当然如果是后台系统，还是使用驼峰啊。</p>
-<h2 id="Java-统一-json-为下划线"><a href="#Java-统一-json-为下划线" class="headerlink" title="Java 统一 json 为下划线"></a>Java 统一 json 为下划线</h2><p>在 Java 中有两种方式可以实现这种方式，一种是全局的，一种是局部。</p>
-<span id="more"></span>
-<h3 id="全局修改属性的json名为下划线格式"><a href="#全局修改属性的json名为下划线格式" class="headerlink" title="全局修改属性的json名为下划线格式"></a>全局修改属性的json名为下划线格式</h3><p>如果需要全局的修改，那么只需要在类上面使用<code>@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</code>即可。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.PropertyNamingStrategy;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.annotation.JsonNaming;</span><br><span class="line"></span><br><span class="line"><span class="meta">@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    Object state;</span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(Object state)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state=state;</span><br><span class="line">        <span class="keyword">this</span>.bookName=<span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(Object state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>转换后的json为：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;state&quot;</span>: <span class="string">&quot;Success&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;book_name&quot;</span>: <span class="string">&quot;《json转换》&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="局部修改属性的json名为下划线格式"><a href="#局部修改属性的json名为下划线格式" class="headerlink" title="局部修改属性的json名为下划线格式"></a>局部修改属性的json名为下划线格式</h3><p>局部的方式就是使用<code>@JsonProperty(value = &quot;book_name&quot;)</code>这个作用在属性上：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonProperty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    String state;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JsonProperty(value = &quot;book_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">        <span class="keyword">this</span>.bookName = <span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>测试类为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jsonTest</span><span class="params">()</span> <span class="keyword">throws</span> JsonProcessingException </span>&#123;</span><br><span class="line">    Instance instance = <span class="keyword">new</span> Instance(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    System.out.println(objectMapper.writeValueAsString(instance));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Json</tag>
       </tags>
   </entry>
   <entry>
@@ -3149,27 +3149,6 @@ https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
       </tags>
   </entry>
   <entry>
-    <title>查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别</title>
-    <url>/2021/03/18/java-string-stringbuffer-stringbuilder/</url>
-    <content><![CDATA[<h1 id="查漏补缺-Java-系列-String，StringBuffer，StringBuilder有什么区别"><a href="#查漏补缺-Java-系列-String，StringBuffer，StringBuilder有什么区别" class="headerlink" title="查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别"></a>查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别</h1><h2 id="String，StringBuffer，StringBuilder-他们三者的优势和劣势？"><a href="#String，StringBuffer，StringBuilder-他们三者的优势和劣势？" class="headerlink" title="String，StringBuffer，StringBuilder 他们三者的优势和劣势？"></a>String，StringBuffer，StringBuilder 他们三者的优势和劣势？</h2><p>一般来说，Java中String是用来对字符串进行操作的类，是一个 Immutable 类，它是被声明为final class，所有的属性也是final的；String中的所有跟字符串修改的方法都是新建了一个String，就会产生很多额外的String对象；</p>
-<p>StringBuffer是一个线程安全的类，它的所有方法都加上了synchronized; StringBuffer还有个优点就是它在执行append的操作的时候将新的字符串插入到原来的串中，可能是末尾，也可能是中间位置；</p>
-<p>StringBuilder 是 Java 1.5 中新增的，它可以看成是StringBuffer的非线程安全实现版本。</p>
-<span id="more"></span>
-<h2 id="String，StringBuffer，StringBuilder-三者的使用场景？"><a href="#String，StringBuffer，StringBuilder-三者的使用场景？" class="headerlink" title="String，StringBuffer，StringBuilder 三者的使用场景？"></a>String，StringBuffer，StringBuilder 三者的使用场景？</h2><p>其实在jdk9开始，如果我们javap String相关的源码会发现，不再有之前的StringBuilder出现了。这是因为在新的jdk9中，采用了一种新的方式：COMPACT_STRINGS 。底层的数据结构用的是 一个bytes数组+coder的方式组建String的内容，用coder来判断是用LATIN1,UTF16。那么很明显了。<br>如果你在jdk8里面，需要线程同步安全的化，可以使用StringBuffer；如果涉及到大量的String操作，可以考虑使用StringBuilder；但是我认为这个还是要根据编码来，编码首先是给人看的，一定要保证可读性。比如下列的：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">sb.append(<span class="string">&quot;abc&quot;</span>).append(<span class="string">&quot;def&quot;</span>);<span class="comment">//如果很长了？</span></span><br><span class="line"></span><br><span class="line">String abcdeft=<span class="string">&quot;abc&quot;</span>+<span class="string">&quot;def&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三者的关键组成部分和关键点？"><a href="#三者的关键组成部分和关键点？" class="headerlink" title="三者的关键组成部分和关键点？"></a>三者的关键组成部分和关键点？</h2><blockquote>
-<p>ps: jdk8中用的是数组char；jdk9+中用的是数组byte；</p>
-</blockquote>
-<h2 id="三者的底层原理和关键实践"><a href="#三者的底层原理和关键实践" class="headerlink" title="三者的底层原理和关键实践"></a>三者的底层原理和关键实践</h2>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java-基础之string</title>
     <url>/2017/08/08/java-string/</url>
     <content><![CDATA[<h2 id="Java-基础-String"><a href="#Java-基础-String" class="headerlink" title="Java 基础-String"></a>Java 基础-String</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. Case mapping is based on the Unicode Standard version specified by the Character class.</span><br><span class="line"></span><br><span class="line">&#96;String&#96;类包括了一系列字符的方法，比如：比较字符，查找字符，子字符串，创建一个全是大写或者全是小写的字符。匹配是在unicode标准版本规范在&#96;Character&#96; 类的基础上。</span><br><span class="line"></span><br><span class="line">The Java language provides special support for the string concatenation operator ( + ), and for conversion of other objects to strings. String concatenation is implemented through the StringBuilder(or StringBuffer) class and its append method. String conversions are implemented through the method toString, defined by Object and inherited by all classes in Java. For additional information on string concatenation and conversion, see Gosling, Joy, and Steele, The Java Language Specification.</span><br><span class="line"></span><br><span class="line">Java语言提供了对字符的操作符&#96;+&#96;做了特殊的支持,并且对其他的objects转换成string也做了相应支持。String的连接是StringBuilder(或者说StringBuffer)来实现的它的append方法的。String转换是通过实现定义在Object(所有的java方法都继承了它)的toString方法。更多的额外的字符操作和转换的特殊操作，看看gosling，joy，steele，写的《java语言规范》。</span><br><span class="line"></span><br><span class="line">Unless otherwise noted, passing a null argument to a constructor or method in this class will cause a NullPointerException to be thrown.</span><br><span class="line"></span><br><span class="line">除非有额外的标记，传递一个null参数给一个构造方法或者非构造方法在这个类中，会导致&#96;NullPointerException&#96;被抛出。</span><br><span class="line"></span><br><span class="line">A String represents a string in the UTF-16 format in which supplementary characters are represented by surrogate pairs (see the section Unicode Character Representations in the Character class for more information). Index values refer to char code units, so a supplementary character uses two positions in a String.</span><br><span class="line"></span><br><span class="line">一个String呈现的字符串是用UTF-16格式，不够的补位。</span><br><span class="line"></span><br><span class="line">The String class provides methods for dealing with Unicode code points (i.e., characters), in addition to those for dealing with Unicode code units (i.e., char values).</span><br><span class="line"></span><br><span class="line">这个String类提供方法处理Unicode代码点和unicode代码单元。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -3214,6 +3193,27 @@ https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
 <p>另外看到indexOf的方法级别上是<code>static int indexOf()</code> 非public，private，而是默认的限定符，附一张限定符的图,<a href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html">accesscontrol.html</a></p>
 <p><img src="/images/qiniu/2017-09-11-16-13-20.png" alt="2017-09-11-16-13-20"></p>
 ]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别</title>
+    <url>/2021/03/18/java-string-stringbuffer-stringbuilder/</url>
+    <content><![CDATA[<h1 id="查漏补缺-Java-系列-String，StringBuffer，StringBuilder有什么区别"><a href="#查漏补缺-Java-系列-String，StringBuffer，StringBuilder有什么区别" class="headerlink" title="查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别"></a>查漏补缺 Java 系列 - String，StringBuffer，StringBuilder有什么区别</h1><h2 id="String，StringBuffer，StringBuilder-他们三者的优势和劣势？"><a href="#String，StringBuffer，StringBuilder-他们三者的优势和劣势？" class="headerlink" title="String，StringBuffer，StringBuilder 他们三者的优势和劣势？"></a>String，StringBuffer，StringBuilder 他们三者的优势和劣势？</h2><p>一般来说，Java中String是用来对字符串进行操作的类，是一个 Immutable 类，它是被声明为final class，所有的属性也是final的；String中的所有跟字符串修改的方法都是新建了一个String，就会产生很多额外的String对象；</p>
+<p>StringBuffer是一个线程安全的类，它的所有方法都加上了synchronized; StringBuffer还有个优点就是它在执行append的操作的时候将新的字符串插入到原来的串中，可能是末尾，也可能是中间位置；</p>
+<p>StringBuilder 是 Java 1.5 中新增的，它可以看成是StringBuffer的非线程安全实现版本。</p>
+<span id="more"></span>
+<h2 id="String，StringBuffer，StringBuilder-三者的使用场景？"><a href="#String，StringBuffer，StringBuilder-三者的使用场景？" class="headerlink" title="String，StringBuffer，StringBuilder 三者的使用场景？"></a>String，StringBuffer，StringBuilder 三者的使用场景？</h2><p>其实在jdk9开始，如果我们javap String相关的源码会发现，不再有之前的StringBuilder出现了。这是因为在新的jdk9中，采用了一种新的方式：COMPACT_STRINGS 。底层的数据结构用的是 一个bytes数组+coder的方式组建String的内容，用coder来判断是用LATIN1,UTF16。那么很明显了。<br>如果你在jdk8里面，需要线程同步安全的化，可以使用StringBuffer；如果涉及到大量的String操作，可以考虑使用StringBuilder；但是我认为这个还是要根据编码来，编码首先是给人看的，一定要保证可读性。比如下列的：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">sb.append(<span class="string">&quot;abc&quot;</span>).append(<span class="string">&quot;def&quot;</span>);<span class="comment">//如果很长了？</span></span><br><span class="line"></span><br><span class="line">String abcdeft=<span class="string">&quot;abc&quot;</span>+<span class="string">&quot;def&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三者的关键组成部分和关键点？"><a href="#三者的关键组成部分和关键点？" class="headerlink" title="三者的关键组成部分和关键点？"></a>三者的关键组成部分和关键点？</h2><blockquote>
+<p>ps: jdk8中用的是数组char；jdk9+中用的是数组byte；</p>
+</blockquote>
+<h2 id="三者的底层原理和关键实践"><a href="#三者的底层原理和关键实践" class="headerlink" title="三者的底层原理和关键实践"></a>三者的底层原理和关键实践</h2>]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -3854,9 +3854,9 @@ https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
       </tags>
   </entry>
   <entry>
-    <title>容器网络 - 三层网络解决</title>
+    <title>容器网络 - 三层网络解决方案</title>
     <url>/2023/06/29/kubernetes-container-network-3/</url>
-    <content><![CDATA[<h1 id="容器网络-三层网络解决"><a href="#容器网络-三层网络解决" class="headerlink" title="容器网络 - 三层网络解决"></a>容器网络 - 三层网络解决</h1><p>前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。</p>
+    <content><![CDATA[<h1 id="容器网络-三层网络解决方案"><a href="#容器网络-三层网络解决方案" class="headerlink" title="容器网络 - 三层网络解决方案"></a>容器网络 - 三层网络解决方案</h1><p>前面两篇了解了kubernetes容器网络和CNI插件的主要工作原理。除了这种模式外，还有一种纯三层的网络方案，如Flannel的host-gw和Calico项目。</p>
 <p>先看一下flannel的host-gw 示意图：</p>
 <p><img src="/images/qiniu/image-20230629173437200.png" alt="image-20230629173437200"></p>
 <p>你在主机上用<code>ip route</code>可以看到一个规则：</p>
@@ -5472,28 +5472,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>Prometheus 常用的查询语句</title>
-    <url>/2022/06/16/prometheus-query/</url>
-    <content><![CDATA[<h2 id="Prometheus-常用的查询语句"><a href="#Prometheus-常用的查询语句" class="headerlink" title="Prometheus 常用的查询语句"></a>Prometheus 常用的查询语句</h2><p>通常我们会使用Grafana作为图表展示，然后选择Prometheus作为数据源的方式来进行我们想要的图表展示。当然我们也可以在Grafana的官网上找到相应的dashboard来直接导入，这样省去了自己手工配置的麻烦。不过知道一些必要的Prometheus查询语句能帮我们更好的选择Grafana的dashboard，然后我们可以自定义做些配置。</p>
-<h3 id="Prometheus一些术语"><a href="#Prometheus一些术语" class="headerlink" title="Prometheus一些术语"></a>Prometheus一些术语</h3><p>Prometheus的metrics分为四类（counter,gauge,histogram,summary）详情(<a href="https://prometheus.io/docs/concepts/metric_types/">metrics-type</a>)，metrics_name的命令也应该符合一定的规范：<a href="https://prometheus.io/docs/concepts/data_model/">metrics-name</a>，<a href="https://prometheus.io/docs/practices/naming/">METRIC AND LABEL NAMING</a></p>
-<p><code>metrics_name</code> ： 也就是指标名，通常我们都会用如http_request_total等进行查询;<br><code>metrics_label</code> ：指标的标签，也就是metrics_name{label-1=”a”,label-2=”b”}这种;<br><code>metrics_value</code> : 通常用指标名+标签查出来一个值，该值根据metrics的类型可能为浮点数，也可能为整数。</p>
-<span id="more"></span>
-
-<h3 id="0-基础查询"><a href="#0-基础查询" class="headerlink" title="0,基础查询"></a>0,基础查询</h3><p>也就是使用metrics_name+metrics_label的组合进行查询，这种查询的效率的基础是你要知道明确知道相应的name和label，如果有错误拼写，则可能数据无法展示，Prometheus的查询工具能帮我们模糊匹配出所有的metrics_name。可以使用label进行筛选。<br>如果只记得部分metrics_name,那么可以使用内置的label：<code>&#123;__name__=~&quot;metrics_name_you_remember:.*&quot;&#125;</code>这样去匹配出来你想要的标签。</p>
-<h3 id="1-正则匹配查询"><a href="#1-正则匹配查询" class="headerlink" title="1,正则匹配查询"></a>1,正则匹配查询</h3><p>Prometheus里面用的最多的查询可能就是正则匹配了。经常配合Grafana的变量(variable)一起使用。比如：<br><code>sum(irate(node_disk_reads_completed&#123;device!~&quot;dm-.*&quot;&#125;[5m]))</code>,这里面的<code>device!~&quot;dm-.*&quot;</code>，后面<br>引号内的<code>dm-.*</code>就是不匹配<code>dm-</code>前缀的所有metrics_name。如果要匹配的话使用<code>=~</code>。这样要注意，如果是或<br>的话要用<code>(regrex_A|regrex_B)</code>,用小括号加<code>|</code>。</p>
-<h3 id="2-常用的操作符和函数"><a href="#2-常用的操作符和函数" class="headerlink" title="2,常用的操作符和函数"></a>2,常用的操作符和函数</h3><p>Prometheus支持常用的操作符：<code>+,-,*,/,&gt;=,&lt;,&gt;,....</code>等</p>
-<p>count是对查询的结果数量进行总和+; 而sum是对查询出来的value进行总和+;</p>
-<p>它也支持比如topk,bottomk,min,max等等。</p>
-<h3 id="更多的查询"><a href="#更多的查询" class="headerlink" title="更多的查询"></a>更多的查询</h3><p>在官网还有更多的查询，通常我们是结合Grafana来做。官网的查询:<a href="https://prometheus.io/docs/Prometheus/latest/querying/functions/">proetheus-query</a>。</p>
-]]></content>
-      <categories>
-        <category>监控</category>
-      </categories>
-      <tags>
-        <tag>Prometheus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Prometheus 使用 influxdb 做永久存储</title>
     <url>/2022/06/09/prometheus-storage-influxdb/</url>
     <content><![CDATA[<h1 id="Prometheus-使用远端存储"><a href="#Prometheus-使用远端存储" class="headerlink" title="Prometheus 使用远端存储"></a>Prometheus 使用远端存储</h1><p>使用Prometheus的过程中，我们可以发现Prometheus默认是自己带有存储的，不过保存的时间为15天。但是对于公司而言，可能有时候会对数据进行统计分析，那么15天的数据将不会满足要求了。所以我们希望能够将数据永久存储起来，或者说能够让我们自己将数据进行处理。</p>
@@ -5513,6 +5491,28 @@ EOF
 <pre><code>示例如下：
 </code></pre>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt; use testdb;</span><br><span class="line">Using database testdb</span><br><span class="line">&gt; insert students,stuid&#x3D;s123 score&#x3D;89</span><br><span class="line">&gt; show measurements;</span><br><span class="line">name: measurements</span><br><span class="line">name</span><br><span class="line">----</span><br><span class="line">students</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>监控</category>
+      </categories>
+      <tags>
+        <tag>Prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Prometheus 常用的查询语句</title>
+    <url>/2022/06/16/prometheus-query/</url>
+    <content><![CDATA[<h2 id="Prometheus-常用的查询语句"><a href="#Prometheus-常用的查询语句" class="headerlink" title="Prometheus 常用的查询语句"></a>Prometheus 常用的查询语句</h2><p>通常我们会使用Grafana作为图表展示，然后选择Prometheus作为数据源的方式来进行我们想要的图表展示。当然我们也可以在Grafana的官网上找到相应的dashboard来直接导入，这样省去了自己手工配置的麻烦。不过知道一些必要的Prometheus查询语句能帮我们更好的选择Grafana的dashboard，然后我们可以自定义做些配置。</p>
+<h3 id="Prometheus一些术语"><a href="#Prometheus一些术语" class="headerlink" title="Prometheus一些术语"></a>Prometheus一些术语</h3><p>Prometheus的metrics分为四类（counter,gauge,histogram,summary）详情(<a href="https://prometheus.io/docs/concepts/metric_types/">metrics-type</a>)，metrics_name的命令也应该符合一定的规范：<a href="https://prometheus.io/docs/concepts/data_model/">metrics-name</a>，<a href="https://prometheus.io/docs/practices/naming/">METRIC AND LABEL NAMING</a></p>
+<p><code>metrics_name</code> ： 也就是指标名，通常我们都会用如http_request_total等进行查询;<br><code>metrics_label</code> ：指标的标签，也就是metrics_name{label-1=”a”,label-2=”b”}这种;<br><code>metrics_value</code> : 通常用指标名+标签查出来一个值，该值根据metrics的类型可能为浮点数，也可能为整数。</p>
+<span id="more"></span>
+
+<h3 id="0-基础查询"><a href="#0-基础查询" class="headerlink" title="0,基础查询"></a>0,基础查询</h3><p>也就是使用metrics_name+metrics_label的组合进行查询，这种查询的效率的基础是你要知道明确知道相应的name和label，如果有错误拼写，则可能数据无法展示，Prometheus的查询工具能帮我们模糊匹配出所有的metrics_name。可以使用label进行筛选。<br>如果只记得部分metrics_name,那么可以使用内置的label：<code>&#123;__name__=~&quot;metrics_name_you_remember:.*&quot;&#125;</code>这样去匹配出来你想要的标签。</p>
+<h3 id="1-正则匹配查询"><a href="#1-正则匹配查询" class="headerlink" title="1,正则匹配查询"></a>1,正则匹配查询</h3><p>Prometheus里面用的最多的查询可能就是正则匹配了。经常配合Grafana的变量(variable)一起使用。比如：<br><code>sum(irate(node_disk_reads_completed&#123;device!~&quot;dm-.*&quot;&#125;[5m]))</code>,这里面的<code>device!~&quot;dm-.*&quot;</code>，后面<br>引号内的<code>dm-.*</code>就是不匹配<code>dm-</code>前缀的所有metrics_name。如果要匹配的话使用<code>=~</code>。这样要注意，如果是或<br>的话要用<code>(regrex_A|regrex_B)</code>,用小括号加<code>|</code>。</p>
+<h3 id="2-常用的操作符和函数"><a href="#2-常用的操作符和函数" class="headerlink" title="2,常用的操作符和函数"></a>2,常用的操作符和函数</h3><p>Prometheus支持常用的操作符：<code>+,-,*,/,&gt;=,&lt;,&gt;,....</code>等</p>
+<p>count是对查询的结果数量进行总和+; 而sum是对查询出来的value进行总和+;</p>
+<p>它也支持比如topk,bottomk,min,max等等。</p>
+<h3 id="更多的查询"><a href="#更多的查询" class="headerlink" title="更多的查询"></a>更多的查询</h3><p>在官网还有更多的查询，通常我们是结合Grafana来做。官网的查询:<a href="https://prometheus.io/docs/Prometheus/latest/querying/functions/">proetheus-query</a>。</p>
+]]></content>
       <categories>
         <category>监控</category>
       </categories>
@@ -5821,26 +5821,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>极光推送线下交流分享会</title>
-    <url>/2018/03/17/shenzhen-xianxia-fenxianghui/</url>
-    <content><![CDATA[<h1 id="极光推送线下交流分享会"><a href="#极光推送线下交流分享会" class="headerlink" title="极光推送线下交流分享会"></a>极光推送线下交流分享会</h1><p>周六参加了异常极光推送组织的线下架构师分享会。当然我只是去学习的。</p>
-<span id="more"></span>
-
-<p>首先是极光推送的架构师分享极光面对的问题以及架构进化历史。他们呢的架构我就听懂了一个从vm迁移到k8s,docker。另外他们是用c++开发的，采用的是并行处理。实话C++忘记的差不多了。然后他们对于特殊vip客户做了特殊处理。我特别感兴趣一个问题，他说他们有上亿的激活用户，那么怎么给每个用户分标签了？我们在使用机关推送的时候其实是有按男女，按地区，按年龄等来分别推送的。那他们怎么做到在亿级别的用户数上做到很快的处理？他说的方案是<strong>请求并行处理</strong>；一个请求可以拆分成多个请求，然后结果统一汇总。这个怎么感觉是多线程并发么？</p>
-<p>另外还听到了一个服务化层的概念。比如mq，他说他们所有的请求都是走mq异步的。但是现在并发量大的情况下，mq已经抗不住了。这个时候他们提出mq服务化。就是说mq可能有kafka，rabbitmq，rocketmq。他们可能是在这些mq的上层包装一层，然后底下用这些mq的集群，而对外就是一个mq服务接口层，使用者完全感觉不出来，还是跟以前一样，而这个服务层有路由策略和处理。另外他们的mq是单实例，也就是非集群方式8c16G。</p>
-<p>第二位分享的是平安云的架构师，主要讲的是k8s。已经他们的云平台服务搭建，已经在内部的使用。项目先要考虑活下来，才会考虑去优化。这是他分享的一句话。另外会下我还问了一下他关于日志的问题。日志丢包怎么解决，他的回答是切分，然后采用一些策略来做。防止掉大部分。小部分丢包可以自己再采用策略补偿。</p>
-<p>第三位分享的是阿里豌豆荚的架构师，很明显，这是一个阿里互联网的气息的人。我第一次听到下级给上级打绩效。这个不得不佩服，他也说了136淘宝的策略，如果两年1，必须淘汰，每年必须有人1。厉害了。然后他分享给我们的是抓好数据结构。熟悉一门新的语言先去看它的api文档，但是如果你熟悉数据结构，你会发现api文档里面其实通用的，因为每个语言用的数据结构还是那些只是实现方式有点不一样罢了。他还分享了一个架构模式进程：mvc-&gt;mvp-&gt;mvvm。性能优化方法面他说先要有个量化下来，他主要是安卓开发推荐我们内存优化的工具是memory，monitor，heap view,aliocation Tracker，MAT。<br>内存泄漏：应用不停的申请新内存；<br>内存溢出：需要一个大内存，实际只有一个小内存;<br>在安卓中使用轻量级的数据结构，不用hashmap的原因是自动装箱，自动拆箱。<br>技术的进化历史：<br>服务业务—&gt; 解决需求<br>反哺业务—&gt; 留存<br>提升业务</p>
-<p>作为技术人需要的不但专，而且要博。专而博。</p>
-<p>最后的提问环节，不得不说，阿里的影响力那是真的大啊，一堆人提问，一堆人加微信。厉害了。</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>希尔排序算法</title>
     <url>/2018/03/17/shell-sort/</url>
     <content><![CDATA[<h1 id="希尔排序算法"><a href="#希尔排序算法" class="headerlink" title="希尔排序算法"></a>希尔排序算法</h1><p>这个算法是插入排序的基础上做的优化，它描叙与实现可以看这个<a href="http://chenzhijun.top/2018/03/09/%E5%88%9D%E7%BA%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">插入排序</a>。</p>
@@ -5858,6 +5838,26 @@ EOF
       </categories>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>极光推送线下交流分享会</title>
+    <url>/2018/03/17/shenzhen-xianxia-fenxianghui/</url>
+    <content><![CDATA[<h1 id="极光推送线下交流分享会"><a href="#极光推送线下交流分享会" class="headerlink" title="极光推送线下交流分享会"></a>极光推送线下交流分享会</h1><p>周六参加了异常极光推送组织的线下架构师分享会。当然我只是去学习的。</p>
+<span id="more"></span>
+
+<p>首先是极光推送的架构师分享极光面对的问题以及架构进化历史。他们呢的架构我就听懂了一个从vm迁移到k8s,docker。另外他们是用c++开发的，采用的是并行处理。实话C++忘记的差不多了。然后他们对于特殊vip客户做了特殊处理。我特别感兴趣一个问题，他说他们有上亿的激活用户，那么怎么给每个用户分标签了？我们在使用机关推送的时候其实是有按男女，按地区，按年龄等来分别推送的。那他们怎么做到在亿级别的用户数上做到很快的处理？他说的方案是<strong>请求并行处理</strong>；一个请求可以拆分成多个请求，然后结果统一汇总。这个怎么感觉是多线程并发么？</p>
+<p>另外还听到了一个服务化层的概念。比如mq，他说他们所有的请求都是走mq异步的。但是现在并发量大的情况下，mq已经抗不住了。这个时候他们提出mq服务化。就是说mq可能有kafka，rabbitmq，rocketmq。他们可能是在这些mq的上层包装一层，然后底下用这些mq的集群，而对外就是一个mq服务接口层，使用者完全感觉不出来，还是跟以前一样，而这个服务层有路由策略和处理。另外他们的mq是单实例，也就是非集群方式8c16G。</p>
+<p>第二位分享的是平安云的架构师，主要讲的是k8s。已经他们的云平台服务搭建，已经在内部的使用。项目先要考虑活下来，才会考虑去优化。这是他分享的一句话。另外会下我还问了一下他关于日志的问题。日志丢包怎么解决，他的回答是切分，然后采用一些策略来做。防止掉大部分。小部分丢包可以自己再采用策略补偿。</p>
+<p>第三位分享的是阿里豌豆荚的架构师，很明显，这是一个阿里互联网的气息的人。我第一次听到下级给上级打绩效。这个不得不佩服，他也说了136淘宝的策略，如果两年1，必须淘汰，每年必须有人1。厉害了。然后他分享给我们的是抓好数据结构。熟悉一门新的语言先去看它的api文档，但是如果你熟悉数据结构，你会发现api文档里面其实通用的，因为每个语言用的数据结构还是那些只是实现方式有点不一样罢了。他还分享了一个架构模式进程：mvc-&gt;mvp-&gt;mvvm。性能优化方法面他说先要有个量化下来，他主要是安卓开发推荐我们内存优化的工具是memory，monitor，heap view,aliocation Tracker，MAT。<br>内存泄漏：应用不停的申请新内存；<br>内存溢出：需要一个大内存，实际只有一个小内存;<br>在安卓中使用轻量级的数据结构，不用hashmap的原因是自动装箱，自动拆箱。<br>技术的进化历史：<br>服务业务—&gt; 解决需求<br>反哺业务—&gt; 留存<br>提升业务</p>
+<p>作为技术人需要的不但专，而且要博。专而博。</p>
+<p>最后的提问环节，不得不说，阿里的影响力那是真的大啊，一堆人提问，一堆人加微信。厉害了。</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
       </tags>
   </entry>
   <entry>
