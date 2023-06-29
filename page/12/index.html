@@ -321,6 +321,335 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/01/08/shell-get-param-from-console/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/08/shell-get-param-from-console/" itemprop="url">从命令行参数获取Shell脚本参数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T17:03:58+08:00">
+                2018-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/08/shell-get-param-from-console/" class="leancloud_visitors" data-flag-title="从命令行参数获取Shell脚本参数">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="从命令行参数获取Shell脚本参数"><a href="#从命令行参数获取Shell脚本参数" class="headerlink" title="从命令行参数获取Shell脚本参数"></a>从命令行参数获取Shell脚本参数</h1><p>很多时候我们写完脚本都需要指定一些变量，这些变量可能根据实际的环境而值不同。所以如何在 shell 脚本中接收到不同的变量值了？</p>
+<h2 id="获取参数"><a href="#获取参数" class="headerlink" title="获取参数"></a>获取参数</h2><p>shell 脚本获取参数的方式很多，我只记录我用过的一种：<code>filebeat.sh</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">    echo &quot;请输入日志文件目录,比如/path/to/xxx.log,输入/path/to:&quot;  </span><br><span class="line">    exit 1;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;日志文件目录：$1&quot; #log_path</span><br><span class="line"></span><br><span class="line">if [ ! -n &quot;$2&quot; ] ;then</span><br><span class="line">    echo &quot;请输入项目名称,比如customer,notice ...:&quot;  </span><br><span class="line">    exit 1;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;项目名称:$2&quot; #log_type</span><br><span class="line"></span><br><span class="line">cd $(pwd)/filebeat</span><br><span class="line"><span class="meta">#</span><span class="bash"> copy a filebeat.yml to filebeat_log_type.yml</span></span><br><span class="line">cp config/filebeat.yml config/filebeat_$2.yml</span><br><span class="line">sed -i &quot;s#PATH#$1#g&quot; config/filebeat_$2.yml</span><br><span class="line">sed -i &quot;s#DOCTYPE#$2#g&quot; config/filebeat_$2.yml</span><br><span class="line">nohup ./filebeat -e -c config/filebeat_$2.yml &gt;&gt; logs/$2.log &amp;</span><br><span class="line">tail -f logs/$2.log</span><br></pre></td></tr></table></figure>
+
+<p>shell 文件都是用<code>#!/bin/bash</code>作为第一行，我们在 filebeat.sh 中获取两个参数，如何使用这个脚本了？<br><code>sh filebeat.sh param1 param2</code></p>
+<p>param1 我们在脚本中使用<code>$1</code>获取，param2 我们在脚本中使用<code>$2</code>获取，以此类推。</p>
+<p>如果要在文件中替换某个特殊文字或者字符如果值中带有<code>/path/to/file</code>,这种带有<code>/</code>的字符，在脚本中可以使用<code>#</code>来转义。之前用的是<code>sed -i &quot;s/path/$1/g&quot; config/file.yml</code>,后来改成<code>sed -i &quot;s#path#$1#g config/file.yml</code>。</p>
+<p>参考文档：<br><a target="_blank" rel="noopener" href="http://www.jb51.net/article/56549.htm">http://www.jb51.net/article/56549.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d3cd36c97abc">https://www.jianshu.com/p/d3cd36c97abc</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.51cto.com/w55554/1223870">http://blog.51cto.com/w55554/1223870</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/12/27/elk-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/27/elk-docker/" itemprop="url">使用Docker搭建ELK日志系统</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T14:28:14+08:00">
+                2017-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ELK/" itemprop="url" rel="index">
+                    <span itemprop="name">ELK</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/27/elk-docker/" class="leancloud_visitors" data-flag-title="使用Docker搭建ELK日志系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="使用Docker搭建ELK日志系统"><a href="#使用Docker搭建ELK日志系统" class="headerlink" title="使用Docker搭建ELK日志系统"></a>使用Docker搭建ELK日志系统</h1><p>之前用本地版本安装了ELK之后，就没有再去弄它了。年底没那么忙，心里一直惦记，所以最近又开始折腾了。去elastic官网看一下，果然版本帝就是版本帝，一周一版本。现在我用的版本是基于6.1.1版本的。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ol>
+<li>收集Java日志文件，并且根据文件的不同将日志分类，比如：订单日志，客户日志等。</li>
+<li>日志文件多行处理</li>
+</ol>
+<h2 id="总体架构图"><a href="#总体架构图" class="headerlink" title="总体架构图"></a>总体架构图</h2><p><img src="/images/qiniu/2017-12-28-11-23-36.png" alt="2017-12-28-11-23-36"></p>
+<h2 id="准备镜像"><a href="#准备镜像" class="headerlink" title="准备镜像"></a>准备镜像</h2><p>6.0之后官方开始自己维护镜像版本:<a target="_blank" rel="noopener" href="https://www.docker.elastic.co/">https://www.docker.elastic.co/</a>。找到需要的ELK镜像地址，pull下来就好了。官方pull下来之后镜像名太长了，所以我将镜像全部重新打了tag，命令：<code>docker tag docker.elastic.co/elasticsearch/elasticsearch:6.1.1 elasticsearch:latest</code>。<br>使用<code>docker images</code>查看：<br><img src="/images/qiniu/2017-12-27-14-49-10.png" alt="2017-12-27-14-49-10"></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/27/elk-docker/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/12/27/top-k-pid-memory-cpu-linux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1624,353 +1953,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/12/03/elastic-search-introduce/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/03/elastic-search-introduce/" itemprop="url">ElasticSearch 简介与使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-03T14:32:47+08:00">
-                2017-12-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">Elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/03/elastic-search-introduce/" class="leancloud_visitors" data-flag-title="ElasticSearch 简介与使用">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="ElasticSearch-简介与使用"><a href="#ElasticSearch-简介与使用" class="headerlink" title="ElasticSearch 简介与使用"></a>ElasticSearch 简介与使用</h2><p>Elasticsearch 是一个分布式、可扩展、实时的搜索与数据分析引擎。Elastic 的底层用的是 Lucene。如果你想用 Lucene的话必须自己去写接口，而Elastic将这些进行了一层封装，并且提供restful接口，让使用者达到开箱即用。</p>
-<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="Node-与-Cluster"><a href="#Node-与-Cluster" class="headerlink" title="Node 与 Cluster"></a>Node 与 Cluster</h4><p>Elastic 实际上是一个分布式数据库，它可以存储数据，能够让多台服务器协同工作，每个服务器可以运行多个Elastic服务。每一个Elastic服务实例都可以称作一个节点（Node），一组节点就构成了集群（Cluster）。</p>
-<h4 id="Index，Type，Document"><a href="#Index，Type，Document" class="headerlink" title="Index，Type，Document"></a>Index，Type，Document</h4><p>Elastic中通过索引(Index)，类型（Type），文档（Document）三个值来定义了Elastic中存储的数据结构。索引相当于我们在数据库中的库名字，类型相当于表，文档就是实际存储的数据内容。比如一堆书，这个就是“书”索引（Index），按照“武侠”，“技术”等进行分类（Type),每一本书就是实际上存储的数据(Document)。在Elastic中多个文档组成了一个索引，而文档可以通过分类来方便查询。这里的Type实际上是逻辑上的分组。</p>
-<h3 id="ES的增删改"><a href="#ES的增删改" class="headerlink" title="ES的增删改"></a>ES的增删改</h3><p>ES的增删改查遵循restful的风格，所以在使用在非常方便：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 增加</span></span><br><span class="line">POST localhost:<span class="number">9200</span>/accounts/person/<span class="number">1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>:<span class="string">&quot;Jack&quot;</span>,</span><br><span class="line">    <span class="string">&quot;lastname&quot;</span>:<span class="string">&quot;Mic&quot;</span>,</span><br><span class="line">    <span class="string">&quot;description&quot;</span>:<span class="string">&quot;A very handsome man&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//删除数据</span></span><br><span class="line"></span><br><span class="line">DELETE localhost:<span class="number">9200</span>/accounts/person/<span class="number">1</span></span><br><span class="line"></span><br><span class="line">POST accounts/persion/<span class="number">1</span>/_update</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;doc&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;description&quot;</span>:<span class="string">&quot;this is change description&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="ES的查询"><a href="#ES的查询" class="headerlink" title="ES的查询"></a>ES的查询</h3><p>为什么要单独讲讲查询？ElasticSearch，从名字中就可以直接看出，search占据了elastic的很大一部分。很多时候我们使用ES也是主要因为它方便的查询功能，在ES中查询的方式有以下几种：</p>
-<ol>
-<li>不带条件返回所有索引下的所有文档：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET localhost:<span class="number">9200</span>/_search?pretty <span class="comment">// pretty是将返回的json进行格式化</span></span><br><span class="line">GET /_search?size=<span class="number">5</span> <span class="comment">// size 是记录条数</span></span><br><span class="line">GET /_search?size=<span class="number">5</span>&amp;from=<span class="number">5</span> <span class="comment">// from是只从哪页开始，类似SQL分页查询</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>根据索引，类型，文档id获取到唯一值：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET localhost:<span class="number">9200</span>/accounts/person/<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>不带body的查询，<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/search-lite.html">轻量搜索</a></li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回所有文档中有‘jack’的数据</span></span><br><span class="line">GET localhost:<span class="number">9200</span>/accounts/person/_search?q=Jack</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回所有类型中为tweet的tweet字段带有‘elasticsearch’的数据</span></span><br><span class="line">GET /_all/tweet/_search?q=tweet:elasticsearch</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>带body的条件查询：<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html">Query DSL</a></li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">GET localhost:<span class="number">9200</span>/accounts/person/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;query&quot;</span>:&#123;</span><br><span class="line">        <span class="string">&quot;term&quot;</span>:&#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>:&#123;</span><br><span class="line">                <span class="string">&quot;value&quot;</span>:<span class="string">&quot;Jack&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>官方文档提供了一些实例：<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/query-dsl-intro.html">查询表达式</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/12/01/elasticsearch-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/01/elasticsearch-install/" itemprop="url">ElasticSearch 安装 (单机单节点/伪集群)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-01T15:27:53+08:00">
-                2017-12-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">Elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/01/elasticsearch-install/" class="leancloud_visitors" data-flag-title="ElasticSearch 安装 (单机单节点/伪集群)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="ElasticSearch-安装-单机单节点-单机多节点"><a href="#ElasticSearch-安装-单机单节点-单机多节点" class="headerlink" title="ElasticSearch 安装 (单机单节点/单机多节点)"></a>ElasticSearch 安装 (单机单节点/单机多节点)</h2><h3 id="ElasticSearch-简介"><a href="#ElasticSearch-简介" class="headerlink" title="ElasticSearch 简介"></a>ElasticSearch 简介</h3><p>ElasticSearch(ES) 现在已经随着技术发展越来越火爆了。它基于Lucence搜索引擎，实现RestFul风格，开箱即用。广泛用于在网站上做站内搜索。</p>
-<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>这个忒简单了，会上网的人应该都会。</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>ES 下载解压后，配置文件主要在<code>config</code>目录下，<br>包含文件：<code>elasticsearch.yml</code>,<code>jvm.options</code>,<code>log4j2.properties</code>。<br>这三个文件分别对应<code>ES配置</code>，<code>JVM配置</code>，<code>ES日志配置</code>。我们这里只讨论<code>elasticsearch.yml</code>的配置，其他的暂时不论。</p>
-<h3 id="单机单节点"><a href="#单机单节点" class="headerlink" title="单机单节点"></a>单机单节点</h3><p>单机单节点最爽了，为啥？因为简单啊。进入到解压后文件夹的<code>bin</code>目录，然后window平台双击<code>elasticsearch.bat</code>,*nix平台使用<code>sh elasticsearch</code>,之后再在控制台中看到如下，有个<code>started</code>：</p>
-<p><img src="/images/qiniu/2017-12-01-15-42-20.png" alt="2017-12-01-15-42-20"></p>
-<p>因为我们什么配置都没改，所以ES使用默认配置，http端口为9200，TCP端口为9300。<br>这个时候我们访问下接口：<code>curl -XGET localhost:9200</code>,或者浏览器打开<code>localhsot:9200</code>,就会看到下面的输出：<br><img src="/images/qiniu/2017-12-01-15-48-31.png" alt="2017-12-01-15-48-31"></p>
-<p>单机很简单，真的很简单。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/01/elasticsearch-install/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2022,7 +2004,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">177</span>
+                <span class="site-state-item-count">179</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

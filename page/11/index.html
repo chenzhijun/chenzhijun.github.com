@@ -321,6 +321,364 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/03/05/thinkinjava-20180305/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/05/thinkinjava-20180305/" itemprop="url">重温Java编程思想的一些感悟-20180305</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T23:43:32+08:00">
+                2018-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/05/thinkinjava-20180305/" class="leancloud_visitors" data-flag-title="重温Java编程思想的一些感悟-20180305">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="重温Java编程思想的一些感悟-20180305"><a href="#重温Java编程思想的一些感悟-20180305" class="headerlink" title="重温Java编程思想的一些感悟-20180305"></a>重温Java编程思想的一些感悟-20180305</h1><p>JIT(just-in-time) 即时编译技术：将程序全部或者部分翻译成本地机器码，程序运行速度因此得到提升。<br>对于hotspot来说，代码每次被执行，都会做一些优化，执行的次数越多，速度也就越快。</p>
+<p>java会给所有的默认域做一个初始化，非基本类型对象不初始化值的情况下，默认为null。<br>初始化顺序:static-&gt;{}-&gt;构造器；</p>
+<p>static的数据指向同一份存储区域，不能用于局部变量。</p>
+<p>final对于基本类型，其数值永不改变。final对于引用类型，其引用永不改变。<br>必须在定义final或者在构造器中对final进行赋值。</p>
+<p>final类无法继承，方法无法重写或修改。private的方法其实是隐式的final。</p>
+<p>compareTo,如果是两个int，最好不要直接返回i-i2，如果是有符号的int类型，一个正数最大，一个负数最大，那么将永远返回负数。所以如果重写compareTo，最好是不要直接返回return i-i2;</p>
+<p>集合是fail-fast的，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.add(aa);</span><br><span class="line">list.iterator();</span><br><span class="line">list.add(cc);</span><br></pre></td></tr></table></figure>
+
+<p>需要明确在添加或者修改完容器所有元素之后再获取迭代器。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/02/28/effective-java-0228/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/28/effective-java-0228/" itemprop="url">Effective Java 0228</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T14:30:33+08:00">
+                2018-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/28/effective-java-0228/" class="leancloud_visitors" data-flag-title="Effective Java 0228">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Effective-Java-0228"><a href="#Effective-Java-0228" class="headerlink" title="Effective Java 0228"></a>Effective Java 0228</h1><h2 id="覆盖equals时候请遵守通用规定"><a href="#覆盖equals时候请遵守通用规定" class="headerlink" title="覆盖equals时候请遵守通用规定"></a>覆盖equals时候请遵守通用规定</h2><pre><code>翻开书，看到了书的第3章-对于所有对象都通用的方法。我们知道，java中一切类都继承自Object，在Object类里面有
+两个非常重要的方法：`hashCode()`,`equals()`;
+
+其实Object类里面很多方法的注释非常详细，有一些比较通用的约定。作为我们在重写的时候我们最好是遵守这些约定。
+</code></pre>
+<p>如果我们要覆盖equals方法，我们需要思考几个问题：</p>
+<ol>
+<li>我们为什么要覆盖？可不可以不覆盖？各自场景是什么？</li>
+<li>怎么覆盖？</li>
+<li>有什么需要特别注意的？</li>
+</ol>
+<p>覆盖equals看起来非常简单，其实坑有蛮多。最好的避免方式当然就是不覆盖了，这样我们可以看到在Object里面的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认equals比较的就是类只与它自身的相等。在何种情况下我们不需要覆盖呢？书上说有四点：</p>
+<ol>
+<li>类的每个实例本质上是唯一的。</li>
+<li>不关心类是否提供“逻辑相等”的测试功能。</li>
+<li>超类已经覆盖了equals，从超类继承过来的行为对于子类也合适。</li>
+<li>类是私有的或是包级私有的，可以确定它的equals方法永远不会被调用。</li>
+</ol>
+<p>什么时候需要覆盖，那么肯定就是上面四个的反例或者其它的情况了。一般我们需要比较逻辑上的关系时候，我们可能需要重写equals。这种被称为“值类”。值类也有不需要覆盖的场景:比如单例模式，每个值至多存在一个对象。那么比较值相等的意义就不大了;另一种就是枚举，枚举类型逻辑相同与对象等同是一个意义，因此这两个方式就算不覆盖Object的equals方法也可以。</p>
+<p>覆盖equals时候最好也是必须遵守它的通用约定：</p>
+<ol>
+<li>自反性，x.equals(x) 返回true</li>
+<li>对称性，x.eq(y),y.eq(x) 返回true</li>
+<li>传递性，x.eq(y),y.eq(z),x.eq(z) 返回true</li>
+<li>一致性，多次调用x.eq(y),都应该返回true</li>
+<li>与null进行equals(null)的时候必须返回false</li>
+</ol>
+<p>高质量equals方法的建议：</p>
+<ol>
+<li>使用==操作符号，查看是否当前比较参数是本身这个对象的引用。如果是返回true。</li>
+<li>使用instanceof操作符检查“参数是否是正确的类型”，这个可以帮助我们排序非当前类型的比较，也可以排除null值。</li>
+<li>转换instanceof之后的类型为当前this指向的对象的类型。</li>
+<li>检查参数中的每个域，是否和该对象中对应的域相等。</li>
+</ol>
+<p>对于不是float和double的基本类型可以用“==”比较，另两个调用他们的compare方法(为什么compare方法可以了？)。<br>另外可以将最有可能不一样的域提前比较。</p>
+<p>覆盖equals的时候一定要一定要一定要覆盖**hashCode()**。</p>
+<p>那么hashCode()该怎么覆盖了？下次分享。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/02/23/thinkinjava-20180223/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1607,335 +1965,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/01/08/shell-get-param-from-console/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/08/shell-get-param-from-console/" itemprop="url">从命令行参数获取Shell脚本参数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T17:03:58+08:00">
-                2018-01-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/01/08/shell-get-param-from-console/" class="leancloud_visitors" data-flag-title="从命令行参数获取Shell脚本参数">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="从命令行参数获取Shell脚本参数"><a href="#从命令行参数获取Shell脚本参数" class="headerlink" title="从命令行参数获取Shell脚本参数"></a>从命令行参数获取Shell脚本参数</h1><p>很多时候我们写完脚本都需要指定一些变量，这些变量可能根据实际的环境而值不同。所以如何在 shell 脚本中接收到不同的变量值了？</p>
-<h2 id="获取参数"><a href="#获取参数" class="headerlink" title="获取参数"></a>获取参数</h2><p>shell 脚本获取参数的方式很多，我只记录我用过的一种：<code>filebeat.sh</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ ! -n &quot;$1&quot; ] ;then</span><br><span class="line">    echo &quot;请输入日志文件目录,比如/path/to/xxx.log,输入/path/to:&quot;  </span><br><span class="line">    exit 1;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;日志文件目录：$1&quot; #log_path</span><br><span class="line"></span><br><span class="line">if [ ! -n &quot;$2&quot; ] ;then</span><br><span class="line">    echo &quot;请输入项目名称,比如customer,notice ...:&quot;  </span><br><span class="line">    exit 1;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;项目名称:$2&quot; #log_type</span><br><span class="line"></span><br><span class="line">cd $(pwd)/filebeat</span><br><span class="line"><span class="meta">#</span><span class="bash"> copy a filebeat.yml to filebeat_log_type.yml</span></span><br><span class="line">cp config/filebeat.yml config/filebeat_$2.yml</span><br><span class="line">sed -i &quot;s#PATH#$1#g&quot; config/filebeat_$2.yml</span><br><span class="line">sed -i &quot;s#DOCTYPE#$2#g&quot; config/filebeat_$2.yml</span><br><span class="line">nohup ./filebeat -e -c config/filebeat_$2.yml &gt;&gt; logs/$2.log &amp;</span><br><span class="line">tail -f logs/$2.log</span><br></pre></td></tr></table></figure>
-
-<p>shell 文件都是用<code>#!/bin/bash</code>作为第一行，我们在 filebeat.sh 中获取两个参数，如何使用这个脚本了？<br><code>sh filebeat.sh param1 param2</code></p>
-<p>param1 我们在脚本中使用<code>$1</code>获取，param2 我们在脚本中使用<code>$2</code>获取，以此类推。</p>
-<p>如果要在文件中替换某个特殊文字或者字符如果值中带有<code>/path/to/file</code>,这种带有<code>/</code>的字符，在脚本中可以使用<code>#</code>来转义。之前用的是<code>sed -i &quot;s/path/$1/g&quot; config/file.yml</code>,后来改成<code>sed -i &quot;s#path#$1#g config/file.yml</code>。</p>
-<p>参考文档：<br><a target="_blank" rel="noopener" href="http://www.jb51.net/article/56549.htm">http://www.jb51.net/article/56549.htm</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d3cd36c97abc">https://www.jianshu.com/p/d3cd36c97abc</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.51cto.com/w55554/1223870">http://blog.51cto.com/w55554/1223870</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/12/27/elk-docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/27/elk-docker/" itemprop="url">使用Docker搭建ELK日志系统</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T14:28:14+08:00">
-                2017-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ELK/" itemprop="url" rel="index">
-                    <span itemprop="name">ELK</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/27/elk-docker/" class="leancloud_visitors" data-flag-title="使用Docker搭建ELK日志系统">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="使用Docker搭建ELK日志系统"><a href="#使用Docker搭建ELK日志系统" class="headerlink" title="使用Docker搭建ELK日志系统"></a>使用Docker搭建ELK日志系统</h1><p>之前用本地版本安装了ELK之后，就没有再去弄它了。年底没那么忙，心里一直惦记，所以最近又开始折腾了。去elastic官网看一下，果然版本帝就是版本帝，一周一版本。现在我用的版本是基于6.1.1版本的。</p>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ol>
-<li>收集Java日志文件，并且根据文件的不同将日志分类，比如：订单日志，客户日志等。</li>
-<li>日志文件多行处理</li>
-</ol>
-<h2 id="总体架构图"><a href="#总体架构图" class="headerlink" title="总体架构图"></a>总体架构图</h2><p><img src="/images/qiniu/2017-12-28-11-23-36.png" alt="2017-12-28-11-23-36"></p>
-<h2 id="准备镜像"><a href="#准备镜像" class="headerlink" title="准备镜像"></a>准备镜像</h2><p>6.0之后官方开始自己维护镜像版本:<a target="_blank" rel="noopener" href="https://www.docker.elastic.co/">https://www.docker.elastic.co/</a>。找到需要的ELK镜像地址，pull下来就好了。官方pull下来之后镜像名太长了，所以我将镜像全部重新打了tag，命令：<code>docker tag docker.elastic.co/elasticsearch/elasticsearch:6.1.1 elasticsearch:latest</code>。<br>使用<code>docker images</code>查看：<br><img src="/images/qiniu/2017-12-27-14-49-10.png" alt="2017-12-27-14-49-10"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/27/elk-docker/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1987,7 +2016,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">177</span>
+                <span class="site-state-item-count">179</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
