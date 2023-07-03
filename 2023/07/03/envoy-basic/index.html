@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Kubernetes,Envoy," />
+
+
+
+
+
+  <link rel="alternate" href="/rss.xml" title="陈志军" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Envoy 使用Envoy的介绍Envoy诞生于云原生流行之时，当微服务开发架构成为主流，需要管理和维护的应用越来越多，服务与服务之间的相互通信越来越复杂。Envoy的出现，提供了一个通用的代理层，处理不同服务之间的网络通信，并且通过强大的控制平台来管理这些通信。 Envoy是一个面向大规模现代服务架构而设计的7层负载和消息总线。主要信念是认为网络对应用程序应该是透明的。当出现网络和应用问题时，应">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Envoy 介绍与用法">
+<meta property="og:url" content="http://chenzhijun.top/2023/07/03/envoy-basic/index.html">
+<meta property="og:site_name" content="陈志军">
+<meta property="og:description" content="Envoy 使用Envoy的介绍Envoy诞生于云原生流行之时，当微服务开发架构成为主流，需要管理和维护的应用越来越多，服务与服务之间的相互通信越来越复杂。Envoy的出现，提供了一个通用的代理层，处理不同服务之间的网络通信，并且通过强大的控制平台来管理这些通信。 Envoy是一个面向大规模现代服务架构而设计的7层负载和消息总线。主要信念是认为网络对应用程序应该是透明的。当出现网络和应用问题时，应">
+<meta property="og:locale">
+<meta property="og:image" content="http://chenzhijun.top/images/qiniu/image-20230703174939882.png">
+<meta property="article:published_time" content="2023-07-03T12:24:37.000Z">
+<meta property="article:modified_time" content="2023-07-03T12:27:22.899Z">
+<meta property="article:author" content="陈志军">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="Envoy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://chenzhijun.top/images/qiniu/image-20230703174939882.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '6303406395207190000',
+      author: 'chenzhijun'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzhijun.top/2023/07/03/envoy-basic/"/>
+
+
+
+
+
+  <title>Envoy 介绍与用法 | 陈志军</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-98129235-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?64f9df4705290b3eaeaf10145b170a11";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">陈志军</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">物来顺应，未来不迎，当时不杂，既过不恋</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2023/07/03/envoy-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Envoy 介绍与用法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-07-03T20:24:37+08:00">
+                2023-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2023/07/03/envoy-basic/" class="leancloud_visitors" data-flag-title="Envoy 介绍与用法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Envoy-使用"><a href="#Envoy-使用" class="headerlink" title="Envoy 使用"></a>Envoy 使用</h1><h2 id="Envoy的介绍"><a href="#Envoy的介绍" class="headerlink" title="Envoy的介绍"></a>Envoy的介绍</h2><p>Envoy诞生于云原生流行之时，当微服务开发架构成为主流，需要管理和维护的应用越来越多，服务与服务之间的相互通信越来越复杂。Envoy的出现，提供了一个通用的代理层，处理不同服务之间的网络通信，并且通过强大的控制平台来管理这些通信。</p>
+<p>Envoy是一个面向大规模现代服务架构而设计的7层负载和消息总线。主要信念是认为网络对应用程序应该是透明的。当出现网络和应用问题时，应该能够轻松找到问题的原因。其实Envoy的本质是网络代理，它可以代理你的应用服务。它主要的功能涵盖：L3/L4/L7代理、HTTP/2的支持、HTTP/3目前处于alpha阶段、GRPC支持、服务发现和动态配置、健康检查、负载均衡、流量管理、边缘代理支持、可观测性。</p>
+<h2 id="Envoy的安装"><a href="#Envoy的安装" class="headerlink" title="Envoy的安装"></a>Envoy的安装</h2><p>目前主流的服务网格是Istio，Envoy作为它的网络代理一部分。实际上，Envoy可以单独作为一个代理服务，部署在Kubernetes集群中。</p>
+<p>首先我们准备一份Envoy的配置文件，为之后创建configmap：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置文件：envoy.yaml</span></span><br><span class="line"><span class="attr">admin:</span></span><br><span class="line">  <span class="attr">address:</span></span><br><span class="line">    <span class="attr">socket_address:</span> &#123; <span class="attr">address:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>, <span class="attr">port_value:</span> <span class="number">9901</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="attr">static_resources:</span></span><br><span class="line">  <span class="attr">listeners:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">listener_0</span></span><br><span class="line">      <span class="attr">address:</span></span><br><span class="line">        <span class="attr">socket_address:</span> &#123; <span class="attr">address:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>, <span class="attr">port_value:</span> <span class="number">10000</span> &#125;</span><br><span class="line">      <span class="attr">filter_chains:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">filters:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy.filters.network.http_connection_manager</span></span><br><span class="line">              <span class="attr">typed_config:</span></span><br><span class="line">                <span class="string">&quot;@type&quot;</span><span class="string">:</span> <span class="string">type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager</span></span><br><span class="line">                <span class="attr">stat_prefix:</span> <span class="string">ingress_http</span></span><br><span class="line">                <span class="attr">codec_type:</span> <span class="string">AUTO</span></span><br><span class="line">                <span class="attr">http_filters:</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy.filters.http.router</span></span><br><span class="line">                    <span class="attr">typed_config:</span></span><br><span class="line">                      <span class="string">&quot;@type&quot;</span><span class="string">:</span> <span class="string">type.googleapis.com/envoy.extensions.filters.http.router.v3.Router</span></span><br><span class="line">                <span class="attr">route_config:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">local_route</span></span><br><span class="line">                  <span class="attr">virtual_hosts:</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">local_service</span></span><br><span class="line">                      <span class="attr">domains:</span> [<span class="string">&quot;*&quot;</span>]</span><br><span class="line">                      <span class="attr">routes:</span></span><br><span class="line">                        <span class="bullet">-</span> <span class="attr">match:</span> &#123; <span class="attr">prefix:</span> <span class="string">&quot;/&quot;</span> &#125;</span><br><span class="line">                          <span class="attr">route:</span> &#123; <span class="attr">cluster:</span> <span class="string">some_service</span> &#125;</span><br><span class="line">                    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">test_service</span></span><br><span class="line">                      <span class="attr">domains:</span> [<span class="string">&quot;ng2.ocft.com&quot;</span>]</span><br><span class="line">                      <span class="attr">routes:</span></span><br><span class="line">                        <span class="bullet">-</span> <span class="attr">match:</span> &#123; <span class="attr">prefix:</span> <span class="string">&quot;/&quot;</span> &#125;</span><br><span class="line">                          <span class="attr">route:</span> &#123; <span class="attr">cluster:</span> <span class="string">test_service</span> &#125;</span><br><span class="line">  <span class="attr">clusters:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">some_service</span></span><br><span class="line">      <span class="attr">connect_timeout:</span> <span class="number">0.</span><span class="string">25s</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">LOGICAL_DNS</span></span><br><span class="line">      <span class="attr">lb_policy:</span> <span class="string">ROUND_ROBIN</span></span><br><span class="line">      <span class="attr">load_assignment:</span></span><br><span class="line">        <span class="attr">cluster_name:</span> <span class="string">some_service</span></span><br><span class="line">        <span class="attr">endpoints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">lb_endpoints:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">endpoint:</span></span><br><span class="line">                  <span class="attr">address:</span></span><br><span class="line">                    <span class="attr">socket_address:</span></span><br><span class="line">                      <span class="attr">address:</span> <span class="string">nginx1</span></span><br><span class="line">                      <span class="attr">port_value:</span> <span class="number">80</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">test_service</span></span><br><span class="line">      <span class="attr">connect_timeout:</span> <span class="number">0.</span><span class="string">25s</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">LOGICAL_DNS</span></span><br><span class="line">      <span class="attr">lb_policy:</span> <span class="string">ROUND_ROBIN</span></span><br><span class="line">      <span class="attr">load_assignment:</span></span><br><span class="line">        <span class="attr">cluster_name:</span> <span class="string">test_service</span></span><br><span class="line">        <span class="attr">endpoints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">lb_endpoints:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">endpoint:</span></span><br><span class="line">                  <span class="attr">address:</span></span><br><span class="line">                    <span class="attr">socket_address:</span></span><br><span class="line">                      <span class="attr">address:</span> <span class="string">nginx2</span></span><br><span class="line">                      <span class="attr">port_value:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来定义Envoy：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># envoy-deploy.yaml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">envoy</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">envoyproxy/envoy-dev</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">envoy</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy-config</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">&quot;/etc/envoy&quot;</span></span><br><span class="line">          <span class="attr">readOnly:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy-config</span></span><br><span class="line">        <span class="attr">configMap:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">envoy-config</span></span><br></pre></td></tr></table></figure>
+
+<p>执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> kubectl create deploy nginx1 --iamge=nginx:alpine</span></span><br><span class="line">kubectl create configmap envoy-config --from-file=envoy.yaml</span><br><span class="line">kubectl create -f envoy-deploy.yaml</span><br><span class="line">kubectl expose deploy envoy --selector run=envoy --port=10000 --type=NodePort</span><br></pre></td></tr></table></figure>
+
+<p>现在你可以通过访问<code>curl localhost:10000</code>来访问服务了。</p>
+<blockquote>
+<p>ps: 你可以把9901端口代理出来，然后访问envoy的管理台页面；envoy中的配置文件，需要创建deployment之后，创建svc，不然会出现访问不到。</p>
+</blockquote>
+<h2 id="Envoy的术语"><a href="#Envoy的术语" class="headerlink" title="Envoy的术语"></a>Envoy的术语</h2><blockquote>
+<p>参考：</p>
+<p>原文：<a target="_blank" rel="noopener" href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/intro/terminology">https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/intro/terminology</a></p>
+<p>中文：<a target="_blank" rel="noopener" href="https://cloudnative.to/envoy/intro/arch_overview/intro/terminology.html">https://cloudnative.to/envoy/intro/arch_overview/intro/terminology.html</a></p>
+</blockquote>
+<p>关于Envoy的几个专业术语：</p>
+<ol>
+<li>Host：主机，能够进行网络通信的实体。主要指引用程序</li>
+<li>Downstream：下游</li>
+<li>Upstream：上游</li>
+<li>Listener：监听器</li>
+<li>Cluster：集群</li>
+<li>Mesh：网格</li>
+<li>Runtime configuration：运行时配置</li>
+</ol>
+<p>Envoy主要使用单进程-多线程架构。一个primary线程处理各种轻量协调任务，同时多个worker线程处理监听、过滤、转发。建议将worker线程数配置为物理机器的线程数。</p>
+<h2 id="Envoy的基本配置"><a href="#Envoy的基本配置" class="headerlink" title="Envoy的基本配置"></a>Envoy的基本配置</h2><p>以下是一份完整envoy的TCP/HTTP配置文档：</p>
+<ol>
+<li>创建configmap</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># envoy-config.yaml</span></span><br><span class="line"><span class="attr">admin:</span></span><br><span class="line">  <span class="attr">address:</span></span><br><span class="line">    <span class="attr">socket_address:</span> &#123; <span class="attr">address:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>, <span class="attr">port_value:</span> <span class="number">9901</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="attr">static_resources:</span></span><br><span class="line">  <span class="attr">listeners:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">http_listener</span></span><br><span class="line">      <span class="attr">address:</span></span><br><span class="line">        <span class="attr">socket_address:</span> </span><br><span class="line">          <span class="attr">address:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">          <span class="attr">port_value:</span> <span class="number">10000</span> </span><br><span class="line">      <span class="attr">filter_chains:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">filters:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy.filters.network.http_connection_manager</span></span><br><span class="line">              <span class="attr">typed_config:</span></span><br><span class="line">                <span class="string">&quot;@type&quot;</span><span class="string">:</span> <span class="string">type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager</span></span><br><span class="line">                <span class="attr">stat_prefix:</span> <span class="string">ingress_http</span></span><br><span class="line">                <span class="attr">codec_type:</span> <span class="string">AUTO</span></span><br><span class="line">                <span class="attr">http_filters:</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy.filters.http.router</span></span><br><span class="line">                    <span class="attr">typed_config:</span></span><br><span class="line">                      <span class="string">&quot;@type&quot;</span><span class="string">:</span> <span class="string">type.googleapis.com/envoy.extensions.filters.http.router.v3.Router</span></span><br><span class="line">                <span class="attr">route_config:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">local_route</span></span><br><span class="line">                  <span class="attr">virtual_hosts:</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ng1_service</span></span><br><span class="line">                      <span class="attr">domains:</span> [<span class="string">&quot;*&quot;</span>]</span><br><span class="line">                      <span class="attr">routes:</span></span><br><span class="line">                        <span class="bullet">-</span> <span class="attr">match:</span> &#123; <span class="attr">prefix:</span> <span class="string">&quot;/&quot;</span> &#125;</span><br><span class="line">                          <span class="attr">route:</span> &#123; <span class="attr">cluster:</span> <span class="string">ng1_service</span> &#125;</span><br><span class="line">                    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ng2_service</span></span><br><span class="line">                      <span class="attr">domains:</span> [<span class="string">&quot;ng2.chenzhijun.top&quot;</span>]</span><br><span class="line">                      <span class="attr">routes:</span></span><br><span class="line">                        <span class="bullet">-</span> <span class="attr">match:</span> &#123; <span class="attr">prefix:</span> <span class="string">&quot;/&quot;</span> &#125;</span><br><span class="line">                          <span class="attr">route:</span> &#123; <span class="attr">cluster:</span> <span class="string">ng2_service</span> &#125;</span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">tcp_listener</span></span><br><span class="line">      <span class="attr">address:</span></span><br><span class="line">        <span class="attr">socket_address:</span></span><br><span class="line">          <span class="attr">address:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">          <span class="attr">port_value:</span> <span class="number">5236</span></span><br><span class="line">      <span class="attr">filter_chains:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">filters:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy.filters.network.tcp_proxy</span></span><br><span class="line">              <span class="attr">typed_config:</span></span><br><span class="line">                <span class="string">&quot;@type&quot;</span><span class="string">:</span> <span class="string">type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy</span></span><br><span class="line">                <span class="attr">stat_prefix:</span> <span class="string">tcp_proxy</span></span><br><span class="line">                <span class="attr">cluster:</span> <span class="string">proxy_cluster</span></span><br><span class="line">  <span class="attr">clusters:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ng1_service</span></span><br><span class="line">      <span class="attr">connect_timeout:</span> <span class="number">0.</span><span class="string">25s</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">LOGICAL_DNS</span></span><br><span class="line">      <span class="attr">lb_policy:</span> <span class="string">ROUND_ROBIN</span></span><br><span class="line">      <span class="attr">load_assignment:</span></span><br><span class="line">        <span class="attr">cluster_name:</span> <span class="string">ng1_service</span></span><br><span class="line">        <span class="attr">endpoints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">lb_endpoints:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">endpoint:</span></span><br><span class="line">                  <span class="attr">address:</span></span><br><span class="line">                    <span class="attr">socket_address:</span></span><br><span class="line">                      <span class="attr">address:</span> <span class="string">nginx1</span></span><br><span class="line">                      <span class="attr">port_value:</span> <span class="number">80</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ng2_service</span></span><br><span class="line">      <span class="attr">connect_timeout:</span> <span class="number">0.</span><span class="string">25s</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">LOGICAL_DNS</span></span><br><span class="line">      <span class="attr">lb_policy:</span> <span class="string">ROUND_ROBIN</span></span><br><span class="line">      <span class="attr">load_assignment:</span></span><br><span class="line">        <span class="attr">cluster_name:</span> <span class="string">ng2_service</span></span><br><span class="line">        <span class="attr">endpoints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">lb_endpoints:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">endpoint:</span></span><br><span class="line">                  <span class="attr">address:</span></span><br><span class="line">                    <span class="attr">socket_address:</span></span><br><span class="line">                      <span class="attr">address:</span> <span class="string">nginx2</span></span><br><span class="line">                      <span class="attr">port_value:</span> <span class="number">80</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">proxy_cluster</span></span><br><span class="line">      <span class="attr">connect_timeout:</span> <span class="number">0.</span><span class="string">25s</span></span><br><span class="line">      <span class="attr">type:</span> <span class="string">strict_dns</span></span><br><span class="line">      <span class="attr">lb_policy:</span> <span class="string">round_robin</span></span><br><span class="line">      <span class="attr">load_assignment:</span></span><br><span class="line">        <span class="attr">cluster_name:</span> <span class="string">proxy_cluster</span></span><br><span class="line">        <span class="attr">endpoints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">lb_endpoints:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">endpoint:</span></span><br><span class="line">                  <span class="attr">address:</span></span><br><span class="line">                    <span class="attr">socket_address:</span></span><br><span class="line">                      <span class="attr">address:</span> <span class="number">10.59</span><span class="number">.100</span><span class="number">.96</span></span><br><span class="line">                      <span class="attr">port_value:</span> <span class="number">5236</span></span><br><span class="line">                      </span><br><span class="line"><span class="comment"># kubectl create cm envoy-config --from-file=envoy.yaml                     </span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建deploy</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#envoy-deploy.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">envoy</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">image:</span> <span class="number">10.59</span><span class="number">.100</span><span class="number">.108</span><span class="string">/cbt-team/envoyproxy/envoy-dev</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">envoy</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">5236</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy-config</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">&quot;/etc/envoy&quot;</span></span><br><span class="line"><span class="comment">#          readOnly: true</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">envoy-config</span></span><br><span class="line">        <span class="attr">configMap:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">envoy-config</span></span><br><span class="line">      <span class="attr">imagePullSecrets:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">image-secret</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">#k apply -f envoy-deploy.yaml</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>创建service：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># envoy-svc.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">envoy</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">port-10000</span></span><br><span class="line">    <span class="attr">nodePort:</span> <span class="number">30574</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">10000</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">10000</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">port-9901</span></span><br><span class="line">    <span class="attr">nodePort:</span> <span class="number">30575</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">9901</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">9901</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">port-5236</span></span><br><span class="line">    <span class="attr">nodePort:</span> <span class="number">30578</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">5236</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">5236</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">run:</span> <span class="string">envoy</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># kubectl apply -f envoy-svc.yaml</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>对应服务创建，服务有TCP服务：10.59.100.96:5236，两个nginx deployment服务 nginx1, nginx2。这块可以直接使用kubectl create deploy; kubectl expose 创建就行。不做多的说明。10.59.100.96:5236是我用本地启动的一个MySQL服务。</li>
+</ol>
+<p><img src="/images/qiniu/image-20230703174939882.png" alt="image-20230703174939882"></p>
+<p>之后就可以测试服务是否正常了。用对应的主机ip和主机NodePort端口就行。</p>
+<h2 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h2><ol>
+<li>match: { prefix: “/“ } 本来想在这里加上”/ng1”，测试发现，它是会增加一个path，原来的路径比如是localhost:10000/index.html可以访问的，会变成localhost:10000/ng1/index.html 这样的路径，这就需要在后端服务做一些配置了。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+        <div>
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2023/07/03/envoy-basic/">Envoy 介绍与用法</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+  <p><span>发布时间:</span>2023-07-03 20:24:37</p>
+ <!-- <p><span>最后更新:</span>2023-07-03 20:27:22</p> -->
+  <p><span>原始链接:</span><a href="/2023/07/03/envoy-basic/" title="Envoy 介绍与用法">http://chenzhijun.top/2023/07/03/envoy-basic/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://chenzhijun.top/2023/07/03/envoy-basic/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+        <div>
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>鼓励一下</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/reward/wechatpay.jpg" alt=" WeChat Pay"/>
+        <p>微信赞助</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/reward/alipay.jpg" alt=" Alipay"/>
+        <p>支付宝赞助</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/Envoy/" rel="tag"># Envoy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/06/29/kubernetes-container-network-3/" rel="next" title="容器网络 - 三层网络解决方案">
+                <i class="fa fa-chevron-left"></i> 容器网络 - 三层网络解决方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="" />
+          <p class="site-author-name" itemprop="name"></p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">180</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/rss.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzhijun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://git.oschina.net/chenzhijun" target="_blank" title="GitEE">
+                  
+                    <i class="fa fa-fw fa-git"></i>
+                  
+                    
+                      GitEE
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐阅读
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://chenzhijun.top/" title="陈志军的个人站" target="_blank">陈志军的个人站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Envoy-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Envoy 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Envoy%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">Envoy的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Envoy%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">Envoy的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Envoy%E7%9A%84%E6%9C%AF%E8%AF%AD"><span class="nav-number">1.3.</span> <span class="nav-text">Envoy的术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Envoy%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">Envoy的基本配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.</span> <span class="nav-text">记录</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈志军</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" rel="noopener" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+   
+   
+   
+   
+   <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+   <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+   
+       <script type="text/javascript">
+           var gitment = new Gitment({
+               id: window.location.pathname, 
+               owner: 'chenzhijun',
+               repo: 'chenzhijun.github.com',
+               oauth: {
+                   client_id: '2b0cd3a2d7d53cde1ef7',
+                   client_secret: '2eb10e4f6ca8c0996b7bebf8e754ce5039e217ed',
+               }});
+           gitment.render('gitment-container');
+       </script>
+   
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3Ipv4LCq5xwYkaKUFvu27F0x-gzGzoHsz", "fAbLTc2xazR7sRtkfvQ7uIiO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

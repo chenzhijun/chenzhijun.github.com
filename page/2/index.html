@@ -321,6 +321,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2022/06/16/prometheus-query/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/06/16/prometheus-query/" itemprop="url">Prometheus 常用的查询语句</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-16T17:03:19+08:00">
+                2022-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%91%E6%8E%A7/" itemprop="url" rel="index">
+                    <span itemprop="name">监控</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/06/16/prometheus-query/" class="leancloud_visitors" data-flag-title="Prometheus 常用的查询语句">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Prometheus-常用的查询语句"><a href="#Prometheus-常用的查询语句" class="headerlink" title="Prometheus 常用的查询语句"></a>Prometheus 常用的查询语句</h2><p>通常我们会使用Grafana作为图表展示，然后选择Prometheus作为数据源的方式来进行我们想要的图表展示。当然我们也可以在Grafana的官网上找到相应的dashboard来直接导入，这样省去了自己手工配置的麻烦。不过知道一些必要的Prometheus查询语句能帮我们更好的选择Grafana的dashboard，然后我们可以自定义做些配置。</p>
+<h3 id="Prometheus一些术语"><a href="#Prometheus一些术语" class="headerlink" title="Prometheus一些术语"></a>Prometheus一些术语</h3><p>Prometheus的metrics分为四类（counter,gauge,histogram,summary）详情(<a target="_blank" rel="noopener" href="https://prometheus.io/docs/concepts/metric_types/">metrics-type</a>)，metrics_name的命令也应该符合一定的规范：<a target="_blank" rel="noopener" href="https://prometheus.io/docs/concepts/data_model/">metrics-name</a>，<a target="_blank" rel="noopener" href="https://prometheus.io/docs/practices/naming/">METRIC AND LABEL NAMING</a></p>
+<p><code>metrics_name</code> ： 也就是指标名，通常我们都会用如http_request_total等进行查询;<br><code>metrics_label</code> ：指标的标签，也就是metrics_name{label-1=”a”,label-2=”b”}这种;<br><code>metrics_value</code> : 通常用指标名+标签查出来一个值，该值根据metrics的类型可能为浮点数，也可能为整数。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/06/16/prometheus-query/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2022/06/09/prometheus-alertmanager-external-url/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1726,198 +1887,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2021/06/16/what-is-the-truely-about-https/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/06/16/what-is-the-truely-about-https/" itemprop="url">HTTPS 到底是什么？CA 证书又是指什么？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-16T22:27:31+08:00">
-                2021-06-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTTPS/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTPS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2021/06/16/what-is-the-truely-about-https/" class="leancloud_visitors" data-flag-title="HTTPS 到底是什么？CA 证书又是指什么？">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="HTTPS-到底是什么？CA-证书又是指什么？"><a href="#HTTPS-到底是什么？CA-证书又是指什么？" class="headerlink" title="HTTPS 到底是什么？CA 证书又是指什么？"></a>HTTPS 到底是什么？CA 证书又是指什么？</h1><p>https 相信很多人已经不陌生了，那么 https 到底是怎么一回事？我们通常说用 https 就要证书，那么证书和 CA 又是什么关系了？</p>
-<!-- 这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题？-->
-<h2 id="HTTPS-出现的背景"><a href="#HTTPS-出现的背景" class="headerlink" title="HTTPS 出现的背景"></a>HTTPS 出现的背景</h2><p>我们通常习惯于使用 http 进行数据通信，可以说如果这个世界是个和谐的世界，那么应该就没 http 的事了。不过林子大了，什么鸟都会有。我们在使用 http 的时候镜像面对的一个问题就是安全性。http 的报文传送都是已明文的方式传送，那么问题来了?我怎么知道这个到底是不是原始数据？如果有个中间人截获了然后篡改消息怎么办？基于这个问题，Netscape（开发 Firefox 的公司）搞了一个 SSL 协议。后来 SSL 发展到 v3 版本时，被标准化，这个时候就改名了，叫 TLS。于是乎，在 http 上 加了 SSL/TLS 就变成了我们都知道的 HTTPS。</p>
-<!-- 这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off （要什么不要什么）是什么 -->
-<h2 id="HTTPS-优势和劣势是什么？"><a href="#HTTPS-优势和劣势是什么？" class="headerlink" title="HTTPS 优势和劣势是什么？"></a>HTTPS 优势和劣势是什么？</h2><p>HTTPS 出现了之后，安全协议在 OSI 的分层中属于在 HTTP 之下，传输层之上。</p>
-<p>HTTPS 带来的的优势有下面几点：</p>
-<ol>
-<li>数据加密与安全保护；</li>
-<li>认证用户和服务器，可以确保数据正确发送到 客户机和服务器;</li>
-<li>SEO 倾斜；</li>
-</ol>
-<p>HTTPS 的劣势也比较明显：</p>
-<ol>
-<li>HTTPS协议握手阶段比较费时，会使页面的加载时间延长 </li>
-<li>加解密会在服务端增加 CPU 的消耗 </li>
-<li>证书费用 </li>
-<li>相对意义上的安全（拥有 CA 根证书，也是可以攻击的）</li>
-</ol>
-<h2 id="这个技术适用的场景"><a href="#这个技术适用的场景" class="headerlink" title="这个技术适用的场景"></a>这个技术适用的场景</h2><p>https 适用于所有的网站。但是如果在一些不需要特别注意安全性，又需要快速访问的话，比如博客网站，静态资源这些，我们可以直接使用 http 而不用 https。在下面的一些场景中，最好还是使用 https:</p>
-<ol>
-<li>企业应用 </li>
-<li>政务信息 </li>
-<li>支付应用 </li>
-<li>API接口</li>
-</ol>
-<h2 id="这个技术的组成部分和关键点（核心思想，核心组件）"><a href="#这个技术的组成部分和关键点（核心思想，核心组件）" class="headerlink" title="这个技术的组成部分和关键点（核心思想，核心组件）"></a>这个技术的组成部分和关键点（核心思想，核心组件）</h2><p>https 的关键在于对信息的加密。在传统的 http 的过程我们 AB 两点间的通信是这样的。</p>
-<p><img src="/images/qiniu/2020-06-16-23-11-08.png" alt="2020-06-16-23-11-08"></p>
-<p>A 直接发送数据给 B。好了。这个时候有个 C 出来了搞事情了：</p>
-<p><img src="/images/qiniu/2020-06-16-23-16-06.png" alt="2020-06-16-23-16-06"></p>
-<p>看原来好好的一个打招呼，变成了一个莫名其妙~~</p>
-<p>那 AB 之间假设要防止 C 的截获并且篡改消息，怎么办？生活中也有这种场景，比如谍战片里面，卧底和接头人约定一个密码串，然后 A 用密码串加密，B 用密码串解密。</p>
-<p><img src="/images/qiniu/2020-06-16-23-24-38.png" alt="2020-06-16-23-24-38"></p>
-<p>这样只要 AB 都有一个密码本，那就可以加解密了。这也就是我们常说的“对称加密”。但是假如你们之间的这个密码本被 C 获取了呢?  C 获取了你们的密码本，它也不告诉 AB，那就跟我们上图一样了。它先解密 A 的数据，然后再篡改数据加密后再发给 B。你看这就危险了吧。</p>
-<p>那这个时候我们又要想办法了。B 说这样不安全，这样吧，我用两个密码本，一个公开给你（公钥），一个我自己单独留着（私钥）。你发过来的消息用我的公钥加下密码，我用我的私钥解下密。A 说好，拿着 B 的公钥加密数据后发给了 B。这样一看，嗯，很不错，A 发给 B 的消息再也不会泄漏了。因为就算 C 获取了消息，它没有私钥也没法解密消息啊。A 也这样想，也是，但是你回给我的消息还是可能被截取到，那我这个 A 也搞个公钥和私钥，你发给我的消息，用我的公钥加密下。这样一看，很不错啊。A B 之间发送的消息再也不用担心被第三方知道了，因为 C 无法界面消息啊！</p>
-<p><img src="/images/qiniu/2020-06-16-23-45-49.png" alt="2020-06-16-23-45-49"></p>
-<p>如果 C 是个好人，那就到此了。可是如果 C 不甘心了？C 想，既然 A 的实际数据我不知道，那我就假装 B 来跟 A 套取数据。比如下面，毕竟 A 是无法判断到底谁是 B 的。如果想不明白，想想谍战片，你说你是好人，你就是好人吗？怎么证明？：</p>
-<p><img src="/images/qiniu/2020-06-16-23-50-39.png" alt="2020-06-16-23-50-39"></p>
-<p>那好吧。大家一看，不行啊。这的搞个中间人来确认 A 是 A，B 是 B，就像确认你是你妈的儿子一样！！那怎么搞了？你想想，你想要知道你们市的公安局合不合法，那肯定是省公安局说了算。你想要知道省公安局合不合法，那肯定是是国家公安局说了算。所以你只要信任国家公安局，那就可以信任国家公安局认可的下一级公安局，那就可以认可它下面的工具认可的下面的公安局… 中间人也一样，不过我们在通信中引入了一个专用术语 CA(Certificate Authority)证书认证机构。</p>
-<h2 id="这个技术的底层原理和关键实现"><a href="#这个技术的底层原理和关键实现" class="headerlink" title="这个技术的底层原理和关键实现"></a>这个技术的底层原理和关键实现</h2><h2 id="已有的实现和它之间的对比"><a href="#已有的实现和它之间的对比" class="headerlink" title="已有的实现和它之间的对比"></a>已有的实现和它之间的对比</h2>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1969,7 +1938,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">179</span>
+                <span class="site-state-item-count">180</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1991,7 +1960,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

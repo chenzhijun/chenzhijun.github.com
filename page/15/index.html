@@ -321,6 +321,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/09/22/message-rabbitmq-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/22/message-rabbitmq-3/" itemprop="url">RabbitMQ-消息中间件（三）订阅与发布</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-22T10:53:40+08:00">
+                2017-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RabbitMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">RabbitMQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/22/message-rabbitmq-3/" class="leancloud_visitors" data-flag-title="RabbitMQ-消息中间件（三）订阅与发布">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="订阅与发布"><a href="#订阅与发布" class="headerlink" title="订阅与发布"></a>订阅与发布</h2><p>之前的实例我们都是将任务精确的转发给某一个工作线程（消费者）。这节我们讲讲怎么将一个任务转发给多个消费者。这种模式就是闻名的“订阅/发布”模式。</p>
+<p>我们的初步想法便是一个发布者发布了一个消息，多个消费者接收到消息，做不同的事情。</p>
+<h3 id="交换机-Exchanges"><a href="#交换机-Exchanges" class="headerlink" title="交换机(Exchanges)"></a>交换机(Exchanges)</h3><p>前面已经说了了我们是通过队列来接受和发送消息的(p-q-c)[p:发布者，q:队列，r:消费者]。消息是由p 发布到q,q 再发给c。其实Rabbit又一个消息模型，在我们完成实例前，我们先来看看Rabbit的所有消息模型。</p>
+<p>在Rabbit消息模型中最核心的点是生产者从不直接发送消息给队列。实际上，生产者都不知道生产的消息给了那个队列。</p>
+<p>相反的，生产者只是给exchange(交换机)发送消息。交换机实际上是一个非常简单的东西，一边是从生产者接受消息，另一边就是将消息推送给队列。交换机必须明确的知道他们接到消息后该怎么处理消息：应该是将消息发送给一个明确的队列？还是应该给所有的队列？又或者是直接忽略不管？这些规则都是由交换机的类型去定义的。</p>
+<p><img src="/images/qiniu/2017-09-22-11-12-44.png" alt="Rabbit消息模型"></p>
+<p>有一些可用的交换机类型是：<code>direc</code>,<code>topic</code>,<code>headers</code>,<code>fanout</code>。今天我们讲的类型主要是<code>fanout</code>。我们可以先声明一个类型：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/22/message-rabbitmq-3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/09/20/java-io/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1794,171 +1959,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/08/19/essay-8-19/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/19/essay-8-19/" itemprop="url">随笔-8-19</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-19T19:02:11+08:00">
-                2017-08-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Question/" itemprop="url" rel="index">
-                    <span itemprop="name">Question</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/08/19/essay-8-19/" class="leancloud_visitors" data-flag-title="随笔-8-19">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="8月19日-阶段总结"><a href="#8月19日-阶段总结" class="headerlink" title="8月19日 阶段总结"></a>8月19日 阶段总结</h2><h3 id="日期格式"><a href="#日期格式" class="headerlink" title="日期格式?"></a>日期格式?</h3><p>SimpleDateFormat ===&gt; SimpleDateFormat</p>
-<h3 id="Double-后面有个E"><a href="#Double-后面有个E" class="headerlink" title="Double 后面有个E?"></a>Double 后面有个E?</h3><p>A: double 为啥后面有个E ,E后面的数字代表后面乘以10的位数</p>
-<h3 id="java-格式化金额显示"><a href="#java-格式化金额显示" class="headerlink" title="java 格式化金额显示"></a>java 格式化金额显示</h3><p>A: numberFormat,留4位小数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public static final int DEFAULT_FORMAT &#x3D; 4;</span><br><span class="line"></span><br><span class="line">public static String formatCurrency(Double money)</span><br><span class="line">&#123;</span><br><span class="line">    NumberFormat numberFormat &#x3D; NumberFormat.getNumberInstance();</span><br><span class="line">    numberFormat.setMaximumFractionDigits(DEFAULT_FORMAT);</span><br><span class="line">    return numberFormat.format(money);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="查看服务器上java命令位置"><a href="#查看服务器上java命令位置" class="headerlink" title="查看服务器上java命令位置:"></a>查看服务器上java命令位置:</h3><p>A: <code>whereis javac/java</code>    <code>ls -al</code> 一直找到没有软连接位置</p>
-<h3 id="jenkins-构建的时候-nohup-failed-to-run-command-没有找到目录-没有权限"><a href="#jenkins-构建的时候-nohup-failed-to-run-command-没有找到目录-没有权限" class="headerlink" title="jenkins 构建的时候,nohup: failed to run command 没有找到目录,没有权限"></a>jenkins 构建的时候,nohup: failed to run command 没有找到目录,没有权限</h3><p>A: jenkins启动springboot脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">source &#x2F;etc&#x2F;profile</span><br><span class="line">#pname&#x3D;$1</span><br><span class="line">pname&#x3D;com.apec.warehouse-server-1.0-RELEASE.jar</span><br><span class="line">puser&#x3D;root</span><br><span class="line">pid&#x3D;&#96;ps aux | grep $pname | grep $puser | grep -v grep | awk &#39;&#123;print $2&#125;&#39;&#96;</span><br><span class="line"></span><br><span class="line">if [[ -z $pid ]]; then</span><br><span class="line">    echo &quot;I can NOT find $pname running by $puser&quot;</span><br><span class="line">fi</span><br><span class="line">#&#x2F;home&#x2F;cncsen&#x2F;warehouse&#x2F;com.</span><br><span class="line">chmod 777 &#x2F;home&#x2F;cncsen&#x2F;warehouse&#x2F;com.apec-warehouse-server-1.0-RELEASE.jar</span><br><span class="line">kill -9 $pid &gt;&#x2F;dev&#x2F;null 2&gt;&amp;1</span><br><span class="line">cd &#x2F;home&#x2F;cncsen&#x2F;warehouse&#x2F;</span><br><span class="line">exec nohup java -Xmx128m -Xss256k -jar $pname --cacheType&#x3D;single  --spring.profiles.active&#x3D;test 5 &gt;&gt;server.log &amp;</span><br><span class="line">tail -f server.log</span><br></pre></td></tr></table></figure>
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2010,7 +2010,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">179</span>
+                <span class="site-state-item-count">180</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2032,7 +2032,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

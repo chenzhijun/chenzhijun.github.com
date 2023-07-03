@@ -321,6 +321,201 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/01/08/docker-swarm-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈志军">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/08/docker-swarm-practice/" itemprop="url">Docker Swarm 实践的一些经验总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T17:19:58+08:00">
+                2018-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/08/docker-swarm-practice/" class="leancloud_visitors" data-flag-title="Docker Swarm 实践的一些经验总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Docker-Swarm-实践的一些经验总结"><a href="#Docker-Swarm-实践的一些经验总结" class="headerlink" title="Docker Swarm 实践的一些经验总结"></a>Docker Swarm 实践的一些经验总结</h1><p>最近弄了一下Docker Swarm。在公司已经把我拉入了黑名单，因为只要我已启动docker公司的mysql就得挂。我也是好奇，正想找问题原因。服务器的密码就已经改了，我是没有机会了。不过在改密码之前，我还是获得一些宝贵的经验，这个我觉得很重要，可以记录下来，自己以后再踩坑的时候可以自己参照下。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>ubuntu机器一台，centos一台，都安装了docker。docker的版本是Docker version 17.12.0-ce, build c97c6d6。4个spring boot项目：eureka，warehouse，web，booksrv。MySQL使用的是另外一台机器上的安装在hosts(非容器化)。eureka做为注册中心，启动了两个示例。部署方式使用的docker stack。 也有直接使用了docker service。使用了网络overlay，看了网上很多文章，对于网络不太了解就用了原生的，这样方式至少容易理解。创建了overlay网络springcloud-overlay。还是用了java:8-jre-alpine镜像</p>
+<h2 id="做了些什么事情"><a href="#做了些什么事情" class="headerlink" title="做了些什么事情"></a>做了些什么事情</h2><p>实现了两台机器上的docker容器连通，U机器上的容器，能够访问C机器上的容器。这说明服务容器化是可以实现的。当然我说的是废话，google以及一系列大公司已经完成了k8s的线上实践了。不过我们还是比较小，经验不丰富，所以采用最简单的方式，先跑一下，看能否跑通，之后再说下一步。</p>
+<h2 id="实际过程"><a href="#实际过程" class="headerlink" title="实际过程"></a>实际过程</h2><h3 id="1-踩的坑"><a href="#1-踩的坑" class="headerlink" title="1. 踩的坑"></a>1. 踩的坑</h3><p>一开始我是想通过在两台机器上各自暴露eureka端口，然后让eureka互相注册，而在每台机器上都启动容器服务并且注册到每台机器eureka上，这种方式理论模型如下图：</p>
+<p><img src="/images/qiniu/2018-01-08-18-40-02.png" alt="2018-01-08-18-40-02"></p>
+<p>我们在eureka上是看到了这些服务都有注册到了，而且可以明显看到服务的ip地址是：172.17.0.0/16 区间的。貌似一切很正常，然后我们尝试访问服务，在每个服务日志中基本都是<code>NO instance XXX Exception</code>,不是在eureka已经注册了么，为什么还没有了？eureka应该是根据ip地址加端口来找服务的，这种情况下，如果A服务找到D服务，发现注册中心有注册地址ip，找到了ip地址后（不清楚这里是eureka转发，还是eureka将地址发给A，A再请求），但是根据找到的ip去请求服务，也就是在A服务上去找D的ip地址，因为D在Centos服务器上，所以根本不可能到达。那么请求又怎么可能知道了。明显两者应该在不同的。(突然感觉不对劲，如果两个eureka不能相互注册，注册中心又怎么可能启动多个。。。这里待定，感觉有问题。)再回首想一下，嗯，没问题，我们使用bridge网络的时候，是内网。没错，是内网，我们一般使用eureka都是公网，至少也是两台hosts能够相互连通，在同一个网络下。但是使用docker默认的网络是内网，A机器是无法访问B机器的172.xxx的网络的。</p>
+<h3 id="2-swarm方式"><a href="#2-swarm方式" class="headerlink" title="2. swarm方式"></a>2. swarm方式</h3><p>在网上找了一圈资料，有在阿里云找到的springcloud项目，并且使用eureka的注册方式，但是他们基于阿里云网络vpc，对于我们不合适，我们是自建机房，尽管没有运维人员去管理。阿里云的方式行不通之后，后来找到swarm，因为我想总有人有这方面（跨主机容器通信）的需求的。刚开始找到了一些是k8s,觉得学习成本有点大，我只是个小java开发，还没强大到那个地步。。。。后来发现swarm好像也可以。一想，swarm毕竟是docker自带的，学习成本应该不大，本且之前也有接触，果断就用swarm做测试。</p>
+<h4 id="2-1-创建overlay网络"><a href="#2-1-创建overlay网络" class="headerlink" title="2.1 创建overlay网络"></a>2.1 创建overlay网络</h4><p>swarm 其实管理的就是docker容器，一开始我们使用docker swarm init.然后让它称为manager，其它的docker容器只要join就可以了。这点还是很方便。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker swarm init</span><br><span class="line"></span><br><span class="line">docker swarm join-token manager</span><br><span class="line"></span><br><span class="line">docker swarm join-token worker</span><br></pre></td></tr></table></figure>
+
+<p>这种方式就简单的构建了一个swarm了。然后我们首先创建网络。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create -d overlay springcloud-overlay</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-准备镜像"><a href="#2-2-准备镜像" class="headerlink" title="2.2 准备镜像"></a>2.2 准备镜像</h4><p>创建网络后，就开始准备相应的镜像和Dockerfile。根据每个人的环境不同可以准备相应的Dockerfile：</p>
+<p>eureka.Dockerfile: 主要作为注册中心用</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./*.jar app.jar</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sh -c <span class="string">&#x27;touch /app.jar&#x27;</span></span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;/app.jar&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>booksrv.Dockerfile: 做一个无需连接数据库的服务提供者</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./*.jar app.jar</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sh -c <span class="string">&#x27;touch /app.jar&#x27;</span></span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;/app.jar&quot;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>warehouse.Dockerfile：连接数据库的服务提供者</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./*.jar app.jar</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sh -c <span class="string">&#x27;touch /app.jar&#x27;</span></span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;/app.jar&quot;</span>,<span class="string">&quot;--cacheType=single&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>web.Dockerfile：客户端调用booksrv和warehouse服务的接口</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./*.jar app.jar</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sh -c <span class="string">&#x27;touch /app.jar&#x27;</span></span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;/app.jar&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>在不同的文件夹下将dockerfile文件准备好之后，我们可以使用<code>docker build -t chenzhijun/imagename .</code>；（chenzhijun/iamgename可以自定义）</p>
+<h4 id="2-3-准备yml文件"><a href="#2-3-准备yml文件" class="headerlink" title="2.3 准备yml文件"></a>2.3 准备yml文件</h4><p>我们准备好镜像文件之后，可以使用docker stack的方式部署服务。</p>
+<p>eureka.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">eureka1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/eureka</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">springcloud-overlay:</span></span><br><span class="line">        <span class="attr">aliases:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">eureka</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;1111:1111&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ADDITIONAL_EUREKA_SERVER_LIST=http://eureka2:1111/eureka/</span></span><br><span class="line">  <span class="attr">eureka2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/eureka</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">springcloud-overlay:</span></span><br><span class="line">        <span class="attr">aliases:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">eureka</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;1112:1111&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ADDITIONAL_EUREKA_SERVER_LIST=http://eureka1:1111/eureka/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">springcloud-overlay:</span></span><br><span class="line">    <span class="attr">external:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">springcloud-overlay</span></span><br></pre></td></tr></table></figure>
+
+<p>service.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/web</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">springcloud-overlay</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8888&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">bookservice:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/booksrv</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">springcloud-overlay</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">warehouse:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">chenzhijun/warehouse</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">springcloud-overlay</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EUREKA_SERVER_ADDRESS=http://eureka1:1111/eureka/,http://eureka2:1111/eureka/</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">springcloud-overlay:</span></span><br><span class="line">    <span class="attr">external:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">springcloud-overlay</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用<code>docker stack deploy -c eureka.yml(service.yml) eureka(service)</code>。<br>之后可以使用<code>docker stack ls</code>查看启动了哪些服务，使用<code>docker stack services eureka(service)</code>来查看具体的信息。</p>
+<p>这个时候，你可以使用<code>docker ps </code>来看机器上启动了哪些服务，然后使用<code>docker logs -f containerid</code>来看输出的日志记录。</p>
+<p>嗯基本上就可以看到相应的输出。。</p>
+<p>docker swarm的另一种服务创建方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name warehouse1 \</span><br><span class="line">    --network springcloud-overlay \</span><br><span class="line">    --mount type=bind,source=/home/user/jar/notice/warehouse-server.jar,destination=/user/share/jar/app.jar \</span><br><span class="line">    --env EUREKA_SERVER_ADDRESS=http://eureka1:8761/eureka/,http://eureka2:8761/eureka/ \</span><br><span class="line">    --env MYSQL_SERVER_ADDRESS=mysql:3306 \</span><br><span class="line">    -p :30021 \</span><br><span class="line">    java:8-jre-alpine java -jar /user/share/jar/app.jar --cacheType=single</span><br></pre></td></tr></table></figure>
+
+<p>一些常见的命令:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">docker stack --hlep;</span><br><span class="line">docker stack ls;</span><br><span class="line">docker stack deploy -c xxx.yml xx-name;</span><br><span class="line">docker stack services xx-name;</span><br><span class="line"></span><br><span class="line">docker service --help;</span><br><span class="line"></span><br><span class="line">docker network --help;</span><br><span class="line"></span><br><span class="line">docker run ;</span><br><span class="line"></span><br><span class="line">docker --help;</span><br><span class="line"></span><br><span class="line">       docker service create --name warehouse1     --network springcloud-overlay     </span><br><span class="line">       --mount type=bind,source=/home/user/jar/notice/warehouse-server.jar,destination=/user/share/jar/app.jar     </span><br><span class="line">       --env EUREKA_SERVER_ADDRESS=http://eureka1:8761/eureka/,http://eureka2:8761/eureka/     </span><br><span class="line">       --env MYSQL_SERVER_ADDRESS=mysql:3306     </span><br><span class="line">       -p :30021     java:8-jre-alpine java -jar /user/share/jar/app.jar --cacheType=single</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2018/01/08/shell-get-param-from-console/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1791,168 +1986,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzhijun.top/2017/12/11/java-poi-operation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈志军">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/11/java-poi-operation/" itemprop="url">使用Apache POI操作生成Execl</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-11T15:17:02+08:00">
-                2017-12-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/11/java-poi-operation/" class="leancloud_visitors" data-flag-title="使用Apache POI操作生成Execl">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="使用Apache-POI操作生成Execl"><a href="#使用Apache-POI操作生成Execl" class="headerlink" title="使用Apache POI操作生成Execl"></a>使用Apache POI操作生成Execl</h2><p>使用Java操作数据生成Excel表格，在网上能搜到的方式有很多，比如jxl，还有今天用到POI。POI是Apache开源的一个项目，该工具使用简单，方便。</p>
-<h3 id="准备与一些概念约定"><a href="#准备与一些概念约定" class="headerlink" title="准备与一些概念约定"></a>准备与一些概念约定</h3><p>需要在<a target="_blank" rel="noopener" href="http://poi.apache.org/">poi官网</a>下载相应的jar包，或者使用maven来引入包。在开始之前我们需要知道一些关于excel文档的概念。一个excel文件通常称为[workbook]，excel里面的一个工作页面通常叫做[sheet]，sheet里面的格子称为[单元格cell]，单元格由坐标确定唯一位置，相应为[行row]，[列col]。</p>
-<p><img src="/images/qiniu/2017-12-11-15-41-40.png" alt="2017-12-11-15-41-40"></p>
-<p>了解这些我们可以开始看看poi的一些类和接口。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/11/java-poi-operation/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2004,7 +2037,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">179</span>
+                <span class="site-state-item-count">180</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2026,7 +2059,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">70</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
