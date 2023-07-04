@@ -270,20 +270,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>conclusion-201809</title>
-    <url>/2018/09/08/conclusion-201809/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>1: linux命令行替换文本中的字符串。<code>sed -i &quot;s/100.69.224.18:10099/100.69.224.27:9999/g&quot; /file.xml</code></p>
-<p>2: rancher平台的相关监控。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql:</span><br><span class="line"></span><br><span class="line">获取mysql用户是否可以远程登陆</span><br><span class="line">CREATE USER &#39;exporter&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;exporter&#39;;</span><br><span class="line">GRANT PROCESS, REPLICATION CLIENT ON *.* TO &#39;exporter&#39;@&#39;localhost&#39;;</span><br><span class="line">GRANT SELECT ON cattle.* TO &#39;exporter&#39;@&#39;%&#39; with MAX_USER_CONNECTIONS 3;</span><br><span class="line">help flush;</span><br><span class="line">show grants for &#39;exporter&#39;@&#39;localhost&#39;;</span><br><span class="line">flush PRIVILEGES;</span><br><span class="line"></span><br><span class="line">docker run -d -p 9104:9104 -e DATA_SOURCE_NAME&#x3D;&quot;exporter:exporter@(127.0.0.1:3306)&#x2F;&quot; prom&#x2F;mysqld-exporter:latest</span><br><span class="line"></span><br><span class="line">haproxy:</span><br><span class="line"></span><br><span class="line">docker run -d -p 9101:9101 prom&#x2F;haproxy-exporter:latest --haproxy.scrape-uri&#x3D;&quot;http:&#x2F;&#x2F;www.haproxy.com&#x2F;haproxy?stats;csv&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>3: sort 根据低三列排序</p>
-<p>docker stats -a –no-stream |awk ‘{print $1,$8,$3,$4}’|sort -k 2,4n</p>
-<p>sort -k a,bn<br>a为第几列，b为几个字符，n为数字比较，1234，1222，从第一个字符开始，到第四个字符都会比较</p>
-<p>4: 给基础镜像安装常用工具：ping,curl,wget,netstat。一般源里面就已经包含了，ping的源为：<code>apt install inetutils-ping或者 apt install net-tools</code></p>
-<p>5：某次给rancher平台扩容，直接将主机加上之后，将原来的应用直接*2启动，平台爆掉了。server不到。</p>
-]]></content>
-  </entry>
-  <entry>
     <title>最近总结-2018-07-16</title>
     <url>/2018/07/16/conclusion-2018-07-16/</url>
     <content><![CDATA[<h1 id="最近总结-2018-07-16"><a href="#最近总结-2018-07-16" class="headerlink" title="最近总结-2018-07-16"></a>最近总结-2018-07-16</h1><p>最近公司机房搬迁，大大小小演练，解决问题搞了差不多一个月。在以前的公司其实从来没有遇到过应用搬迁的事情。那个时候还是个开发写代码的。可能有搬迁也不需要我来帮忙，但是这次公司搬迁，从前到后。基本上全程参与。只有一个感受，那就是真的是严谨的要命。</p>
@@ -301,6 +287,20 @@
       <tags>
         <tag>总结</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>conclusion-201809</title>
+    <url>/2018/09/08/conclusion-201809/</url>
+    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>1: linux命令行替换文本中的字符串。<code>sed -i &quot;s/100.69.224.18:10099/100.69.224.27:9999/g&quot; /file.xml</code></p>
+<p>2: rancher平台的相关监控。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql:</span><br><span class="line"></span><br><span class="line">获取mysql用户是否可以远程登陆</span><br><span class="line">CREATE USER &#39;exporter&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;exporter&#39;;</span><br><span class="line">GRANT PROCESS, REPLICATION CLIENT ON *.* TO &#39;exporter&#39;@&#39;localhost&#39;;</span><br><span class="line">GRANT SELECT ON cattle.* TO &#39;exporter&#39;@&#39;%&#39; with MAX_USER_CONNECTIONS 3;</span><br><span class="line">help flush;</span><br><span class="line">show grants for &#39;exporter&#39;@&#39;localhost&#39;;</span><br><span class="line">flush PRIVILEGES;</span><br><span class="line"></span><br><span class="line">docker run -d -p 9104:9104 -e DATA_SOURCE_NAME&#x3D;&quot;exporter:exporter@(127.0.0.1:3306)&#x2F;&quot; prom&#x2F;mysqld-exporter:latest</span><br><span class="line"></span><br><span class="line">haproxy:</span><br><span class="line"></span><br><span class="line">docker run -d -p 9101:9101 prom&#x2F;haproxy-exporter:latest --haproxy.scrape-uri&#x3D;&quot;http:&#x2F;&#x2F;www.haproxy.com&#x2F;haproxy?stats;csv&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3: sort 根据低三列排序</p>
+<p>docker stats -a –no-stream |awk ‘{print $1,$8,$3,$4}’|sort -k 2,4n</p>
+<p>sort -k a,bn<br>a为第几列，b为几个字符，n为数字比较，1234，1222，从第一个字符开始，到第四个字符都会比较</p>
+<p>4: 给基础镜像安装常用工具：ping,curl,wget,netstat。一般源里面就已经包含了，ping的源为：<code>apt install inetutils-ping或者 apt install net-tools</code></p>
+<p>5：某次给rancher平台扩容，直接将主机加上之后，将原来的应用直接*2启动，平台爆掉了。server不到。</p>
+]]></content>
   </entry>
   <entry>
     <title>修改 Linux Core 文件目录</title>
@@ -613,7 +613,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;Labels&quot;: &#123;</span><br><span class="line">    &quot;com.example.vendor&quot;: &quot;ACME Incorporated&quot;</span><br><span class="line">    &quot;com.example.label-with-value&quot;: &quot;foo&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0&quot;,</span><br><span class="line">    &quot;description&quot;: &quot;This text illustrates that label-values can span multiple lines.&quot;,</span><br><span class="line">    &quot;multi.label1&quot;: &quot;value1&quot;,</span><br><span class="line">    &quot;multi.label2&quot;: &quot;value2&quot;,</span><br><span class="line">    &quot;other&quot;: &quot;value3&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
 <h4 id="MAINTAINER-deprecated"><a href="#MAINTAINER-deprecated" class="headerlink" title="MAINTAINER [deprecated]"></a>MAINTAINER [deprecated]</h4><p><code>MAINTAINER &lt;name&gt;</code> 作者信息</p>
-<p>使用LABEL更加灵活：LABEL maintainer=”<a href="mailto:&#83;&#118;&#101;&#x6e;&#68;&#111;&#x77;&#105;&#x64;&#101;&#x69;&#x74;&#x40;&#104;&#x6f;&#x6d;&#101;&#x2e;&#111;&#x72;&#103;&#x2e;&#x61;&#117;">&#83;&#118;&#101;&#x6e;&#68;&#111;&#x77;&#105;&#x64;&#101;&#x69;&#x74;&#x40;&#104;&#x6f;&#x6d;&#101;&#x2e;&#111;&#x72;&#103;&#x2e;&#x61;&#117;</a>“</p>
+<p>使用LABEL更加灵活：LABEL maintainer=”<a href="mailto:&#x53;&#118;&#101;&#x6e;&#68;&#x6f;&#119;&#105;&#100;&#101;&#105;&#116;&#x40;&#104;&#111;&#x6d;&#x65;&#46;&#111;&#x72;&#103;&#46;&#x61;&#x75;">&#x53;&#118;&#101;&#x6e;&#68;&#x6f;&#119;&#105;&#100;&#101;&#105;&#116;&#x40;&#104;&#111;&#x6d;&#x65;&#46;&#111;&#x72;&#103;&#46;&#x61;&#x75;</a>“</p>
 <h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p><code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code></p>
 <p>在容器运行的时候暴露端口，不会自己和宿主机绑定。如果要和宿主机绑定需要-p，制定端口。或者-P随机系统端口。</p>
 <h4 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key&gt;&#x3D;&lt;value&gt; ...</span><br></pre></td></tr></table></figure>
@@ -680,46 +680,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker 与 Linux Namespace &amp;&amp; Cgroups</title>
-    <url>/2019/06/30/docker-lxc-cgroup/</url>
-    <content><![CDATA[<h1 id="Docker-与-Linux-Namespace-amp-amp-Cgroups"><a href="#Docker-与-Linux-Namespace-amp-amp-Cgroups" class="headerlink" title="Docker 与 Linux Namespace &amp;&amp; Cgroups"></a>Docker 与 Linux Namespace &amp;&amp; Cgroups</h1><h2 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker?"></a>什么是Docker?</h2><p>不得不说这几年技术领域最火的就是“容器”这个词了。而谈到容器，大家的第一反应就是 Docker ,Docker 已经再很多人心中成了容器的代名词。那么Docker到底是什么？Docker能为我们带来什么？</p>
-<p>官网上用来解释Docker的一句话:<code>Docker is a platform for developers and sysadmins to develop, deploy, and run applications with containers</code>。Docker 就是一个开源的工具，将我们的应用打包成标准的镜像格式，并且以容器的方式运行。容器化的越来越流行，带给我们的优势也是非常多：</p>
-<ol>
-<li>灵活性：再复杂的应用都可以被容器化；</li>
-<li>轻量级：容器利用共享的是主机内核；</li>
-<li>即时性：可以随时部署更新和升级；</li>
-<li>通用性：一次构建，到处运行；</li>
-<li>伸缩性：控制容器副本数量来任意伸缩；<span id="more"></span>
-<h2 id="Docker-与虚拟机的比较"><a href="#Docker-与虚拟机的比较" class="headerlink" title="Docker 与虚拟机的比较"></a>Docker 与虚拟机的比较</h2></li>
-</ol>
-<p>容器与容器之间是共享Kernel的，各容器直接互相隔离。它只运行一个独立的进程，没有其它的执行进程，也不需要占用其它额外的资源。</p>
-<p>虚拟机运行的是一个独立的完整的系统，占用的资源也要比独立的应用需要的多。他们两者区别在于虚拟机管理程序对整个设备进行抽象处理，而容器只是对操作系统内核进行抽象处理。下面这张图可以对两者有个认知了解：</p>
-<p><img src="/images/qiniu/2019-06-30-15-12-00.png" alt="2019-06-30-15-12-00"></p>
-<h2 id="Linux-Namespace"><a href="#Linux-Namespace" class="headerlink" title="Linux Namespace"></a>Linux Namespace</h2><p>我们经常听到，Docker其实并不是单独创造的一个技术，在早期，Docker其实就是基于Linux上的LXC(Linux Container)项目来创建单个应用程序的容器，目前Docker使用libcontainer来直接操作核心namespace和cgoup。这里我们了解下Linux Namesapce。Linux namespace是Kernel的功能，主要用来隔离一系列资源，目前Linux有6种不同类型的Namespace：</p>
-<ol>
-<li>Mount Namespace, CLONE_NEWNS, 用来隔离nodename和domainname;</li>
-<li>UTS Namespace, CLONE_NEWUTS, 用来隔离 System V IPC 和 POSIX message queues;</li>
-<li>IPC Namespace, CLONE_NEWIPC, 用来隔离进行ID;</li>
-<li>PID Namespace, CLONE_NEWPID, 用来隔离各个进程看到的挂载点视图;</li>
-<li>Network Namespace, CLONE_NEWNET, 用来隔离网络设备、IP 地址端口等网络栈的 Namespace;</li>
-<li>User Namespace, CLONE_NEWUSER, 用来隔离用户的用户组ID;</li>
-</ol>
-<h2 id="Linux-Cgroups"><a href="#Linux-Cgroups" class="headerlink" title="Linux Cgroups"></a>Linux Cgroups</h2><p>Linux Cgroups (Control Groups) 提供了一组进程及将来子进程的资源限制、控制和统计的能力，资源包括CPU、内存、存储、网络等。通过Cgroups,可以方便地限制某个进程的资源占用，并且可以实时地监控进程的监控和统计信息。Cgroups的三个组件，</p>
-<ol>
-<li>cgroup</li>
-<li>subsystem</li>
-<li>hierarchy</li>
-</ol>
-<h2 id="libcontainer"><a href="#libcontainer" class="headerlink" title="libcontainer"></a>libcontainer</h2><p>libcontainer 是Docker开源的一个项目，目前runC的实现也已经有原来的LXC变为libcontainer。官网对libcontainer的解释：<a href="https://docs.docker.com/glossary/?term=libcontainer">libcontainer provides a native Go implementation for creating containers with namespaces, cgroups, capabilities, and filesystem access controls. It allows you to manage the lifecycle of the container performing additional operations after the container is created</a></p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 镜像</title>
     <url>/2017/05/13/docker-image/</url>
     <content><![CDATA[<h2 id="镜像是Docker的三大核心概念之一。"><a href="#镜像是Docker的三大核心概念之一。" class="headerlink" title="镜像是Docker的三大核心概念之一。"></a>镜像是Docker的三大核心概念之一。</h2><blockquote>
@@ -752,6 +712,46 @@
 
 
 
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 与 Linux Namespace &amp;&amp; Cgroups</title>
+    <url>/2019/06/30/docker-lxc-cgroup/</url>
+    <content><![CDATA[<h1 id="Docker-与-Linux-Namespace-amp-amp-Cgroups"><a href="#Docker-与-Linux-Namespace-amp-amp-Cgroups" class="headerlink" title="Docker 与 Linux Namespace &amp;&amp; Cgroups"></a>Docker 与 Linux Namespace &amp;&amp; Cgroups</h1><h2 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker?"></a>什么是Docker?</h2><p>不得不说这几年技术领域最火的就是“容器”这个词了。而谈到容器，大家的第一反应就是 Docker ,Docker 已经再很多人心中成了容器的代名词。那么Docker到底是什么？Docker能为我们带来什么？</p>
+<p>官网上用来解释Docker的一句话:<code>Docker is a platform for developers and sysadmins to develop, deploy, and run applications with containers</code>。Docker 就是一个开源的工具，将我们的应用打包成标准的镜像格式，并且以容器的方式运行。容器化的越来越流行，带给我们的优势也是非常多：</p>
+<ol>
+<li>灵活性：再复杂的应用都可以被容器化；</li>
+<li>轻量级：容器利用共享的是主机内核；</li>
+<li>即时性：可以随时部署更新和升级；</li>
+<li>通用性：一次构建，到处运行；</li>
+<li>伸缩性：控制容器副本数量来任意伸缩；<span id="more"></span>
+<h2 id="Docker-与虚拟机的比较"><a href="#Docker-与虚拟机的比较" class="headerlink" title="Docker 与虚拟机的比较"></a>Docker 与虚拟机的比较</h2></li>
+</ol>
+<p>容器与容器之间是共享Kernel的，各容器直接互相隔离。它只运行一个独立的进程，没有其它的执行进程，也不需要占用其它额外的资源。</p>
+<p>虚拟机运行的是一个独立的完整的系统，占用的资源也要比独立的应用需要的多。他们两者区别在于虚拟机管理程序对整个设备进行抽象处理，而容器只是对操作系统内核进行抽象处理。下面这张图可以对两者有个认知了解：</p>
+<p><img src="/images/qiniu/2019-06-30-15-12-00.png" alt="2019-06-30-15-12-00"></p>
+<h2 id="Linux-Namespace"><a href="#Linux-Namespace" class="headerlink" title="Linux Namespace"></a>Linux Namespace</h2><p>我们经常听到，Docker其实并不是单独创造的一个技术，在早期，Docker其实就是基于Linux上的LXC(Linux Container)项目来创建单个应用程序的容器，目前Docker使用libcontainer来直接操作核心namespace和cgoup。这里我们了解下Linux Namesapce。Linux namespace是Kernel的功能，主要用来隔离一系列资源，目前Linux有6种不同类型的Namespace：</p>
+<ol>
+<li>Mount Namespace, CLONE_NEWNS, 用来隔离nodename和domainname;</li>
+<li>UTS Namespace, CLONE_NEWUTS, 用来隔离 System V IPC 和 POSIX message queues;</li>
+<li>IPC Namespace, CLONE_NEWIPC, 用来隔离进行ID;</li>
+<li>PID Namespace, CLONE_NEWPID, 用来隔离各个进程看到的挂载点视图;</li>
+<li>Network Namespace, CLONE_NEWNET, 用来隔离网络设备、IP 地址端口等网络栈的 Namespace;</li>
+<li>User Namespace, CLONE_NEWUSER, 用来隔离用户的用户组ID;</li>
+</ol>
+<h2 id="Linux-Cgroups"><a href="#Linux-Cgroups" class="headerlink" title="Linux Cgroups"></a>Linux Cgroups</h2><p>Linux Cgroups (Control Groups) 提供了一组进程及将来子进程的资源限制、控制和统计的能力，资源包括CPU、内存、存储、网络等。通过Cgroups,可以方便地限制某个进程的资源占用，并且可以实时地监控进程的监控和统计信息。Cgroups的三个组件，</p>
+<ol>
+<li>cgroup</li>
+<li>subsystem</li>
+<li>hierarchy</li>
+</ol>
+<h2 id="libcontainer"><a href="#libcontainer" class="headerlink" title="libcontainer"></a>libcontainer</h2><p>libcontainer 是Docker开源的一个项目，目前runC的实现也已经有原来的LXC变为libcontainer。官网对libcontainer的解释：<a href="https://docs.docker.com/glossary/?term=libcontainer">libcontainer provides a native Go implementation for creating containers with namespaces, cgroups, capabilities, and filesystem access controls. It allows you to manage the lifecycle of the container performing additional operations after the container is created</a></p>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -917,7 +917,7 @@ docker run -d --name test -p 13306:3306 -e MYSQL_ROOT_PASSWORD=root123456 -e MYS
 
 <p>8:上传镜像到hub.docker.com,首先保证在hub上有一个相同名字的镜像地址，跟git类似。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker login</span><br><span class="line">username:</span><br><span class="line">password:</span><br><span class="line"></span><br><span class="line">docker push chenzhijun&#x2F;javaweb</span><br></pre></td></tr></table></figure>
-<p>好了，暂时照着这个操作就基本上可以了。 如果遇到问题可以给我留言，也可以联系我的邮箱：<a href="mailto:&#118;&#x62;&#x6f;&#x6f;&#107;&#x63;&#x68;&#101;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#118;&#x62;&#x6f;&#x6f;&#107;&#x63;&#x68;&#101;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></p>
+<p>好了，暂时照着这个操作就基本上可以了。 如果遇到问题可以给我留言，也可以联系我的邮箱：<a href="mailto:&#x76;&#98;&#x6f;&#x6f;&#107;&#x63;&#x68;&#x65;&#x6e;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#x76;&#98;&#x6f;&#x6f;&#107;&#x63;&#x68;&#x65;&#x6e;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -1812,33 +1812,6 @@ git remote -v<br>origin    <a href="https://github.com/chenzhijun/java-core-lear
       </tags>
   </entry>
   <entry>
-    <title>golang 并发基础（一）</title>
-    <url>/2019/08/25/golang-goroutine1/</url>
-    <content><![CDATA[<h1 id="golang-并发基础（一）"><a href="#golang-并发基础（一）" class="headerlink" title="golang 并发基础（一）"></a>golang 并发基础（一）</h1><p>golang 在语言的语法和运行时方面内置了对并发的支持。在了解golang的并发之前，我们先看一下操作系统的两个概念：线程和进程。你应该知道，在系统中运行一个程序，其实就是启动了一个进程，而要运行起来，对外来说肯定是需要资源的，比如cpu，内存空间，文件句柄，线程等等..每个进程至少有一个线程，每个进程的初始线程被称为主线程。了解到这些，你大概可以类比一下，比如你创建一个项目，肯定要有main方法（主线程），你的项目中可能还有不同的业务逻辑，这个时候就可以让主进程创建多个线程去运行求结果。线程可以共享进程的空间。另外我们要知道，cpu的执行方式是轮询时间分片的，也就是可能这个线程有10ms的cpu执行时间，所以如果是单核cpu，就是每个线程执行一会，抢占式执行。并发(concurrency)不是并行(parallelism)。并行是在相同的时候让不同的代码都能在不同的处理器上执行，也就是同时做很多事情。并发是指同时管理很多事情，这些事情可能只做了一半就被暂停去做别的事情了。</p>
-<span id="more"></span>
-<h2 id="并发通信模型"><a href="#并发通信模型" class="headerlink" title="并发通信模型"></a>并发通信模型</h2><p>golang 采用的并发同步模型为通信顺序进程（Communicating Sequential Process,CSP)的模型，通过在goroutine之间传递数据来传递消息，而不是对数据进行加锁来实现同步访问。并发通信模型还有一种是Actor，比较著名的例子就是akka.io。</p>
-<h2 id="golang-并发工作模式"><a href="#golang-并发工作模式" class="headerlink" title="golang 并发工作模式"></a>golang 并发工作模式</h2><p>操作系统会在物理处理器上调度线程来运行，而Go语言的运行时会在逻辑处理器上调度goroutine来执行，每个逻辑处理器又分别绑定到单个的操作系统线程。像下图，如果一个Goroutine可以运行的时候，就会被放入到逻辑处理器的执行队列中，逻辑处理器有绑定到一个唯一的操作系统线程中。</p>
-<p><img src="/images/qiniu/2019-08-25-20-03-52.png" alt="2019-08-25-20-03-52"></p>
-<p>如果一个goroutine执行的是一个阻塞的系统调用，比如打开文件，那岂不是队列中的就绪态goroutine都的阻塞了？当出现这类调用时候，当前线程和当前的goroutine就会从逻辑处理器上分离，当前线程继续阻塞，等待刚刚的系统调用的放回。同时，逻辑处理器失去用来运行的线程。所以调度器就会创建一个新线程，并将其绑定到逻辑处理器上。当阻塞的系统完成调用并且返回，对应的goroutine会放回到本地运行队列，而之前的线程会保存好，一遍之后可以继续使用。如下图，线程A本来是绑定在P0的，后来有阻塞调用，就脱离出去了，然后线程B又绑定了P0。</p>
-<p><img src="/images/qiniu/2019-08-25-20-21-14.png" alt="2019-08-25-20-21-14"></p>
-<p>golang默认可以创建的线程数量为10000个线程，可以通过runtime/debug包的SetMaxThreads方法来更改。</p>
-<!-- golang由于天生的支持高并发的应用，得到了很多大的基础项目的青睐。在golang的并发中最小的单元即为goroutine。今天来聊一下goroutine是怎么和chan配合的。
-
-## channel的分类
-
-channel分为非缓存chan和有缓存chan，  -->
-
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>The C10K problem</p>
-<p><a href="https://cloud.tencent.com/developer/article/1346210">https://cloud.tencent.com/developer/article/1346210</a></p>
-]]></content>
-      <categories>
-        <category>并发</category>
-      </categories>
-      <tags>
-        <tag>golang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>golang 并发基础（二）</title>
     <url>/2019/08/25/golang-goroutine2/</url>
     <content><![CDATA[<h1 id="golang-并发基础（二）"><a href="#golang-并发基础（二）" class="headerlink" title="golang 并发基础（二）"></a>golang 并发基础（二）</h1><p>上一篇简单介绍了并发与并行，goroutine实际工作的原理示意图，现在我们来看下golang是怎么处理并发中竞争状态的。</p>
@@ -1881,6 +1854,33 @@ channel分为非缓存chan和有缓存chan，  -->
       </tags>
   </entry>
   <entry>
+    <title>golang 并发基础（一）</title>
+    <url>/2019/08/25/golang-goroutine1/</url>
+    <content><![CDATA[<h1 id="golang-并发基础（一）"><a href="#golang-并发基础（一）" class="headerlink" title="golang 并发基础（一）"></a>golang 并发基础（一）</h1><p>golang 在语言的语法和运行时方面内置了对并发的支持。在了解golang的并发之前，我们先看一下操作系统的两个概念：线程和进程。你应该知道，在系统中运行一个程序，其实就是启动了一个进程，而要运行起来，对外来说肯定是需要资源的，比如cpu，内存空间，文件句柄，线程等等..每个进程至少有一个线程，每个进程的初始线程被称为主线程。了解到这些，你大概可以类比一下，比如你创建一个项目，肯定要有main方法（主线程），你的项目中可能还有不同的业务逻辑，这个时候就可以让主进程创建多个线程去运行求结果。线程可以共享进程的空间。另外我们要知道，cpu的执行方式是轮询时间分片的，也就是可能这个线程有10ms的cpu执行时间，所以如果是单核cpu，就是每个线程执行一会，抢占式执行。并发(concurrency)不是并行(parallelism)。并行是在相同的时候让不同的代码都能在不同的处理器上执行，也就是同时做很多事情。并发是指同时管理很多事情，这些事情可能只做了一半就被暂停去做别的事情了。</p>
+<span id="more"></span>
+<h2 id="并发通信模型"><a href="#并发通信模型" class="headerlink" title="并发通信模型"></a>并发通信模型</h2><p>golang 采用的并发同步模型为通信顺序进程（Communicating Sequential Process,CSP)的模型，通过在goroutine之间传递数据来传递消息，而不是对数据进行加锁来实现同步访问。并发通信模型还有一种是Actor，比较著名的例子就是akka.io。</p>
+<h2 id="golang-并发工作模式"><a href="#golang-并发工作模式" class="headerlink" title="golang 并发工作模式"></a>golang 并发工作模式</h2><p>操作系统会在物理处理器上调度线程来运行，而Go语言的运行时会在逻辑处理器上调度goroutine来执行，每个逻辑处理器又分别绑定到单个的操作系统线程。像下图，如果一个Goroutine可以运行的时候，就会被放入到逻辑处理器的执行队列中，逻辑处理器有绑定到一个唯一的操作系统线程中。</p>
+<p><img src="/images/qiniu/2019-08-25-20-03-52.png" alt="2019-08-25-20-03-52"></p>
+<p>如果一个goroutine执行的是一个阻塞的系统调用，比如打开文件，那岂不是队列中的就绪态goroutine都的阻塞了？当出现这类调用时候，当前线程和当前的goroutine就会从逻辑处理器上分离，当前线程继续阻塞，等待刚刚的系统调用的放回。同时，逻辑处理器失去用来运行的线程。所以调度器就会创建一个新线程，并将其绑定到逻辑处理器上。当阻塞的系统完成调用并且返回，对应的goroutine会放回到本地运行队列，而之前的线程会保存好，一遍之后可以继续使用。如下图，线程A本来是绑定在P0的，后来有阻塞调用，就脱离出去了，然后线程B又绑定了P0。</p>
+<p><img src="/images/qiniu/2019-08-25-20-21-14.png" alt="2019-08-25-20-21-14"></p>
+<p>golang默认可以创建的线程数量为10000个线程，可以通过runtime/debug包的SetMaxThreads方法来更改。</p>
+<!-- golang由于天生的支持高并发的应用，得到了很多大的基础项目的青睐。在golang的并发中最小的单元即为goroutine。今天来聊一下goroutine是怎么和chan配合的。
+
+## channel的分类
+
+channel分为非缓存chan和有缓存chan，  -->
+
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>The C10K problem</p>
+<p><a href="https://cloud.tencent.com/developer/article/1346210">https://cloud.tencent.com/developer/article/1346210</a></p>
+]]></content>
+      <categories>
+        <category>并发</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>golang 包项目结构</title>
     <url>/2019/03/31/golang-package-struct/</url>
     <content><![CDATA[<h1 id="golang-包项目结构"><a href="#golang-包项目结构" class="headerlink" title="golang 包项目结构"></a>golang 包项目结构</h1>]]></content>
@@ -1897,6 +1897,71 @@ channel分为非缓存chan和有缓存chan，  -->
     <content><![CDATA[<h1 id="golang-基础入门-数据类型"><a href="#golang-基础入门-数据类型" class="headerlink" title="golang 基础入门 - 数据类型"></a>golang 基础入门 - 数据类型</h1><p>任何一门语句都会有它的基本关键字和数据类型。golang的数据类型大致分为三种：基本类型，引用类型，结构体。</p>
 <p><img src="/images/qiniu/2019-07-14-23-35-07.png" alt="2019-07-14-23-35-07"></p>
 <p>类型的一些细节可以参考：<a href="https://github.com/golang/go/wiki">官网</a></p>
+]]></content>
+      <categories>
+        <category>Go</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Golang 基础入门</title>
+    <url>/2019/07/14/hello-golang/</url>
+    <content><![CDATA[<h1 id="Golang-基础入门"><a href="#Golang-基础入门" class="headerlink" title="Golang 基础入门"></a>Golang 基础入门</h1><p>了解任何事物首先得了解一下它的历史。golang 在2007年就开始开发，在09年开源，并且在12年发布了第一个稳定版本GO 1。今年19年，go这些年的发展是很快的，目前的版本是go 1.12.7，目前go的开发节奏是半年发布一个版本。并且golang承诺，go的更新时兼容之前的版本的。</p>
+<h2 id="Golang-安装"><a href="#Golang-安装" class="headerlink" title="Golang 安装"></a>Golang 安装</h2><p>在golang的官网<a href="https://golang.org/">golang.org</a>下载最新版本的golang或者你需要的版本。接下来如果是windows的机器，那么只需要一路next就行了,之后在<code>c:\\go</code>文件夹下就可以了。如果是Linux系统，只需要将tar.gz包解压到自己工作的位置，然后将$GOLANG_PATH\bin加入到path就可以了。</p>
+<span id="more"></span>
+
+<h2 id="Hello-Go"><a href="#Hello-Go" class="headerlink" title="Hello Go"></a>Hello Go</h2><p>开始一门新语言的探险时，大家的第一个demo肯定是“Hello World”。我们也开始第一个”Hello Go”吧：</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;Hello,Go..&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>将上面的内容保存为一个<code>main.go</code>文件，然后使用<code>go run main.go</code>。你就可以看到输出了，超级简单。</p>
+<p>不得不说是真的简洁。看到上面的代码，我们开始进行一下基本golang开发介绍。</p>
+<h2 id="main包main方法"><a href="#main包main方法" class="headerlink" title="main包main方法"></a>main包main方法</h2><p>golang中定义一个包的关键字就是<code>package</code>，程序的入口始终都是<code>main</code>包中的<code>main()</code>方法，程序始终都是从这里开始。<br>不像Java中的lang包不需要导入，golang中除了一些关键字，其它的不管是内部包，还是外部包都需要通过关键字<code>import</code>进行导入。</p>
+<h2 id="GOROOT，GOPATH"><a href="#GOROOT，GOPATH" class="headerlink" title="GOROOT，GOPATH"></a>GOROOT，GOPATH</h2><p>golang 中有个路径非常重要：GOROOT 和 GOPATH ; </p>
+<p>GOROOT ： 其实就是golang的安装目录，当你用在控制台输入： <code>go env GOROOT</code>就能获取到值。</p>
+<p>GOPATH ： 实际开发工作的目录。</p>
+<p>GOROOT 就不多讲了，这里讲一下GOPATH；golang程序开发不像之前Java开发，Java开发，可能是项目名/src/路径-源码。而golang中，你的所有开发代码其实都是放在GOPATH下的，而且是在$GOPATH/src下。在GOPATH中定义了三个文件夹：<code>src</code>,<code>pkg</code>,<code>bin</code>。</p>
+<ol>
+<li>pkg 存放项目编译时期的中间文件，比如:<code>.a</code>文件；</li>
+<li>bin 目录存放项目的可执行文件，如果你把这个路径放到path目录下，那么就可以直接在控制台执行这里目录下的可执行文件；</li>
+<li>src 源码存放路径记住，开发中一定要将代码放到这个路径下；比如Java开发者可能就不适应，因为之前的Java是<code>项目名/src</code>的方式，现在golang是<code>src/项目名</code>;</li>
+</ol>
+<p>如果开发一个应用<code>myserver</code>,那么目录结构就是：<code>$GOPATH/src/myserver</code>; golang在编译的时候是会自动去找GOPATH下src目录的。这样你可以把所有相关联的项目放到一个GOPATH路径下，不同的项目之间可以隔开，也可把所有项目都放在一个GOPATH下，这样这个路径下的所有包，你都可以直接导入。当然你也可以照样像Java那样包路径结构，只是需要记住要将项目根路径指定为GOPATH，不然编译就会报错。</p>
+<h2 id="golang的包"><a href="#golang的包" class="headerlink" title="golang的包"></a>golang的包</h2><p>你可能注意到了我们上面<code>hello go</code>的第二行 <code>import &quot;fmt&quot;</code>；这里的作用就是导入fmt包，这个包在哪里了？golang寻找import包的优先级为：GOROOT–&gt;GOPATH;如果找不到你也可以使用<code>go get</code>工具，它会帮你自动下载包;</p>
+<p>项目开发中项目结构如下：</p>
+<p><img src="/images/qiniu/2019-07-14-22-14-21.png" alt="2019-07-14-22-14-21"></p>
+<p>我们看一个包导入的例子：</p>
+<p><img src="/images/qiniu/2019-07-14-22-42-50.png" alt="2019-07-14-22-42-50"></p>
+<p>我在项目中的handler下定一个了方法<code>Hello</code>，包名为<code>handler</code>;正常情况下，在main包中我们如果掉用它的话就是<code>handler.Hello()</code>;如下：</p>
+<p><img src="/images/qiniu/2019-07-14-22-44-21.png" alt="2019-07-14-22-44-21"></p>
+<p>可以看到，main 方法中出了一场，报的是找不到handler包。这个时候要看一下我们的GOPATH了，之前我们也说了golang是先从goroot再从gopath去寻找包的。goroot，一般大家也不会将源码放那里，我们现在看下GOPATH的目录：</p>
+<p><img src="/images/qiniu/2019-07-14-22-46-46.png" alt="2019-07-14-22-46-46"></p>
+<p>这下可以看到了吧。我们的项目路径是：<code>D:\workspace-paas\goinaction</code>;但是gopath的路径是<code>D:\Users\chenzj001\go</code></p>
+<p>我们可以知道GOPATH下是没有我们的handler包的。这个时候的修改方式有两个：</p>
+<ol>
+<li>将项目移到gopath目录的src目录下；</li>
+<li>将GOPATH设置为当前的工作目录；</li>
+</ol>
+<p>如果采用1的话那么恭喜你，问题解决。如果采用2,哈，那么恭喜你，你肯定是Java派golang开发者，同道中人啊。你可能会想，我不是将GOPATH指到当前项目根路径了么？怎么还是导入不了。唉~。其实就像前面说的，go寻找包的时候都是去src目录下找的。所以你需要在项目路径下再建立一个src目录，再将源码放进去，就能解决异常了，采用2，就相当于是你要用Java开发的包路径结构。这种其实是不推荐的，入乡随俗还是独树一帜看你选择了。我是觉得按照大家的约定会比较好。</p>
+<p>我们采用第一种方式，你看下图：</p>
+<p><img src="/images/qiniu/2019-07-14-22-59-40.png" alt="2019-07-14-22-59-40"></p>
+<p>你可以看到上面的gopath。</p>
+<blockquote>
+<p>ps: 其实你是可以同时设置多个GOPATH的哦，可以自己动手尝试一下。</p>
+</blockquote>
+<h2 id="GO-自带的工具"><a href="#GO-自带的工具" class="headerlink" title="GO 自带的工具"></a>GO 自带的工具</h2><p>GO 自带了一些常用工具，使用<code>go --help</code>就能看到。这里介绍常用的几个：</p>
+<ol>
+<li><code>go build</code>,编译包</li>
+<li><code>go run</code>,编译运行</li>
+<li><code>go fmt</code>,golang内置的将代码格式化</li>
+<li><code>go doc</code>,golang的文档</li>
+<li><code>go test</code>,golang测试工具</li>
+<li><code>go get</code>,下载导入外部包</li>
+</ol>
+<p>go 也可以编译成其它平台的可执行文件，比如window下编译成Linux下的执行文件<a href="http://chenzhijun.top/2019/03/31/windows-compile-golang-to-linux-running-script/">golang编译成Linux环境下的二进制文件</a>。</p>
+<p>go 的这些工具还是挺有用的，没事可以多用用。</p>
+<p>这篇文章介绍了下go的发展史，也写下了<code>hello go</code>之后介绍了gopath，goroot，以及go自带的工具。其实golang其实是面向程序员友好的，对比Java动辄就是几十行代码，golang确实很简洁。不过对比Java来说，golang的生态其实感觉并没有Java那么的完善，另一方面，golang的包管理，我到现在还是有点。。还有一个就是在国内访问golang官网需要科学上网。这有点像什么了，我要推广给大家用，但是大家用起来又是各种阻碍，在已有的产品能实现需求的产品上，如果新产品不能提供很好的体验，其实要退光是有困难的。另一方面，golang其实面向的最多的感觉还是C/C++来转型。一门语言其实有它的优势，也肯定有它的不足。适合自己的业务场景，个人发展路径，取舍在于自己，我从一开始其实挺不喜欢golang的，但最近学会不排斥的心态去了解之后，感觉是真的爽。个人观点，不喜勿喷。一千个观众有一千个哈姆雷特。</p>
 ]]></content>
       <categories>
         <category>Go</category>
@@ -1973,71 +2038,6 @@ channel分为非缓存chan和有缓存chan，  -->
       </tags>
   </entry>
   <entry>
-    <title>Golang 基础入门</title>
-    <url>/2019/07/14/hello-golang/</url>
-    <content><![CDATA[<h1 id="Golang-基础入门"><a href="#Golang-基础入门" class="headerlink" title="Golang 基础入门"></a>Golang 基础入门</h1><p>了解任何事物首先得了解一下它的历史。golang 在2007年就开始开发，在09年开源，并且在12年发布了第一个稳定版本GO 1。今年19年，go这些年的发展是很快的，目前的版本是go 1.12.7，目前go的开发节奏是半年发布一个版本。并且golang承诺，go的更新时兼容之前的版本的。</p>
-<h2 id="Golang-安装"><a href="#Golang-安装" class="headerlink" title="Golang 安装"></a>Golang 安装</h2><p>在golang的官网<a href="https://golang.org/">golang.org</a>下载最新版本的golang或者你需要的版本。接下来如果是windows的机器，那么只需要一路next就行了,之后在<code>c:\\go</code>文件夹下就可以了。如果是Linux系统，只需要将tar.gz包解压到自己工作的位置，然后将$GOLANG_PATH\bin加入到path就可以了。</p>
-<span id="more"></span>
-
-<h2 id="Hello-Go"><a href="#Hello-Go" class="headerlink" title="Hello Go"></a>Hello Go</h2><p>开始一门新语言的探险时，大家的第一个demo肯定是“Hello World”。我们也开始第一个”Hello Go”吧：</p>
-<figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;Hello,Go..&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>将上面的内容保存为一个<code>main.go</code>文件，然后使用<code>go run main.go</code>。你就可以看到输出了，超级简单。</p>
-<p>不得不说是真的简洁。看到上面的代码，我们开始进行一下基本golang开发介绍。</p>
-<h2 id="main包main方法"><a href="#main包main方法" class="headerlink" title="main包main方法"></a>main包main方法</h2><p>golang中定义一个包的关键字就是<code>package</code>，程序的入口始终都是<code>main</code>包中的<code>main()</code>方法，程序始终都是从这里开始。<br>不像Java中的lang包不需要导入，golang中除了一些关键字，其它的不管是内部包，还是外部包都需要通过关键字<code>import</code>进行导入。</p>
-<h2 id="GOROOT，GOPATH"><a href="#GOROOT，GOPATH" class="headerlink" title="GOROOT，GOPATH"></a>GOROOT，GOPATH</h2><p>golang 中有个路径非常重要：GOROOT 和 GOPATH ; </p>
-<p>GOROOT ： 其实就是golang的安装目录，当你用在控制台输入： <code>go env GOROOT</code>就能获取到值。</p>
-<p>GOPATH ： 实际开发工作的目录。</p>
-<p>GOROOT 就不多讲了，这里讲一下GOPATH；golang程序开发不像之前Java开发，Java开发，可能是项目名/src/路径-源码。而golang中，你的所有开发代码其实都是放在GOPATH下的，而且是在$GOPATH/src下。在GOPATH中定义了三个文件夹：<code>src</code>,<code>pkg</code>,<code>bin</code>。</p>
-<ol>
-<li>pkg 存放项目编译时期的中间文件，比如:<code>.a</code>文件；</li>
-<li>bin 目录存放项目的可执行文件，如果你把这个路径放到path目录下，那么就可以直接在控制台执行这里目录下的可执行文件；</li>
-<li>src 源码存放路径记住，开发中一定要将代码放到这个路径下；比如Java开发者可能就不适应，因为之前的Java是<code>项目名/src</code>的方式，现在golang是<code>src/项目名</code>;</li>
-</ol>
-<p>如果开发一个应用<code>myserver</code>,那么目录结构就是：<code>$GOPATH/src/myserver</code>; golang在编译的时候是会自动去找GOPATH下src目录的。这样你可以把所有相关联的项目放到一个GOPATH路径下，不同的项目之间可以隔开，也可把所有项目都放在一个GOPATH下，这样这个路径下的所有包，你都可以直接导入。当然你也可以照样像Java那样包路径结构，只是需要记住要将项目根路径指定为GOPATH，不然编译就会报错。</p>
-<h2 id="golang的包"><a href="#golang的包" class="headerlink" title="golang的包"></a>golang的包</h2><p>你可能注意到了我们上面<code>hello go</code>的第二行 <code>import &quot;fmt&quot;</code>；这里的作用就是导入fmt包，这个包在哪里了？golang寻找import包的优先级为：GOROOT–&gt;GOPATH;如果找不到你也可以使用<code>go get</code>工具，它会帮你自动下载包;</p>
-<p>项目开发中项目结构如下：</p>
-<p><img src="/images/qiniu/2019-07-14-22-14-21.png" alt="2019-07-14-22-14-21"></p>
-<p>我们看一个包导入的例子：</p>
-<p><img src="/images/qiniu/2019-07-14-22-42-50.png" alt="2019-07-14-22-42-50"></p>
-<p>我在项目中的handler下定一个了方法<code>Hello</code>，包名为<code>handler</code>;正常情况下，在main包中我们如果掉用它的话就是<code>handler.Hello()</code>;如下：</p>
-<p><img src="/images/qiniu/2019-07-14-22-44-21.png" alt="2019-07-14-22-44-21"></p>
-<p>可以看到，main 方法中出了一场，报的是找不到handler包。这个时候要看一下我们的GOPATH了，之前我们也说了golang是先从goroot再从gopath去寻找包的。goroot，一般大家也不会将源码放那里，我们现在看下GOPATH的目录：</p>
-<p><img src="/images/qiniu/2019-07-14-22-46-46.png" alt="2019-07-14-22-46-46"></p>
-<p>这下可以看到了吧。我们的项目路径是：<code>D:\workspace-paas\goinaction</code>;但是gopath的路径是<code>D:\Users\chenzj001\go</code></p>
-<p>我们可以知道GOPATH下是没有我们的handler包的。这个时候的修改方式有两个：</p>
-<ol>
-<li>将项目移到gopath目录的src目录下；</li>
-<li>将GOPATH设置为当前的工作目录；</li>
-</ol>
-<p>如果采用1的话那么恭喜你，问题解决。如果采用2,哈，那么恭喜你，你肯定是Java派golang开发者，同道中人啊。你可能会想，我不是将GOPATH指到当前项目根路径了么？怎么还是导入不了。唉~。其实就像前面说的，go寻找包的时候都是去src目录下找的。所以你需要在项目路径下再建立一个src目录，再将源码放进去，就能解决异常了，采用2，就相当于是你要用Java开发的包路径结构。这种其实是不推荐的，入乡随俗还是独树一帜看你选择了。我是觉得按照大家的约定会比较好。</p>
-<p>我们采用第一种方式，你看下图：</p>
-<p><img src="/images/qiniu/2019-07-14-22-59-40.png" alt="2019-07-14-22-59-40"></p>
-<p>你可以看到上面的gopath。</p>
-<blockquote>
-<p>ps: 其实你是可以同时设置多个GOPATH的哦，可以自己动手尝试一下。</p>
-</blockquote>
-<h2 id="GO-自带的工具"><a href="#GO-自带的工具" class="headerlink" title="GO 自带的工具"></a>GO 自带的工具</h2><p>GO 自带了一些常用工具，使用<code>go --help</code>就能看到。这里介绍常用的几个：</p>
-<ol>
-<li><code>go build</code>,编译包</li>
-<li><code>go run</code>,编译运行</li>
-<li><code>go fmt</code>,golang内置的将代码格式化</li>
-<li><code>go doc</code>,golang的文档</li>
-<li><code>go test</code>,golang测试工具</li>
-<li><code>go get</code>,下载导入外部包</li>
-</ol>
-<p>go 也可以编译成其它平台的可执行文件，比如window下编译成Linux下的执行文件<a href="http://chenzhijun.top/2019/03/31/windows-compile-golang-to-linux-running-script/">golang编译成Linux环境下的二进制文件</a>。</p>
-<p>go 的这些工具还是挺有用的，没事可以多用用。</p>
-<p>这篇文章介绍了下go的发展史，也写下了<code>hello go</code>之后介绍了gopath，goroot，以及go自带的工具。其实golang其实是面向程序员友好的，对比Java动辄就是几十行代码，golang确实很简洁。不过对比Java来说，golang的生态其实感觉并没有Java那么的完善，另一方面，golang的包管理，我到现在还是有点。。还有一个就是在国内访问golang官网需要科学上网。这有点像什么了，我要推广给大家用，但是大家用起来又是各种阻碍，在已有的产品能实现需求的产品上，如果新产品不能提供很好的体验，其实要退光是有困难的。另一方面，golang其实面向的最多的感觉还是C/C++来转型。一门语言其实有它的优势，也肯定有它的不足。适合自己的业务场景，个人发展路径，取舍在于自己，我从一开始其实挺不喜欢golang的，但最近学会不排斥的心态去了解之后，感觉是真的爽。个人观点，不喜勿喷。一千个观众有一千个哈姆雷特。</p>
-]]></content>
-      <categories>
-        <category>Go</category>
-      </categories>
-      <tags>
-        <tag>golang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hibernate 校验参数</title>
     <url>/2018/01/31/hibernater-validate-properties/</url>
     <content><![CDATA[<h1 id="Hibernater-Validator-校验参数"><a href="#Hibernater-Validator-校验参数" class="headerlink" title="Hibernater Validator 校验参数"></a>Hibernater Validator 校验参数</h1><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>如果我们使用spring mvc 那么肯定知道在方法中我们可以使用注解对参数进行校验：</p>
@@ -2091,31 +2091,6 @@ channel分为非缓存chan和有缓存chan，  -->
       </tags>
   </entry>
   <entry>
-    <title>编写属于自己的springboot-starter</title>
-    <url>/2018/01/31/how-to-build-springboot-starter/</url>
-    <content><![CDATA[<h1 id="编写属于自己的springboot-starter"><a href="#编写属于自己的springboot-starter" class="headerlink" title="编写属于自己的springboot-starter"></a>编写属于自己的springboot-starter</h1><p>最近手痒，想实现一下自己的starter，感概于springboot的starter导入方便，要是能有一款自己的starter，那样多么好，比起之前的maven导入方式，好像更有意思。<br>主要可以加重对springboot的自动配置装载的理解。</p>
-<h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><p>starter的简易目录如下，”autoconfiguration”,”domain”,”service”,”META-INF”：</p>
-<span id="more"></span>
-<p><img src="/images/qiniu/2018-01-31-11-03-47.png" alt="2018-01-31-11-03-47"></p>
-<p>这几个包的作用如下：<br><code>domain</code>一般放置配置的参数，比如我们通常在<code>application.properties</code>中用到的<code>xxx.yyy=value</code>,其中<code>xxx.yyy</code>就是在这里配置的,前面的<code>xxx</code>我们一般指前缀，用以标识某个类级别，后面的<code>yyy</code><br>一般会是指代属性，如果是驼峰标识的属性在properties文件中，默认为<code>-</code>连接。其中前缀的定义方式使用注解<code>@ConfigurationProperties</code></p>
-<p><img src="/images/qiniu/2018-01-31-11-12-21.png" alt="2018-01-31-11-12-21"></p>
-<p><code>service</code>服务的实际配置使用，我们获取到参数之后，总要将参数用起来，那么参数配置才有价值，而这些都是在service中做处理，也就是业务处理。所以可以想象的到，在service类里面，我们肯定需要一个<br>domain的类来接收配置的参数。</p>
-<p><img src="/images/qiniu/2018-01-31-11-16-39.png" alt="2018-01-31-11-16-39"></p>
-<p><code>autoconfiguration</code>包其实就是我们的自动装载配置了，它需要告诉系统我们要让哪个配置类自动装载，spring的ioc要管理bean，前提就是这个bean要被加载到了容器中，所以我们需要注入配置类(domain)<br>使用@Configuration指明当前类是配置类，使用@EnableConfigurationProperties指明快速注册到spring中的类。</p>
-<p><img src="/images/qiniu/2018-01-31-11-20-27.png" alt="2018-01-31-11-20-27"></p>
-<p>另外就是resource下的META-INF包下的<code>spring.factories</code>文件，这里说的是元信息，也是指明我们的配置启动类是在哪个目录，在其它的spring项目里面也可以看到这个文件。</p>
-<p><img src="/images/qiniu/2018-01-31-19-33-18.png" alt="2018-01-31-19-33-18"></p>
-<p>现在我们看下pom文件我们导入的包：</p>
-<p><img src="/images/qiniu/2018-01-31-19-35-17.png" alt="2018-01-31-19-35-17"></p>
-<p>我在这里加入了configuration-processor包，这种情况下能够方便我们在配置文件中使用我们自定义的前缀，然后进行提示。</p>
-<p><img src="/images/qiniu/2018-01-31-19-37-34.png" alt="2018-01-31-19-37-34"></p>
-<p>注意到我这里有些jar包引入的时候使用optional，这种方式声明的包不会让jar包顺延，也就是在使用方我们仍需导入这个包才能使用。</p>
-]]></content>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎样用SSH连接VirtualBox</title>
     <url>/2017/04/26/how-to-connect-virtual-box-with-ssh/</url>
     <content><![CDATA[<h3 id="用-iterm2-ssh连接virtual-box中运行的centos-minimal版本"><a href="#用-iterm2-ssh连接virtual-box中运行的centos-minimal版本" class="headerlink" title="用 iterm2 ssh连接virtual box中运行的centos minimal版本"></a>用 iterm2 ssh连接virtual box中运行的centos minimal版本</h3><h4 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h4><ul>
@@ -2155,6 +2130,31 @@ channel分为非缓存chan和有缓存chan，  -->
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编写属于自己的springboot-starter</title>
+    <url>/2018/01/31/how-to-build-springboot-starter/</url>
+    <content><![CDATA[<h1 id="编写属于自己的springboot-starter"><a href="#编写属于自己的springboot-starter" class="headerlink" title="编写属于自己的springboot-starter"></a>编写属于自己的springboot-starter</h1><p>最近手痒，想实现一下自己的starter，感概于springboot的starter导入方便，要是能有一款自己的starter，那样多么好，比起之前的maven导入方式，好像更有意思。<br>主要可以加重对springboot的自动配置装载的理解。</p>
+<h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><p>starter的简易目录如下，”autoconfiguration”,”domain”,”service”,”META-INF”：</p>
+<span id="more"></span>
+<p><img src="/images/qiniu/2018-01-31-11-03-47.png" alt="2018-01-31-11-03-47"></p>
+<p>这几个包的作用如下：<br><code>domain</code>一般放置配置的参数，比如我们通常在<code>application.properties</code>中用到的<code>xxx.yyy=value</code>,其中<code>xxx.yyy</code>就是在这里配置的,前面的<code>xxx</code>我们一般指前缀，用以标识某个类级别，后面的<code>yyy</code><br>一般会是指代属性，如果是驼峰标识的属性在properties文件中，默认为<code>-</code>连接。其中前缀的定义方式使用注解<code>@ConfigurationProperties</code></p>
+<p><img src="/images/qiniu/2018-01-31-11-12-21.png" alt="2018-01-31-11-12-21"></p>
+<p><code>service</code>服务的实际配置使用，我们获取到参数之后，总要将参数用起来，那么参数配置才有价值，而这些都是在service中做处理，也就是业务处理。所以可以想象的到，在service类里面，我们肯定需要一个<br>domain的类来接收配置的参数。</p>
+<p><img src="/images/qiniu/2018-01-31-11-16-39.png" alt="2018-01-31-11-16-39"></p>
+<p><code>autoconfiguration</code>包其实就是我们的自动装载配置了，它需要告诉系统我们要让哪个配置类自动装载，spring的ioc要管理bean，前提就是这个bean要被加载到了容器中，所以我们需要注入配置类(domain)<br>使用@Configuration指明当前类是配置类，使用@EnableConfigurationProperties指明快速注册到spring中的类。</p>
+<p><img src="/images/qiniu/2018-01-31-11-20-27.png" alt="2018-01-31-11-20-27"></p>
+<p>另外就是resource下的META-INF包下的<code>spring.factories</code>文件，这里说的是元信息，也是指明我们的配置启动类是在哪个目录，在其它的spring项目里面也可以看到这个文件。</p>
+<p><img src="/images/qiniu/2018-01-31-19-33-18.png" alt="2018-01-31-19-33-18"></p>
+<p>现在我们看下pom文件我们导入的包：</p>
+<p><img src="/images/qiniu/2018-01-31-19-35-17.png" alt="2018-01-31-19-35-17"></p>
+<p>我在这里加入了configuration-processor包，这种情况下能够方便我们在配置文件中使用我们自定义的前缀，然后进行提示。</p>
+<p><img src="/images/qiniu/2018-01-31-19-37-34.png" alt="2018-01-31-19-37-34"></p>
+<p>注意到我这里有些jar包引入的时候使用optional，这种方式声明的包不会让jar包顺延，也就是在使用方我们仍需导入这个包才能使用。</p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -2884,6 +2884,61 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </tags>
   </entry>
   <entry>
+    <title>Java 枚举和注解总结</title>
+    <url>/2018/03/22/java-enum-anotation/</url>
+    <content><![CDATA[<h1 id="Java-枚举和注解总结"><a href="#Java-枚举和注解总结" class="headerlink" title="Java 枚举和注解总结"></a>Java 枚举和注解总结</h1><h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><h3 id="没有枚举前我们基本上常量来定义值："><a href="#没有枚举前我们基本上常量来定义值：" class="headerlink" title="没有枚举前我们基本上常量来定义值："></a>没有枚举前我们基本上常量来定义值：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Color</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> GREEN = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RED   = <span class="number">1</span>;</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>如果有了枚举后我们会怎样了？</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Color</span></span>&#123;</span><br><span class="line">    GREEN,RED,BLACk,.......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码是不是就清晰很多了？而且使用的时候输出的值我们是可以使用GREEN，是不是可以很明白的知道是什么颜色？</p>
+<h3 id="枚举的创建"><a href="#枚举的创建" class="headerlink" title="枚举的创建"></a>枚举的创建</h3><p>枚举是继承自<code>Enum</code>，使用<code>enum</code>关键字。</p>
+<h3 id="枚举的使用场景"><a href="#枚举的使用场景" class="headerlink" title="枚举的使用场景"></a>枚举的使用场景</h3><p>枚举适合在<strong>固定的常量</strong>下使用，比如四季，月份，星期；这种基本公认的而且不会有改变的场景下使用。</p>
+<h3 id="编译器中的枚举"><a href="#编译器中的枚举" class="headerlink" title="编译器中的枚举"></a>编译器中的枚举</h3><p>编译器默认帮我们实现了很多枚举中的方法，比如equals(),hashCode(),toString,values(),valueOf(String)等。这些都是编译器帮我们做的。</p>
+<h3 id="枚举中的注意事项"><a href="#枚举中的注意事项" class="headerlink" title="枚举中的注意事项"></a>枚举中的注意事项</h3><ol>
+<li>不能使用static，final修饰枚举，因为它是隐式的final类型的；</li>
+<li>因为是final类型，所以我们也就知道它是<strong>不能被继承</strong>的；</li>
+<li>从Enum继承的clone是final类型的，枚举是不能重写clone方法的，并且Enum里面的clone方法直接抛出异常，所以enum是不能被clone的;</li>
+<li>enum中的ordinal是强依赖于枚举实例的定义顺序的，所以用ordinal来做判断顺序是不推荐的，因为只要在非最后加入实例，那么就会改变整体的顺序;如果是需要顺序可以自定义属性。</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><h3 id="注解出现前"><a href="#注解出现前" class="headerlink" title="注解出现前"></a>注解出现前</h3><p>注解的作用我理解为就是用来约定一些数据定义，让我们可以在某个属性或者某个地方做个标记。在注解出现前能做这个的应该是XML，我们通常在xml中定义类或者属性的相关配置。而有了注解我们可以在代码中直接定义了。</p>
+<h3 id="注解的分类"><a href="#注解的分类" class="headerlink" title="注解的分类"></a>注解的分类</h3><ol>
+<li>定义注解的注解，元注解：<code>@Rentation</code>，<code>@Target</code>，<code>@Document</code>，<code>@Inherited</code></li>
+<li>jdk内置注解：<code>@Override</code>，<code>@Deprecated</code>…</li>
+<li>自定义的注解</li>
+<li>spring等外部注解</li>
+</ol>
+<p>作用场景：</p>
+<p><code>@Rentation</code>：Source，Class，Runtime</p>
+<p>作用目标域：</p>
+<p><code>@Target</code>：Construct，Field，Local_variable,method,package,paramter,type</p>
+<h3 id="注解的定义"><a href="#注解的定义" class="headerlink" title="注解的定义"></a>注解的定义</h3><p>注解的定义使用<code>@interface</code>关键字，并且使用元注解进行标注：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Rentation(Rentation.Runtime)</span></span><br><span class="line"><span class="meta">@Target(ElementType.Field)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> XxAnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">values</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注解属性"><a href="#注解属性" class="headerlink" title="注解属性"></a>注解属性</h3><p>注解里面的属性只能使用以下6种类型来定义：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 所有的基本类型；</span><br><span class="line"><span class="number">2.</span> String</span><br><span class="line"><span class="number">3.</span> Class</span><br><span class="line"><span class="number">4.</span> <span class="class"><span class="keyword">enum</span></span></span><br><span class="line"><span class="class">5. <span class="title">Annotation</span></span></span><br><span class="line"><span class="class">6. 以上类型的数组类型</span></span><br></pre></td></tr></table></figure>
+
+<p>注解不允许使用基本类型的包装类来定义里面的注解属性。注解里面的属性都是使用方法的方式来定义的。有点类似接口方法。<br>注解的属性需要注意一下几点：</p>
+<ol>
+<li>要么具有默认值，要么在使用注解的时候提供属性的值；</li>
+<li>非基本类型的元素，默认值不能为null；</li>
+<li>如果只有一个属性，那么可以设置为value，在使用注解的时候就可以直接赋值；<code>@XxAnotation(&quot;ok&quot;)</code></li>
+</ol>
+<blockquote>
+<p>ps:注解是不能继承的。</p>
+</blockquote>
+<h3 id="注解处理器"><a href="#注解处理器" class="headerlink" title="注解处理器"></a>注解处理器</h3><p>我们定义了注解，设置了元素值。那么就必须要有一个处理器来进行注解处理。这个可以看看之前的<a href="http://www.chenzhijun.top/2017/08/19/java-sensitive/">Java 特殊字段脱敏</a>，我们可以使用反射来获取注解定义的值，然后进行业务处理。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java Enum 与 Json 的互相转换</title>
     <url>/2019/07/06/java-enum-how-to-generate-json/</url>
     <content><![CDATA[<h1 id="Java-Enum-与-Json-的互相转换"><a href="#Java-Enum-与-Json-的互相转换" class="headerlink" title="Java Enum 与 Json 的互相转换"></a>Java Enum 与 Json 的互相转换</h1><p>在Java中使用Enum的频率很高，我们也经常使用 Enum 作为类的一个属性定义。那么如果需要将Enum转换成Json或者将Json传转换成Enum该怎么操作了？接下来我们看一下。Enum序列化成Json的几种方式。</p>
@@ -2946,61 +3001,6 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </tags>
   </entry>
   <entry>
-    <title>Java 枚举和注解总结</title>
-    <url>/2018/03/22/java-enum-anotation/</url>
-    <content><![CDATA[<h1 id="Java-枚举和注解总结"><a href="#Java-枚举和注解总结" class="headerlink" title="Java 枚举和注解总结"></a>Java 枚举和注解总结</h1><h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><h3 id="没有枚举前我们基本上常量来定义值："><a href="#没有枚举前我们基本上常量来定义值：" class="headerlink" title="没有枚举前我们基本上常量来定义值："></a>没有枚举前我们基本上常量来定义值：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Color</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> GREEN = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RED   = <span class="number">1</span>;</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">    ....</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p>如果有了枚举后我们会怎样了？</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Color</span></span>&#123;</span><br><span class="line">    GREEN,RED,BLACk,.......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>代码是不是就清晰很多了？而且使用的时候输出的值我们是可以使用GREEN，是不是可以很明白的知道是什么颜色？</p>
-<h3 id="枚举的创建"><a href="#枚举的创建" class="headerlink" title="枚举的创建"></a>枚举的创建</h3><p>枚举是继承自<code>Enum</code>，使用<code>enum</code>关键字。</p>
-<h3 id="枚举的使用场景"><a href="#枚举的使用场景" class="headerlink" title="枚举的使用场景"></a>枚举的使用场景</h3><p>枚举适合在<strong>固定的常量</strong>下使用，比如四季，月份，星期；这种基本公认的而且不会有改变的场景下使用。</p>
-<h3 id="编译器中的枚举"><a href="#编译器中的枚举" class="headerlink" title="编译器中的枚举"></a>编译器中的枚举</h3><p>编译器默认帮我们实现了很多枚举中的方法，比如equals(),hashCode(),toString,values(),valueOf(String)等。这些都是编译器帮我们做的。</p>
-<h3 id="枚举中的注意事项"><a href="#枚举中的注意事项" class="headerlink" title="枚举中的注意事项"></a>枚举中的注意事项</h3><ol>
-<li>不能使用static，final修饰枚举，因为它是隐式的final类型的；</li>
-<li>因为是final类型，所以我们也就知道它是<strong>不能被继承</strong>的；</li>
-<li>从Enum继承的clone是final类型的，枚举是不能重写clone方法的，并且Enum里面的clone方法直接抛出异常，所以enum是不能被clone的;</li>
-<li>enum中的ordinal是强依赖于枚举实例的定义顺序的，所以用ordinal来做判断顺序是不推荐的，因为只要在非最后加入实例，那么就会改变整体的顺序;如果是需要顺序可以自定义属性。</li>
-</ol>
-<span id="more"></span>
-
-<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><h3 id="注解出现前"><a href="#注解出现前" class="headerlink" title="注解出现前"></a>注解出现前</h3><p>注解的作用我理解为就是用来约定一些数据定义，让我们可以在某个属性或者某个地方做个标记。在注解出现前能做这个的应该是XML，我们通常在xml中定义类或者属性的相关配置。而有了注解我们可以在代码中直接定义了。</p>
-<h3 id="注解的分类"><a href="#注解的分类" class="headerlink" title="注解的分类"></a>注解的分类</h3><ol>
-<li>定义注解的注解，元注解：<code>@Rentation</code>，<code>@Target</code>，<code>@Document</code>，<code>@Inherited</code></li>
-<li>jdk内置注解：<code>@Override</code>，<code>@Deprecated</code>…</li>
-<li>自定义的注解</li>
-<li>spring等外部注解</li>
-</ol>
-<p>作用场景：</p>
-<p><code>@Rentation</code>：Source，Class，Runtime</p>
-<p>作用目标域：</p>
-<p><code>@Target</code>：Construct，Field，Local_variable,method,package,paramter,type</p>
-<h3 id="注解的定义"><a href="#注解的定义" class="headerlink" title="注解的定义"></a>注解的定义</h3><p>注解的定义使用<code>@interface</code>关键字，并且使用元注解进行标注：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Rentation(Rentation.Runtime)</span></span><br><span class="line"><span class="meta">@Target(ElementType.Field)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> XxAnotation&#123;</span><br><span class="line">    <span class="function">String <span class="title">values</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="注解属性"><a href="#注解属性" class="headerlink" title="注解属性"></a>注解属性</h3><p>注解里面的属性只能使用以下6种类型来定义：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 所有的基本类型；</span><br><span class="line"><span class="number">2.</span> String</span><br><span class="line"><span class="number">3.</span> Class</span><br><span class="line"><span class="number">4.</span> <span class="class"><span class="keyword">enum</span></span></span><br><span class="line"><span class="class">5. <span class="title">Annotation</span></span></span><br><span class="line"><span class="class">6. 以上类型的数组类型</span></span><br></pre></td></tr></table></figure>
-
-<p>注解不允许使用基本类型的包装类来定义里面的注解属性。注解里面的属性都是使用方法的方式来定义的。有点类似接口方法。<br>注解的属性需要注意一下几点：</p>
-<ol>
-<li>要么具有默认值，要么在使用注解的时候提供属性的值；</li>
-<li>非基本类型的元素，默认值不能为null；</li>
-<li>如果只有一个属性，那么可以设置为value，在使用注解的时候就可以直接赋值；<code>@XxAnotation(&quot;ok&quot;)</code></li>
-</ol>
-<blockquote>
-<p>ps:注解是不能继承的。</p>
-</blockquote>
-<h3 id="注解处理器"><a href="#注解处理器" class="headerlink" title="注解处理器"></a>注解处理器</h3><p>我们定义了注解，设置了元素值。那么就必须要有一个处理器来进行注解处理。这个可以看看之前的<a href="http://www.chenzhijun.top/2017/08/19/java-sensitive/">Java 特殊字段脱敏</a>，我们可以使用反射来获取注解定义的值，然后进行业务处理。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>FastJson 转换Map问题</title>
     <url>/2017/08/19/java-fastjson-map/</url>
     <content><![CDATA[<h2 id="使用FastJson-转换成HashMap-lt-String-List-gt-问题"><a href="#使用FastJson-转换成HashMap-lt-String-List-gt-问题" class="headerlink" title="使用FastJson 转换成HashMap&lt;String,List&gt;问题"></a>使用FastJson 转换成HashMap&lt;String,List<Object>&gt;问题</h2><h3 id="背景需求"><a href="#背景需求" class="headerlink" title="背景需求"></a>背景需求</h3><p>有个json串需要转换成Map&lt;String,List<Object>&gt;这种格式,在使用fastjson的时候发现出现异常,调试后发现是类型转化出错,它将List<Object>转成了JSONArray<JSONObject>,这个就很尴尬了.这个问题也找了很久,一直以为它可以直接转换成我想要的List<Object>,没想到最后来了个JSONArray.</p>
@@ -3015,31 +3015,6 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 类转 Json 时属性名使用下划线</title>
-    <url>/2019/07/06/java-json-generate-with-underline/</url>
-    <content><![CDATA[<h1 id="Java-类转-Json-时属性名使用下划线"><a href="#Java-类转-Json-时属性名使用下划线" class="headerlink" title="Java 类转 Json 时属性名使用下划线"></a>Java 类转 Json 时属性名使用下划线</h1><p>很多时候和其它系统对接的时候，不太喜欢用驼峰的方式，毕竟如果是给前端的api，写个驼峰总感觉有点怪异，总喜欢将属性使用下划线。也就是一个<code>bookName</code>,给前端的时候是：<code>book_name</code>，当然如果是后台系统，还是使用驼峰啊。</p>
-<h2 id="Java-统一-json-为下划线"><a href="#Java-统一-json-为下划线" class="headerlink" title="Java 统一 json 为下划线"></a>Java 统一 json 为下划线</h2><p>在 Java 中有两种方式可以实现这种方式，一种是全局的，一种是局部。</p>
-<span id="more"></span>
-<h3 id="全局修改属性的json名为下划线格式"><a href="#全局修改属性的json名为下划线格式" class="headerlink" title="全局修改属性的json名为下划线格式"></a>全局修改属性的json名为下划线格式</h3><p>如果需要全局的修改，那么只需要在类上面使用<code>@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</code>即可。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.PropertyNamingStrategy;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.annotation.JsonNaming;</span><br><span class="line"></span><br><span class="line"><span class="meta">@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    Object state;</span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(Object state)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state=state;</span><br><span class="line">        <span class="keyword">this</span>.bookName=<span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(Object state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>转换后的json为：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;state&quot;</span>: <span class="string">&quot;Success&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;book_name&quot;</span>: <span class="string">&quot;《json转换》&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="局部修改属性的json名为下划线格式"><a href="#局部修改属性的json名为下划线格式" class="headerlink" title="局部修改属性的json名为下划线格式"></a>局部修改属性的json名为下划线格式</h3><p>局部的方式就是使用<code>@JsonProperty(value = &quot;book_name&quot;)</code>这个作用在属性上：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonProperty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    String state;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JsonProperty(value = &quot;book_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">        <span class="keyword">this</span>.bookName = <span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>测试类为：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jsonTest</span><span class="params">()</span> <span class="keyword">throws</span> JsonProcessingException </span>&#123;</span><br><span class="line">    Instance instance = <span class="keyword">new</span> Instance(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    System.out.println(objectMapper.writeValueAsString(instance));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Json</tag>
       </tags>
   </entry>
   <entry>
@@ -3100,6 +3075,31 @@ Java 8 中，函数成为了“第一等公民”，这就意味着，我们可�
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 类转 Json 时属性名使用下划线</title>
+    <url>/2019/07/06/java-json-generate-with-underline/</url>
+    <content><![CDATA[<h1 id="Java-类转-Json-时属性名使用下划线"><a href="#Java-类转-Json-时属性名使用下划线" class="headerlink" title="Java 类转 Json 时属性名使用下划线"></a>Java 类转 Json 时属性名使用下划线</h1><p>很多时候和其它系统对接的时候，不太喜欢用驼峰的方式，毕竟如果是给前端的api，写个驼峰总感觉有点怪异，总喜欢将属性使用下划线。也就是一个<code>bookName</code>,给前端的时候是：<code>book_name</code>，当然如果是后台系统，还是使用驼峰啊。</p>
+<h2 id="Java-统一-json-为下划线"><a href="#Java-统一-json-为下划线" class="headerlink" title="Java 统一 json 为下划线"></a>Java 统一 json 为下划线</h2><p>在 Java 中有两种方式可以实现这种方式，一种是全局的，一种是局部。</p>
+<span id="more"></span>
+<h3 id="全局修改属性的json名为下划线格式"><a href="#全局修改属性的json名为下划线格式" class="headerlink" title="全局修改属性的json名为下划线格式"></a>全局修改属性的json名为下划线格式</h3><p>如果需要全局的修改，那么只需要在类上面使用<code>@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</code>即可。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.PropertyNamingStrategy;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.annotation.JsonNaming;</span><br><span class="line"></span><br><span class="line"><span class="meta">@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    Object state;</span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(Object state)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state=state;</span><br><span class="line">        <span class="keyword">this</span>.bookName=<span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(Object state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>转换后的json为：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;state&quot;</span>: <span class="string">&quot;Success&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;book_name&quot;</span>: <span class="string">&quot;《json转换》&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="局部修改属性的json名为下划线格式"><a href="#局部修改属性的json名为下划线格式" class="headerlink" title="局部修改属性的json名为下划线格式"></a>局部修改属性的json名为下划线格式</h3><p>局部的方式就是使用<code>@JsonProperty(value = &quot;book_name&quot;)</code>这个作用在属性上：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> me.chenzhijun.enumjson;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonProperty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    String state;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JsonProperty(value = &quot;book_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">        <span class="keyword">this</span>.bookName = <span class="string">&quot;《json转换》&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(String state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBookName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> bookName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBookName</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bookName = bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>测试类为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jsonTest</span><span class="params">()</span> <span class="keyword">throws</span> JsonProcessingException </span>&#123;</span><br><span class="line">    Instance instance = <span class="keyword">new</span> Instance(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    System.out.println(objectMapper.writeValueAsString(instance));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Json</tag>
       </tags>
   </entry>
   <entry>
@@ -3260,45 +3260,6 @@ https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
       </tags>
   </entry>
   <entry>
-    <title>Java 多线程随笔</title>
-    <url>/2018/03/23/java-thread-guidance/</url>
-    <content><![CDATA[<h1 id="Java多线程随笔"><a href="#Java多线程随笔" class="headerlink" title="Java多线程随笔"></a>Java多线程随笔</h1><p>最近匆匆的看了一下多线程的知识，其实在我们现在的系统中，我只在一个地方用了多线程，异步刷缓存的时候使用到了。其它地方并没有使用。这个可能跟公司局限性业务有关系，毕竟大家都听过一句话，20%的人掌握着80%的财富。而我们服务的就是那20%里面的一部分。</p>
-<span id="more"></span>
-
-<h2 id="多线程的产生"><a href="#多线程的产生" class="headerlink" title="多线程的产生"></a>多线程的产生</h2><p>硬件的摩尔定律已经被打破了，所以现在多核处理器下使用多线程那是大大的提高效率啊。毕竟5个人同时赚钱，跟5个人轮流赚钱那可不是差的一点半点。所以为了<strong>合理</strong>的利用资源，那必须的挤榨一点机器性能啊。</p>
-<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>多线程未必一定比单线程快，为什么？每个东西都是有正反面的。多线程其实对于计算机来说是一种cpu时间切片。像《java并发编程艺术》里面说的，你在看英文书的时候，如果在某一页遇到不知道的单词，你停下来查字典，查完字典你还得返回去继续读。这个过程中读书，查字典就是两个线程，你就是cpu，你给每个线程一些时间让他们做自己的事情。但是在这个过程中，在你从看书切换到查字典再切换到看书这个过程中，你其实还需要记住看书的位置吧，这种从一件事切换到另一件事再从另一件事切回来，总的有耗费吧？术语称之为<strong>上下文切换</strong>。</p>
-<p>减少上下问切换的方式：</p>
-<ol>
-<li>无锁并发编程。使用hash算法进行数据id取模分段，特定的线程处理不同段的数据</li>
-<li>使用cas算法，java的atomic包，cas=compare and swap</li>
-<li>使用最少线程，避免创建不必要的线程</li>
-<li>使用协程，在单线程里面实现多任务调度，并在单线程里面维持多个任务间的切换。</li>
-</ol>
-<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>死锁的概念就是有两个线程A，B。线程A，B都需要a,b资源，线程A已经占有了a资源，需要b资源，线程B已经占有了b资源，需要a资源；所以A等待B，B等待A。这样就造成了死锁。这个就是那个著名的哲学家吃饭的问题，5个人，5根筷子，嗯就是这个问题。</p>
-<h2 id="线程执行任务"><a href="#线程执行任务" class="headerlink" title="线程执行任务"></a>线程执行任务</h2><ol>
-<li><p>runnable接口，不带返回值</p>
-</li>
-<li><p>Callable接口，返回Future对象</p>
-</li>
-</ol>
-<p>定义任务：实现runnable，重写run方法。一个线程都需要使用Thread.start()进行启动。线程的运行由线程调度器来选择，线程调度机制非确定性的。</p>
-<p>callable接口—-&gt;实现call()—-&gt;executorService.submit()—-&gt;Future&lt;—–访问Future的isDone()是否完成</p>
-<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p><code>FixedThreadPool</code>:一次性预先加载线程，限制线程的数量;<br><code>CachedThreadPool</code>:创建与所需数量相同的线程;<br><code>SingleThreadPool</code>:线程数量为1的fixedThreadPool;</p>
-<h2 id="sleep-和wait-的区别"><a href="#sleep-和wait-的区别" class="headerlink" title="sleep()和wait()的区别"></a>sleep()和wait()的区别</h2><p>sleep()调用的时候不会释放锁，wait()是会阻塞当前线程同时释放锁。</p>
-<h2 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h2><p>优先级别主要是给线程调度器用，如果同一优先级也是随机的。建议使用<code>MAX_PRIORITY</code>,<code>NORM_PRIORITY</code>,<code>MIN_PRIORITY</code>。</p>
-<p>线程让步：yield(),然后相同优先级的其它线程；<br>join()，自己会挂起，让join的线程先完成;</p>
-<p>后台线程,在调用start方法之前设置daemon。</p>
-<h2 id="java并发包"><a href="#java并发包" class="headerlink" title="java并发包"></a>java并发包</h2><p>java有个juc的并发包。要再仔细看看。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java-基础之string</title>
     <url>/2017/08/08/java-string/</url>
     <content><![CDATA[<h2 id="Java-基础-String"><a href="#Java-基础-String" class="headerlink" title="Java 基础-String"></a>Java 基础-String</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The class String includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. Case mapping is based on the Unicode Standard version specified by the Character class.</span><br><span class="line"></span><br><span class="line">&#96;String&#96;类包括了一系列字符的方法，比如：比较字符，查找字符，子字符串，创建一个全是大写或者全是小写的字符。匹配是在unicode标准版本规范在&#96;Character&#96; 类的基础上。</span><br><span class="line"></span><br><span class="line">The Java language provides special support for the string concatenation operator ( + ), and for conversion of other objects to strings. String concatenation is implemented through the StringBuilder(or StringBuffer) class and its append method. String conversions are implemented through the method toString, defined by Object and inherited by all classes in Java. For additional information on string concatenation and conversion, see Gosling, Joy, and Steele, The Java Language Specification.</span><br><span class="line"></span><br><span class="line">Java语言提供了对字符的操作符&#96;+&#96;做了特殊的支持,并且对其他的objects转换成string也做了相应支持。String的连接是StringBuilder(或者说StringBuffer)来实现的它的append方法的。String转换是通过实现定义在Object(所有的java方法都继承了它)的toString方法。更多的额外的字符操作和转换的特殊操作，看看gosling，joy，steele，写的《java语言规范》。</span><br><span class="line"></span><br><span class="line">Unless otherwise noted, passing a null argument to a constructor or method in this class will cause a NullPointerException to be thrown.</span><br><span class="line"></span><br><span class="line">除非有额外的标记，传递一个null参数给一个构造方法或者非构造方法在这个类中，会导致&#96;NullPointerException&#96;被抛出。</span><br><span class="line"></span><br><span class="line">A String represents a string in the UTF-16 format in which supplementary characters are represented by surrogate pairs (see the section Unicode Character Representations in the Character class for more information). Index values refer to char code units, so a supplementary character uses two positions in a String.</span><br><span class="line"></span><br><span class="line">一个String呈现的字符串是用UTF-16格式，不够的补位。</span><br><span class="line"></span><br><span class="line">The String class provides methods for dealing with Unicode code points (i.e., characters), in addition to those for dealing with Unicode code units (i.e., char values).</span><br><span class="line"></span><br><span class="line">这个String类提供方法处理Unicode代码点和unicode代码单元。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -3348,6 +3309,45 @@ https://bugs.java.com/bugdatabase/view_bug.do?bug_id=6423457
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 多线程随笔</title>
+    <url>/2018/03/23/java-thread-guidance/</url>
+    <content><![CDATA[<h1 id="Java多线程随笔"><a href="#Java多线程随笔" class="headerlink" title="Java多线程随笔"></a>Java多线程随笔</h1><p>最近匆匆的看了一下多线程的知识，其实在我们现在的系统中，我只在一个地方用了多线程，异步刷缓存的时候使用到了。其它地方并没有使用。这个可能跟公司局限性业务有关系，毕竟大家都听过一句话，20%的人掌握着80%的财富。而我们服务的就是那20%里面的一部分。</p>
+<span id="more"></span>
+
+<h2 id="多线程的产生"><a href="#多线程的产生" class="headerlink" title="多线程的产生"></a>多线程的产生</h2><p>硬件的摩尔定律已经被打破了，所以现在多核处理器下使用多线程那是大大的提高效率啊。毕竟5个人同时赚钱，跟5个人轮流赚钱那可不是差的一点半点。所以为了<strong>合理</strong>的利用资源，那必须的挤榨一点机器性能啊。</p>
+<h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>多线程未必一定比单线程快，为什么？每个东西都是有正反面的。多线程其实对于计算机来说是一种cpu时间切片。像《java并发编程艺术》里面说的，你在看英文书的时候，如果在某一页遇到不知道的单词，你停下来查字典，查完字典你还得返回去继续读。这个过程中读书，查字典就是两个线程，你就是cpu，你给每个线程一些时间让他们做自己的事情。但是在这个过程中，在你从看书切换到查字典再切换到看书这个过程中，你其实还需要记住看书的位置吧，这种从一件事切换到另一件事再从另一件事切回来，总的有耗费吧？术语称之为<strong>上下文切换</strong>。</p>
+<p>减少上下问切换的方式：</p>
+<ol>
+<li>无锁并发编程。使用hash算法进行数据id取模分段，特定的线程处理不同段的数据</li>
+<li>使用cas算法，java的atomic包，cas=compare and swap</li>
+<li>使用最少线程，避免创建不必要的线程</li>
+<li>使用协程，在单线程里面实现多任务调度，并在单线程里面维持多个任务间的切换。</li>
+</ol>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>死锁的概念就是有两个线程A，B。线程A，B都需要a,b资源，线程A已经占有了a资源，需要b资源，线程B已经占有了b资源，需要a资源；所以A等待B，B等待A。这样就造成了死锁。这个就是那个著名的哲学家吃饭的问题，5个人，5根筷子，嗯就是这个问题。</p>
+<h2 id="线程执行任务"><a href="#线程执行任务" class="headerlink" title="线程执行任务"></a>线程执行任务</h2><ol>
+<li><p>runnable接口，不带返回值</p>
+</li>
+<li><p>Callable接口，返回Future对象</p>
+</li>
+</ol>
+<p>定义任务：实现runnable，重写run方法。一个线程都需要使用Thread.start()进行启动。线程的运行由线程调度器来选择，线程调度机制非确定性的。</p>
+<p>callable接口—-&gt;实现call()—-&gt;executorService.submit()—-&gt;Future&lt;—–访问Future的isDone()是否完成</p>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p><code>FixedThreadPool</code>:一次性预先加载线程，限制线程的数量;<br><code>CachedThreadPool</code>:创建与所需数量相同的线程;<br><code>SingleThreadPool</code>:线程数量为1的fixedThreadPool;</p>
+<h2 id="sleep-和wait-的区别"><a href="#sleep-和wait-的区别" class="headerlink" title="sleep()和wait()的区别"></a>sleep()和wait()的区别</h2><p>sleep()调用的时候不会释放锁，wait()是会阻塞当前线程同时释放锁。</p>
+<h2 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h2><p>优先级别主要是给线程调度器用，如果同一优先级也是随机的。建议使用<code>MAX_PRIORITY</code>,<code>NORM_PRIORITY</code>,<code>MIN_PRIORITY</code>。</p>
+<p>线程让步：yield(),然后相同优先级的其它线程；<br>join()，自己会挂起，让join的线程先完成;</p>
+<p>后台线程,在调用start方法之前设置daemon。</p>
+<h2 id="java并发包"><a href="#java并发包" class="headerlink" title="java并发包"></a>java并发包</h2><p>java有个juc的并发包。要再仔细看看。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -5301,6 +5301,31 @@ EOF
       </tags>
   </entry>
   <entry>
+    <title>Openshift 专属机方案</title>
+    <url>/2022/02/17/openshift-server-exclusive/</url>
+    <content><![CDATA[<h1 id="Openshift-专属机方案"><a href="#Openshift-专属机方案" class="headerlink" title="Openshift 专属机方案"></a>Openshift 专属机方案</h1><span id="more"></span> 
+<h2 id="专属机方案-Kubernetes-一）"><a href="#专属机方案-Kubernetes-一）" class="headerlink" title="专属机方案-Kubernetes(一）"></a>专属机方案-Kubernetes(一）</h2><ol>
+<li>给所有主机新增 role:  [<code>node-role.kubernetes.io/&#123;xxxxx&#125;:](http://node-role.kubernetes.io/%7Bxxxxx%7D:) &quot;true&quot;</code>;这样在 oc get nodes 的时候就会多出一个 <code>xxxxx</code> 的角色；</li>
+<li>给相关的主机打上污点：<code>oc adm nodes $i com.cmft.exclusive=xxxxx:NoSchedule</code> / <code>kubectl taint node com.cmft.exclusive=xxxxx:NoSchedule</code></li>
+<li>让所有的业务 pod 增加主机调度和容忍，<code>nodeSelector</code>,<code>tolerations</code>：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - image: harbor.uat.chenzhijun.top/base/nginx:latest</span><br><span class="line">    name: nginx</span><br><span class="line">    resources: &#123;&#125;</span><br><span class="line">  nodeSelector: </span><br><span class="line">    node-role.kubernetes.io/compute: <span class="string">&quot;true&quot;</span></span><br><span class="line">    node-role.kubernetes.io/xxxxx: <span class="string">&quot;true&quot;</span></span><br><span class="line">  tolerations: </span><br><span class="line">  - key: <span class="string">&quot;com.cmft.exclusive&quot;</span></span><br><span class="line">    operator: <span class="string">&quot;Equal&quot;</span></span><br><span class="line">    value: <span class="string">&quot;xxxxx&quot;</span></span><br><span class="line">    effect: <span class="string">&quot;NoSchedule&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="专属机方案-Openshift（二）"><a href="#专属机方案-Openshift（二）" class="headerlink" title="专属机方案-Openshift（二）"></a>专属机方案-Openshift（二）</h2><ol>
+<li> 选定主机并且将主机的 label 进行修改，将 label 名改为 [<code>node-role.kubernetes.io](node-role.kubernetes.io/shimo)/xxx=true</code>，这样在 <code>oc get nodes</code> 时可以看到 <code>xxx</code> 的角色的主机；</li>
+<li> project（namespace）在创建的时候可以使用<code>oc adm new-project demo --node-selector=&#39;node-role.kubernetes.io/xxx=true&#39;</code> 这样默认 project 会只调度到selector 的主机上。</li>
+<li>如果是已存在的项目：<code>oc patch namespace demo -p &#39;&#123;&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&quot;openshift.io/node-selector&quot;:&quot;node-role.kubernetes.io/xxx=true&quot;&#125;&#125;&#125;&#39;</code> 可以进行 patch 操作；如果有多个 label 可以进行：<code>oc patch namespace demo -p &#39;&#123;&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&quot;openshift.io/node-selector&quot;:&quot;node-role.kubernetes.io/xxx1=true,node-role.kubernetes.io/xxx2=true&quot;&#125;&#125;&#125;&#39;</code></li>
+<li>如果需要设置全局默认调度可以修改 master 配置文件：<code>/etc/origin/master/master-config.yaml</code>  <code>projectConfig.defaultNodeSelector</code> 然后重启 api 和 controller：<code>master-restart api</code>&amp;&amp;<code>master-restart api</code></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Kubernetes</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>最近遇到的小问题总结-2018522</title>
     <url>/2018/05/22/problem-cmrh-2018522/</url>
     <content><![CDATA[<h1 id="最近遇到的小问题总结-2018522"><a href="#最近遇到的小问题总结-2018522" class="headerlink" title="最近遇到的小问题总结-2018522"></a>最近遇到的小问题总结-2018522</h1><ol>
@@ -5371,31 +5396,6 @@ EOF
       </categories>
       <tags>
         <tag>problem</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Openshift 专属机方案</title>
-    <url>/2022/02/17/openshift-server-exclusive/</url>
-    <content><![CDATA[<h1 id="Openshift-专属机方案"><a href="#Openshift-专属机方案" class="headerlink" title="Openshift 专属机方案"></a>Openshift 专属机方案</h1><span id="more"></span> 
-<h2 id="专属机方案-Kubernetes-一）"><a href="#专属机方案-Kubernetes-一）" class="headerlink" title="专属机方案-Kubernetes(一）"></a>专属机方案-Kubernetes(一）</h2><ol>
-<li>给所有主机新增 role:  [<code>node-role.kubernetes.io/&#123;xxxxx&#125;:](http://node-role.kubernetes.io/%7Bxxxxx%7D:) &quot;true&quot;</code>;这样在 oc get nodes 的时候就会多出一个 <code>xxxxx</code> 的角色；</li>
-<li>给相关的主机打上污点：<code>oc adm nodes $i com.cmft.exclusive=xxxxx:NoSchedule</code> / <code>kubectl taint node com.cmft.exclusive=xxxxx:NoSchedule</code></li>
-<li>让所有的业务 pod 增加主机调度和容忍，<code>nodeSelector</code>,<code>tolerations</code>：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - image: harbor.uat.chenzhijun.top/base/nginx:latest</span><br><span class="line">    name: nginx</span><br><span class="line">    resources: &#123;&#125;</span><br><span class="line">  nodeSelector: </span><br><span class="line">    node-role.kubernetes.io/compute: <span class="string">&quot;true&quot;</span></span><br><span class="line">    node-role.kubernetes.io/xxxxx: <span class="string">&quot;true&quot;</span></span><br><span class="line">  tolerations: </span><br><span class="line">  - key: <span class="string">&quot;com.cmft.exclusive&quot;</span></span><br><span class="line">    operator: <span class="string">&quot;Equal&quot;</span></span><br><span class="line">    value: <span class="string">&quot;xxxxx&quot;</span></span><br><span class="line">    effect: <span class="string">&quot;NoSchedule&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="专属机方案-Openshift（二）"><a href="#专属机方案-Openshift（二）" class="headerlink" title="专属机方案-Openshift（二）"></a>专属机方案-Openshift（二）</h2><ol>
-<li> 选定主机并且将主机的 label 进行修改，将 label 名改为 [<code>node-role.kubernetes.io](node-role.kubernetes.io/shimo)/xxx=true</code>，这样在 <code>oc get nodes</code> 时可以看到 <code>xxx</code> 的角色的主机；</li>
-<li> project（namespace）在创建的时候可以使用<code>oc adm new-project demo --node-selector=&#39;node-role.kubernetes.io/xxx=true&#39;</code> 这样默认 project 会只调度到selector 的主机上。</li>
-<li>如果是已存在的项目：<code>oc patch namespace demo -p &#39;&#123;&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&quot;openshift.io/node-selector&quot;:&quot;node-role.kubernetes.io/xxx=true&quot;&#125;&#125;&#125;&#39;</code> 可以进行 patch 操作；如果有多个 label 可以进行：<code>oc patch namespace demo -p &#39;&#123;&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&quot;openshift.io/node-selector&quot;:&quot;node-role.kubernetes.io/xxx1=true,node-role.kubernetes.io/xxx2=true&quot;&#125;&#125;&#125;&#39;</code></li>
-<li>如果需要设置全局默认调度可以修改 master 配置文件：<code>/etc/origin/master/master-config.yaml</code>  <code>projectConfig.defaultNodeSelector</code> 然后重启 api 和 controller：<code>master-restart api</code>&amp;&amp;<code>master-restart api</code></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Kubernetes</category>
-      </categories>
-      <tags>
-        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -5521,28 +5521,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>Prometheus 常用的查询语句</title>
-    <url>/2022/06/16/prometheus-query/</url>
-    <content><![CDATA[<h2 id="Prometheus-常用的查询语句"><a href="#Prometheus-常用的查询语句" class="headerlink" title="Prometheus 常用的查询语句"></a>Prometheus 常用的查询语句</h2><p>通常我们会使用Grafana作为图表展示，然后选择Prometheus作为数据源的方式来进行我们想要的图表展示。当然我们也可以在Grafana的官网上找到相应的dashboard来直接导入，这样省去了自己手工配置的麻烦。不过知道一些必要的Prometheus查询语句能帮我们更好的选择Grafana的dashboard，然后我们可以自定义做些配置。</p>
-<h3 id="Prometheus一些术语"><a href="#Prometheus一些术语" class="headerlink" title="Prometheus一些术语"></a>Prometheus一些术语</h3><p>Prometheus的metrics分为四类（counter,gauge,histogram,summary）详情(<a href="https://prometheus.io/docs/concepts/metric_types/">metrics-type</a>)，metrics_name的命令也应该符合一定的规范：<a href="https://prometheus.io/docs/concepts/data_model/">metrics-name</a>，<a href="https://prometheus.io/docs/practices/naming/">METRIC AND LABEL NAMING</a></p>
-<p><code>metrics_name</code> ： 也就是指标名，通常我们都会用如http_request_total等进行查询;<br><code>metrics_label</code> ：指标的标签，也就是metrics_name{label-1=”a”,label-2=”b”}这种;<br><code>metrics_value</code> : 通常用指标名+标签查出来一个值，该值根据metrics的类型可能为浮点数，也可能为整数。</p>
-<span id="more"></span>
-
-<h3 id="0-基础查询"><a href="#0-基础查询" class="headerlink" title="0,基础查询"></a>0,基础查询</h3><p>也就是使用metrics_name+metrics_label的组合进行查询，这种查询的效率的基础是你要知道明确知道相应的name和label，如果有错误拼写，则可能数据无法展示，Prometheus的查询工具能帮我们模糊匹配出所有的metrics_name。可以使用label进行筛选。<br>如果只记得部分metrics_name,那么可以使用内置的label：<code>&#123;__name__=~&quot;metrics_name_you_remember:.*&quot;&#125;</code>这样去匹配出来你想要的标签。</p>
-<h3 id="1-正则匹配查询"><a href="#1-正则匹配查询" class="headerlink" title="1,正则匹配查询"></a>1,正则匹配查询</h3><p>Prometheus里面用的最多的查询可能就是正则匹配了。经常配合Grafana的变量(variable)一起使用。比如：<br><code>sum(irate(node_disk_reads_completed&#123;device!~&quot;dm-.*&quot;&#125;[5m]))</code>,这里面的<code>device!~&quot;dm-.*&quot;</code>，后面<br>引号内的<code>dm-.*</code>就是不匹配<code>dm-</code>前缀的所有metrics_name。如果要匹配的话使用<code>=~</code>。这样要注意，如果是或<br>的话要用<code>(regrex_A|regrex_B)</code>,用小括号加<code>|</code>。</p>
-<h3 id="2-常用的操作符和函数"><a href="#2-常用的操作符和函数" class="headerlink" title="2,常用的操作符和函数"></a>2,常用的操作符和函数</h3><p>Prometheus支持常用的操作符：<code>+,-,*,/,&gt;=,&lt;,&gt;,....</code>等</p>
-<p>count是对查询的结果数量进行总和+; 而sum是对查询出来的value进行总和+;</p>
-<p>它也支持比如topk,bottomk,min,max等等。</p>
-<h3 id="更多的查询"><a href="#更多的查询" class="headerlink" title="更多的查询"></a>更多的查询</h3><p>在官网还有更多的查询，通常我们是结合Grafana来做。官网的查询:<a href="https://prometheus.io/docs/Prometheus/latest/querying/functions/">proetheus-query</a>。</p>
-]]></content>
-      <categories>
-        <category>监控</category>
-      </categories>
-      <tags>
-        <tag>Prometheus</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Prometheus 体验</title>
     <url>/2022/05/01/prometheus-pre-use/</url>
     <content><![CDATA[<h1 id="Prometheus-监控"><a href="#Prometheus-监控" class="headerlink" title="Prometheus 监控"></a>Prometheus 监控</h1><p> Prometheus [普罗米修斯]主要的是从被监控项目中获取metrics。架构全景图：</p>
@@ -5581,6 +5559,28 @@ EOF
       </categories>
       <tags>
         <tag>prometheus</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Prometheus 常用的查询语句</title>
+    <url>/2022/06/16/prometheus-query/</url>
+    <content><![CDATA[<h2 id="Prometheus-常用的查询语句"><a href="#Prometheus-常用的查询语句" class="headerlink" title="Prometheus 常用的查询语句"></a>Prometheus 常用的查询语句</h2><p>通常我们会使用Grafana作为图表展示，然后选择Prometheus作为数据源的方式来进行我们想要的图表展示。当然我们也可以在Grafana的官网上找到相应的dashboard来直接导入，这样省去了自己手工配置的麻烦。不过知道一些必要的Prometheus查询语句能帮我们更好的选择Grafana的dashboard，然后我们可以自定义做些配置。</p>
+<h3 id="Prometheus一些术语"><a href="#Prometheus一些术语" class="headerlink" title="Prometheus一些术语"></a>Prometheus一些术语</h3><p>Prometheus的metrics分为四类（counter,gauge,histogram,summary）详情(<a href="https://prometheus.io/docs/concepts/metric_types/">metrics-type</a>)，metrics_name的命令也应该符合一定的规范：<a href="https://prometheus.io/docs/concepts/data_model/">metrics-name</a>，<a href="https://prometheus.io/docs/practices/naming/">METRIC AND LABEL NAMING</a></p>
+<p><code>metrics_name</code> ： 也就是指标名，通常我们都会用如http_request_total等进行查询;<br><code>metrics_label</code> ：指标的标签，也就是metrics_name{label-1=”a”,label-2=”b”}这种;<br><code>metrics_value</code> : 通常用指标名+标签查出来一个值，该值根据metrics的类型可能为浮点数，也可能为整数。</p>
+<span id="more"></span>
+
+<h3 id="0-基础查询"><a href="#0-基础查询" class="headerlink" title="0,基础查询"></a>0,基础查询</h3><p>也就是使用metrics_name+metrics_label的组合进行查询，这种查询的效率的基础是你要知道明确知道相应的name和label，如果有错误拼写，则可能数据无法展示，Prometheus的查询工具能帮我们模糊匹配出所有的metrics_name。可以使用label进行筛选。<br>如果只记得部分metrics_name,那么可以使用内置的label：<code>&#123;__name__=~&quot;metrics_name_you_remember:.*&quot;&#125;</code>这样去匹配出来你想要的标签。</p>
+<h3 id="1-正则匹配查询"><a href="#1-正则匹配查询" class="headerlink" title="1,正则匹配查询"></a>1,正则匹配查询</h3><p>Prometheus里面用的最多的查询可能就是正则匹配了。经常配合Grafana的变量(variable)一起使用。比如：<br><code>sum(irate(node_disk_reads_completed&#123;device!~&quot;dm-.*&quot;&#125;[5m]))</code>,这里面的<code>device!~&quot;dm-.*&quot;</code>，后面<br>引号内的<code>dm-.*</code>就是不匹配<code>dm-</code>前缀的所有metrics_name。如果要匹配的话使用<code>=~</code>。这样要注意，如果是或<br>的话要用<code>(regrex_A|regrex_B)</code>,用小括号加<code>|</code>。</p>
+<h3 id="2-常用的操作符和函数"><a href="#2-常用的操作符和函数" class="headerlink" title="2,常用的操作符和函数"></a>2,常用的操作符和函数</h3><p>Prometheus支持常用的操作符：<code>+,-,*,/,&gt;=,&lt;,&gt;,....</code>等</p>
+<p>count是对查询的结果数量进行总和+; 而sum是对查询出来的value进行总和+;</p>
+<p>它也支持比如topk,bottomk,min,max等等。</p>
+<h3 id="更多的查询"><a href="#更多的查询" class="headerlink" title="更多的查询"></a>更多的查询</h3><p>在官网还有更多的查询，通常我们是结合Grafana来做。官网的查询:<a href="https://prometheus.io/docs/Prometheus/latest/querying/functions/">proetheus-query</a>。</p>
+]]></content>
+      <categories>
+        <category>监控</category>
+      </categories>
+      <tags>
+        <tag>Prometheus</tag>
       </tags>
   </entry>
   <entry>
@@ -5665,19 +5665,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>Restful 接口返回响应码</title>
-    <url>/2019/05/05/restful-api/</url>
-    <content><![CDATA[<h1 id="Restful-接口返回响应码"><a href="#Restful-接口返回响应码" class="headerlink" title="Restful 接口返回响应码"></a>Restful 接口返回响应码</h1><p>最近用restful做接口，突然想想返回状态码该怎么返回给客户端或者调用者。毕竟那么多的状态码。</p>
-<p>后来找到一个状态码解释:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">1xx：信息响应类，表示接收到请求并且继续处理</span><br><span class="line">2xx：处理成功响应类，表示动作被成功接收、理解和接受</span><br><span class="line">3xx：重定向响应类，为了完成指定的动作，必须接受进一步处理</span><br><span class="line">4xx：客户端错误，客户请求包含语法错误或者是不能正确执行</span><br><span class="line">5xx：服务端错误，服务器不能正确执行一个正确的请求</span><br><span class="line"></span><br><span class="line">100——客户必须继续发出请求</span><br><span class="line">101——客户要求服务器根据请求转换HTTP协议版本</span><br><span class="line"></span><br><span class="line">200——交易成功</span><br><span class="line">201——提示知道新文件的URL</span><br><span class="line">202——接受和处理、但处理未完成</span><br><span class="line">203——返回信息不确定或不完整</span><br><span class="line">204——请求收到，但返回信息为空</span><br><span class="line">205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件</span><br><span class="line">206——服务器已经完成了部分用户的GET请求</span><br><span class="line"></span><br><span class="line">300——请求的资源可在多处得到</span><br><span class="line">301——删除请求数据</span><br><span class="line">302——在其他地址发现了请求数据</span><br><span class="line">303——建议客户访问其他URL或访问方式</span><br><span class="line">304——客户端已经执行了GET，但文件未变化</span><br><span class="line">305——请求的资源必须从服务器指定的地址得到</span><br><span class="line">306——前一版本HTTP中使用的代码，现行版本中不再使用</span><br><span class="line">307——申明请求的资源临时性删除</span><br><span class="line"></span><br><span class="line">400——错误请求，如语法错误</span><br><span class="line">401——请求授权失败</span><br><span class="line">402——保留有效ChargeTo头响应</span><br><span class="line">403——请求不允许</span><br><span class="line">404——没有发现文件、查询或URl</span><br><span class="line">405——用户在Request-Line字段定义的方法不允许</span><br><span class="line">406——根据用户发送的Accept拖，请求资源不可访问</span><br><span class="line">407——类似401，用户必须首先在代理服务器上得到授权</span><br><span class="line">408——客户端没有在用户指定的饿时间内完成请求</span><br><span class="line">409——对当前资源状态，请求不能完成</span><br><span class="line">410——服务器上不再有此资源且无进一步的参考地址</span><br><span class="line">411——服务器拒绝用户定义的Content-Length属性请求</span><br><span class="line">412——一个或多个请求头字段在当前请求中错误</span><br><span class="line">413——请求的资源大于服务器允许的大小</span><br><span class="line">414——请求的资源URL长于服务器允许的长度</span><br><span class="line">415——请求资源不支持请求项目格式</span><br><span class="line">416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段</span><br><span class="line">417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求</span><br><span class="line"></span><br><span class="line">500——服务器产生内部错误</span><br><span class="line">501——服务器不支持请求的函数</span><br><span class="line">502——服务器暂时不可用，有时是为了防止发生系统过载</span><br><span class="line">503——服务器过载或暂停维修</span><br><span class="line">504——关口过载，服务器使用另一个关口或服务来响应用户，等待时间设定值较长</span><br><span class="line">505——服务器不支持或拒绝支请求头中指定的HTTP版本</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>过去一段时间遇到的一些问题</title>
     <url>/2019/08/17/record-last/</url>
     <content><![CDATA[<h1 id="随笔-过去一段时间遇到的一些问题"><a href="#随笔-过去一段时间遇到的一些问题" class="headerlink" title="随笔-过去一段时间遇到的一些问题"></a>随笔-过去一段时间遇到的一些问题</h1><span id="more"></span>
@@ -5720,6 +5707,19 @@ EOF
       </categories>
       <tags>
         <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Restful 接口返回响应码</title>
+    <url>/2019/05/05/restful-api/</url>
+    <content><![CDATA[<h1 id="Restful-接口返回响应码"><a href="#Restful-接口返回响应码" class="headerlink" title="Restful 接口返回响应码"></a>Restful 接口返回响应码</h1><p>最近用restful做接口，突然想想返回状态码该怎么返回给客户端或者调用者。毕竟那么多的状态码。</p>
+<p>后来找到一个状态码解释:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">1xx：信息响应类，表示接收到请求并且继续处理</span><br><span class="line">2xx：处理成功响应类，表示动作被成功接收、理解和接受</span><br><span class="line">3xx：重定向响应类，为了完成指定的动作，必须接受进一步处理</span><br><span class="line">4xx：客户端错误，客户请求包含语法错误或者是不能正确执行</span><br><span class="line">5xx：服务端错误，服务器不能正确执行一个正确的请求</span><br><span class="line"></span><br><span class="line">100——客户必须继续发出请求</span><br><span class="line">101——客户要求服务器根据请求转换HTTP协议版本</span><br><span class="line"></span><br><span class="line">200——交易成功</span><br><span class="line">201——提示知道新文件的URL</span><br><span class="line">202——接受和处理、但处理未完成</span><br><span class="line">203——返回信息不确定或不完整</span><br><span class="line">204——请求收到，但返回信息为空</span><br><span class="line">205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件</span><br><span class="line">206——服务器已经完成了部分用户的GET请求</span><br><span class="line"></span><br><span class="line">300——请求的资源可在多处得到</span><br><span class="line">301——删除请求数据</span><br><span class="line">302——在其他地址发现了请求数据</span><br><span class="line">303——建议客户访问其他URL或访问方式</span><br><span class="line">304——客户端已经执行了GET，但文件未变化</span><br><span class="line">305——请求的资源必须从服务器指定的地址得到</span><br><span class="line">306——前一版本HTTP中使用的代码，现行版本中不再使用</span><br><span class="line">307——申明请求的资源临时性删除</span><br><span class="line"></span><br><span class="line">400——错误请求，如语法错误</span><br><span class="line">401——请求授权失败</span><br><span class="line">402——保留有效ChargeTo头响应</span><br><span class="line">403——请求不允许</span><br><span class="line">404——没有发现文件、查询或URl</span><br><span class="line">405——用户在Request-Line字段定义的方法不允许</span><br><span class="line">406——根据用户发送的Accept拖，请求资源不可访问</span><br><span class="line">407——类似401，用户必须首先在代理服务器上得到授权</span><br><span class="line">408——客户端没有在用户指定的饿时间内完成请求</span><br><span class="line">409——对当前资源状态，请求不能完成</span><br><span class="line">410——服务器上不再有此资源且无进一步的参考地址</span><br><span class="line">411——服务器拒绝用户定义的Content-Length属性请求</span><br><span class="line">412——一个或多个请求头字段在当前请求中错误</span><br><span class="line">413——请求的资源大于服务器允许的大小</span><br><span class="line">414——请求的资源URL长于服务器允许的长度</span><br><span class="line">415——请求资源不支持请求项目格式</span><br><span class="line">416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段</span><br><span class="line">417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求</span><br><span class="line"></span><br><span class="line">500——服务器产生内部错误</span><br><span class="line">501——服务器不支持请求的函数</span><br><span class="line">502——服务器暂时不可用，有时是为了防止发生系统过载</span><br><span class="line">503——服务器过载或暂停维修</span><br><span class="line">504——关口过载，服务器使用另一个关口或服务来响应用户，等待时间设定值较长</span><br><span class="line">505——服务器不支持或拒绝支请求头中指定的HTTP版本</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -5767,11 +5767,6 @@ EOF
       <tags>
         <tag>Shell</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>shell-operation</title>
-    <url>/2019/12/18/shell-operation/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>shell 相关基本操作</title>
@@ -5832,6 +5827,11 @@ EOF
       <tags>
         <tag>shell</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>shell-operation</title>
+    <url>/2019/12/18/shell-operation/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>shell 脚本学习</title>
@@ -5951,61 +5951,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>Spring周报翻译 - 2017年10月3日周报</title>
-    <url>/2017/10/09/spring-io-weekly-newspaper/</url>
-    <content><![CDATA[<h2 id="10月3号周报"><a href="#10月3号周报" class="headerlink" title="10月3号周报"></a>10月3号周报</h2><blockquote>
-<p>今日突然兴起，想翻译文章，其实之前的我在LinuxCN上也翻译过，只是那边大多是Linux的文章，其实我想翻译Java周边的。那边的文章我也有翻译过，只是总觉得缺少什么，后来接触了Spring4ALL,也就随口问了下，没想到还竟然有人回复了我,所以也就有了下面这篇文章，算作投名状吧。</p>
-</blockquote>
-<p>其实，能翻译我还是很高兴的，因为我觉得那26个字母非常可爱。^_^</p>
-<p>下面是是10月3号在Spring官网看到的周报内容，取出主要内容作为本文主体：</p>
-<ol>
-<li><p> 怎么<a href="https://spring.io/blog/2017/09/27/spring-tips-reactive-websockets-with-spring-framework-5">使用Spring Framwork5来构建基于websocket的响应式应用</a></p>
-</li>
-<li><p> Spring AMQP和Spring Integration开发领导者Gary Russell发布了<a href="https://spring.io/blog/2017/09/27/spring-amqp-2-0-release-candidate-2-available">Spring AMQP 2.0.RC2</a>。</p>
-</li>
-<li><p> 经过一段长的时间，<code>Spring Framework 5.0.GA</code>现在终于发布了！新版本集成了Reactor项目，包括响应式web运行时环境，Kotlin扩展，以及全面基于Java EE 7和Java 8。<br>新的发行版具有太多的新东西,如果想要知道更多的消息，查看<a href="https://spring.io/blog/2017/09/28/spring-framework-5-0-goes-ga">版本说明</a>，然后查看<a href="https://github.com/spring-projects/spring-framework/wiki/What's-New-in-the-Spring-Framework#whats-new-in-spring-framework-5x">更新内容</a></p>
-</li>
-</ol>
-<span id="more"></span>
-
-<ol start="4">
-<li><p>Spring Reactor团队成员Simon Baslé宣布发布Spring和Reactor集成的新版本<a href="https://spring.io/blog/2017/09/28/reactor-bismuth-is-out">Reactor Bismuth</a>。这个版本为Spring Framework 5.0奠定了基础，它自己本身也包含了非常多的功能！</p>
-</li>
-<li><p> Spring Framework 5.0版本更新了一些其他的项目，其中包括发布了<a href="https://spring.io/blog/2017/10/02/spring-data-release-train-kay-goes-ga">Spring Data Kay</a>。自从Spring Data于2009年成立以来，这是Spring Data更新的最大版本！该新版本以Spring Framework 5.0，Java 8和Java EE 7作为基准。它包括一个改进的仓储(repository) API（完整支持<code>Optional&lt;T&gt;</code>），支持响应式数据访问（Cassandra，Couchbase，MongoDB和Redis），新发布版本新增Spring Data Geode，使用非空注解并且优化了运行时检查空注解，通过Kotlin构造方法，支持Kotlin的null安全和不可变数据类，支持兼容Java 9和然后还有更多的请看文档：<a href="https://spring.io/blog/2017/10/02/spring-data-release-train-kay-goes-ga">Spring Data Kay</a>！</p>
-</li>
-<li><p> Spring消息中间件集成团队成员Artem Bilan宣布发布<a href="https://spring.io/blog/2017/10/02/spring-for-apache-kafka-2-0-ga-available">Spring for Apache Kafka 2.0.GA</a>.新版本包括支持<code>Apache Kafka</code>，支持事务，消息头匹配，Apache Kafka 的<code>Streams</code>支持，新的<code>KafkaAdmin</code>，增加<code>@KafkaListener</code>和<code>Consumer</code>错误处理和群组支持的方案。它还支持使用<code>@EmbeddedKafka</code>进行测试。</p>
-</li>
-<li><p> Spring Cloud团队成员Ryan Baxter宣布发布<a href="https://spring.io/blog/2017/10/03/spring-cloud-dalston-sr4-is-now-available">Spring Cloud Dalston SR4</a>。新版本更新了<code>Spring Cloud Contract</code>，<code>Spring Cloud Config</code>，<code>Spring Cloud Commons</code>，<code>Spring Cloud Netflix</code>和<code>Spring Cloud Sleuth</code>。</p>
-</li>
-<li><p> Spring REST Docs 开发领导者Andy Wilkinson宣布发布<a href="https://spring.io/blog/2017/09/28/spring-rest-docs-1-2-2-release">Spring REST Docs 1.2.2.RELEASE</a>。这个维护版本包括一些错误修复和文档的改进，推荐大家升级</p>
-</li>
-<li><p> 查看Spring Framework 5的全新的<a href="https://github.com/spring-projects/spring-framework/commit/23497a7ece7aac1591187b46f4b601d2f48764e0">通过构造方法实现注解的实现</a></p>
-</li>
-<li><p> 德语访谈中Andreas Falk提到的Spring Framework 5.0和Spring Security 5.0中的<a href="https://jaxenter.de/spring-security-interview-falk-62685">新功能</a>。</p>
-</li>
-<li><p> 由Zoltan Altfatter发表的这篇文章介绍了<a href="http://blog.mimacom.com/blog/2017/09/29/trigger-a-spring-batch-job-with-a-jms-message/">如何在Spring Integration流程中引入一个新的JMS消息来启动Spring Batch作业</a>。</p>
-</li>
-<li><p> Rohit Kelapure: <a href="https://twitter.com/rkela/status/914924780373073920">为什么Pivotal公司的Cloud Foundry是运行Spring Boot应用程序的最佳选择</a></p>
-</li>
-<li><p> 在这篇文章中，Cristina Negrean介绍了<a href="https://cristinanegrean.github.io/2017/10/01/spring-cloud-dataflow-for-real-time-analytics-with-twitter-api">如何使用Spring Cloud Data Flow进行实时分析</a>。</p>
-</li>
-<li><p> Gabriela Motroc<a href="https://jaxenter.com/spring-framework-5-0-137677.html">在JAXEnter网上发布了一篇关于Spring Framework 5的新文章</a>。非常多的功能文章都包含了</p>
-</li>
-<li><p> Aboullaite Mohammed：<a href="https://aboullaite.me/spring-boot-elastic-kibana/">使用Elasticsearch和Kibana和Spring Boot集合来监控一些指标</a></p>
-</li>
-<li><p> Ordina JWorks：<a href="https://ordina-jworks.github.io/microservices/2017/09/26/Secure-your-architecture-part1.html">使用Spring Cloud来对微服务进行安全防护</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Spring周报翻译</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-        <tag>周报</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Boot 应用可视化监控</title>
     <url>/2017/11/02/spring-boot-actuator-prometheus-grafana/</url>
     <content><![CDATA[<h1 id="Spring-Boot-应用可视化监控"><a href="#Spring-Boot-应用可视化监控" class="headerlink" title="Spring Boot 应用可视化监控"></a>Spring Boot 应用可视化监控</h1><blockquote>
@@ -6116,6 +6061,61 @@ EOF
       </tags>
   </entry>
   <entry>
+    <title>Spring周报翻译 - 2017年10月3日周报</title>
+    <url>/2017/10/09/spring-io-weekly-newspaper/</url>
+    <content><![CDATA[<h2 id="10月3号周报"><a href="#10月3号周报" class="headerlink" title="10月3号周报"></a>10月3号周报</h2><blockquote>
+<p>今日突然兴起，想翻译文章，其实之前的我在LinuxCN上也翻译过，只是那边大多是Linux的文章，其实我想翻译Java周边的。那边的文章我也有翻译过，只是总觉得缺少什么，后来接触了Spring4ALL,也就随口问了下，没想到还竟然有人回复了我,所以也就有了下面这篇文章，算作投名状吧。</p>
+</blockquote>
+<p>其实，能翻译我还是很高兴的，因为我觉得那26个字母非常可爱。^_^</p>
+<p>下面是是10月3号在Spring官网看到的周报内容，取出主要内容作为本文主体：</p>
+<ol>
+<li><p> 怎么<a href="https://spring.io/blog/2017/09/27/spring-tips-reactive-websockets-with-spring-framework-5">使用Spring Framwork5来构建基于websocket的响应式应用</a></p>
+</li>
+<li><p> Spring AMQP和Spring Integration开发领导者Gary Russell发布了<a href="https://spring.io/blog/2017/09/27/spring-amqp-2-0-release-candidate-2-available">Spring AMQP 2.0.RC2</a>。</p>
+</li>
+<li><p> 经过一段长的时间，<code>Spring Framework 5.0.GA</code>现在终于发布了！新版本集成了Reactor项目，包括响应式web运行时环境，Kotlin扩展，以及全面基于Java EE 7和Java 8。<br>新的发行版具有太多的新东西,如果想要知道更多的消息，查看<a href="https://spring.io/blog/2017/09/28/spring-framework-5-0-goes-ga">版本说明</a>，然后查看<a href="https://github.com/spring-projects/spring-framework/wiki/What's-New-in-the-Spring-Framework#whats-new-in-spring-framework-5x">更新内容</a></p>
+</li>
+</ol>
+<span id="more"></span>
+
+<ol start="4">
+<li><p>Spring Reactor团队成员Simon Baslé宣布发布Spring和Reactor集成的新版本<a href="https://spring.io/blog/2017/09/28/reactor-bismuth-is-out">Reactor Bismuth</a>。这个版本为Spring Framework 5.0奠定了基础，它自己本身也包含了非常多的功能！</p>
+</li>
+<li><p> Spring Framework 5.0版本更新了一些其他的项目，其中包括发布了<a href="https://spring.io/blog/2017/10/02/spring-data-release-train-kay-goes-ga">Spring Data Kay</a>。自从Spring Data于2009年成立以来，这是Spring Data更新的最大版本！该新版本以Spring Framework 5.0，Java 8和Java EE 7作为基准。它包括一个改进的仓储(repository) API（完整支持<code>Optional&lt;T&gt;</code>），支持响应式数据访问（Cassandra，Couchbase，MongoDB和Redis），新发布版本新增Spring Data Geode，使用非空注解并且优化了运行时检查空注解，通过Kotlin构造方法，支持Kotlin的null安全和不可变数据类，支持兼容Java 9和然后还有更多的请看文档：<a href="https://spring.io/blog/2017/10/02/spring-data-release-train-kay-goes-ga">Spring Data Kay</a>！</p>
+</li>
+<li><p> Spring消息中间件集成团队成员Artem Bilan宣布发布<a href="https://spring.io/blog/2017/10/02/spring-for-apache-kafka-2-0-ga-available">Spring for Apache Kafka 2.0.GA</a>.新版本包括支持<code>Apache Kafka</code>，支持事务，消息头匹配，Apache Kafka 的<code>Streams</code>支持，新的<code>KafkaAdmin</code>，增加<code>@KafkaListener</code>和<code>Consumer</code>错误处理和群组支持的方案。它还支持使用<code>@EmbeddedKafka</code>进行测试。</p>
+</li>
+<li><p> Spring Cloud团队成员Ryan Baxter宣布发布<a href="https://spring.io/blog/2017/10/03/spring-cloud-dalston-sr4-is-now-available">Spring Cloud Dalston SR4</a>。新版本更新了<code>Spring Cloud Contract</code>，<code>Spring Cloud Config</code>，<code>Spring Cloud Commons</code>，<code>Spring Cloud Netflix</code>和<code>Spring Cloud Sleuth</code>。</p>
+</li>
+<li><p> Spring REST Docs 开发领导者Andy Wilkinson宣布发布<a href="https://spring.io/blog/2017/09/28/spring-rest-docs-1-2-2-release">Spring REST Docs 1.2.2.RELEASE</a>。这个维护版本包括一些错误修复和文档的改进，推荐大家升级</p>
+</li>
+<li><p> 查看Spring Framework 5的全新的<a href="https://github.com/spring-projects/spring-framework/commit/23497a7ece7aac1591187b46f4b601d2f48764e0">通过构造方法实现注解的实现</a></p>
+</li>
+<li><p> 德语访谈中Andreas Falk提到的Spring Framework 5.0和Spring Security 5.0中的<a href="https://jaxenter.de/spring-security-interview-falk-62685">新功能</a>。</p>
+</li>
+<li><p> 由Zoltan Altfatter发表的这篇文章介绍了<a href="http://blog.mimacom.com/blog/2017/09/29/trigger-a-spring-batch-job-with-a-jms-message/">如何在Spring Integration流程中引入一个新的JMS消息来启动Spring Batch作业</a>。</p>
+</li>
+<li><p> Rohit Kelapure: <a href="https://twitter.com/rkela/status/914924780373073920">为什么Pivotal公司的Cloud Foundry是运行Spring Boot应用程序的最佳选择</a></p>
+</li>
+<li><p> 在这篇文章中，Cristina Negrean介绍了<a href="https://cristinanegrean.github.io/2017/10/01/spring-cloud-dataflow-for-real-time-analytics-with-twitter-api">如何使用Spring Cloud Data Flow进行实时分析</a>。</p>
+</li>
+<li><p> Gabriela Motroc<a href="https://jaxenter.com/spring-framework-5-0-137677.html">在JAXEnter网上发布了一篇关于Spring Framework 5的新文章</a>。非常多的功能文章都包含了</p>
+</li>
+<li><p> Aboullaite Mohammed：<a href="https://aboullaite.me/spring-boot-elastic-kibana/">使用Elasticsearch和Kibana和Spring Boot集合来监控一些指标</a></p>
+</li>
+<li><p> Ordina JWorks：<a href="https://ordina-jworks.github.io/microservices/2017/09/26/Secure-your-architecture-part1.html">使用Spring Cloud来对微服务进行安全防护</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Spring周报翻译</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+        <tag>周报</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从 SVN 迁移到 Git （二）</title>
     <url>/2018/04/02/svn-to-git/</url>
     <content><![CDATA[<p>从 SVN 导入到 GitLab 仓库中我们只需要下载一个 <code>git-svn</code> 的工具，如果是windows版本的git工具，应该是内置了的；Linux 下使用<code>yum install git-svn</code>。一些操作可以参考git官网的两篇文章：<a href="https://git-scm.com/book/zh/v1/Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F-Git-%E4%B8%8E-Subversion">Git-与其他系统-Git-与-Subversion</a>和<a href="https://git-scm.com/book/zh/v1/Git-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F-%E8%BF%81%E7%A7%BB%E5%88%B0-Git">Git-与其他系统-迁移到-Git</a>。</p>
@@ -6199,27 +6199,6 @@ EOF
       </tags>
   </entry>
   <entry>
-    <title>重温Java编程思想的一些感悟-20180305</title>
-    <url>/2018/03/05/thinkinjava-20180305/</url>
-    <content><![CDATA[<h1 id="重温Java编程思想的一些感悟-20180305"><a href="#重温Java编程思想的一些感悟-20180305" class="headerlink" title="重温Java编程思想的一些感悟-20180305"></a>重温Java编程思想的一些感悟-20180305</h1><p>JIT(just-in-time) 即时编译技术：将程序全部或者部分翻译成本地机器码，程序运行速度因此得到提升。<br>对于hotspot来说，代码每次被执行，都会做一些优化，执行的次数越多，速度也就越快。</p>
-<p>java会给所有的默认域做一个初始化，非基本类型对象不初始化值的情况下，默认为null。<br>初始化顺序:static-&gt;{}-&gt;构造器；</p>
-<p>static的数据指向同一份存储区域，不能用于局部变量。</p>
-<p>final对于基本类型，其数值永不改变。final对于引用类型，其引用永不改变。<br>必须在定义final或者在构造器中对final进行赋值。</p>
-<p>final类无法继承，方法无法重写或修改。private的方法其实是隐式的final。</p>
-<p>compareTo,如果是两个int，最好不要直接返回i-i2，如果是有符号的int类型，一个正数最大，一个负数最大，那么将永远返回负数。所以如果重写compareTo，最好是不要直接返回return i-i2;</p>
-<p>集合是fail-fast的，比如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">list.add(aa);</span><br><span class="line">list.iterator();</span><br><span class="line">list.add(cc);</span><br></pre></td></tr></table></figure>
-
-<p>需要明确在添加或者修改完容器所有元素之后再获取迭代器。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>重温Java编程思想的一些感悟-20180223</title>
     <url>/2018/02/23/thinkinjava-20180223/</url>
     <content><![CDATA[<h1 id="重温Java编程思想的一些感悟-20180223"><a href="#重温Java编程思想的一些感悟-20180223" class="headerlink" title="重温Java编程思想的一些感悟-20180223"></a>重温Java编程思想的一些感悟-20180223</h1><p>最近又重新翻开了这本书，翻开第一页，上面的第一句话让我有点感触。</p>
@@ -6245,6 +6224,27 @@ EOF
 <p><strong>逻辑操作符号只用于布尔值</strong></p>
 <p><strong>按位操作符～，是一元操作符，也就是只需要一个操作数就可以了。所以不能用 ～=</strong></p>
 <p>类型转换：高位转地位会失真，所以需要显示强转；地位转高位没事不必显示强转。基本类型中，如果是数据类型小和数据类型大的做运算，结果总是数据类型大的。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重温Java编程思想的一些感悟-20180305</title>
+    <url>/2018/03/05/thinkinjava-20180305/</url>
+    <content><![CDATA[<h1 id="重温Java编程思想的一些感悟-20180305"><a href="#重温Java编程思想的一些感悟-20180305" class="headerlink" title="重温Java编程思想的一些感悟-20180305"></a>重温Java编程思想的一些感悟-20180305</h1><p>JIT(just-in-time) 即时编译技术：将程序全部或者部分翻译成本地机器码，程序运行速度因此得到提升。<br>对于hotspot来说，代码每次被执行，都会做一些优化，执行的次数越多，速度也就越快。</p>
+<p>java会给所有的默认域做一个初始化，非基本类型对象不初始化值的情况下，默认为null。<br>初始化顺序:static-&gt;{}-&gt;构造器；</p>
+<p>static的数据指向同一份存储区域，不能用于局部变量。</p>
+<p>final对于基本类型，其数值永不改变。final对于引用类型，其引用永不改变。<br>必须在定义final或者在构造器中对final进行赋值。</p>
+<p>final类无法继承，方法无法重写或修改。private的方法其实是隐式的final。</p>
+<p>compareTo,如果是两个int，最好不要直接返回i-i2，如果是有符号的int类型，一个正数最大，一个负数最大，那么将永远返回负数。所以如果重写compareTo，最好是不要直接返回return i-i2;</p>
+<p>集合是fail-fast的，比如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">list.add(aa);</span><br><span class="line">list.iterator();</span><br><span class="line">list.add(cc);</span><br></pre></td></tr></table></figure>
+
+<p>需要明确在添加或者修改完容器所有元素之后再获取迭代器。</p>
 ]]></content>
       <categories>
         <category>Java</category>
